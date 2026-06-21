@@ -17,11 +17,46 @@ if (menuToggle && siteNav) {
 }
 
 if (contactForm) {
-  contactForm.addEventListener("submit", (event) => {
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const note = contactForm.querySelector(".form-note");
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+
     if (note) {
-      note.textContent = "已记录在页面演示中。接入后端或表单工具后即可正式收集咨询需求。";
+      note.textContent = "正在发送咨询需求，请稍候...";
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "发送中...";
+    }
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        body: new FormData(contactForm),
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      contactForm.reset();
+      if (note) {
+        note.textContent = "已成功发送，我们会尽快与您联系。";
+      }
+    } catch (error) {
+      if (note) {
+        note.textContent = "发送失败，请稍后再试，或直接通过微信/电话联系我们。";
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "发送咨询需求";
+      }
     }
   });
 }

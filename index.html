@@ -387,14 +387,15 @@
           </p>
         </div>
 
-        <form class="contact-form">
+        <form class="contact-form" action="https://formspree.io/f/xykqgeqv" method="POST">
+          <input type="hidden" name="_subject" value="墨澳教育网站咨询表单" />
           <label>
             家长/学生姓名
-            <input type="text" name="name" placeholder="请输入姓名" />
+            <input type="text" name="name" placeholder="请输入姓名" required />
           </label>
           <label>
             咨询项目
-            <select name="service">
+            <select name="service" required>
               <option>澳洲留学代办 / 私校申请</option>
               <option>澳洲小留学 / 私校插班营</option>
               <option>AEAS 备考与私校申请</option>
@@ -403,14 +404,14 @@
           </label>
           <label>
             联系方式
-            <input type="text" name="contact" placeholder="微信 / 手机 / 邮箱" />
+            <input type="text" name="contact" placeholder="微信 / 手机 / 邮箱" required />
           </label>
           <label>
             备注
-            <textarea name="message" rows="4" placeholder="例如：学生目前年级、英语水平、计划入学时间"></textarea>
+            <textarea name="message" rows="4" placeholder="例如：学生目前年级、英语水平、计划入学时间" required></textarea>
           </label>
           <button class="button primary" type="submit">发送咨询需求</button>
-          <p class="form-note">当前为静态演示表单，提交后不会发送到服务器。</p>
+          <p class="form-note" role="status" aria-live="polite">表单已接入邮件服务，提交后会发送到我们的邮箱。</p>
         </form>
       </section>
     </main>
