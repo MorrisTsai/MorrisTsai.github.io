@@ -1,107 +1,428 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fluffy Brown - Where Games Evoke Tranquility</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #4a3728;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fcf7f4;
-        }
-        header {
-            text-align: center;
-            padding: 2rem 0;
-        }
-        .logo {
-            width: 100px;
-            height: 100px;
-        }
-        .banner {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-        }
-        nav {
-            background-color: #8b5a2b;
-            padding: 0.5rem;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: center;
-        }
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-        nav ul li a {
-            color: #fcf7f4;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .game-preview {
-            border: 2px solid #8b5a2b;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #fff;
-        }
-        footer {
-            background-color: #8b5a2b;
-            color: #fcf7f4;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-top: 2rem;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <img src="Banner.jpg" alt="Fluffy Brown Banner" class="banner">
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>墨澳教育 MelAU | 澳洲留学代办、AEAS、PTE 与小留学</title>
+    <meta
+      name="description"
+      content="墨澳教育提供全澳留学代办、私校申请、AEAS 备考、PTE 考试培训与以墨尔本为基地的小留学插班体验营。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="top-strip">
+      <span>Australia Wide Applications</span>
+      <strong>全澳学校申请与升学规划</strong>
+      <span>留学代办 · AEAS · PTE · 墨尔本小留学</span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="墨澳教育首页">
+        <span class="brand-mark">M</span>
+        <span>
+          <strong>墨澳教育</strong>
+          <small>MelAU Education</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="主导航">
+        <a href="#services">服务项目</a>
+        <a href="#study">留学代办</a>
+        <a href="#aeas">AEAS</a>
+        <a href="#pte">PTE</a>
+        <a href="#camp">小留学</a>
+        <a class="nav-cta" href="#contact">预约咨询</a>
+      </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#games">Games</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section id="home">
-            <h2>Welcome to Fluffy Brown</h2>
-            <p>We are a passionate indie game development studio dedicated to creating unique and tranquil gaming experiences. Our games are designed to bring peace and relaxation to players around the world.</p>
-        </section>
-        <section id="games">
-            <h2>Our Games</h2>
-            <div class="game-preview">
-                <h3>Cozy Cube Adventures</h3>
-                <p>Embark on a soothing journey through a world of soft-edged cubes. Solve gentle puzzles and uncover the sweet surprises hidden within each level.</p>
-                <img src="Logo.jpg" alt="Cozy Cube Adventures preview" class="logo">
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy-block">
+          <p class="eyebrow">澳洲中小学与升学考试规划</p>
+          <h1>把澳洲留学申请，变成一条清楚、可执行的路线。</h1>
+          <p class="hero-copy">
+            墨澳教育专注澳洲留学代办、私校申请、AEAS 备考、PTE 提分与短期小留学体验。
+            我们帮助家庭从选校、考试、材料、面试到 Offer 跟进，把每一步提前规划好。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#contact">获取初步评估</a>
+            <a class="button ghost" href="#services">查看服务</a>
+          </div>
+          <div class="trust-row">
+            <span>适合人群</span>
+            <strong>10-18 岁学生</strong>
+            <strong>目标澳洲私校家庭</strong>
+            <strong>PTE/AEAS 备考学生</strong>
+          </div>
+        </div>
+
+        <div class="hero-collage" aria-label="澳洲学习场景">
+          <img
+            class="hero-img hero-img-main"
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200"
+            alt="学生小组讨论学习"
+          />
+          <img
+            class="hero-img hero-img-small top"
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=800"
+            alt="考试学习用品"
+          />
+          <img
+            class="hero-img hero-img-small bottom"
+            src="assets/camp-poster.png"
+            alt="2027 寒假澳洲私校插班体验营海报"
+          />
+          <div class="float-card">
+            <span>2027 寒假项目</span>
+            <strong>澳洲私校插班体验营</strong>
+            <small>14天13晚 · 10-14岁</small>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section service-section">
+        <div class="section-heading center">
+          <p class="eyebrow">Services</p>
+          <h2>不是只给资料，而是帮你把路线跑通</h2>
+          <p>从短期体验到长期升学，所有服务围绕“学生是否适合、学校是否匹配、准备是否到位”。</p>
+        </div>
+
+        <div class="service-grid">
+          <a class="service-card image-card" href="#camp">
+            <img src="assets/camp-poster.png" alt="澳洲私校插班体验营" />
+            <div>
+              <span class="tag">Study Tour</span>
+              <h3>澳洲小留学</h3>
+              <p>私校插班、课堂体验、城市探索、寄宿与安全管理，让学生先真实感受澳洲学习方式。</p>
             </div>
-             </section>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>At Fluffy Brown, we believe that games have the power to create moments of peace in our busy lives. Our team of dedicated developers and artists work together to craft experiences that are as comforting as they are engaging.</p>
-        </section>
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>Email: hello@fluffybrown.com</p>
-            <p>Twitter: @FluffyBrownGames</p>
-            <p>Address: 123 Tranquil Lane, Melbourne, VIC 3000, Australia</p>
-        </section>
+          </a>
+          <a class="service-card image-card" href="#study">
+            <img src="assets/service-study-application.png" alt="留学代办与选校咨询" />
+            <div>
+              <span class="tag">Application</span>
+              <h3>留学代办与选校</h3>
+              <p>结合年级、成绩、预算、城市偏好与入学时间，筛选合适学校并规划申请节奏。</p>
+            </div>
+          </a>
+          <a class="service-card image-card" href="#aeas">
+            <img src="assets/service-aeas-small-class.png" alt="AEAS 五人小班课堂辅导" />
+            <div>
+              <span class="tag">AEAS</span>
+              <h3>AEAS 备考与私校申请</h3>
+              <p>覆盖英语、数学推理、非语言推理、模拟考试、面试训练和 Offer 跟进。</p>
+            </div>
+          </a>
+          <a class="service-card image-card" href="#pte">
+            <img src="assets/service-pte-full-exam.png" alt="PTE 听说读写全科考试培训" />
+            <div>
+              <span class="tag">PTE</span>
+              <h3>PTE 考试培训</h3>
+              <p>根据听说读写评分逻辑拆解提分动作，适合有升学英语成绩需求的学生。</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="australia-band">
+        <img
+          src="assets/service-study-application.png"
+          alt="澳洲留学咨询与学校申请规划"
+        />
+        <div class="australia-panel">
+          <p class="eyebrow">Why Australia</p>
+          <h2>为什么很多家庭选择澳洲留学？</h2>
+          <div class="reason-grid">
+            <div><strong>QS 排名亮眼</strong><span>澳洲多所大学常年位列世界前列，中小学到大学的升学衔接清晰。</span></div>
+            <div><strong>学术实力扎实</strong><span>课程重视英文表达、批判性思维、项目研究和真实问题解决能力。</span></div>
+            <div><strong>校园安全友好</strong><span>学校管理规范，学生支持体系成熟，国际学生更容易获得照顾与反馈。</span></div>
+            <div><strong>多元发展空间</strong><span>体育、艺术、音乐、科技和社团活动丰富，不只用分数定义学生。</span></div>
+            <div><strong>生活自然放松</strong><span>城市节奏相对舒适，海滩、公园和户外活动多，孩子更容易平衡学习与生活。</span></div>
+            <div><strong>全澳择校灵活</strong><span>可根据学生目标匹配维州、新州、昆州、南澳、西澳等地区学校。</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="study" class="section study-section">
+        <div class="study-copy">
+          <p class="eyebrow">Application Service</p>
+          <h2>留学代办：从“想去澳洲”到“拿到 Offer”</h2>
+          <p>
+            留学申请最怕信息碎片化。我们会把目标学校要求、申请材料、面试准备和时间节点整理成一张路线图，
+            让家长清楚现在该做什么，学生清楚自己该补什么。
+          </p>
+        </div>
+        <div class="study-steps">
+          <article><span>Step 01</span><strong>背景评估</strong><p>年级、成绩、英语水平、预算与入学时间。</p></article>
+          <article><span>Step 02</span><strong>学校匹配</strong><p>按城市、课程、排名、面试要求与家庭偏好筛选。</p></article>
+          <article><span>Step 03</span><strong>材料准备</strong><p>整理申请表、成绩单、推荐材料与个人陈述方向。</p></article>
+          <article><span>Step 04</span><strong>面试与跟进</strong><p>模拟面试、补件提醒、Offer 进度跟进与入学安排。</p></article>
+        </div>
+      </section>
+
+      <section id="aeas" class="section aeas-section">
+        <div class="aeas-copy">
+          <p class="eyebrow">AEAS Preparation</p>
+          <h2>AEAS 不只是英文考试，也是私校录取竞争力的一部分</h2>
+          <p>
+            AEAS 常用于澳洲私立中学评估国际学生，考察英语能力、数学推理、非语言推理和学习潜力。
+            墨澳教育提供分年级小班课、澳洲课堂同步直播、模拟考试、学习报告、家长反馈与私校申请规划。
+          </p>
+          <div class="class-mode-grid">
+            <article>
+              <span>China Online</span>
+              <strong>中国学生线上直播课</strong>
+              <p>同步接入墨尔本线下课堂，不是录播；学生可以直接提问、回答问题，与老师实时互动。</p>
+            </article>
+            <article>
+              <span>Melbourne Offline</span>
+              <strong>墨尔本线下小班课</strong>
+              <p>澳洲现场学生在教室上课，中国线上学生一起参与，同一节课、同一套节奏。</p>
+            </article>
+          </div>
+          <ul class="check-list">
+            <li>7-9 年级与 10-12 年级分层课程</li>
+            <li>48 小时精品小班直播课、作业批改与督学服务</li>
+            <li>中国线上学生与澳洲线下学生同堂互动</li>
+            <li>Mock Interview、申请文件指导与 Offer 跟进</li>
+          </ul>
+        </div>
+        <div class="aeas-gallery">
+          <img src="assets/aeas-overview.png" alt="AEAS 入学测评介绍" />
+          <img src="assets/aeas-plans.png" alt="AEAS 升学课程与私校录取规划" />
+        </div>
+      </section>
+
+      <section id="pte" class="section pte-section">
+        <div class="pte-media">
+          <img src="assets/service-pte-full-exam.png" alt="PTE 听说读写全科备考课堂" />
+        </div>
+        <div class="pte-copy">
+          <p class="eyebrow">PTE Training</p>
+          <h2>PTE 全科备考：听说读写一起规划，不只练口语</h2>
+          <p>
+            PTE 备考覆盖听说读写全科，需要系统理解 Speaking、Writing、Reading、Listening 各题型的评分方式。
+            我们会先评估目标分数与当前差距，再安排全科提分节奏。
+          </p>
+          <div class="pte-points">
+            <span>Speaking 口语</span>
+            <span>Writing 写作</span>
+            <span>Reading 阅读</span>
+            <span>Listening 听力</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="camp" class="camp-section">
+        <div class="camp-content">
+          <p class="eyebrow">Study Tour</p>
+          <h2>2027 寒假澳洲私校插班体验营</h2>
+          <p>
+            面向 10-14 岁小学高年级与初中生，以墨尔本为基地，14 天 13 晚体验澳洲课堂、澳网、
+            淘金文化、小企鹅归巢、城市探索与名校参访。
+          </p>
+          <div class="camp-points">
+            <span>顶级私校插班</span>
+            <span>本地学生同堂</span>
+            <span>结业证书</span>
+            <span>全程安心管理</span>
+          </div>
+        </div>
+        <div class="timeline">
+          <div><strong>Day 1-3</strong><span>抵达墨尔本、适应环境、澳网体验</span></div>
+          <div><strong>Day 4-8</strong><span>顶级私校插班学习，与本地学生一起上课</span></div>
+          <div><strong>Day 9-12</strong><span>淘金镇、企鹅岛、城市文化与名校探访</span></div>
+          <div><strong>Day 13-14</strong><span>成果展示、结业证书、整理返程</span></div>
+        </div>
+      </section>
+
+      <section class="section programs-section">
+        <div class="section-heading center">
+          <p class="eyebrow">Programs</p>
+          <h2>课程与规划方案</h2>
+          <p>价格以最终开课计划和服务协议为准，网页用于展示方案结构。</p>
+        </div>
+        <div class="program-grid">
+          <article class="program-card">
+            <span>AEAS Course</span>
+            <h3>7-9 年级课程</h3>
+            <p class="price">RMB 15,800</p>
+            <p>英语、数学推理、非语言推理，小班直播互动课，含督学与学习报告。</p>
+          </article>
+          <article class="program-card highlight">
+            <span>AEAS Course</span>
+            <h3>10-12 年级课程</h3>
+            <p class="price">RMB 18,800</p>
+            <p>强化学术英语、逻辑推理、模拟考试；中国线上与澳洲线下学生同步上课。</p>
+          </article>
+          <article class="program-card">
+            <span>School Application</span>
+            <h3>澳洲私校录取规划</h3>
+            <p class="price">RMB 9,900</p>
+            <p>选校规划、申请时间线、面试培训、文件指导与 Offer 跟进。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section resource-section">
+        <div>
+          <p class="eyebrow">Resources</p>
+          <h2>AEAS 题型预览</h2>
+          <p>提前熟悉题型、答题速度、逻辑表达与英文学习任务，比临时刷题更稳定。</p>
+          <a class="button ghost dark" href="#contact">咨询备考方案</a>
+        </div>
+        <img src="assets/aeas-samples.png" alt="AEAS Year 10-12 题目范例" />
+      </section>
+
+      <section class="section faq-section">
+        <div class="section-heading center">
+          <p class="eyebrow">FAQ</p>
+          <h2>常见问题</h2>
+        </div>
+        <div class="faq-grid">
+          <details open>
+            <summary>小留学适合什么年龄？</summary>
+            <p>当前项目重点面向 10-14 岁学生，适合小学高年级到初中阶段的孩子。这个年龄段的学生已经具备一定独立生活和课堂参与能力，也正适合提前感受澳洲学习方式。家长可以通过短期体验观察孩子是否适合未来长期留学。我们也会关注学生在课堂、生活和团队活动中的适应情况。</p>
+          </details>
+          <details>
+            <summary>AEAS 需要提前多久准备？</summary>
+            <p>通常建议至少提前 3-6 个月开始评估和准备。AEAS 不只是英文考试，还包括数学推理、非语言推理和学习能力表现。目标学校越明确，越需要提前安排考试时间、面试训练和申请材料。我们会先做水平判断，再帮学生制定备考节奏。</p>
+          </details>
+          <details>
+            <summary>PTE 适合哪些学生？</summary>
+            <p>PTE 适合需要英语成绩用于升学申请、课程衔接或其他英语能力证明的学生。课程覆盖 Speaking、Writing、Reading、Listening 全科，不只训练口语。我们会先评估目标分数和当前差距，再安排不同题型的提分重点。学生也会学习如何稳定发挥，而不是只靠临时刷题。</p>
+          </details>
+          <details>
+            <summary>你们留学代办是只做墨尔本学校吗？</summary>
+            <p>不是，我们的学校申请服务覆盖全澳范围。可以根据学生情况匹配维州、新州、昆州、南澳、西澳等地区的学校。墨尔本主要是小留学项目的基地，因为当地课堂体验和活动资源比较成熟。正式留学申请会以学生目标、预算、成绩和家庭偏好为核心来规划。</p>
+          </details>
+          <details>
+            <summary>小留学和正式留学申请有什么区别？</summary>
+            <p>小留学是短期体验项目，重点是让学生真实感受澳洲课堂、校园生活和城市环境。正式留学申请则是为长期入读澳洲学校做选校、材料、考试和面试准备。小留学不等于直接录取，但能帮助家庭判断孩子是否适合澳洲教育环境。很多家庭会先体验，再决定后续申请方向。</p>
+          </details>
+          <details>
+            <summary>AEAS 中国学生怎么上课？</summary>
+            <p>中国学生通过线上直播接入墨尔本线下小班课堂。课程不是录播，而是同步直播，学生可以直接提问、回答问题和参与课堂互动。线上学生与澳洲现场学生使用同一套课程节奏。老师会同时照顾线上和线下学生的参与度。</p>
+          </details>
+          <details>
+            <summary>AEAS 墨尔本学生怎么上课？</summary>
+            <p>墨尔本学生参加线下小班课，在教室里与老师面对面学习。课堂人数控制在小班规模，方便老师观察每个学生的答题状态和理解程度。线下学生也会和线上学生一起参与讨论。这样的安排可以让课堂更接近真实国际学习环境。</p>
+          </details>
+          <details>
+            <summary>AEAS 小班课大概几个人？</summary>
+            <p>AEAS 辅导主打小班模式，课堂人数会控制在适合互动和反馈的范围。我们会尽量避免大班讲座式教学，因为 AEAS 需要老师观察学生的逻辑、表达和答题习惯。小班课更方便及时纠正问题，也更适合做模拟练习。具体班级人数会根据开班安排确认。</p>
+          </details>
+          <details>
+            <summary>线上学生可以和老师互动吗？</summary>
+            <p>可以，这是直播课的重点之一。线上学生不是旁听录播，而是实时进入课堂。遇到不懂的问题，可以直接向老师提问，也可以参与课堂回答。老师会根据线上学生的表现调整讲解和练习节奏。</p>
+          </details>
+          <details>
+            <summary>AEAS 主要考哪些内容？</summary>
+            <p>AEAS 常见考察内容包括英语能力、数学推理和非语言推理。英语部分通常涉及词汇、阅读、听力、写作等能力。数学推理关注学生运用数学知识解决问题的能力。非语言推理则更看重图形规律、空间想象和逻辑分析。</p>
+          </details>
+          <details>
+            <summary>AEAS 成绩对私校申请重要吗？</summary>
+            <p>对很多澳洲私立学校来说，AEAS 是评估国际学生的重要参考。学校会通过成绩了解学生的英文能力、学习潜力和是否适合当前年级。好的 AEAS 表现可以提升申请竞争力，但通常还需要结合成绩单、面试和其他材料。我们会把 AEAS 备考和私校申请一起规划。</p>
+          </details>
+          <details>
+            <summary>如果孩子英文基础一般，可以准备 AEAS 吗？</summary>
+            <p>可以，但需要先做真实水平评估。英文基础一般的学生不建议直接冲考试，而是要先补词汇、阅读、听力和写作基本能力。AEAS 还涉及逻辑和数学表达，所以准备方式不能只背单词。我们会根据目标学校和入学时间判断备考周期是否充足。</p>
+          </details>
+          <details>
+            <summary>澳洲私校申请一般看什么？</summary>
+            <p>学校通常会综合看学生成绩、英文能力、AEAS 或其他测试表现、面试状态和过往学习经历。不同学校和年级的要求会有差异。热门学校名额竞争更强，所以时间线和材料质量都很重要。我们会帮家庭先判断目标是否现实，再设计申请组合。</p>
+          </details>
+          <details>
+            <summary>什么时候开始准备澳洲学校申请比较好？</summary>
+            <p>越热门的学校，越建议提前规划。一般来说，至少提前 6-12 个月会更从容，部分学校甚至需要更早关注名额和考试安排。如果学生还需要 AEAS 或英文提升，就更应该提前开始。我们会根据目标入学年份倒推申请时间表。</p>
+          </details>
+          <details>
+            <summary>你们会帮忙选学校吗？</summary>
+            <p>会，选校是留学代办的重要环节。我们会结合学生年级、成绩、英文能力、预算、城市偏好、课程需求和家庭期待来筛选学校。不是所有排名高的学校都适合每个孩子。我们的重点是找到匹配度高、申请策略合理的选择。</p>
+          </details>
+          <details>
+            <summary>小留学期间安全吗？</summary>
+            <p>安全管理是小留学项目的核心部分。项目会安排住宿、餐食、交通、活动和日常作息管理。学生不是自由散漫地旅行，而是在计划好的行程中体验课堂和活动。具体安全安排会以最终项目说明和出行通知为准。</p>
+          </details>
+          <details>
+            <summary>小留学会进入真实澳洲课堂吗？</summary>
+            <p>项目设计重点就是让学生体验真实课堂环境。学生会有机会参与私校插班或课堂体验，与本地学习方式近距离接触。课堂安排会根据学校实际情况和项目档期确认。我们也会搭配城市探索、文化体验和名校参访，让孩子看到课堂外的澳洲生活。</p>
+          </details>
+          <details>
+            <summary>小留学结束后会有什么成果？</summary>
+            <p>学生通常会获得结业证书或项目参与证明，具体以项目安排为准。更重要的是，家长可以看到孩子在课堂参与、英文沟通、生活适应和团队合作方面的表现。项目也可以作为未来留学规划的参考。我们会鼓励学生整理学习收获，而不是只把它当成旅行。</p>
+          </details>
+          <details>
+            <summary>PTE 课程会怎么安排？</summary>
+            <p>PTE 课程会先看学生目标分数和当前基础。之后会按听说读写四个模块拆解题型、评分逻辑和练习重点。不同学生的短板不同，有的人需要补听力，有的人需要加强写作结构或阅读速度。课程会尽量围绕提分效率来安排。</p>
+          </details>
+          <details>
+            <summary>PTE 可以短期提分吗？</summary>
+            <p>PTE 通过系统训练是可以提升的，但提升范围会受到学生原本英语基础限制。课程主要是在现有能力上提高一个合理区间，而不是保证短时间跨越很大的分数差距。如果基础接近目标分数，集中训练题型、节奏和评分逻辑会更有效。我们会先评估当前能力和目标分数，再判断适合冲刺还是需要长期补基础。</p>
+          </details>
+          <details>
+            <summary>家长第一次咨询需要准备什么？</summary>
+            <p>建议准备学生年级、目前学校、成绩情况、英文水平和目标入学时间。如果已经有目标城市或学校，也可以一起告诉我们。对于 AEAS 或 PTE，最好说明是否考过、目标分数是多少。信息越完整，我们给出的初步路线就越准确。</p>
+          </details>
+          <details>
+            <summary>还没有明确目标学校，可以先咨询吗？</summary>
+            <p>可以，很多家庭一开始都没有明确目标学校。我们会先帮你梳理学生情况和家庭期待，再讨论适合的城市、学校类型和申请难度。咨询的目的不是马上定校，而是先建立清晰方向。后续再根据成绩、考试和名额情况逐步收窄选择。</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section">
+        <div class="contact-copy">
+          <p class="eyebrow">Book a consultation</p>
+          <h2>预约一次清晰的升学评估</h2>
+          <p>
+            告诉我们学生年级、目标服务和预计入学时间，我们会根据情况给出初步路线建议。
+            后续可以替换为微信二维码、WhatsApp、电话或正式表单系统。
+          </p>
+        </div>
+
+        <form class="contact-form">
+          <label>
+            家长/学生姓名
+            <input type="text" name="name" placeholder="请输入姓名" />
+          </label>
+          <label>
+            咨询项目
+            <select name="service">
+              <option>澳洲留学代办 / 私校申请</option>
+              <option>澳洲小留学 / 私校插班营</option>
+              <option>AEAS 备考与私校申请</option>
+              <option>PTE 考试培训</option>
+            </select>
+          </label>
+          <label>
+            联系方式
+            <input type="text" name="contact" placeholder="微信 / 手机 / 邮箱" />
+          </label>
+          <label>
+            备注
+            <textarea name="message" rows="4" placeholder="例如：学生目前年级、英语水平、计划入学时间"></textarea>
+          </label>
+          <button class="button primary" type="submit">发送咨询需求</button>
+          <p class="form-note">当前为静态演示表单，提交后不会发送到服务器。</p>
+        </form>
+      </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Fluffy Brown. All rights reserved.</p>
+
+    <footer class="site-footer">
+      <div>
+        <strong>墨澳教育 MelAU Education</strong>
+        <p>全澳留学代办 | 私校申请 | AEAS/PTE | 墨尔本小留学</p>
+      </div>
+      <a href="#top">返回顶部</a>
     </footer>
-</body>
+
+    <script src="script.js"></script>
+  </body>
 </html>
