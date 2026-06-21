@@ -647,10 +647,29 @@ a.service-card:focus-visible {
 }
 
 .aeas-gallery img,
-.resource-section img {
+.resource-gallery img {
   border: 1px solid var(--line);
   border-radius: 18px;
   box-shadow: var(--shadow);
+}
+
+.resource-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.resource-gallery figure {
+  margin: 0;
+}
+
+.resource-gallery figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--muted);
 }
 
 .aeas-gallery img:nth-child(2) {
@@ -873,7 +892,7 @@ a.service-card:focus-visible {
   background: linear-gradient(135deg, #f5f9ff 0%, #fff 100%);
 }
 
-.resource-section img {
+.resource-gallery img {
   max-height: 760px;
   object-fit: cover;
   object-position: top center;
@@ -1111,6 +1130,7 @@ a.service-card:focus-visible {
   .study-steps,
   .class-mode-grid,
   .aeas-gallery,
+  .resource-gallery,
   .timeline,
   .camp-detail-grid,
   .camp-extra-grid,
