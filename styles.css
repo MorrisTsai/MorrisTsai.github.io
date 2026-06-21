@@ -1058,27 +1058,53 @@ a.service-card:focus-visible {
   }
 
   .hero-collage {
-    min-height: auto;
-    display: grid;
-    gap: 14px;
+    min-height: 360px;
+    display: block;
   }
 
-  .hero-img,
-  .float-card {
-    position: static;
+  .hero-img {
+    position: absolute;
   }
 
-  .hero-img-main,
-  .hero-img-small.top,
-  .hero-img-small.bottom,
-  .float-card {
-    width: 100%;
-    height: auto;
+  .hero-img-main {
+    left: 0;
+    top: 0;
+    width: 88%;
+    height: 245px;
+  }
+
+  .hero-img-small.top {
+    display: none;
   }
 
   .hero-img-small.bottom {
-    max-height: 520px;
+    right: 0;
+    bottom: 0;
+    width: 58%;
+    height: 175px;
     object-fit: cover;
+  }
+
+  .float-card {
+    position: absolute;
+    left: 0;
+    bottom: 18px;
+    width: min(68%, 260px);
+    padding: 14px;
+  }
+
+  .float-card strong {
+    font-size: 18px;
+  }
+
+  .trust-row {
+    gap: 8px;
+  }
+
+  .trust-row span,
+  .trust-row strong {
+    padding: 8px 10px;
+    font-size: 12px;
   }
 
   .service-grid,
@@ -1092,6 +1118,25 @@ a.service-card:focus-visible {
   .faq-grid,
   .reason-grid {
     grid-template-columns: 1fr;
+  }
+
+  .service-grid {
+    display: flex;
+    gap: 14px;
+    margin-inline: -20px;
+    padding: 0 20px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .service-grid .service-card {
+    flex: 0 0 min(86vw, 360px);
+    scroll-snap-align: start;
+  }
+
+  .service-grid .image-card {
+    grid-template-rows: 210px auto;
   }
 
   .image-card {
