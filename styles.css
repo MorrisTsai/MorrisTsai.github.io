@@ -612,6 +612,307 @@ a.service-card:focus-visible {
   font-weight: 900;
 }
 
+.pte-copy .button {
+  margin-top: 24px;
+}
+
+.pte-page {
+  background: #f7fbff;
+}
+
+.pte-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(420px, 0.9fr);
+  gap: clamp(34px, 6vw, 86px);
+  align-items: center;
+  min-height: calc(100vh - 112px);
+  padding: clamp(72px, 8vw, 118px) clamp(20px, 5vw, 76px);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(230, 242, 255, 0.95), transparent 36%),
+    linear-gradient(135deg, #ffffff 0%, #eef6ff 100%);
+}
+
+.pte-hero h1 {
+  max-width: 760px;
+}
+
+.pte-hero .lead {
+  margin: 0 0 18px;
+  color: var(--blue);
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 900;
+}
+
+.pte-hero-copy > p:not(.eyebrow):not(.lead) {
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.pte-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.pte-seo-line {
+  margin: 28px 0 0;
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.pte-keywords a {
+  padding: 9px 13px;
+  color: var(--blue);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.pte-hero-media {
+  position: relative;
+}
+
+.pte-hero-media img {
+  width: 100%;
+  min-height: 470px;
+  object-fit: cover;
+  border: 1px solid rgba(219, 229, 242, 0.92);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.pte-score-card {
+  position: absolute;
+  left: -24px;
+  bottom: 28px;
+  max-width: 310px;
+  padding: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(6, 28, 70, 0.24);
+}
+
+.pte-score-card span,
+.pte-score-card strong {
+  display: block;
+}
+
+.pte-score-card span {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pte-score-card strong {
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.pte-intro-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1fr);
+  gap: clamp(30px, 5vw, 72px);
+  align-items: center;
+  background: #fff;
+}
+
+.pte-skill-grid,
+.pte-icon-grid,
+.pte-card-grid,
+.pte-advantage-list {
+  display: grid;
+  gap: 16px;
+}
+
+.pte-skill-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pte-skill-grid article,
+.pte-icon-grid article,
+.pte-card-grid article,
+.pte-support-card,
+.pte-advantage-list article {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(8, 28, 64, 0.06);
+}
+
+.pte-skill-grid article {
+  min-height: 190px;
+  padding: 24px;
+}
+
+.pte-skill-grid span,
+.pte-support-card span {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 18px;
+  place-items: center;
+  color: var(--blue);
+  background: var(--sky);
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.pte-skill-grid strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 22px;
+}
+
+.pte-skill-grid p,
+.pte-icon-grid p,
+.pte-card-grid p,
+.pte-support-card p,
+.pte-advantage-list span {
+  color: var(--muted);
+}
+
+.pte-why-section,
+.pte-fit-section {
+  background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
+}
+
+.pte-icon-grid,
+.pte-card-grid,
+.pte-advantage-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pte-icon-grid article,
+.pte-card-grid article {
+  padding: 24px;
+}
+
+.pte-icon {
+  display: inline-grid;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 18px;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue), var(--gold));
+  border-radius: 16px;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.pte-icon-grid h3,
+.pte-card-grid h3,
+.pte-support-card h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.pte-support-section {
+  background: var(--navy);
+}
+
+.pte-support-section .section-heading h2,
+.pte-support-section .section-heading p {
+  color: #fff;
+}
+
+.pte-support-section .section-heading p:not(.eyebrow) {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.pte-support-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+}
+
+.pte-support-card {
+  padding: 26px;
+}
+
+.pte-support-card.instructor {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 18px;
+  align-items: start;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
+}
+
+.pte-support-card.instructor span {
+  grid-row: span 2;
+}
+
+.pte-support-card.instructor h3 {
+  margin-top: 0;
+}
+
+.pte-support-card.featured {
+  grid-row: span 2;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(7, 61, 143, 0.92), rgba(6, 28, 70, 0.96)),
+    url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200") center / cover;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.pte-support-card.featured p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.pte-support-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pte-support-card li {
+  padding: 8px 11px;
+  color: var(--blue);
+  background: var(--soft);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.pte-advantage-section {
+  background: #fff;
+}
+
+.pte-advantage-list article {
+  min-height: 160px;
+  padding: 24px;
+}
+
+.pte-advantage-list strong,
+.pte-advantage-list span {
+  display: block;
+}
+
+.pte-advantage-list strong {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.pte-faq-section {
+  background: #f2f7ff;
+}
+
+.pte-faq-grid {
+  max-width: 980px;
+  margin-inline: auto;
+}
+
 .check-list {
   display: grid;
   gap: 12px;
@@ -1042,6 +1343,8 @@ a.service-card:focus-visible {
   .study-section,
   .aeas-section,
   .pte-section,
+  .pte-hero,
+  .pte-intro-section,
   .camp-hero,
   .resource-section,
   .contact-section {
@@ -1062,8 +1365,23 @@ a.service-card:focus-visible {
 
   .camp-detail-grid,
   .camp-extra-grid,
-  .timeline {
+  .timeline,
+  .pte-icon-grid,
+  .pte-card-grid,
+  .pte-advantage-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pte-support-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pte-support-card.featured {
+    grid-row: auto;
+  }
+
+  .pte-support-card.instructor {
+    grid-template-columns: 1fr;
   }
 
   .image-card:first-child {
@@ -1176,8 +1494,30 @@ a.service-card:focus-visible {
   .camp-extra-grid,
   .program-grid,
   .faq-grid,
-  .reason-grid {
+  .reason-grid,
+  .pte-skill-grid,
+  .pte-icon-grid,
+  .pte-card-grid,
+  .pte-advantage-list {
     grid-template-columns: 1fr;
+  }
+
+  .pte-hero {
+    min-height: 0;
+    padding-top: 56px;
+  }
+
+  .pte-hero-media img {
+    min-height: 280px;
+    border-radius: 18px;
+  }
+
+  .pte-score-card {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    max-width: none;
+    margin-top: -28px;
   }
 
   .service-grid {
