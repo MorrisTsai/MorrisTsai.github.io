@@ -674,6 +674,23 @@ a.service-card:focus-visible {
   font-weight: 900;
 }
 
+.pte-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.pte-hero-badges span {
+  padding: 10px 13px;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
 .pte-hero-media {
   position: relative;
 }
@@ -779,19 +796,52 @@ a.service-card:focus-visible {
 }
 
 .pte-why-section,
-.pte-fit-section {
+.pte-fit-section,
+.pte-process-section {
   background: linear-gradient(180deg, #f7fbff 0%, #ffffff 100%);
 }
 
 .pte-icon-grid,
 .pte-card-grid,
-.pte-advantage-list {
+.pte-advantage-list,
+.pte-process-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .pte-icon-grid article,
-.pte-card-grid article {
+.pte-card-grid article,
+.pte-process-grid article {
   padding: 24px;
+}
+
+.pte-process-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.pte-process-grid article {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(8, 28, 64, 0.06);
+}
+
+.pte-process-grid p {
+  color: var(--muted);
+}
+
+.pte-process-grid span {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.pte-process-grid strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 21px;
 }
 
 .pte-icon {
@@ -902,6 +952,41 @@ a.service-card:focus-visible {
 .pte-advantage-list strong {
   margin-bottom: 10px;
   font-size: 20px;
+}
+
+.pte-inline-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 clamp(20px, 5vw, 76px);
+  padding: clamp(28px, 4vw, 46px);
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue), var(--navy));
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.pte-inline-cta h2,
+.pte-inline-cta p {
+  margin: 0;
+  color: #fff;
+}
+
+.pte-inline-cta h2 {
+  margin-top: 4px;
+}
+
+.pte-inline-cta p:not(.eyebrow) {
+  max-width: 720px;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.pte-inline-cta .button {
+  flex: 0 0 auto;
+  background: #fff;
+  color: var(--blue);
 }
 
 .pte-faq-section {
@@ -1368,7 +1453,8 @@ a.service-card:focus-visible {
   .timeline,
   .pte-icon-grid,
   .pte-card-grid,
-  .pte-advantage-list {
+  .pte-advantage-list,
+  .pte-process-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1382,6 +1468,11 @@ a.service-card:focus-visible {
 
   .pte-support-card.instructor {
     grid-template-columns: 1fr;
+  }
+
+  .pte-inline-cta {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .image-card:first-child {
@@ -1498,7 +1589,8 @@ a.service-card:focus-visible {
   .pte-skill-grid,
   .pte-icon-grid,
   .pte-card-grid,
-  .pte-advantage-list {
+  .pte-advantage-list,
+  .pte-process-grid {
     grid-template-columns: 1fr;
   }
 
