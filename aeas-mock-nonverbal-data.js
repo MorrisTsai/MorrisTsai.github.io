@@ -216,23 +216,19 @@ window.aeasMockNonVerbalQuestionsByType = {
       "options": [
         {
           "value": "A",
-          "label": "A"
+          "label": "3/4"
         },
         {
           "value": "B",
-          "label": "B"
+          "label": "5/6"
         },
         {
           "value": "C",
-          "label": "C"
+          "label": "2/3"
         },
         {
           "value": "D",
-          "label": "D"
-        },
-        {
-          "value": "E",
-          "label": "E"
+          "label": "3/5"
         }
       ]
     },
@@ -247,23 +243,19 @@ window.aeasMockNonVerbalQuestionsByType = {
       "options": [
         {
           "value": "A",
-          "label": "A"
+          "label": "1/4"
         },
         {
           "value": "B",
-          "label": "B"
+          "label": "3/8"
         },
         {
           "value": "C",
-          "label": "C"
+          "label": "1/3"
         },
         {
           "value": "D",
-          "label": "D"
-        },
-        {
-          "value": "E",
-          "label": "E"
+          "label": "2/5"
         }
       ]
     },
@@ -278,23 +270,19 @@ window.aeasMockNonVerbalQuestionsByType = {
       "options": [
         {
           "value": "A",
-          "label": "A"
+          "label": "1/3"
         },
         {
           "value": "B",
-          "label": "B"
+          "label": "1/4"
         },
         {
           "value": "C",
-          "label": "C"
+          "label": "1/2"
         },
         {
           "value": "D",
-          "label": "D"
-        },
-        {
-          "value": "E",
-          "label": "E"
+          "label": "2/5"
         }
       ]
     },
@@ -309,23 +297,19 @@ window.aeasMockNonVerbalQuestionsByType = {
       "options": [
         {
           "value": "A",
-          "label": "A"
+          "label": "2/3"
         },
         {
           "value": "B",
-          "label": "B"
+          "label": "4/7"
         },
         {
           "value": "C",
-          "label": "C"
+          "label": "5/8"
         },
         {
           "value": "D",
-          "label": "D"
-        },
-        {
-          "value": "E",
-          "label": "E"
+          "label": "5/6"
         }
       ]
     },
@@ -340,23 +324,19 @@ window.aeasMockNonVerbalQuestionsByType = {
       "options": [
         {
           "value": "A",
-          "label": "A"
+          "label": "3/4"
         },
         {
           "value": "B",
-          "label": "B"
+          "label": "5/9"
         },
         {
           "value": "C",
-          "label": "C"
+          "label": "2/3"
         },
         {
           "value": "D",
-          "label": "D"
-        },
-        {
-          "value": "E",
-          "label": "E"
+          "label": "1/2"
         }
       ]
     },
@@ -371,23 +351,19 @@ window.aeasMockNonVerbalQuestionsByType = {
       "options": [
         {
           "value": "A",
-          "label": "A"
+          "label": "1/4"
         },
         {
           "value": "B",
-          "label": "B"
+          "label": "7/12"
         },
         {
           "value": "C",
-          "label": "C"
+          "label": "1/3"
         },
         {
           "value": "D",
-          "label": "D"
-        },
-        {
-          "value": "E",
-          "label": "E"
+          "label": "3/8"
         }
       ]
     }

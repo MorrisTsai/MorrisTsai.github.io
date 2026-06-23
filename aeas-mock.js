@@ -2,6 +2,7 @@ const MOCK_STORAGE_KEY = "rewardSchoolAeasMockProgressV2";
 const rawMathQuestionGroups = window.aeasMockMathQuestionsByType || {};
 const rawReadingQuestionGroups = window.aeasMockReadingQuestionsByType || {};
 const rawVocabularyQuestionGroups = window.aeasMockVocabularyQuestionsByType || {};
+const rawGapFillingQuestionGroups = window.aeasMockGapFillingQuestionsByType || {};
 const rawNonVerbalQuestionGroups = window.aeasMockNonVerbalQuestionsByType || {};
 const nonVerbalMeta = window.aeasMockNonVerbalMeta || {};
 const mathQuestionGroups = Object.fromEntries(
@@ -40,6 +41,7 @@ const mockSubjects = [
     types: [
       { id: "reading", title: "Reading", subtitle: "阅读理解", questions: rawReadingQuestionGroups.reading || [] },
       { id: "vocabulary", title: "Vocabulary", subtitle: "词汇运用", questions: rawVocabularyQuestionGroups.vocabulary || [] },
+      { id: "gap-filling", title: "Gap Filling", subtitle: "词汇填空", questions: rawGapFillingQuestionGroups["gap-filling"] || [] },
       { id: "grammar", title: "Language Use", subtitle: "语法与语言运用", questions: [] },
       { id: "listening", title: "Listening", subtitle: "听力理解", questions: [] },
       { id: "writing", title: "Writing", subtitle: "写作任务", questions: [] },
@@ -473,6 +475,17 @@ function renderTypeList(subject) {
 
 function renderSubjectReview(subject) {
   const stats = getSubjectStats(subject);
+  const reviewTypes = subject.types.filter((type) => getQuestionNumbers(type).length);
+  const filters = reviewTypes
+    .map(
+      (type) => `
+        <label class="mock-review-filter-chip">
+          <input type="checkbox" value="${type.id}" data-review-filter checked />
+          <span>${type.title}</span>
+        </label>
+      `
+    )
+    .join("");
   const rows = subject.types
     .flatMap((type) =>
       getQuestionNumbers(type).map((number) => {
@@ -492,15 +505,15 @@ function renderSubjectReview(subject) {
           : "待补充";
         const detailId = `${subject.id}-${type.id}-${number}`;
         return `
-          <tr>
-            <td>${type.subtitle}</td>
+          <tr data-review-question-row data-review-type="${type.id}" data-attempted="${record ? "1" : "0"}" data-graded="${record?.graded ? "1" : "0"}" data-correct="${record?.correct ? "1" : "0"}">
+            <td>${type.title}</td>
             <td>第 ${number} 题</td>
             <td>${answer}</td>
             <td>${correctAnswer}</td>
             <td><span class="mock-review-status ${statusClass}">${status}</span></td>
             <td><button class="mock-detail-button" type="button" data-toggle-detail="${detailId}">详解</button></td>
           </tr>
-          <tr class="mock-detail-row" data-detail-row="${detailId}" hidden>
+          <tr class="mock-detail-row" data-detail-row="${detailId}" data-review-type="${type.id}" hidden>
             <td colspan="6">${escapeHTML(question?.explanation || "这道题暂无详解。")}</td>
           </tr>
         `;
@@ -515,14 +528,27 @@ function renderSubjectReview(subject) {
           <div>
             <p class="eyebrow">Subject Review</p>
             <h3>${subject.title}</h3>
-            <p>已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题，正确 ${stats.correct} 题。</p>
+            <p data-review-headline>已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题，正确 ${stats.correct} 题。</p>
           </div>
           <button class="mock-review-close" type="button" data-close-review>关闭</button>
         </div>
+        <details class="mock-review-filter-dropdown">
+          <summary>
+            <span>Question type filter</span>
+            <strong data-review-filter-summary>All question types</strong>
+          </summary>
+          <div class="mock-review-filter-menu">
+            <label class="mock-review-filter-chip is-select-all">
+              <input type="checkbox" data-review-filter-all checked />
+              <span>Select all</span>
+            </label>
+            ${filters}
+          </div>
+        </details>
         <div class="mock-review-summary">
-          <span>完成率 <strong>${stats.attempted}/${stats.total}</strong></span>
-          <span>批改率 <strong>${stats.graded}/${stats.total}</strong></span>
-          <span>正确题数 <strong>${stats.correct}</strong></span>
+          <span>完成率 <strong data-review-attempted>${stats.attempted}/${stats.total}</strong></span>
+          <span>批改率 <strong data-review-graded>${stats.graded}/${stats.total}</strong></span>
+          <span>正确题数 <strong data-review-correct>${stats.correct}</strong></span>
         </div>
         <div class="mock-review-table-wrap">
           <table class="mock-review-table">
@@ -558,6 +584,52 @@ function closeSubjectReview() {
   renderMockApp();
 }
 
+function updateReviewFilters(overlay) {
+  const filterInputs = [...overlay.querySelectorAll("[data-review-filter]")];
+  const selectAllInput = overlay.querySelector("[data-review-filter-all]");
+  const checkedInputs = filterInputs.filter((input) => input.checked);
+  const selectedTypes = new Set(checkedInputs.map((input) => input.value));
+  const rows = [...overlay.querySelectorAll("[data-review-question-row]")];
+  const visibleRows = [];
+
+  rows.forEach((row) => {
+    const visible = selectedTypes.has(row.dataset.reviewType);
+    row.hidden = !visible;
+    const detailRow = overlay.querySelector(`[data-detail-row="${row.querySelector("[data-toggle-detail]")?.dataset.toggleDetail}"]`);
+    if (detailRow) detailRow.hidden = true;
+    if (visible) visibleRows.push(row);
+  });
+
+  const attempted = visibleRows.filter((row) => row.dataset.attempted === "1").length;
+  const graded = visibleRows.filter((row) => row.dataset.graded === "1").length;
+  const correct = visibleRows.filter((row) => row.dataset.correct === "1").length;
+  const total = visibleRows.length;
+  const summaryTotal = total || 0;
+
+  const headline = overlay.querySelector("[data-review-headline]");
+  const attemptedNode = overlay.querySelector("[data-review-attempted]");
+  const gradedNode = overlay.querySelector("[data-review-graded]");
+  const correctNode = overlay.querySelector("[data-review-correct]");
+  const filterSummary = overlay.querySelector("[data-review-filter-summary]");
+
+  if (headline) headline.textContent = `已做 ${attempted}/${summaryTotal} 题，已批改 ${graded} 题，正确 ${correct} 题。`;
+  if (attemptedNode) attemptedNode.textContent = `${attempted}/${summaryTotal}`;
+  if (gradedNode) gradedNode.textContent = `${graded}/${summaryTotal}`;
+  if (correctNode) correctNode.textContent = `${correct}`;
+  if (selectAllInput) {
+    selectAllInput.checked = checkedInputs.length === filterInputs.length;
+    selectAllInput.indeterminate = checkedInputs.length > 0 && checkedInputs.length < filterInputs.length;
+  }
+  if (filterSummary) {
+    filterSummary.textContent =
+      checkedInputs.length === filterInputs.length
+        ? "All question types"
+        : checkedInputs.length
+          ? `${checkedInputs.length} selected`
+          : "No question types selected";
+  }
+}
+
 function getQuestionStatusClass(record) {
   if (!record) return "";
   if (!record.graded) return "is-attempted";
@@ -568,6 +640,41 @@ function getQuestionStatusText(record) {
   if (!record) return "未作答";
   if (!record.graded) return "已作答";
   return record.correct ? "正确" : "错误";
+}
+
+function getQuestionGroups(type) {
+  const groups = [];
+  const groupMap = new Map();
+
+  getQuestions(type).forEach((question) => {
+    const groupTitle = question.passageTitle || "Practice Set";
+    if (!groupMap.has(groupTitle)) {
+      const group = { title: groupTitle, questions: [] };
+      groupMap.set(groupTitle, group);
+      groups.push(group);
+    }
+    groupMap.get(groupTitle).questions.push(question);
+  });
+
+  return groups;
+}
+
+function getQuestionGroupStats(subject, type, questions) {
+  return questions.reduce(
+    (summary, question) => {
+      const record = getQuestionRecord(subject.id, type.id, question.number);
+      summary.total += 1;
+      if (record?.answer) summary.attempted += 1;
+      if (record?.graded) summary.graded += 1;
+      if (record?.correct) summary.correct += 1;
+      return summary;
+    },
+    { total: 0, attempted: 0, graded: 0, correct: 0 },
+  );
+}
+
+function shouldGroupQuestionList(type) {
+  return type.id === "reading" && getQuestions(type).some((question) => question.passageTitle);
 }
 
 function renderQuestionList(subject, type) {
@@ -591,6 +698,57 @@ function renderQuestionList(subject, type) {
     return;
   }
 
+  const questionListMarkup = shouldGroupQuestionList(type)
+    ? `
+      <div class="mock-reading-group-list">
+        ${getQuestionGroups(type)
+          .map((group) => {
+            const groupStats = getQuestionGroupStats(subject, type, group.questions);
+            return `
+              <section class="mock-reading-group">
+                <div class="mock-reading-group-header">
+                  <div>
+                    <span>Reading Text</span>
+                    <h4>${escapeHTML(group.title)}</h4>
+                    <p>${groupStats.attempted}/${groupStats.total} 已做 · 已批改 ${groupStats.graded} 题 · 正确 ${groupStats.correct} 题</p>
+                  </div>
+                  <em>${groupStats.total} 题</em>
+                </div>
+                <div class="mock-question-grid is-compact">
+                  ${group.questions
+                    .map((question) => {
+                      const record = getQuestionRecord(subject.id, type.id, question.number);
+                      return `
+                        <button class="mock-question-button ${getQuestionStatusClass(record)}" type="button" data-question="${question.number}">
+                          <span>${getQuestionStatusText(record)}</span>
+                          <strong>${question.number}</strong>
+                        </button>
+                      `;
+                    })
+                    .join("")}
+                </div>
+              </section>
+            `;
+          })
+          .join("")}
+      </div>
+    `
+    : `
+      <div class="mock-question-grid">
+        ${questionNumbers
+          .map((number) => {
+            const record = getQuestionRecord(subject.id, type.id, number);
+            return `
+              <button class="mock-question-button ${getQuestionStatusClass(record)}" type="button" data-question="${number}">
+                <span>${getQuestionStatusText(record)}</span>
+                <strong>${number}</strong>
+              </button>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+
   mockStage.innerHTML = `
     <div class="mock-stage-heading">
       <button class="mock-back" type="button" data-reset="types">返回题型</button>
@@ -598,19 +756,7 @@ function renderQuestionList(subject, type) {
       <h3>${type.subtitle} / ${type.title}</h3>
       <p>请选择题号进入练习。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
     </div>
-    <div class="mock-question-grid">
-      ${questionNumbers
-        .map((number) => {
-          const record = getQuestionRecord(subject.id, type.id, number);
-          return `
-            <button class="mock-question-button ${getQuestionStatusClass(record)}" type="button" data-question="${number}">
-              <span>${getQuestionStatusText(record)}</span>
-              <strong>${number}</strong>
-            </button>
-          `;
-        })
-        .join("")}
-    </div>
+    ${questionListMarkup}
   `;
 }
 
@@ -624,9 +770,9 @@ function getAnswerOptions(question) {
 
 function getAnswerPanelHeading(question) {
   const answerType = getQuestionAnswerType(question);
-  if (answerType === "input") return "填写答案";
-  if (answerType === "multiChoice") return `选择 ${question.maxSelections || 2} 个答案`;
-  return "选择答案";
+  if (answerType === "input") return "Write Answer";
+  if (answerType === "multiChoice") return `Choose ${question.maxSelections || 2} Answers`;
+  return "Select Answer";
 }
 
 function renderWordBank(question) {
@@ -762,14 +908,14 @@ function renderQuestion(subject, type, questionIndex) {
     ${renderWordBank(question)}
   `;
   const questionImage = question?.image
-    ? `<div class="mock-question-visual"><img src="${question.image}" alt="${type.subtitle}第 ${questionIndex} 题图示" /></div>`
+    ? `<div class="mock-question-visual"><img src="${question.image}" alt="${type.title} question ${questionIndex} visual" /></div>`
     : "";
 
   mockStage.innerHTML = `
     <div class="mock-question-view">
       <div class="mock-question-topbar">
         <button class="mock-back" type="button" data-reset="questions">返回题号</button>
-        <span>${subject.subtitle} · ${type.subtitle} · 第 ${questionIndex} 题${sourceLabel ? ` · ${sourceLabel}` : ""}</span>
+        <span>${subject.title} · ${type.title} · Question ${questionIndex}${sourceLabel ? ` · Source ${question.sourceNumber}` : ""}</span>
       </div>
       <div class="mock-question-layout ${hasPassage ? "has-reading-passage" : ""}">
         <div class="mock-question-content">
@@ -989,6 +1135,10 @@ if (mockApp) {
 }
 
 document.addEventListener("click", (event) => {
+  document.querySelectorAll(".mock-review-filter-dropdown[open]").forEach((dropdown) => {
+    if (!dropdown.contains(event.target)) dropdown.open = false;
+  });
+
   const detailButton = event.target?.closest?.("[data-toggle-detail]");
   if (detailButton) {
     const row = document.querySelector(`[data-detail-row="${detailButton.dataset.toggleDetail}"]`);
@@ -1004,6 +1154,24 @@ document.addEventListener("click", (event) => {
 
   if (event.target?.matches?.("[data-review-overlay]")) {
     closeSubjectReview();
+  }
+});
+
+document.addEventListener("change", (event) => {
+  if (event.target?.matches?.("[data-review-filter-all]")) {
+    const overlay = event.target.closest("[data-review-overlay]");
+    if (overlay) {
+      overlay.querySelectorAll("[data-review-filter]").forEach((input) => {
+        input.checked = event.target.checked;
+      });
+      updateReviewFilters(overlay);
+    }
+    return;
+  }
+
+  if (event.target?.matches?.("[data-review-filter]")) {
+    const overlay = event.target.closest("[data-review-overlay]");
+    if (overlay) updateReviewFilters(overlay);
   }
 });
 

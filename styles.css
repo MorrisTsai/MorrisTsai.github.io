@@ -998,6 +998,203 @@ a.service-card:focus-visible {
   margin-inline: auto;
 }
 
+.aeas-page {
+  background: #f7fbff;
+}
+
+.aeas-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 0.85fr);
+  gap: clamp(34px, 5vw, 72px);
+  align-items: start;
+  padding: clamp(42px, 5vw, 76px) clamp(20px, 5vw, 76px);
+  background:
+    radial-gradient(circle at 80% 8%, rgba(201, 145, 47, 0.22), transparent 32%),
+    linear-gradient(135deg, #ffffff 0%, #edf6ff 58%, #fff8ea 100%);
+}
+
+.aeas-hero h1 {
+  font-size: clamp(42px, 6vw, 76px);
+}
+
+.aeas-hero .lead {
+  color: var(--blue);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 900;
+}
+
+.aeas-hero-copy > p:not(.eyebrow):not(.lead),
+.aeas-report-card p {
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.aeas-hero-media {
+  display: grid;
+  gap: 14px;
+}
+
+.aeas-hero-media img {
+  width: 100%;
+  object-fit: contain;
+  object-position: top center;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.aeas-hero-media img:first-child {
+  max-height: 520px;
+}
+
+.aeas-hero-media img + img {
+  max-height: none;
+}
+
+.aeas-fact-grid,
+.aeas-structure-grid,
+.aeas-report-points {
+  display: grid;
+  gap: 18px;
+}
+
+.aeas-fact-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.aeas-fact-grid article,
+.aeas-structure-grid article,
+.aeas-report-points article {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.aeas-fact-grid span,
+.aeas-structure-grid span,
+.aeas-report-points strong {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.aeas-fact-grid strong,
+.aeas-report-points strong {
+  display: block;
+  margin: 10px 0 8px;
+  color: var(--navy);
+  font-size: 20px;
+}
+
+.aeas-fact-grid p,
+.aeas-structure-grid p,
+.aeas-structure-grid li,
+.aeas-report-points span {
+  color: var(--muted);
+}
+
+.aeas-structure-section {
+  background: #fff;
+}
+
+.aeas-structure-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.aeas-structure-grid article {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.aeas-structure-grid h3 {
+  margin-top: 10px;
+  color: var(--navy);
+  font-size: 28px;
+}
+
+.aeas-structure-grid ul {
+  display: grid;
+  gap: 8px;
+  margin: auto 0 0;
+  padding-left: 18px;
+}
+
+.aeas-report-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(420px, 1fr);
+  gap: 28px;
+  align-items: center;
+  padding: clamp(26px, 4vw, 48px);
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy), #0c4595);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.aeas-report-card h2,
+.aeas-report-card .eyebrow {
+  color: #fff;
+}
+
+.aeas-report-card p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.aeas-report-points {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.aeas-report-points article {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.aeas-report-points strong {
+  margin-top: 0;
+  color: #fff;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.aeas-report-points span {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.aeas-inline-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  margin: 0 clamp(20px, 5vw, 76px) clamp(42px, 6vw, 76px);
+  padding: clamp(26px, 4vw, 44px);
+  color: #fff;
+  background: var(--blue);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.aeas-inline-cta h2,
+.aeas-inline-cta .eyebrow {
+  color: #fff;
+}
+
+.aeas-inline-cta p {
+  max-width: 780px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.aeas-inline-cta .button {
+  flex: 0 0 auto;
+  color: var(--blue);
+  background: #fff;
+}
+
 .mock-page {
   background: #f7fbff;
 }
@@ -1384,6 +1581,73 @@ a.service-card:focus-visible {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
+}
+
+.mock-reading-group-list {
+  display: grid;
+  gap: 18px;
+}
+
+.mock-reading-group {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(7, 31, 72, 0.05);
+}
+
+.mock-reading-group-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.mock-reading-group-header span {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mock-reading-group-header h4 {
+  margin: 5px 0 6px;
+  color: var(--navy);
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.mock-reading-group-header p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.mock-reading-group-header em {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  color: var(--blue);
+  background: var(--sky);
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.mock-question-grid.is-compact {
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 10px;
+}
+
+.mock-question-grid.is-compact .mock-question-button {
+  min-height: 92px;
+  padding: 14px;
+}
+
+.mock-question-grid.is-compact .mock-question-button strong {
+  font-size: 28px;
 }
 
 .mock-question-button {
@@ -1823,6 +2087,101 @@ a.service-card:focus-visible {
   font-weight: 900;
 }
 
+.mock-review-filter-dropdown {
+  position: relative;
+  width: min(360px, calc(100% - 56px));
+  margin: 16px 28px 0;
+}
+
+.mock-review-filter-dropdown summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  color: var(--navy);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 900;
+  list-style: none;
+}
+
+.mock-review-filter-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.mock-review-filter-dropdown summary::after {
+  content: "▾";
+  color: var(--blue);
+  font-size: 13px;
+}
+
+.mock-review-filter-dropdown[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.mock-review-filter-dropdown summary span {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mock-review-filter-dropdown summary strong {
+  color: var(--blue);
+  font-size: 14px;
+}
+
+.mock-review-filter-menu {
+  position: absolute;
+  z-index: 3;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  display: grid;
+  gap: 6px;
+  max-height: 300px;
+  overflow: auto;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(7, 31, 72, 0.16);
+}
+
+.mock-review-filter-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.mock-review-filter-chip:hover {
+  background: #f3f7fd;
+}
+
+.mock-review-filter-chip.is-select-all {
+  margin-bottom: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  border-radius: 10px 10px 0 0;
+}
+
+.mock-review-filter-chip.is-select-all span {
+  color: var(--blue);
+}
+
+.mock-review-filter-chip input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue);
+}
+
 .mock-review-summary {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1942,6 +2301,10 @@ a.service-card:focus-visible {
   background: var(--green);
   border-radius: 50%;
   font-size: 12px;
+}
+
+.aeas-copy .button {
+  margin-top: 22px;
 }
 
 .aeas-gallery {
@@ -2345,6 +2708,8 @@ a.service-card:focus-visible {
   .study-section,
   .aeas-section,
   .pte-section,
+  .aeas-hero,
+  .aeas-report-card,
   .pte-hero,
   .pte-intro-section,
   .mock-hero,
@@ -2369,6 +2734,8 @@ a.service-card:focus-visible {
 
   .camp-detail-grid,
   .camp-extra-grid,
+  .aeas-fact-grid,
+  .aeas-structure-grid,
   .timeline,
   .pte-icon-grid,
   .pte-card-grid,
@@ -2414,6 +2781,11 @@ a.service-card:focus-visible {
   }
 
   .pte-inline-cta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .aeas-inline-cta {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -2529,6 +2901,9 @@ a.service-card:focus-visible {
   .program-grid,
   .faq-grid,
   .reason-grid,
+  .aeas-fact-grid,
+  .aeas-structure-grid,
+  .aeas-report-points,
   .pte-skill-grid,
   .pte-icon-grid,
   .pte-card-grid,
@@ -2555,6 +2930,7 @@ a.service-card:focus-visible {
   .mock-question-topbar,
   .mock-question-actions,
   .mock-stage-title-row,
+  .mock-reading-group-header,
   .mock-review-header {
     align-items: stretch;
     flex-direction: column;
@@ -2571,6 +2947,14 @@ a.service-card:focus-visible {
   .pte-hero {
     min-height: 0;
     padding-top: 56px;
+  }
+
+  .aeas-hero {
+    padding-top: 56px;
+  }
+
+  .aeas-hero-media img {
+    border-radius: 16px;
   }
 
   .pte-hero-media img {
