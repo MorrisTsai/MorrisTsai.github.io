@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AEAS 模拟测试 | Reward School 睿澳升学</title>
+    <meta
+      name="description"
+      content="Reward School 睿澳升学 AEAS 备考诊断模拟测试入口，按英语能力、数学推理和非语言推理分类浏览题型与练习题号。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="top-strip">
+      <span>AEAS Diagnostic Mock Test</span>
+      <strong>按科目与题型浏览练习入口</strong>
+      <span>English · Mathematical Reasoning · Non-Verbal General Ability</span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Reward School 睿澳升学首页">
+        <span class="brand-mark">
+          <img src="assets/reward-school-logo.png" alt="" />
+        </span>
+        <span>
+          <strong>睿澳升学</strong>
+          <small>Reward School</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="主导航">
+        <a href="index.html#services">服务项目</a>
+        <a href="index.html#study">留学代办</a>
+        <a href="index.html#aeas">AEAS</a>
+        <a href="aeas-mock.html" aria-current="page">模拟测试</a>
+        <a href="pte.html">PTE</a>
+        <a href="index.html#contact">预约咨询</a>
+      </nav>
+    </header>
+
+    <main id="top" class="mock-page">
+      <section class="mock-hero">
+        <div class="mock-hero-copy">
+          <p class="eyebrow">AEAS Mock Test</p>
+          <h1>AEAS 入学能力模拟测试</h1>
+          <p>
+            这是 Reward School 睿澳升学设计的 AEAS 备考诊断入口。学生可以按科目、题型和题号进入练习，
+            先熟悉题型结构与答题流程，后续可逐步接入原创题库、计时、报告和 GPT 诊断评分。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#mock-app">开始浏览题库</a>
+            <a class="button ghost" href="#mock-info">了解测试结构</a>
+          </div>
+          <p class="mock-disclaimer">
+            本测评为备考诊断工具，并非 AEAS 官方考试、官方练习材料或官方成绩报告。
+          </p>
+        </div>
+        <div class="mock-hero-panel">
+          <img src="assets/mock-test-placeholder.svg" alt="AEAS 模拟测试题目占位图" />
+          <div>
+            <strong>3 个科目</strong>
+            <span>英语能力、数学推理、非语言推理</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="mock-app" class="section mock-app-section">
+        <div class="mock-app-shell" data-mock-app>
+          <aside class="mock-sidebar">
+            <p class="eyebrow">Mock Test Library</p>
+            <h2>选择科目与题型</h2>
+            <p>先选择科目，再选择题型，进入题号列表后即可打开 placeholder 题目。</p>
+            <div class="mock-breadcrumb" data-mock-breadcrumb>科目</div>
+            <div class="mock-progress-panel" data-mock-progress></div>
+          </aside>
+          <div class="mock-stage" data-mock-stage></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Reward School 睿澳升学</strong>
+        <p>全澳留学代办 | 私校申请 | AEAS/PTE | 墨尔本小留学</p>
+      </div>
+      <a href="#top">返回顶部</a>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="aeas-mock-data.js?v=20260623"></script>
+    <script src="aeas-mock.js?v=20260623"></script>
+  </body>
+</html>
