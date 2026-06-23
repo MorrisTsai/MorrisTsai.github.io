@@ -170,7 +170,7 @@ window.aeasMockMathQuestionsByType = {
     },
     {
       "number": 26,
-      "text": "The length L, in meters, of a spring is given by the\nequation L =\n( 2\n3\n)\nF+0.05, where F is the applied force\nin newtons. Approximately what force, in newtons, must\nbe applied for the spring’s length to be 0.23 meters?",
+      "text": "The length L, in meters, of a spring is given by the equation L = (2/3)F + 0.05, where F is the applied force in newtons. Approximately what force, in newtons, must be applied for the spring’s length to be 0.23 meters?",
       "options": [
         {
           "value": "A",
