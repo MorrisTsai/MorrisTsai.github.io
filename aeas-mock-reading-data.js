@@ -1743,6 +1743,582 @@ window.aeasMockReadingQuestionsByType = {
       "correctAnswer": "{\"q26\": \"C\", \"q27\": \"E\", \"q28\": \"H\", \"q29\": \"A\", \"q30\": \"D\"}",
       "explanation": "Answers: 26. C; 27. E; 28. H; 29. A; 30. D.",
       "number": 56
+    },
+    {
+      "sourceNumber": 1,
+      "sourceRange": "1-5",
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "Write the correct answer for each blank. Short equivalent answers are accepted.",
+      "text": "Questions 1-5: Complete the short-answer questions about the urban growth text.",
+      "answerType": "input",
+      "inputFields": [
+        {
+          "id": "q1",
+          "label": "1. This text explains how cities develop and the challenges created by urban _____.",
+          "type": "text"
+        },
+        {
+          "id": "q2",
+          "label": "2. People moving from rural areas to cities",
+          "type": "text"
+        },
+        {
+          "id": "q3",
+          "label": "3. Too many vehicles causing delays on roads",
+          "type": "text"
+        },
+        {
+          "id": "q4",
+          "label": "4. Development that considers future generations",
+          "type": "text"
+        },
+        {
+          "id": "q5",
+          "label": "5. The systems and facilities that support a city",
+          "type": "text"
+        }
+      ],
+      "correctAnswer": "{\"q1\": \"growth\", \"q2\": \"migration\", \"q3\": [\"traffic congestion\", \"congestion\"], \"q4\": \"sustainability\", \"q5\": \"infrastructure\"}",
+      "explanation": "Answers: 1. growth; 2. migration; 3. traffic congestion; 4. sustainability; 5. infrastructure.",
+      "number": 57
+    },
+    {
+      "sourceNumber": 6,
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Cities often grow because people move there for new opportunities.",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "True",
+          "label": "True"
+        },
+        {
+          "value": "False",
+          "label": "False"
+        }
+      ],
+      "correctAnswer": "True",
+      "explanation": "The correct answer is True.",
+      "number": 58
+    },
+    {
+      "sourceNumber": 7,
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "All answers should be based on the reading text.",
+      "text": "The text suggests that urban growth creates only positive results.",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "True",
+          "label": "True"
+        },
+        {
+          "value": "False",
+          "label": "False"
+        }
+      ],
+      "correctAnswer": "False",
+      "explanation": "The correct answer is False.",
+      "number": 59
+    },
+    {
+      "sourceNumber": 8,
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Sustainability is concerned with future generations.",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "True",
+          "label": "True"
+        },
+        {
+          "value": "False",
+          "label": "False"
+        }
+      ],
+      "correctAnswer": "True",
+      "explanation": "The correct answer is True.",
+      "number": 60
+    },
+    {
+      "sourceNumber": 9,
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Urban planners mainly study ancient cities.",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "True",
+          "label": "True"
+        },
+        {
+          "value": "False",
+          "label": "False"
+        }
+      ],
+      "correctAnswer": "False",
+      "explanation": "The correct answer is False.",
+      "number": 61
+    },
+    {
+      "sourceNumber": 10,
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "All answers should be based on the reading text.",
+      "text": "The writer uses examples such as hospitals and universities...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "to describe problems caused by migration"
+        },
+        {
+          "value": "B",
+          "label": "to show some advantages of cities"
+        },
+        {
+          "value": "C",
+          "label": "to compare cities with rural areas"
+        },
+        {
+          "value": "D",
+          "label": "to explain why cities become polluted"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "The correct answer is B.",
+      "number": 62
+    },
+    {
+      "sourceNumber": 11,
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "All answers should be based on the reading text.",
+      "text": "The passage is organised...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "by describing a process and its effects"
+        },
+        {
+          "value": "B",
+          "label": "by telling a historical story"
+        },
+        {
+          "value": "C",
+          "label": "by comparing different countries"
+        },
+        {
+          "value": "D",
+          "label": "by discussing famous cities"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "The correct answer is A.",
+      "number": 63
+    },
+    {
+      "sourceNumber": 12,
+      "sourceRange": "12-16",
+      "passageTitle": "Practice Test 4 - Text 1",
+      "passageText": "A Geography Lesson on Urban Growth\n\nCities are constantly changing. As populations increase, towns may expand into large cities and cities may grow into major urban centres. Understanding how cities develop helps us understand many of the challenges faced by modern societies.\n\nOne important factor in urban growth is migration. People often move from rural areas to cities in search of employment, education and better services. As more people arrive, the demand for housing, transport and public facilities increases. This can create pressure on existing infrastructure.\n\nCities can provide many opportunities. They often contain universities, hospitals, cultural institutions and large businesses. However, rapid growth may also create problems. Traffic congestion, rising housing costs and pollution are common issues in expanding cities. Local governments must plan carefully to manage these challenges.\n\nAnother important concept is sustainability. A sustainable city aims to meet the needs of current residents without creating serious problems for future generations. This may involve improving public transport, protecting green spaces and reducing energy consumption.\n\nUrban planners study population trends, land use and transportation systems to help cities grow successfully. By analysing these factors, they can recommend policies that improve quality of life while supporting economic development.",
+      "context": "Match the words and meanings. Write A-E for each word.",
+      "text": "Questions 12-16: Match each word with its meaning.",
+      "answerType": "input",
+      "wordBank": [
+        {
+          "value": "A",
+          "label": "movement of people"
+        },
+        {
+          "value": "B",
+          "label": "systems and services that support a city"
+        },
+        {
+          "value": "C",
+          "label": "ability to continue successfully into the future"
+        },
+        {
+          "value": "D",
+          "label": "careful examination of information"
+        },
+        {
+          "value": "E",
+          "label": "heavy traffic"
+        }
+      ],
+      "inputFields": [
+        {
+          "id": "q12",
+          "label": "12. migration",
+          "type": "text"
+        },
+        {
+          "id": "q13",
+          "label": "13. infrastructure",
+          "type": "text"
+        },
+        {
+          "id": "q14",
+          "label": "14. congestion",
+          "type": "text"
+        },
+        {
+          "id": "q15",
+          "label": "15. sustainability",
+          "type": "text"
+        },
+        {
+          "id": "q16",
+          "label": "16. analysing",
+          "type": "text"
+        }
+      ],
+      "correctAnswer": "{\"q12\": \"A\", \"q13\": \"B\", \"q14\": \"E\", \"q15\": \"C\", \"q16\": \"D\"}",
+      "explanation": "Answers: 12. A; 13. B; 14. E; 15. C; 16. D.",
+      "number": 64
+    },
+    {
+      "sourceNumber": 17,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "The words ?special congratulations? are used to...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "criticise some students"
+        },
+        {
+          "value": "B",
+          "label": "praise particular achievements"
+        },
+        {
+          "value": "C",
+          "label": "explain the science fair rules"
+        },
+        {
+          "value": "D",
+          "label": "describe a future event"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "The correct answer is B.",
+      "number": 65
+    },
+    {
+      "sourceNumber": 18,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Liam Cooper probably...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "won an individual award"
+        },
+        {
+          "value": "B",
+          "label": "teaches science"
+        },
+        {
+          "value": "C",
+          "label": "organised the competition"
+        },
+        {
+          "value": "D",
+          "label": "is a Year 7 student"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "The correct answer is A.",
+      "number": 66
+    },
+    {
+      "sourceNumber": 19,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "The bicycle notice suggests that...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "bicycles are not allowed at school"
+        },
+        {
+          "value": "B",
+          "label": "bicycles may be parked anywhere"
+        },
+        {
+          "value": "C",
+          "label": "bicycles must be parked in approved locations"
+        },
+        {
+          "value": "D",
+          "label": "only senior students may ride bicycles"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "The correct answer is C.",
+      "number": 67
+    },
+    {
+      "sourceNumber": 20,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "The notices are organised mainly according to...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "importance of events"
+        },
+        {
+          "value": "B",
+          "label": "groups of students"
+        },
+        {
+          "value": "C",
+          "label": "dates of events"
+        },
+        {
+          "value": "D",
+          "label": "teacher seniority"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "The correct answer is B.",
+      "number": 68
+    },
+    {
+      "sourceNumber": 21,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Year 8 students are expected to behave quietly because...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "they will take a test"
+        },
+        {
+          "value": "B",
+          "label": "they are attending a formal presentation"
+        },
+        {
+          "value": "C",
+          "label": "they have been noisy recently"
+        },
+        {
+          "value": "D",
+          "label": "they are leaving school early"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "The correct answer is B.",
+      "number": 69
+    },
+    {
+      "sourceNumber": 22,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Which statement is false?",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "The Drama Club performance is on Friday."
+        },
+        {
+          "value": "B",
+          "label": "Scholarship information will be given on Wednesday."
+        },
+        {
+          "value": "C",
+          "label": "Chemistry students do not need permission forms."
+        },
+        {
+          "value": "D",
+          "label": "Mrs Brown will be away temporarily."
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "The correct answer is C.",
+      "number": 70
+    },
+    {
+      "sourceNumber": 23,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Mrs Kelly is probably...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "a science teacher"
+        },
+        {
+          "value": "B",
+          "label": "an art teacher"
+        },
+        {
+          "value": "C",
+          "label": "a careers adviser"
+        },
+        {
+          "value": "D",
+          "label": "a police officer"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "The correct answer is B.",
+      "number": 71
+    },
+    {
+      "sourceNumber": 24,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "Mr Turner...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "is replacing Mrs Brown for a short period"
+        },
+        {
+          "value": "B",
+          "label": "is leading the Student Representative Council"
+        },
+        {
+          "value": "C",
+          "label": "is giving the online safety presentation"
+        },
+        {
+          "value": "D",
+          "label": "is organising the chemistry excursion"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "The correct answer is A.",
+      "number": 72
+    },
+    {
+      "sourceNumber": 25,
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "All answers should be based on the reading text.",
+      "text": "?Attendance is required? means students...",
+      "answerType": "choice",
+      "options": [
+        {
+          "value": "A",
+          "label": "may attend if they wish"
+        },
+        {
+          "value": "B",
+          "label": "should attend only if invited"
+        },
+        {
+          "value": "C",
+          "label": "must attend"
+        },
+        {
+          "value": "D",
+          "label": "should arrive early"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "The correct answer is C.",
+      "number": 73
+    },
+    {
+      "sourceNumber": 26,
+      "sourceRange": "26-30",
+      "passageTitle": "Practice Test 4 - Text 2",
+      "passageText": "Greenhill Secondary College\nWeekly Notices - Monday 7th May\n\nNotices for All Students\n1. Congratulations to all students who participated in the Regional Science Fair last weekend. Several judges commented on the high standard of projects presented by Greenhill students. Special congratulations go to the Year 10 team, which won the Environmental Innovation Award, and to Liam Cooper, who received the prize for Best Individual Project.\n\n2. Students are reminded that bicycles must be parked only in the designated bicycle area near the sports centre. Bicycles left in other locations may be removed by school staff.\n\n3. The Drama Club will present its annual production this Friday evening in the school auditorium. Tickets are available from the front office until Thursday afternoon.\n\nSenior Students\n1. Year 12 students planning to apply for university scholarships are invited to attend an information session on Wednesday at lunchtime in Room 18. - Mrs Graham, Careers Coordinator.\n\n2. Members of the Student Representative Council will meet with Mr Dawson in the conference room at 8:00 a.m. on Friday. Attendance is required.\n\n3. Year 11 Chemistry students attending the laboratory excursion next week must return signed permission forms by Monday.\n\nJunior Students\n1. From Mr Patel: All Year 8 students are to report to the gymnasium after lunch today for a presentation on online safety by Officer Rebecca Jones. Students should enter quietly and remain seated until dismissed.\n\n2. Reminder: All Year 7 Art classes should bring a recycled household item next week for a sculpture project. - Mrs Kelly.\n\n3. Mrs Brown will be absent for three days this week while attending a professional development course. Her classes will be taught by Mr Turner during this period.",
+      "context": "Match the correct person A-H with each statement.",
+      "text": "Questions 26-30: Write the correct person letter for each statement.",
+      "answerType": "input",
+      "wordBank": [
+        {
+          "value": "A",
+          "label": "Mrs Kelly"
+        },
+        {
+          "value": "B",
+          "label": "Mrs Graham"
+        },
+        {
+          "value": "C",
+          "label": "Mr Patel"
+        },
+        {
+          "value": "D",
+          "label": "Mr Dawson"
+        },
+        {
+          "value": "E",
+          "label": "Liam Cooper"
+        },
+        {
+          "value": "F",
+          "label": "Officer Rebecca Jones"
+        },
+        {
+          "value": "G",
+          "label": "Mr Turner"
+        },
+        {
+          "value": "H",
+          "label": "The Principal"
+        }
+      ],
+      "inputFields": [
+        {
+          "id": "q26",
+          "label": "26. wants students to listen politely to a guest speaker",
+          "type": "text"
+        },
+        {
+          "id": "q27",
+          "label": "27. received recognition for an individual achievement",
+          "type": "text"
+        },
+        {
+          "id": "q28",
+          "label": "28. provides information for all students",
+          "type": "text"
+        },
+        {
+          "id": "q29",
+          "label": "29. wants students to bring materials for a project",
+          "type": "text"
+        },
+        {
+          "id": "q30",
+          "label": "30. will meet with student representatives",
+          "type": "text"
+        }
+      ],
+      "correctAnswer": "{\"q26\": \"C\", \"q27\": \"E\", \"q28\": \"H\", \"q29\": \"A\", \"q30\": \"D\"}",
+      "explanation": "Answers: 26. C; 27. E; 28. H; 29. A; 30. D.",
+      "number": 74
     }
   ]
 };
