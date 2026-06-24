@@ -924,7 +924,7 @@ function renderQuestionList(subject, type) {
 
     mockStage.innerHTML = `
       <div class="mock-stage-heading">
-        <button class="mock-back" type="button" data-reset="types">è¿”å›žé¢˜åž‹</button>
+        <button class="mock-back" type="button" data-reset="types">返回题型</button>
         <p class="eyebrow">Step 04</p>
         <h3>${type.subtitle} / ${type.title}</h3>
         <p>请先进入题组浏览所有题目，再播放音频作答。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
