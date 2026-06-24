@@ -85,6 +85,10 @@ const mockSubjects = [
   },
 ];
 
+mockSubjects.forEach((subject) => {
+  subject.types = subject.types.filter((type) => type.id !== "grammar");
+});
+
 const englishSubject = mockSubjects.find((subject) => subject.id === "english");
 const listeningType = englishSubject?.types.find((type) => type.id === "listening");
 if (listeningType) listeningType.questions = rawListeningQuestionGroups.listening || [];
