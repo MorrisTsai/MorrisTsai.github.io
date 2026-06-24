@@ -2399,49 +2399,20 @@ function normalizeAiWritingReviewResult(raw) {
 }
 
 async function requestAiWritingReview(question, essay, modelConfig) {
-  const config = window.rewardSchoolAiConfig || {};
-  if (!config.apiKey) throw new Error("AI API key is missing.");
   const model = typeof modelConfig === "string" ? modelConfig : modelConfig.id;
   const modelLabel = typeof modelConfig === "string" ? modelConfig : modelConfig.label || modelConfig.id;
 
-  if (!config.endpoint) throw new Error("AI API endpoint is missing.");
+  if (!window.rewardSchoolApi?.reviewWriting) throw new Error("Reward School API client is missing.");
 
-  const response = await fetch(config.endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${config.apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      temperature: 0.1,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are an AEAS writing assessment engine. Return only valid JSON matching the requested schema. No markdown, no code fences, no extra text.",
-        },
-        {
-          role: "user",
-          content: buildAiWritingPrompt(question, essay),
-        },
-      ],
-    }),
+  const payload = await window.rewardSchoolApi.reviewWriting({
+    question: question.text || "",
+    essay,
+    sourceId: String(question.sourceId || question.id || question.number || ""),
   });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`AI request failed: ${response.status} ${errorText.slice(0, 180)}`);
-  }
-
-  const payload = await response.json();
-  const content = payload?.choices?.[0]?.message?.content;
-  if (!content) throw new Error("AI returned an empty response.");
   return {
-    ...normalizeAiWritingReviewResult(extractJsonObject(content)),
-    model,
-    modelLabel,
+    ...normalizeAiWritingReviewResult(payload),
+    model: payload.model || model,
+    modelLabel: payload.modelLabel || modelLabel,
   };
 }
 
