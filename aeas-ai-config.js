@@ -188,7 +188,7 @@ window.rewardSchoolAiConfig = {
   provider: "deepseek",
   endpoint: "https://api.deepseek.com/chat/completions",
   models: [{ id: "deepseek-v4-pro", label: "Pro" }],
-  apiKey: "sk-0986a141527743f68a5972f0ad896a17",
+  apiKey: "sk-cb16d7ed740b4d9fb8a2c019ab858b5b",
   writingPromptTemplate: AEAS_WRITING_ASSESSMENT_PROMPT,
   writingJsonSchema: AEAS_WRITING_JSON_SCHEMA,
 };

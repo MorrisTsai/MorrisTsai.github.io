@@ -1636,6 +1636,21 @@ a.service-card:focus-visible {
   white-space: nowrap;
 }
 
+.mock-listening-group-card {
+  display: grid;
+  gap: 16px;
+}
+
+.mock-listening-test-note {
+  margin-bottom: 18px;
+}
+
+.mock-listening-group-intro {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 .mock-question-grid.is-compact {
   grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
   gap: 10px;
@@ -1726,6 +1741,347 @@ a.service-card:focus-visible {
 
 .mock-question-layout.has-reading-passage {
   grid-template-columns: minmax(360px, 1fr) minmax(360px, 0.86fr);
+}
+
+.mock-listening-view {
+  display: grid;
+  gap: 20px;
+}
+
+.mock-listening-player-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.58fr);
+  gap: 22px;
+  align-items: center;
+  padding: clamp(22px, 4vw, 34px);
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  border-radius: 20px;
+  box-shadow: 0 18px 44px rgba(7, 61, 143, 0.22);
+}
+
+.mock-listening-player-card h3 {
+  margin: 4px 0 10px;
+  font-size: clamp(26px, 4vw, 40px);
+}
+
+.mock-listening-player-card p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mock-listening-player-card .eyebrow {
+  color: #ffd27a;
+}
+
+.mock-listening-player-card audio {
+  width: 100%;
+}
+
+.mock-listening-stats {
+  margin-top: 12px;
+  font-weight: 900;
+}
+
+.mock-listening-paper {
+  display: grid;
+  gap: 14px;
+}
+
+.mock-listening-section-note {
+  padding: 14px 16px;
+  color: var(--blue);
+  background: #eef5ff;
+  border: 1px solid rgba(13, 72, 150, 0.12);
+  border-radius: 14px;
+  font-weight: 900;
+  line-height: 1.6;
+}
+
+.mock-listening-question {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.mock-listening-question-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.mock-listening-question-head strong {
+  color: var(--blue);
+}
+
+.mock-listening-question p {
+  margin: 0;
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.mock-listening-options {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.mock-speaking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.mock-speaking-monologue-layout {
+  display: grid;
+  grid-template-columns: minmax(340px, 0.9fr) minmax(420px, 1.1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.mock-speaking-picture-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(420px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.mock-speaking-prompt-card,
+.mock-speaking-recorder-card {
+  padding: clamp(22px, 4vw, 38px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.mock-speaking-prompt-card h3,
+.mock-speaking-recorder-card h3 {
+  margin: 4px 0 12px;
+  color: var(--ink);
+  font-size: clamp(30px, 4vw, 48px);
+}
+
+.mock-speaking-type {
+  display: inline-flex;
+  width: fit-content;
+  padding: 10px 14px;
+  color: var(--blue);
+  background: var(--soft);
+  border-radius: 14px;
+  font-weight: 900;
+}
+
+.mock-speaking-question {
+  margin: 24px 0;
+  color: var(--ink);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.mock-speaking-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mock-speaking-meta span {
+  padding: 9px 13px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.mock-speaking-cue-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  margin: 20px 0;
+  background: #f4f8ff;
+  border: 1px solid rgba(13, 72, 150, 0.14);
+  border-radius: 16px;
+}
+
+.mock-speaking-cue-card strong {
+  color: var(--blue);
+  font-size: 18px;
+}
+
+.mock-speaking-cue-card ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 22px;
+  margin: 0;
+  color: var(--ink);
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.mock-speaking-image-card {
+  margin: 20px 0;
+  overflow: hidden;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.mock-speaking-image-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mock-speaking-status {
+  padding: 14px;
+  color: var(--muted);
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.mock-speaking-status.is-recording {
+  color: #b22b2b;
+  background: rgba(178, 43, 43, 0.08);
+  border-color: rgba(178, 43, 43, 0.35);
+}
+
+.mock-speaking-meter {
+  position: relative;
+  height: 14px;
+  margin: 14px 0 4px;
+  overflow: hidden;
+  background: #e8eef7;
+  border-radius: 999px;
+}
+
+.mock-speaking-meter::before {
+  position: absolute;
+  inset: 0;
+  width: var(--speaking-level, 4%);
+  content: "";
+  background: linear-gradient(90deg, var(--blue), #2aa876);
+  border-radius: inherit;
+  transition: width 90ms linear;
+}
+
+.mock-speaking-meter::after {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  color: rgba(2, 24, 68, 0.48);
+  content: "Mic level";
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translateY(-50%);
+}
+
+.mock-speaking-meter.is-active::after {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.mock-speaking-meter.is-live::before {
+  background: linear-gradient(90deg, var(--blue), #18a06d, #d08a1d);
+}
+
+.mock-speaking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.mock-speaking-audio {
+  width: 100%;
+  margin: 8px 0 14px;
+}
+
+.mock-speaking-empty {
+  padding: 20px;
+  color: var(--muted);
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.mock-speaking-segment-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.mock-speaking-segment {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.mock-speaking-segment.is-recording {
+  border-color: rgba(178, 43, 43, 0.35);
+  box-shadow: 0 12px 28px rgba(178, 43, 43, 0.08);
+}
+
+.mock-speaking-segment.is-locked {
+  background: #f7f9fd;
+  opacity: 0.72;
+}
+
+.mock-speaking-segment-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.mock-speaking-segment-head div {
+  display: grid;
+  gap: 4px;
+}
+
+.mock-speaking-segment-head span,
+.mock-speaking-segment-head em {
+  color: var(--muted);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mock-speaking-segment-head strong {
+  color: var(--blue);
+  font-size: 18px;
+}
+
+.mock-speaking-segment p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.mock-speaking-coming-soon {
+  padding: 20px;
+  color: var(--muted);
+  background: var(--soft);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  font-weight: 900;
 }
 
 .mock-writing-layout {
@@ -3036,7 +3392,10 @@ a.service-card:focus-visible {
 
   .mock-info-grid,
   .mock-card-grid,
-  .mock-question-layout {
+  .mock-question-layout,
+  .mock-speaking-layout,
+  .mock-speaking-monologue-layout,
+  .mock-speaking-picture-layout {
     grid-template-columns: 1fr;
   }
 

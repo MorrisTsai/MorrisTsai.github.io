@@ -3,9 +3,12 @@ const rawMathQuestionGroups = window.aeasMockMathQuestionsByType || {};
 const rawReadingQuestionGroups = window.aeasMockReadingQuestionsByType || {};
 const rawVocabularyQuestionGroups = window.aeasMockVocabularyQuestionsByType || {};
 const rawGapFillingQuestionGroups = window.aeasMockGapFillingQuestionsByType || {};
+const rawListeningQuestionGroups = window.aeasMockListeningQuestionsByType || {};
 const rawWritingQuestionGroups = window.aeasMockWritingQuestionsByType || {};
+const rawSpeakingQuestionGroups = window.aeasMockSpeakingQuestionsByType || {};
 const rawNonVerbalQuestionGroups = window.aeasMockNonVerbalQuestionsByType || {};
 const nonVerbalMeta = window.aeasMockNonVerbalMeta || {};
+const pendingAiReviewKeys = new Set();
 const mathQuestionGroups = Object.fromEntries(
   Object.entries(rawMathQuestionGroups).map(([typeId, questions]) => [
     typeId,
@@ -82,6 +85,12 @@ const mockSubjects = [
   },
 ];
 
+const englishSubject = mockSubjects.find((subject) => subject.id === "english");
+const listeningType = englishSubject?.types.find((type) => type.id === "listening");
+if (listeningType) listeningType.questions = rawListeningQuestionGroups.listening || [];
+const speakingType = englishSubject?.types.find((type) => type.id === "speaking");
+if (speakingType) speakingType.questions = rawSpeakingQuestionGroups.speaking || [];
+
 const mockApp = document.querySelector("[data-mock-app]");
 const mockStage = document.querySelector("[data-mock-stage]");
 const mockBreadcrumb = document.querySelector("[data-mock-breadcrumb]");
@@ -96,6 +105,15 @@ let mockState = {
 
 let mockProgress = loadProgress();
 let writingTimerInterval = null;
+let activeSpeakingRecorder = null;
+let activeSpeakingStream = null;
+let activeSpeakingChunks = [];
+let activeSpeakingKey = "";
+let speakingAudioContext = null;
+let speakingAnalyser = null;
+let speakingMeterSource = null;
+let speakingMeterFrame = null;
+const speakingRecordings = new Map();
 
 function createSessionId() {
   const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
@@ -124,6 +142,10 @@ function saveProgress() {
 }
 
 function resetProgress() {
+  speakingRecordings.forEach((recording) => {
+    if (recording?.url) URL.revokeObjectURL(recording.url);
+  });
+  speakingRecordings.clear();
   mockProgress = {
     sessionId: createSessionId(),
     startedAt: new Date().toISOString(),
@@ -229,7 +251,52 @@ function getQuestionAnswerType(question) {
 function normalizeInputAnswer(value) {
   return String(value ?? "")
     .trim()
-    .replace(/\s+/g, "")
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/\b(a|an|the|their|own)\b/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function inputAnswerContains(answer, phrase) {
+  const normalizedAnswer = ` ${normalizeInputAnswer(answer)} `;
+  const normalizedPhrase = normalizeInputAnswer(phrase);
+  return Boolean(normalizedPhrase) && normalizedAnswer.includes(` ${normalizedPhrase} `);
+}
+
+function evaluateInputAnswer(recordAnswer, correctAnswer, question) {
+  const userValues = parseStoredInputAnswer(recordAnswer);
+  const correctValues = parseStoredInputAnswer(correctAnswer);
+  const fieldIds = (question.inputFields || [{ id: "answer" }]).map((field) => field.id);
+  const localMarking = question.localMarking || {};
+
+  const exactCorrect = fieldIds.every((fieldId) => {
+    const acceptedValues = Array.isArray(correctValues[fieldId]) ? correctValues[fieldId] : [correctValues[fieldId]];
+    return acceptedValues.some((acceptedValue) => normalizeInputAnswer(userValues[fieldId]) === normalizeInputAnswer(acceptedValue));
+  });
+  if (exactCorrect) return { correct: true, needsReview: false };
+
+  const combinedAnswer = fieldIds.map((fieldId) => userValues[fieldId] || "").join(" ");
+  if (!normalizeInputAnswer(combinedAnswer)) return { correct: false, needsReview: false };
+
+  if (Array.isArray(localMarking.requiredAll) && localMarking.requiredAll.length) {
+    const matchedCount = localMarking.requiredAll.filter((part) => inputAnswerContains(combinedAnswer, part)).length;
+    if (matchedCount === localMarking.requiredAll.length) return { correct: true, needsReview: false };
+    if (localMarking.reviewIfPartial && matchedCount > 0) return { correct: false, needsReview: true };
+  }
+
+  if (Array.isArray(localMarking.acceptedAny) && localMarking.acceptedAny.length) {
+    const matchedAny = localMarking.acceptedAny.some((part) => inputAnswerContains(combinedAnswer, part));
+    if (matchedAny) return { correct: true, needsReview: false };
+  }
+
+  return { correct: false, needsReview: false };
+}
+
+function normalizeChoiceAnswer(value) {
+  return String(value ?? "")
+    .trim()
     .toUpperCase();
 }
 
@@ -284,13 +351,7 @@ function compareAnswers(recordAnswer, correctAnswer, question) {
 
   const answerType = getQuestionAnswerType(question);
   if (answerType === "input") {
-    const userValues = parseStoredInputAnswer(recordAnswer);
-    const correctValues = parseStoredInputAnswer(correctAnswer);
-    const fieldIds = (question.inputFields || [{ id: "answer" }]).map((field) => field.id);
-    return fieldIds.every((fieldId) => {
-      const acceptedValues = Array.isArray(correctValues[fieldId]) ? correctValues[fieldId] : [correctValues[fieldId]];
-      return acceptedValues.some((acceptedValue) => normalizeInputAnswer(userValues[fieldId]) === normalizeInputAnswer(acceptedValue));
-    });
+    return evaluateInputAnswer(recordAnswer, correctAnswer, question).correct;
   }
 
   if (answerType === "multiChoice") {
@@ -367,10 +428,15 @@ function gradeSubjectAnswers(subject) {
       const question = getQuestion(type, number);
       if (isAiReviewQuestion(question)) return;
       const canGrade = isAnswerGradable(correctAnswer);
+      const result =
+        canGrade && getQuestionAnswerType(question) === "input"
+          ? evaluateInputAnswer(record.answer, correctAnswer, question)
+          : { correct: canGrade ? compareAnswers(record.answer, correctAnswer, question) : null, needsReview: false };
       mockProgress.answers[key] = {
         ...record,
         graded: canGrade,
-        correct: canGrade ? compareAnswers(record.answer, correctAnswer, question) : null,
+        correct: result.correct,
+        needsReview: result.needsReview,
         correctAnswer,
         updatedAt: new Date().toISOString(),
       };
@@ -746,15 +812,24 @@ function hasSuccessfulAiReview(record) {
   return Array.isArray(record?.aiReviews) && record.aiReviews.some((review) => !review.error && Number.isFinite(Number(review.total)));
 }
 
+function hasPendingAiReview() {
+  return pendingAiReviewKeys.size > 0;
+}
+
 function getQuestionStatusClass(record, question) {
   if (!record) return "";
+  if (question?.speakingMode) return "is-attempted";
   if (isAiReviewQuestion(question)) return "is-attempted";
   if (!record.graded) return "is-attempted";
+  if (record.needsReview) return "is-attempted";
   return record.correct ? "is-correct" : "is-wrong";
 }
 
 function getQuestionStatusText(record, question) {
   if (!record) return "未作答";
+  if (question?.speakingMode === "warmup-recording") return "已录音";
+  if (question?.speakingMode === "monologue") return record.answer === "completed" ? "已完成" : "进行中";
+  if (question?.speakingMode === "picture-response") return record.answer === "completed" ? "已完成" : "进行中";
   if (isAiReviewQuestion(question)) return "已做";
   if (!record.graded) return "已作答";
   return record.correct ? "正确" : "错误";
@@ -765,7 +840,7 @@ function getQuestionGroups(type) {
   const groupMap = new Map();
 
   getQuestions(type).forEach((question) => {
-    const groupTitle = question.passageTitle || "Practice Set";
+    const groupTitle = question.listeningTitle || question.passageTitle || "Practice Set";
     if (!groupMap.has(groupTitle)) {
       const group = { title: groupTitle, questions: [] };
       groupMap.set(groupTitle, group);
@@ -792,7 +867,7 @@ function getQuestionGroupStats(subject, type, questions) {
 }
 
 function shouldGroupQuestionList(type) {
-  return type.id === "reading" && getQuestions(type).some((question) => question.passageTitle);
+  return ["reading", "listening"].includes(type.id) && getQuestions(type).some((question) => question.passageTitle || question.listeningGroupId);
 }
 
 function renderQuestionList(subject, type) {
@@ -811,6 +886,125 @@ function renderQuestionList(subject, type) {
       <div class="mock-construction-card">
         <strong>施工中</strong>
         <span>题目、答案与讲解补齐后，这里会显示题号列表与做题记录。</span>
+      </div>
+    `;
+    return;
+  }
+
+  if (type.id === "listening" && shouldGroupQuestionList(type)) {
+    const listeningGroups = getQuestionGroups(type);
+    const groupListMarkup = `
+      <div class="mock-reading-group-list">
+        ${listeningGroups
+          .map((group) => {
+            const groupStats = getQuestionGroupStats(subject, type, group.questions);
+            const firstQuestion = group.questions[0];
+            return `
+              <section class="mock-reading-group mock-listening-group-card">
+                <div class="mock-reading-group-header">
+                  <div>
+                    <span>Listening Test</span>
+                    <h4>${escapeHTML(group.title)}</h4>
+                    <p>${groupStats.attempted}/${groupStats.total} 已做 · 已批改 ${groupStats.graded} 题 · 正确 ${groupStats.correct} 题</p>
+                  </div>
+                  <em>${groupStats.total} 题</em>
+                </div>
+                <p class="mock-listening-group-intro">进入后会先看到完整题目与音频播放器。建议先读完 1-12 题，再点击播放作答。</p>
+                <button class="button primary" type="button" data-question="${firstQuestion.number}">进入听力题组</button>
+              </section>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+
+    mockStage.innerHTML = `
+      <div class="mock-stage-heading">
+        <button class="mock-back" type="button" data-reset="types">è¿”å›žé¢˜åž‹</button>
+        <p class="eyebrow">Step 04</p>
+        <h3>${type.subtitle} / ${type.title}</h3>
+        <p>请先进入题组浏览所有题目，再播放音频作答。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
+      </div>
+      <div class="mock-construction-card mock-listening-test-note">
+        <strong>完整听力套题结构</strong>
+        <span>Listening Text One、Two、Three 合起来是一套完整听力测验。当前页面支持单篇分开练习；未来做整套模拟考时，会按这三段难度与题型组合完整呈现。</span>
+      </div>
+      ${groupListMarkup}
+    `;
+    return;
+  }
+
+  if (type.id === "speaking") {
+    const speakingSections = [
+      {
+        id: "warmup",
+        label: "Type 01",
+        title: "Warm-up Questions",
+        note: "Not scored. Students record short answers and listen back for clarity.",
+        questions: getQuestions(type).filter((question) => question.speakingMode === "warmup-recording"),
+      },
+      {
+        id: "monologue",
+        label: "Type 02",
+        title: "Monologue + Follow-up",
+        note: "Scored after the main response and three randomly selected follow-up questions are all recorded.",
+        questions: getQuestions(type).filter((question) => question.speakingMode === "monologue"),
+      },
+      {
+        id: "listening-response",
+        label: "Type 03",
+        title: "Picture-based Questions",
+        note: "Students describe an image and answer all follow-up questions. Scoring will use a hidden image description.",
+        questions: getQuestions(type).filter((question) => question.speakingMode === "picture-response"),
+      },
+    ];
+
+    const sectionMarkup = speakingSections
+      .map((section) => {
+        const sectionStats = getQuestionGroupStats(subject, type, section.questions);
+        const questionButtons = section.questions.length
+          ? `
+            <div class="mock-question-grid is-compact">
+              ${section.questions
+                .map((question) => {
+                  const record = getQuestionRecord(subject.id, type.id, question.number);
+                  return `
+                    <button class="mock-question-button ${getQuestionStatusClass(record, question)}" type="button" data-question="${question.number}">
+                      <span>${getQuestionStatusText(record, question)}</span>
+                      <strong>${question.number}</strong>
+                    </button>
+                  `;
+                })
+                .join("")}
+            </div>
+          `
+          : `<div class="mock-speaking-coming-soon">In preparation</div>`;
+
+        return `
+          <section class="mock-reading-group mock-speaking-type-group">
+            <div class="mock-reading-group-header">
+              <div>
+                <span>${section.label}</span>
+                <h4>${section.title}</h4>
+                <p>${section.note}</p>
+              </div>
+              <em>${section.questions.length ? `${sectionStats.attempted}/${sectionStats.total}` : "Soon"}</em>
+            </div>
+            ${questionButtons}
+          </section>
+        `;
+      })
+      .join("");
+
+    mockStage.innerHTML = `
+      <div class="mock-stage-heading">
+        <button class="mock-back" type="button" data-reset="types">返回题型</button>
+        <p class="eyebrow">Step 04</p>
+        <h3>Speaking Interview</h3>
+        <p>口说练习分成三个类型：Warm-up 不评分，Monologue 完成主答与随机追问后再整体评分，Picture-based Questions 根据图片逐题作答。</p>
+      </div>
+      <div class="mock-reading-group-list">
+        ${sectionMarkup}
       </div>
     `;
     return;
@@ -1004,6 +1198,687 @@ function renderAnswerOptions(question, record, correctAnswer) {
   `;
 }
 
+function saveListeningGroupAnswers(subject, type) {
+  if (!mockStage) return;
+  mockStage.querySelectorAll("[data-listening-question]").forEach((questionNode) => {
+    const questionNumber = Number(questionNode.dataset.listeningQuestion);
+    const question = getQuestion(type, questionNumber);
+    if (getQuestionAnswerType(question) === "input") {
+      const fields = question.inputFields || [{ id: "answer" }];
+      const values = {};
+      fields.forEach((field) => {
+        const input = questionNode.querySelector(`[name="listening-input-${questionNumber}-${field.id}"]`);
+        if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) {
+          values[field.id] = input.value.trim();
+        }
+      });
+      if (!Object.values(values).some(Boolean)) return;
+      const key = getQuestionKey(subject.id, type.id, questionNumber);
+      const existing = mockProgress.answers[key] || {};
+      mockProgress.answers[key] = {
+        ...existing,
+        answer: JSON.stringify(values),
+        graded: false,
+        correct: null,
+        updatedAt: new Date().toISOString(),
+      };
+      return;
+    }
+
+    const selected = questionNode.querySelector(`input[name="listening-answer-${questionNumber}"]:checked`);
+    if (!(selected instanceof HTMLInputElement)) return;
+    const key = getQuestionKey(subject.id, type.id, questionNumber);
+    const existing = mockProgress.answers[key] || {};
+    mockProgress.answers[key] = {
+      ...existing,
+      answer: selected.value,
+      graded: false,
+      correct: null,
+      updatedAt: new Date().toISOString(),
+    };
+  });
+  saveProgress();
+  renderProgressPanel();
+}
+
+function renderListeningGroup(subject, type, groupId) {
+  const questions = getQuestions(type).filter((question) => question.listeningGroupId === groupId);
+  if (!questions.length) return;
+
+  const firstQuestion = questions[0];
+  const groupStats = getQuestionGroupStats(subject, type, questions);
+  let currentInstruction = "";
+  const questionCards = questions
+    .map((question) => {
+      const record = getQuestionRecord(subject.id, type.id, question.number);
+      const correctAnswer = getCorrectAnswer(type, question.number);
+      const instructionMarkup =
+        question.sectionInstruction && question.sectionInstruction !== currentInstruction
+          ? ((currentInstruction = question.sectionInstruction),
+            `<div class="mock-listening-section-note">${escapeHTML(question.sectionInstruction)}</div>`)
+          : "";
+      const answerType = getQuestionAnswerType(question);
+      const options =
+        answerType === "input"
+          ? (() => {
+              const saved = parseStoredInputAnswer(record?.answer);
+              const fields = question.inputFields || [{ id: "answer", label: "Answer", type: "text" }];
+              const correctValues = parseStoredInputAnswer(correctAnswer);
+              return `
+                <div class="mock-input-fields">
+                  ${fields
+                    .map((field) => {
+                      const value = saved[field.id] || "";
+                      const acceptedValues = Array.isArray(correctValues[field.id]) ? correctValues[field.id] : [correctValues[field.id]];
+                      const gradedClass =
+                        record?.graded && isAnswerGradable(correctAnswer)
+                          ? acceptedValues.some((acceptedValue) => normalizeInputAnswer(value) === normalizeInputAnswer(acceptedValue))
+                            ? "is-correct"
+                            : "is-wrong"
+                          : "";
+                      return `
+                        <label class="mock-input-field ${gradedClass}">
+                          <span>${escapeHTML(field.label || "Answer")}</span>
+                          <input
+                            type="text"
+                            name="listening-input-${question.number}-${field.id}"
+                            value="${escapeHTML(value)}"
+                            autocomplete="off"
+                            placeholder="${escapeHTML(field.placeholder || "Write your answer")}"
+                          />
+                        </label>
+                      `;
+                    })
+                    .join("")}
+                </div>
+              `;
+            })()
+          : `
+            <div class="mock-options mock-listening-options">
+              ${getAnswerOptions(question)
+                .map(([value, label]) => {
+                  const checked = record?.answer === value ? "checked" : "";
+                  const optionClass = record?.graded
+                    ? value === correctAnswer
+                      ? "is-correct"
+                      : record.answer === value
+                        ? "is-wrong"
+                        : ""
+                    : "";
+                  return `
+                    <label class="mock-option-card ${optionClass}">
+                      <input type="radio" name="listening-answer-${question.number}" value="${escapeHTML(value)}" ${checked} />
+                      <span class="mock-option-label">${escapeHTML(value)}${label && label !== value ? `. ${escapeHTML(label)}` : ""}</span>
+                    </label>
+                  `;
+                })
+                .join("")}
+            </div>
+          `;
+
+      return `
+        ${instructionMarkup}
+        <article class="mock-listening-question" data-listening-question="${question.number}">
+          <div class="mock-listening-question-head">
+            <span>Question ${question.number}</span>
+            <strong>${escapeHTML(getQuestionStatusText(record, question))}</strong>
+          </div>
+          <p>${escapeHTML(formatQuestionText(question.text))}</p>
+          ${options}
+        </article>
+      `;
+    })
+    .join("");
+
+  mockStage.innerHTML = `
+    <div class="mock-question-view mock-listening-view">
+      <div class="mock-question-topbar">
+        <button class="mock-back" type="button" data-reset="questions">返回题组</button>
+        <span>${subject.title} · ${type.title} · ${escapeHTML(firstQuestion.listeningTitle)}</span>
+      </div>
+      <section class="mock-listening-player-card">
+        <div>
+          <p class="eyebrow">Listening Practice</p>
+          <h3>${escapeHTML(firstQuestion.listeningTitle)}</h3>
+          <p>先浏览下方所有题目，再播放音频。音频只需要播放一次，答案会自动保存在本地。</p>
+          <p class="mock-listening-stats">${groupStats.attempted}/${groupStats.total} 已做 · 已批改 ${groupStats.graded} 题 · 正确 ${groupStats.correct} 题</p>
+        </div>
+        <audio controls preload="metadata" src="${escapeHTML(firstQuestion.audioSrc)}"></audio>
+      </section>
+      <section class="mock-listening-paper">
+        ${questionCards}
+      </section>
+      <div class="mock-question-actions">
+        <button class="button ghost dark" type="button" data-reset="questions">返回题组</button>
+        <button class="button ghost dark" type="button" data-leave-review>离开并批改</button>
+      </div>
+    </div>
+  `;
+}
+
+function getSpeakingRecordingKey(subjectId, typeId, questionIndex, segmentId = "answer") {
+  return `${getQuestionKey(subjectId, typeId, questionIndex)}:${segmentId}`;
+}
+
+function getSpeakingProgressKey(subjectId, typeId, questionIndex) {
+  return getQuestionKey(subjectId, typeId, questionIndex);
+}
+
+function shuffleArray(items) {
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+  return copy;
+}
+
+function drawNextMonologueFollowUp(subject, type, questionIndex, question) {
+  const key = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const record = mockProgress.answers[key] || {};
+  const existing = Array.isArray(record.speakingFollowUps) ? record.speakingFollowUps : [];
+  if (existing.length >= (question.followUpCount || 3)) return existing;
+
+  const remaining = (question.followUps || []).filter((prompt) => !existing.includes(prompt));
+  if (!remaining.length) return existing;
+
+  const followUps = [...existing, shuffleArray(remaining)[0]];
+  mockProgress.answers[key] = {
+    ...record,
+    speakingFollowUps: followUps,
+    updatedAt: new Date().toISOString(),
+  };
+  saveProgress();
+  return followUps;
+}
+
+function getMonologueFollowUps(subject, type, questionIndex) {
+  const key = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const existing = mockProgress.answers[key]?.speakingFollowUps;
+  return Array.isArray(existing) ? existing : [];
+}
+
+function getSpeakingSegments(subject, type, questionIndex, question, options = {}) {
+  if (question?.speakingMode === "picture-response") {
+    return (question.pictureQuestions || []).map((prompt, index) => ({
+      id: `picture-${index + 1}`,
+      label: `Question ${index + 1}`,
+      prompt,
+      timeLimit: "30 seconds",
+    }));
+  }
+
+  if (question?.speakingMode !== "monologue") {
+    return [{ id: "answer", label: "Answer", prompt: question?.text || "", timeLimit: question?.timeLimit || "30 seconds" }];
+  }
+
+  const followUps = options.drawNext ? drawNextMonologueFollowUp(subject, type, questionIndex, question) : getMonologueFollowUps(subject, type, questionIndex);
+  return [
+    { id: "main", label: "Main response", prompt: question.text, timeLimit: question.timeLimit || "2 minutes" },
+    ...followUps.map((prompt, index) => ({
+      id: `followup-${index + 1}`,
+      label: `Follow-up ${index + 1}`,
+      prompt,
+      timeLimit: "30 seconds",
+    })),
+  ];
+}
+
+function getSpeakingCompletedSegments(subject, type, questionIndex, question) {
+  return getSpeakingSegments(subject, type, questionIndex, question).filter((segment) =>
+    speakingRecordings.has(getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id))
+  );
+}
+
+function getSpeakingExpectedSegmentCount(question) {
+  if (question?.speakingMode === "monologue") return 1 + (question.followUpCount || 3);
+  if (question?.speakingMode === "picture-response") return question.pictureQuestions?.length || 0;
+  return 1;
+}
+
+function cleanupSpeakingStream() {
+  stopSpeakingMeter();
+  if (activeSpeakingStream) {
+    activeSpeakingStream.getTracks().forEach((track) => track.stop());
+  }
+  activeSpeakingStream = null;
+  if (speakingMeterSource) {
+    speakingMeterSource.disconnect();
+    speakingMeterSource = null;
+  }
+  speakingAnalyser = null;
+  if (speakingAudioContext) {
+    speakingAudioContext.close().catch(() => {});
+    speakingAudioContext = null;
+  }
+}
+
+async function getReusableSpeakingStream() {
+  const hasLiveStream = activeSpeakingStream?.getAudioTracks().some((track) => track.readyState === "live");
+  if (hasLiveStream) return activeSpeakingStream;
+
+  activeSpeakingStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  return activeSpeakingStream;
+}
+
+function stopSpeakingMeter() {
+  if (speakingMeterFrame) {
+    window.cancelAnimationFrame(speakingMeterFrame);
+    speakingMeterFrame = null;
+  }
+  if (speakingMeterSource) {
+    speakingMeterSource.disconnect();
+    speakingMeterSource = null;
+  }
+}
+
+function startSpeakingMeter(stream, meterKey = "") {
+  stopSpeakingMeter();
+  const meters = [...(mockStage?.querySelectorAll("[data-speaking-meter]") || [])];
+  const meter = meters.find((node) => node.dataset.speakingMeter === meterKey) || meters[0];
+  if (!meter) return;
+
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  if (!speakingAudioContext || speakingAudioContext.state === "closed") {
+    speakingAudioContext = new AudioContextClass();
+  }
+  if (speakingAudioContext.state === "suspended") {
+    speakingAudioContext.resume().catch(() => {});
+  }
+
+  speakingAnalyser = speakingAudioContext.createAnalyser();
+  speakingAnalyser.fftSize = 256;
+  speakingMeterSource = speakingAudioContext.createMediaStreamSource(stream);
+  speakingMeterSource.connect(speakingAnalyser);
+  const samples = new Uint8Array(speakingAnalyser.fftSize);
+
+  const update = () => {
+    speakingAnalyser.getByteTimeDomainData(samples);
+    let sum = 0;
+    samples.forEach((sample) => {
+      const value = sample - 128;
+      sum += value * value;
+    });
+    const rms = Math.sqrt(sum / samples.length);
+    const level = Math.min(1, rms / 34);
+    meter.style.setProperty("--speaking-level", `${Math.max(0.04, level) * 100}%`);
+    meter.classList.toggle("is-live", level > 0.08);
+    speakingMeterFrame = window.requestAnimationFrame(update);
+  };
+
+  update();
+}
+
+function isSpeakingRecording(questionKey) {
+  return activeSpeakingRecorder?.state === "recording" && activeSpeakingKey === questionKey;
+}
+
+function saveSpeakingAttempt(subject, type, questionIndex, question) {
+  const key = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const segments = getSpeakingSegments(subject, type, questionIndex, question);
+  const completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
+  const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
+  mockProgress.answers[key] = {
+    ...(mockProgress.answers[key] || {}),
+    answer: completed.length >= expectedSegmentCount ? "completed" : "in-progress",
+    graded: false,
+    correct: null,
+    speakingCompletedSegments: completed.map((segment) => segment.id),
+    updatedAt: new Date().toISOString(),
+  };
+  saveProgress();
+}
+
+async function startSpeakingRecording(subject, type, questionIndex, segmentId = "answer") {
+  if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
+    window.alert("当前浏览器不支持录音功能。请使用最新版 Chrome 或 Edge 再试。");
+    return;
+  }
+
+  if (activeSpeakingRecorder?.state === "recording") {
+    window.alert("已有录音正在进行，请先停止当前录音。");
+    return;
+  }
+
+  const question = getQuestion(type, questionIndex);
+  const key = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segmentId);
+  try {
+    const stream = await getReusableSpeakingStream();
+    activeSpeakingChunks = [];
+    activeSpeakingKey = key;
+    activeSpeakingRecorder = new MediaRecorder(stream);
+    activeSpeakingRecorder.addEventListener("dataavailable", (event) => {
+      if (event.data?.size) activeSpeakingChunks.push(event.data);
+    });
+    activeSpeakingRecorder.addEventListener("stop", () => {
+      stopSpeakingMeter();
+      const blob = new Blob(activeSpeakingChunks, { type: activeSpeakingRecorder.mimeType || "audio/webm" });
+      const previous = speakingRecordings.get(key);
+      if (previous?.url) URL.revokeObjectURL(previous.url);
+      speakingRecordings.set(key, {
+        blob,
+        url: URL.createObjectURL(blob),
+        recordedAt: new Date().toISOString(),
+      });
+      activeSpeakingRecorder = null;
+      activeSpeakingChunks = [];
+      activeSpeakingKey = "";
+      saveSpeakingAttempt(subject, type, questionIndex, question);
+      renderSpeakingQuestion(subject, type, questionIndex);
+    });
+    activeSpeakingRecorder.start();
+    renderSpeakingQuestion(subject, type, questionIndex);
+    startSpeakingMeter(stream, key);
+  } catch (error) {
+    cleanupSpeakingStream();
+    activeSpeakingRecorder = null;
+    activeSpeakingChunks = [];
+    activeSpeakingKey = "";
+    window.alert("无法开启麦克风。请检查浏览器麦克风权限后再试。");
+  }
+}
+
+function stopSpeakingRecording() {
+  if (activeSpeakingRecorder?.state === "recording") {
+    activeSpeakingRecorder.stop();
+  }
+}
+
+function clearSpeakingRecording(subject, type, questionIndex) {
+  const question = getQuestion(type, questionIndex);
+  const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  getSpeakingSegments(subject, type, questionIndex, question).forEach((segment) => {
+    const recordingKey = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id);
+    const recording = speakingRecordings.get(recordingKey);
+    if (recording?.url) URL.revokeObjectURL(recording.url);
+    speakingRecordings.delete(recordingKey);
+  });
+  delete mockProgress.answers[progressKey];
+  saveProgress();
+  renderSpeakingQuestion(subject, type, questionIndex);
+}
+
+function renderSpeakingMonologue(subject, type, questionIndex, question) {
+  const questionNumbers = getQuestionNumbers(type);
+  const currentPosition = questionNumbers.indexOf(questionIndex);
+  const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
+  const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
+  const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
+  const anyRecordingNow = activeSpeakingRecorder?.state === "recording";
+  let segments = getSpeakingSegments(subject, type, questionIndex, question);
+  let completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
+  if (!anyRecordingNow && completed.length === segments.length && completed.length < expectedSegmentCount) {
+    segments = getSpeakingSegments(subject, type, questionIndex, question, { drawNext: true });
+    completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
+  }
+  const allComplete = completed.length >= expectedSegmentCount;
+  const promptList = (question.prompts || [])
+    .map((prompt) => `<li>${escapeHTML(prompt)}</li>`)
+    .join("");
+
+  const segmentCards = segments
+    .map((segment, index) => {
+      const recordingKey = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id);
+      const recording = speakingRecordings.get(recordingKey);
+      const recordingNow = isSpeakingRecording(recordingKey);
+      return `
+        <article class="mock-speaking-segment ${recordingNow ? "is-recording" : ""}">
+          <div class="mock-speaking-segment-head">
+            <div>
+              <span>${escapeHTML(segment.label)}</span>
+              <strong>${recording ? "Recorded" : "Ready"}</strong>
+            </div>
+            <em>${escapeHTML(segment.timeLimit)}</em>
+          </div>
+          <p>${escapeHTML(segment.prompt)}</p>
+          <div class="mock-speaking-meter ${recordingNow ? "is-active" : ""}" aria-label="Microphone input level" data-speaking-meter="${escapeHTML(recordingKey)}">
+            <span></span>
+          </div>
+          <div class="mock-speaking-actions">
+            <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"} data-speaking-segment="${segment.id}" ${!recordingNow && anyRecordingNow ? "disabled" : ""}>
+              ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
+            </button>
+          </div>
+          ${
+            recording
+              ? `<audio class="mock-speaking-audio" controls src="${escapeHTML(recording.url)}"></audio>`
+              : `<div class="mock-speaking-empty">No recording yet.</div>`
+          }
+        </article>
+      `;
+    })
+    .join("");
+
+  mockStage.innerHTML = `
+    <div class="mock-question-view">
+      <div class="mock-question-topbar">
+        <button class="mock-back" type="button" data-reset="questions" ${anyRecordingNow ? "disabled" : ""}>返回题号</button>
+        <span>${subject.title} · ${type.title} · Monologue</span>
+      </div>
+      <div class="mock-speaking-monologue-layout">
+        <section class="mock-speaking-prompt-card">
+          <p class="eyebrow">Speaking Practice</p>
+          <h3>Monologue</h3>
+          <p class="mock-speaking-type">Main topic + 3 follow-up questions</p>
+          <p class="mock-speaking-question">${escapeHTML(question.text || "")}</p>
+          <div class="mock-speaking-cue-card">
+            <strong>You should say:</strong>
+            <ul>${promptList}</ul>
+          </div>
+          <div class="mock-speaking-meta">
+            <span>Preparation: ${escapeHTML(question.preparationTime || "1 minute")}</span>
+            <span>Main response: ${escapeHTML(question.timeLimit || "2 minutes")}</span>
+            <span>Progress: ${completed.length}/${expectedSegmentCount} recordings</span>
+          </div>
+        </section>
+        <section class="mock-speaking-recorder-card">
+          <p class="eyebrow">Recorder</p>
+          <h3>Record Each Part</h3>
+          <p class="mock-speaking-status ${anyRecordingNow ? "is-recording" : ""}">
+            ${anyRecordingNow ? "Recording now..." : allComplete ? "All recordings are ready. Submit them together for review." : "Record the current question. The next follow-up will appear only after you finish."}
+          </p>
+          <div class="mock-speaking-segment-list">
+            ${segmentCards}
+          </div>
+          <p class="mock-answer-note">Monologue 会把主陈述和 3 个追问一起提交评分。当前评分接口先预留，录音只保存在当前浏览器页面中。</p>
+          <div class="mock-question-actions">
+            <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
+            <button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>提交评分</button>
+            <button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
+            <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  `;
+
+  if (allComplete) {
+    mockProgress.answers[progressKey] = {
+      ...(mockProgress.answers[progressKey] || {}),
+      answer: "completed",
+      graded: false,
+      correct: null,
+      speakingCompletedSegments: completed.map((segment) => segment.id),
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+  }
+}
+
+function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
+  const questionNumbers = getQuestionNumbers(type);
+  const currentPosition = questionNumbers.indexOf(questionIndex);
+  const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
+  const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
+  const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const segments = getSpeakingSegments(subject, type, questionIndex, question);
+  const completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
+  const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
+  const allComplete = completed.length >= expectedSegmentCount;
+  const anyRecordingNow = activeSpeakingRecorder?.state === "recording";
+
+  const segmentCards = segments
+    .map((segment) => {
+      const recordingKey = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id);
+      const recording = speakingRecordings.get(recordingKey);
+      const recordingNow = isSpeakingRecording(recordingKey);
+      return `
+        <article class="mock-speaking-segment ${recordingNow ? "is-recording" : ""}">
+          <div class="mock-speaking-segment-head">
+            <div>
+              <span>${escapeHTML(segment.label)}</span>
+              <strong>${recording ? "Recorded" : "Ready"}</strong>
+            </div>
+            <em>${escapeHTML(segment.timeLimit)}</em>
+          </div>
+          <p>${escapeHTML(segment.prompt)}</p>
+          <div class="mock-speaking-meter ${recordingNow ? "is-active" : ""}" aria-label="Microphone input level" data-speaking-meter="${escapeHTML(recordingKey)}">
+            <span></span>
+          </div>
+          <div class="mock-speaking-actions">
+            <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"} data-speaking-segment="${segment.id}" ${!recordingNow && anyRecordingNow ? "disabled" : ""}>
+              ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
+            </button>
+          </div>
+          ${
+            recording
+              ? `<audio class="mock-speaking-audio" controls src="${escapeHTML(recording.url)}"></audio>`
+              : `<div class="mock-speaking-empty">No recording yet.</div>`
+          }
+        </article>
+      `;
+    })
+    .join("");
+
+  mockStage.innerHTML = `
+    <div class="mock-question-view">
+      <div class="mock-question-topbar">
+        <button class="mock-back" type="button" data-reset="questions" ${anyRecordingNow ? "disabled" : ""}>返回题号</button>
+        <span>${subject.title} · ${type.title} · Picture-based Questions</span>
+      </div>
+      <div class="mock-speaking-picture-layout">
+        <section class="mock-speaking-prompt-card">
+          <p class="eyebrow">Picture-based Speaking</p>
+          <h3>${escapeHTML(question.imageTitle || "Picture Task")}</h3>
+          <p class="mock-speaking-type">Look at the picture and answer all questions</p>
+          <div class="mock-speaking-image-card">
+            <img src="${escapeHTML(question.image)}" alt="${escapeHTML(question.imageTitle || "Speaking picture")}" />
+          </div>
+          <div class="mock-speaking-meta">
+            <span>${expectedSegmentCount} questions</span>
+            <span>${escapeHTML(question.timeLimit || "30 seconds per question")}</span>
+            <span>Progress: ${completed.length}/${expectedSegmentCount} recordings</span>
+          </div>
+        </section>
+        <section class="mock-speaking-recorder-card">
+          <p class="eyebrow">Recorder</p>
+          <h3>Answer the Questions</h3>
+          <p class="mock-speaking-status ${anyRecordingNow ? "is-recording" : ""}">
+            ${anyRecordingNow ? "Recording now..." : allComplete ? "All recordings are ready. Submit them together for review." : "Record one answer for each picture question."}
+          </p>
+          <div class="mock-speaking-segment-list">
+            ${segmentCards}
+          </div>
+          <p class="mock-answer-note">图片说明会保存在后台数据中用于未来评分，不会显示给学生。当前录音只保存在当前浏览器页面。</p>
+          <div class="mock-question-actions">
+            <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
+            <button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>提交评分</button>
+            <button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
+            <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  `;
+
+  if (allComplete) {
+    mockProgress.answers[progressKey] = {
+      ...(mockProgress.answers[progressKey] || {}),
+      answer: "completed",
+      graded: false,
+      correct: null,
+      speakingCompletedSegments: completed.map((segment) => segment.id),
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+  }
+}
+
+function renderSpeakingQuestion(subject, type, questionIndex) {
+  if (!mockStage) return;
+
+  const questionNumbers = getQuestionNumbers(type);
+  const currentPosition = questionNumbers.indexOf(questionIndex);
+  const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
+  const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
+  const question = getQuestion(type, questionIndex);
+  if (question?.speakingMode === "monologue") {
+    renderSpeakingMonologue(subject, type, questionIndex, question);
+    return;
+  }
+  if (question?.speakingMode === "picture-response") {
+    renderSpeakingPictureResponse(subject, type, questionIndex, question);
+    return;
+  }
+  const key = getSpeakingRecordingKey(subject.id, type.id, questionIndex);
+  const recording = speakingRecordings.get(key);
+  const recordingNow = isSpeakingRecording(key);
+  const statusText = recordingNow
+    ? "Recording now..."
+    : recording
+      ? "Recording saved for this session. You can listen back or record again."
+      : "This warm-up question is not scored. Record your answer and listen back to check clarity.";
+
+  mockStage.innerHTML = `
+    <div class="mock-question-view">
+      <div class="mock-question-topbar">
+        <button class="mock-back" type="button" data-reset="questions">返回题号</button>
+        <span>${subject.title} · ${type.title} · Question ${questionIndex}</span>
+      </div>
+      <div class="mock-speaking-layout">
+        <section class="mock-speaking-prompt-card">
+          <p class="eyebrow">Speaking Practice</p>
+          <h3>Question ${questionIndex}</h3>
+          <p class="mock-speaking-type">${escapeHTML(question.speakingTitle || "Warm-up Questions")} · Not scored</p>
+          <p class="mock-speaking-question">${escapeHTML(question.text || "")}</p>
+          <div class="mock-speaking-meta">
+            <span>Suggested time: ${escapeHTML(question.timeLimit || "30 seconds")}</span>
+            <span>Focus: clear answer, natural pace, complete sentence</span>
+          </div>
+        </section>
+        <section class="mock-speaking-recorder-card">
+          <p class="eyebrow">Recorder</p>
+          <h3>Record Your Answer</h3>
+          <p class="mock-speaking-status ${recordingNow ? "is-recording" : ""}">${statusText}</p>
+          <div class="mock-speaking-meter ${recordingNow ? "is-active" : ""}" aria-label="Microphone input level" data-speaking-meter="${escapeHTML(key)}">
+            <span></span>
+          </div>
+          <div class="mock-speaking-actions">
+            <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"}>
+              ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
+            </button>
+            <button class="button ghost dark" type="button" data-clear-speaking-recording ${recording && !recordingNow ? "" : "disabled"}>Clear</button>
+          </div>
+          ${
+            recording
+              ? `<audio class="mock-speaking-audio" controls src="${escapeHTML(recording.url)}"></audio>`
+              : `<div class="mock-speaking-empty">No recording yet.</div>`
+          }
+          <p class="mock-answer-note">录音只保存在当前浏览器页面中，不会上传，也不会计分。</p>
+          <div class="mock-question-actions">
+            <button class="button ghost dark" type="button" ${previous && !recordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
+            <button class="button ghost dark" type="button" data-reset="questions" ${recordingNow ? "disabled" : ""}>返回题号</button>
+            <button class="button primary" type="button" ${next && !recordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  `;
+}
+
 function renderQuestion(subject, type, questionIndex) {
   if (!mockStage) return;
 
@@ -1014,6 +1889,16 @@ function renderQuestion(subject, type, questionIndex) {
   const key = getQuestionKey(subject.id, type.id, questionIndex);
   const record = mockProgress.answers[key];
   const question = getQuestion(type, questionIndex);
+  if (type.id === "listening" && question?.listeningGroupId) {
+    clearWritingTimerInterval();
+    renderListeningGroup(subject, type, question.listeningGroupId);
+    return;
+  }
+  if (type.id === "speaking" && question?.speakingMode) {
+    clearWritingTimerInterval();
+    renderSpeakingQuestion(subject, type, questionIndex);
+    return;
+  }
   const correctAnswer = getCorrectAnswer(type, questionIndex);
   const answerType = getQuestionAnswerType(question);
   if (!isAiReviewQuestion(question)) clearWritingTimerInterval();
@@ -1091,10 +1976,11 @@ function renderQuestion(subject, type, questionIndex) {
     </div>
   `;
   const canRetryAiReview = hasSuccessfulAiReview(record);
+  const aiSubmitLocked = !canRetryAiReview && hasPendingAiReview();
   const aiActionButtons = `
     <div class="mock-question-actions">
       <button class="button ghost dark" type="button" ${previous ? `data-question="${previous}"` : "disabled"}>上一题</button>
-      <button class="button primary" type="button" ${canRetryAiReview ? "data-view-ai-review" : "data-submit-ai-review"}>
+      <button class="button primary" type="button" ${canRetryAiReview ? "data-view-ai-review" : "data-submit-ai-review"} ${aiSubmitLocked ? "disabled" : ""}>
         ${canRetryAiReview ? "看评论" : "提交并批改"}
       </button>
       ${canRetryAiReview ? `<button class="button ghost dark" type="button" data-retry-ai-question>再试一次</button>` : ""}
@@ -1476,6 +2362,16 @@ function normalizeStringArray(value) {
   return value.map((item) => String(item || "").trim()).filter(Boolean);
 }
 
+function hashString(value) {
+  let hash = 0;
+  const text = String(value || "");
+  for (let index = 0; index < text.length; index += 1) {
+    hash = (hash << 5) - hash + text.charCodeAt(index);
+    hash |= 0;
+  }
+  return String(hash);
+}
+
 function normalizeAiWritingReviewResult(raw) {
   const languageAccuracy = normalizeScore(raw.language_accuracy, 8);
   const vocabulary = normalizeScore(raw.vocabulary, 4);
@@ -1555,7 +2451,20 @@ async function submitAiWritingReview(subject, type, questionIndex) {
   }
 
   const config = window.rewardSchoolAiConfig || {};
-  const models = config.models || [{ id: "pro", label: "Pro" }];
+  const models = (config.models || [{ id: "pro", label: "Pro" }]).slice(0, 1);
+  const latestRecord = getQuestionRecord(subject.id, type.id, questionIndex);
+  if (hasSuccessfulAiReview(latestRecord)) {
+    openAiWritingReview(subject, type, questionIndex, "ready");
+    return;
+  }
+
+  const pendingKey = `${subject.id}:${type.id}:${questionIndex}`;
+  if (hasPendingAiReview() && !pendingAiReviewKeys.has(pendingKey)) {
+    window.alert("已有一篇作文正在批改中，请等分数回来后再提交下一篇。");
+    return;
+  }
+  if (pendingAiReviewKeys.has(pendingKey)) return;
+  pendingAiReviewKeys.add(pendingKey);
   openAiWritingReview(subject, type, questionIndex, "loading");
 
   try {
@@ -1584,6 +2493,8 @@ async function submitAiWritingReview(subject, type, questionIndex) {
     openAiWritingReview(subject, type, questionIndex, "ready");
   } catch (error) {
     openAiWritingReview(subject, type, questionIndex, "error", error.message || "AI 批改失败，请稍后再试。");
+  } finally {
+    pendingAiReviewKeys.delete(pendingKey);
   }
 }
 
@@ -1595,7 +2506,11 @@ function leaveAndReviewSubject() {
   const confirmed = window.confirm("确定要离开当前题目并批改本科目吗？系统会批改当前科目下所有已作答题目。");
   if (!confirmed) return;
 
-  saveCurrentAnswerFromForm();
+  if (type.id === "listening") {
+    saveListeningGroupAnswers(subject, type);
+  } else {
+    saveCurrentAnswerFromForm();
+  }
 
   mockState = { ...mockState, questionIndex: null };
   openSubjectReview(subject.id);
@@ -1619,6 +2534,20 @@ if (mockApp) {
         }
       }
       saveCurrentAnswerFromForm();
+      return;
+    }
+
+    if (target.name.startsWith("listening-answer-")) {
+      const subject = findSubject(mockState.subjectId);
+      const type = findType(subject, mockState.typeId);
+      if (subject && type) saveListeningGroupAnswers(subject, type);
+      return;
+    }
+
+    if (target.name.startsWith("listening-input-")) {
+      const subject = findSubject(mockState.subjectId);
+      const type = findType(subject, mockState.typeId);
+      if (subject && type) saveListeningGroupAnswers(subject, type);
       return;
     }
 
@@ -1715,6 +2644,34 @@ if (mockApp) {
       return;
     }
 
+    if (target.dataset.startSpeakingRecording !== undefined) {
+      const subject = findSubject(mockState.subjectId);
+      const type = findType(subject, mockState.typeId);
+      if (subject && type && mockState.questionIndex) {
+        startSpeakingRecording(subject, type, mockState.questionIndex, target.dataset.speakingSegment || "answer");
+      }
+      return;
+    }
+
+    if (target.dataset.stopSpeakingRecording !== undefined) {
+      stopSpeakingRecording();
+      return;
+    }
+
+    if (target.dataset.clearSpeakingRecording !== undefined) {
+      const subject = findSubject(mockState.subjectId);
+      const type = findType(subject, mockState.typeId);
+      if (subject && type && mockState.questionIndex) {
+        clearSpeakingRecording(subject, type, mockState.questionIndex);
+      }
+      return;
+    }
+
+    if (target.dataset.submitSpeakingReview !== undefined) {
+      window.alert("Speaking review interface is prepared. We will connect the scoring model after confirming the rubric and API path.");
+      return;
+    }
+
     if (target.dataset.question) {
       saveCurrentAnswerFromForm();
       setMockState({ questionIndex: Number(target.dataset.question) });
@@ -1805,4 +2762,8 @@ document.addEventListener("keydown", (event) => {
     closeSubjectReview();
     closeAiWritingReview();
   }
+});
+
+window.addEventListener("beforeunload", () => {
+  cleanupSpeakingStream();
 });
