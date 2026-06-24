@@ -1,7 +1,7 @@
 const rewardSchoolAiParams = new URLSearchParams(window.location.search);
 const rewardSchoolApiMode = rewardSchoolAiParams.get("api");
 const rewardSchoolApiDebug = rewardSchoolAiParams.get("apiDebug") === "1";
-const REWARD_SCHOOL_FRONTEND_VERSION = "20260625-04";
+const REWARD_SCHOOL_FRONTEND_VERSION = "20260625-05";
 
 const REWARD_SCHOOL_API_BASE_URL =
   window.REWARD_SCHOOL_API_BASE_URL ||
@@ -21,29 +21,44 @@ window.rewardSchoolAiConfig = {
 
 console.info("[Reward School API]", window.rewardSchoolAiConfig);
 
-if (rewardSchoolApiDebug) {
-  window.addEventListener("DOMContentLoaded", () => {
-    const badge = document.createElement("div");
-    const mode = rewardSchoolApiMode === "online" ? "online" : window.location.protocol === "file:" ? "local" : "production";
-    badge.textContent = `v${REWARD_SCHOOL_FRONTEND_VERSION} | API ${mode}: ${REWARD_SCHOOL_API_BASE_URL}`;
-    badge.title = window.rewardSchoolAiConfig.writingReviewEndpoint;
-    Object.assign(badge.style, {
-      position: "fixed",
-      right: "16px",
-      bottom: "16px",
-      zIndex: "99999",
-      maxWidth: "min(520px, calc(100vw - 32px))",
-      padding: "10px 14px",
-      borderRadius: "999px",
-      background: "#06265f",
-      color: "#fff",
-      boxShadow: "0 18px 50px rgba(6, 38, 95, 0.25)",
-      font: "700 13px/1.4 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      letterSpacing: "0.01em",
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-    });
-    document.body.appendChild(badge);
+window.addEventListener("DOMContentLoaded", () => {
+  const badge = document.createElement("div");
+  const mode = rewardSchoolApiMode === "online" ? "online" : window.location.protocol === "file:" ? "local" : "production";
+  badge.textContent = `v${REWARD_SCHOOL_FRONTEND_VERSION} | API ${mode}: ${REWARD_SCHOOL_API_BASE_URL}`;
+  badge.title = window.rewardSchoolAiConfig.writingReviewEndpoint;
+  Object.assign(badge.style, {
+    position: "fixed",
+    right: "16px",
+    bottom: "16px",
+    zIndex: "99999",
+    display: rewardSchoolApiDebug ? "block" : "none",
+    maxWidth: "min(520px, calc(100vw - 32px))",
+    padding: "10px 14px",
+    borderRadius: "999px",
+    background: "#06265f",
+    color: "#fff",
+    boxShadow: "0 18px 50px rgba(6, 38, 95, 0.25)",
+    font: "700 13px/1.4 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    letterSpacing: "0.01em",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   });
-}
+  document.body.appendChild(badge);
+
+  let logoClickCount = 0;
+  let logoClickTimer = null;
+  document.querySelector(".brand")?.addEventListener("click", (event) => {
+    logoClickCount += 1;
+    window.clearTimeout(logoClickTimer);
+    logoClickTimer = window.setTimeout(() => {
+      logoClickCount = 0;
+    }, 1400);
+
+    if (logoClickCount >= 5) {
+      event.preventDefault();
+      badge.style.display = badge.style.display === "none" ? "block" : "none";
+      logoClickCount = 0;
+    }
+  });
+});
