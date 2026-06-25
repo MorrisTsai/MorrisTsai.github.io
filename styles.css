@@ -1242,6 +1242,10 @@ a.service-card:focus-visible {
   background: linear-gradient(135deg, var(--blue), var(--navy));
 }
 
+.mock-hero-panel .mock-hero-trial {
+  background: linear-gradient(135deg, #167255, #0d4d3a);
+}
+
 .mock-hero-panel .mock-hero-status {
   display: grid;
   min-height: 260px;
@@ -2561,13 +2565,13 @@ a.service-card:focus-visible {
 
 .mock-ai-review-dialog {
   display: grid;
-  gap: 18px;
-  width: min(880px, 100%);
+  gap: 16px;
+  width: min(940px, 100%);
   max-height: min(780px, 92vh);
   overflow: auto;
-  padding-bottom: 26px;
-  background: #fff;
-  border-radius: 22px;
+  padding-bottom: 28px;
+  background: #fbfcff;
+  border-radius: 18px;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
 }
 
@@ -2594,10 +2598,10 @@ a.service-card:focus-visible {
   display: grid;
   gap: 4px;
   margin: 0;
-  padding: 22px;
+  padding: 20px;
   color: #fff;
-  background: linear-gradient(135deg, var(--navy), var(--blue));
-  border-radius: 18px;
+  background: linear-gradient(135deg, #153b68, #167255);
+  border-radius: 14px;
 }
 
 .mock-ai-review-total span {
@@ -2636,7 +2640,7 @@ a.service-card:focus-visible {
   padding: 18px;
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 14px;
 }
 
 .mock-ai-error {
@@ -2658,12 +2662,19 @@ a.service-card:focus-visible {
   padding: 16px;
   background: #f8fbff;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 12px;
 }
 
 .mock-ai-score-card {
   display: grid;
-  gap: 6px;
+  align-content: start;
+  gap: 8px;
+  min-height: 0;
+  overflow-wrap: anywhere;
+}
+
+.mock-ai-score-card:nth-child(3) {
+  grid-column: 1 / -1;
 }
 
 .mock-ai-score-card span {
@@ -2695,6 +2706,36 @@ a.service-card:focus-visible {
 
 .mock-ai-feedback-block p {
   margin: 0;
+}
+
+.mock-ai-bilingual-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.mock-ai-bilingual-list li {
+  padding-left: 4px;
+}
+
+.mock-ai-feedback-cn,
+.mock-ai-feedback-en {
+  display: block;
+}
+
+.mock-ai-feedback-cn {
+  color: var(--ink);
+  font-weight: 750;
+  line-height: 1.68;
+}
+
+.mock-ai-feedback-en {
+  margin-top: 3px;
+  color: #54708f;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 .mock-review-close {
@@ -3406,6 +3447,10 @@ a.service-card:focus-visible {
   .mock-reading-passage {
     position: static;
     max-height: none;
+  }
+
+  .mock-ai-score-grid {
+    grid-template-columns: 1fr;
   }
 
   .mock-sidebar {

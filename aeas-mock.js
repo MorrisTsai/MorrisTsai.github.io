@@ -170,7 +170,7 @@ function findType(subject, typeId) {
 }
 
 function escapeHTML(value) {
-  return String(value || "")
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -750,7 +750,7 @@ function closeSubjectReview() {
 function renderAiFeedbackDetail(record) {
   const reviews = Array.isArray(record?.aiReviews) ? record.aiReviews.filter((review) => !review.error) : [];
   if (!reviews.length) {
-    return "这道写作题暂无 AI 反馈。提交并批改后，反馈会显示在这里。";
+    return formatBilingualFeedback("这道题暂无 AI 反馈。提交并批改后，反馈会显示在这里。English note: Submit your response to see bilingual feedback.");
   }
 
   return reviews
@@ -758,9 +758,9 @@ function renderAiFeedbackDetail(record) {
       (review) => `
         <div class="mock-ai-detail">
           <h4>${escapeHTML(review.modelLabel || review.model || "AI Review")} · ${escapeHTML(review.total)}/20 · ${escapeHTML(review.level)}</h4>
-          <p>${escapeHTML(review.overall_feedback || "")}</p>
+          <p>${formatBilingualFeedback(review.overall_feedback || "")}</p>
           <strong>Top improvements</strong>
-          ${renderListItems(review.top_3_improvements, "暂无修改建议。")}
+          ${renderListItems(review.top_3_improvements, "暂无修改建议。English note: Practical revision advice will appear after review.")}
         </div>
       `
     )
@@ -814,7 +814,24 @@ function updateReviewFilters(overlay) {
 }
 
 function hasSuccessfulAiReview(record) {
-  return Array.isArray(record?.aiReviews) && record.aiReviews.some((review) => !review.error && Number.isFinite(Number(review.total)));
+  return Array.isArray(record?.aiReviews) && record.aiReviews.some((review) => (
+    !review.error &&
+    Number.isFinite(Number(review.total)) &&
+    hasChineseAiFeedback(review)
+  ));
+}
+
+function hasChineseAiFeedback(review) {
+  const text = [
+    review?.language_accuracy_reason,
+    review?.vocabulary_reason,
+    review?.content_organisation_reason,
+    review?.overall_feedback,
+    ...(Array.isArray(review?.strengths) ? review.strengths : []),
+    ...(Array.isArray(review?.weaknesses) ? review.weaknesses : []),
+    ...(Array.isArray(review?.top_3_improvements) ? review.top_3_improvements : []),
+  ].join("\n");
+  return /[\u3400-\u9fff]/.test(text);
 }
 
 function hasPendingAiReview() {
@@ -2203,10 +2220,31 @@ function getWritingReviewItems(question) {
 function renderListItems(items, fallback) {
   const list = Array.isArray(items) ? items.filter(Boolean) : [];
   return `
-    <ul>
-      ${(list.length ? list : [fallback]).map((item) => `<li>${escapeHTML(item)}</li>`).join("")}
+    <ul class="mock-ai-bilingual-list">
+      ${(list.length ? list : [fallback]).map((item) => `<li>${formatBilingualFeedback(item)}</li>`).join("")}
     </ul>
   `;
+}
+
+function formatBilingualFeedback(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  const englishMatch = text.match(/\b(English note|English focus|Student note|Practice note)\s*:\s*/i);
+  if (englishMatch && englishMatch.index > 0) {
+    const chinese = text.slice(0, englishMatch.index).trim();
+    const english = text.slice(englishMatch.index + englishMatch[0].length).trim();
+    return `
+      <span class="mock-ai-feedback-cn">${escapeHTML(chinese)}</span>
+      <span class="mock-ai-feedback-en">${escapeHTML(english)}</span>
+    `;
+  }
+  const lines = text.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length > 1) {
+    return lines
+      .map((line, index) => `<span class="${index === 0 ? "mock-ai-feedback-cn" : "mock-ai-feedback-en"}">${escapeHTML(line)}</span>`)
+      .join("");
+  }
+  return `<span class="mock-ai-feedback-cn">${escapeHTML(text)}</span>`;
 }
 
 function renderAiWritingModelResult(review, isLoading) {
@@ -2220,13 +2258,13 @@ function renderAiWritingModelResult(review, isLoading) {
           : modelError
             ? modelError
           : isLoading
-            ? "AI is reviewing this essay."
-            : "Waiting for AI review";
+            ? "AI 正在批改，请稍等。English note: Your feedback will appear here soon."
+            : "提交后会显示批改意见。English note: Submit your response to generate feedback.";
       return `
         <div class="mock-ai-score-card">
           <span>${escapeHTML(item.title)}</span>
           <strong>${escapeHTML(score)}/${item.max}</strong>
-          <small>${escapeHTML(reason)}</small>
+          <small>${formatBilingualFeedback(reason)}</small>
         </div>
       `;
     })
@@ -2245,19 +2283,19 @@ function renderAiWritingModelResult(review, isLoading) {
       </div>
       <div class="mock-ai-feedback-block">
         <h4>Overall Feedback</h4>
-        <p>${escapeHTML(hasScore ? review.overall_feedback : isLoading ? "AI is generating feedback." : "Submit the essay to generate feedback.")}</p>
+        <p>${formatBilingualFeedback(hasScore ? review.overall_feedback : isLoading ? "AI 正在生成整体反馈。English note: The review is being prepared." : "提交后会显示整体反馈。English note: Submit your response to generate feedback.")}</p>
       </div>
       <div class="mock-ai-feedback-block">
         <h4>Strengths</h4>
-        ${renderListItems(hasScore ? review.strengths : [], isLoading ? "Reviewing strengths..." : "No strengths generated yet.")}
+        ${renderListItems(hasScore ? review.strengths : [], isLoading ? "正在分析亮点。English note: Strengths will appear shortly." : "暂无亮点反馈。English note: Submit your response to generate strengths.")}
       </div>
       <div class="mock-ai-feedback-block">
         <h4>Weaknesses</h4>
-        ${renderListItems(hasScore ? review.weaknesses : [], isLoading ? "Reviewing weaknesses..." : "No weaknesses generated yet.")}
+        ${renderListItems(hasScore ? review.weaknesses : [], isLoading ? "正在分析薄弱点。English note: Weaknesses will appear shortly." : "暂无薄弱点反馈。English note: Submit your response to generate weaknesses.")}
       </div>
       <div class="mock-ai-feedback-block">
         <h4>Top 3 Improvements</h4>
-        ${renderListItems(hasScore ? review.top_3_improvements : [], isLoading ? "Generating improvement advice..." : "No advice generated yet.")}
+        ${renderListItems(hasScore ? review.top_3_improvements : [], isLoading ? "正在生成改进建议。English note: Practical next steps will appear shortly." : "暂无改进建议。English note: Submit your response to generate next steps.")}
       </div>
     </section>
   `;
@@ -2274,9 +2312,9 @@ function renderAiWritingReview(subject, type, questionIndex, status = "ready", e
   );
   const activeModelIds = new Set(modelNames.map((model) => model.id));
   const reviews = Array.isArray(record?.aiReviews)
-    ? record.aiReviews.filter((review) => activeModelIds.has(review.model))
+    ? record.aiReviews.filter((review) => activeModelIds.has(review.model) && !review.error && hasChineseAiFeedback(review))
     : record?.aiReview
-      ? [{ ...record.aiReview, model: record.aiReview.model || "AI", modelLabel: record.aiReview.modelLabel || "Pro" }]
+      ? [{ ...record.aiReview, model: record.aiReview.model || "AI", modelLabel: record.aiReview.modelLabel || "Pro" }].filter(hasChineseAiFeedback)
       : [];
   const isLoading = status === "loading";
   const hasReview = reviews.length > 0;
@@ -2289,9 +2327,9 @@ function renderAiWritingReview(subject, type, questionIndex, status = "ready", e
       <div class="mock-ai-review-dialog" role="dialog" aria-modal="true" aria-label="Writing AI review">
         <div class="mock-review-header">
           <div>
-            <p class="eyebrow">AI Writing Review</p>
-            <h3>Writing Feedback</h3>
-            <p>${isLoading ? "AI 正在批改作文，请稍等。" : hasReview ? "以下为 AI 根据写作诊断维度生成的评分与反馈。" : "提交作文后会显示 AI 批改结果。"} Essay word count: ${wordCount}</p>
+            <p class="eyebrow">AI Bilingual Review</p>
+            <h3>AI 批改反馈</h3>
+            <p>${isLoading ? "AI 正在批改，请稍等。" : hasReview ? "以下为 AI 根据诊断维度生成的中英双语评分与反馈。" : "提交后会显示 AI 中英双语批改结果。"} Word count: ${wordCount}</p>
           </div>
           <button class="mock-review-close" type="button" data-close-ai-review>关闭</button>
         </div>
@@ -2367,6 +2405,23 @@ function normalizeStringArray(value) {
   return value.map((item) => String(item || "").trim()).filter(Boolean);
 }
 
+function composeBilingualText(zh, en, fallback = "") {
+  const cleanZh = String(zh || "").trim();
+  const cleanEn = String(en || "").trim();
+  if (cleanZh && cleanEn) return `${cleanZh} English note: ${cleanEn}`;
+  if (cleanZh) return cleanZh;
+  if (cleanEn) return `English note: ${cleanEn}`;
+  return String(fallback || "").trim();
+}
+
+function composeBilingualList(zhItems, enItems, fallbackItems = []) {
+  const zhList = normalizeStringArray(zhItems);
+  const enList = normalizeStringArray(enItems);
+  const maxLength = Math.max(zhList.length, enList.length);
+  if (!maxLength) return normalizeStringArray(fallbackItems);
+  return Array.from({ length: maxLength }, (_, index) => composeBilingualText(zhList[index], enList[index])).filter(Boolean);
+}
+
 function hashString(value) {
   let hash = 0;
   const text = String(value || "");
@@ -2384,17 +2439,31 @@ function normalizeAiWritingReviewResult(raw) {
   const total = normalizeScore(raw.total ?? languageAccuracy + vocabulary + contentOrganisation, 20);
   return {
     language_accuracy: languageAccuracy,
-    language_accuracy_reason: String(raw.language_accuracy_reason || "").trim(),
+    language_accuracy_reason: composeBilingualText(raw.language_accuracy_reason_zh, raw.language_accuracy_reason_en, raw.language_accuracy_reason),
+    language_accuracy_reason_zh: String(raw.language_accuracy_reason_zh || "").trim(),
+    language_accuracy_reason_en: String(raw.language_accuracy_reason_en || "").trim(),
     vocabulary,
-    vocabulary_reason: String(raw.vocabulary_reason || "").trim(),
+    vocabulary_reason: composeBilingualText(raw.vocabulary_reason_zh, raw.vocabulary_reason_en, raw.vocabulary_reason),
+    vocabulary_reason_zh: String(raw.vocabulary_reason_zh || "").trim(),
+    vocabulary_reason_en: String(raw.vocabulary_reason_en || "").trim(),
     content_organisation: contentOrganisation,
-    content_organisation_reason: String(raw.content_organisation_reason || "").trim(),
+    content_organisation_reason: composeBilingualText(raw.content_organisation_reason_zh, raw.content_organisation_reason_en, raw.content_organisation_reason),
+    content_organisation_reason_zh: String(raw.content_organisation_reason_zh || "").trim(),
+    content_organisation_reason_en: String(raw.content_organisation_reason_en || "").trim(),
     total,
     level: String(raw.level || "").trim(),
-    overall_feedback: String(raw.overall_feedback || "").trim(),
-    strengths: normalizeStringArray(raw.strengths),
-    weaknesses: normalizeStringArray(raw.weaknesses),
-    top_3_improvements: normalizeStringArray(raw.top_3_improvements),
+    overall_feedback: composeBilingualText(raw.overall_feedback_zh, raw.overall_feedback_en, raw.overall_feedback),
+    overall_feedback_zh: String(raw.overall_feedback_zh || "").trim(),
+    overall_feedback_en: String(raw.overall_feedback_en || "").trim(),
+    strengths: composeBilingualList(raw.strengths_zh, raw.strengths_en, raw.strengths),
+    strengths_zh: normalizeStringArray(raw.strengths_zh),
+    strengths_en: normalizeStringArray(raw.strengths_en),
+    weaknesses: composeBilingualList(raw.weaknesses_zh, raw.weaknesses_en, raw.weaknesses),
+    weaknesses_zh: normalizeStringArray(raw.weaknesses_zh),
+    weaknesses_en: normalizeStringArray(raw.weaknesses_en),
+    top_3_improvements: composeBilingualList(raw.top_3_improvements_zh, raw.top_3_improvements_en, raw.top_3_improvements),
+    top_3_improvements_zh: normalizeStringArray(raw.top_3_improvements_zh),
+    top_3_improvements_en: normalizeStringArray(raw.top_3_improvements_en),
     reviewedAt: new Date().toISOString(),
   };
 }
