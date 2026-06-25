@@ -47,6 +47,11 @@ window.rewardSchoolApi = {
         throw timeoutError;
       }
       if (error?.message?.startsWith("Writing review API")) throw error;
+      if (config.requiresSecureApi && endpoint.startsWith("http://")) {
+        throw new Error(
+          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html"} for AI review.`
+        );
+      }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
     } finally {
       window.clearTimeout(timeoutId);
@@ -79,5 +84,14 @@ function getApiMode() {
 }
 
 function getDefaultWritingReviewEndpoint() {
+  const config = window.rewardSchoolAiConfig || {};
+  if (config.writingReviewEndpoint) {
+    return config.writingReviewEndpoint;
+  }
+
+  if (window.location.hostname === "39.105.34.236") {
+    return `${window.location.origin}/api/aeas/writing/review`;
+  }
+
   return "http://39.105.34.236/api/aeas/writing/review";
 }

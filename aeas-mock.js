@@ -2513,7 +2513,23 @@ function leaveAndReviewSubject() {
   openSubjectReview(subject.id);
 }
 
+function showSecureApiNotice() {
+  const config = window.rewardSchoolAiConfig || {};
+  if (!config.requiresSecureApi || document.querySelector("[data-secure-api-notice]")) return;
+
+  const notice = document.createElement("div");
+  notice.className = "mock-ai-error";
+  notice.dataset.secureApiNotice = "true";
+  notice.innerHTML = `
+    <strong>AI 批改需要切换到 HTTP 版本页面。</strong>
+    当前是 HTTPS 页面，浏览器会拦截对 HTTP API 的请求。
+    <a href="${escapeHTML(config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html")}">打开可用版本</a>
+  `;
+  mockApp?.insertAdjacentElement("afterbegin", notice);
+}
+
 if (mockApp) {
+  showSecureApiNotice();
   mockApp.addEventListener("change", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
