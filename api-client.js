@@ -1,35 +1,83 @@
 window.rewardSchoolApi = {
   async reviewWriting({ question, essay, sourceId }) {
     const config = window.rewardSchoolAiConfig || {};
-    if (!config.writingReviewEndpoint) {
-      throw new Error("Writing review API endpoint is missing.");
-    }
-
-    const endpoint = config.writingReviewEndpoint;
+    const endpoint = getWritingReviewEndpoint(config);
+    const timeoutMs = Number(config.requestTimeoutMs || 65000);
     window.rewardSchoolApi.lastEndpoint = endpoint;
 
     let response;
+    const controller = new AbortController();
+    let didTimeout = false;
+    let timeoutId = 0;
+    const timeoutError = new Error(`Writing review API timed out after ${Math.round(timeoutMs / 1000)} seconds at ${endpoint}.`);
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = window.setTimeout(() => {
+        didTimeout = true;
+        controller.abort();
+        reject(timeoutError);
+      }, timeoutMs);
+    });
+
     try {
-      response = await fetch(endpoint, {
+      response = await Promise.race([fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        signal: controller.signal,
         body: JSON.stringify({
           question,
           essay,
           sourceId,
         }),
-      });
+      }), timeoutPromise]);
+
+      const responseText = await Promise.race([response.text(), timeoutPromise]);
+      if (!response.ok) {
+        throw new Error(`Writing review API failed at ${endpoint}: ${response.status} ${responseText.slice(0, 180)}`);
+      }
+
+      try {
+        return JSON.parse(responseText);
+      } catch (error) {
+        throw new Error(`Writing review API returned invalid JSON from ${endpoint}: ${responseText.slice(0, 180)}`);
+      }
     } catch (error) {
+      if (didTimeout || error === timeoutError || error?.name === "AbortError") {
+        throw timeoutError;
+      }
+      if (error?.message?.startsWith("Writing review API")) throw error;
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
+    } finally {
+      window.clearTimeout(timeoutId);
     }
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Writing review API failed at ${endpoint}: ${response.status} ${errorText.slice(0, 180)}`);
-    }
-
-    return response.json();
   },
 };
+
+function getWritingReviewEndpoint(config) {
+  const mode = getApiMode();
+  if (mode === "local") {
+    return "http://localhost:5132/api/aeas/writing/review";
+  }
+
+  if (config.writingReviewEndpoint) {
+    return config.writingReviewEndpoint;
+  }
+
+  if (mode === "online") {
+    return "http://39.105.34.236/api/aeas/writing/review";
+  }
+
+  return getDefaultWritingReviewEndpoint();
+}
+
+function getApiMode() {
+  const searchParams = new URLSearchParams(window.location.search || "");
+  const hashText = (window.location.hash || "").replace(/^#/, "");
+  const hashParams = new URLSearchParams(hashText);
+  return searchParams.get("api") || hashParams.get("api") || "";
+}
+
+function getDefaultWritingReviewEndpoint() {
+  return "http://39.105.34.236/api/aeas/writing/review";
+}

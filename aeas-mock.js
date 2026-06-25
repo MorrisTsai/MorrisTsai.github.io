@@ -1,4 +1,4 @@
-const MOCK_STORAGE_KEY = "rewardSchoolAeasMockProgressV2";
+﻿const MOCK_STORAGE_KEY = "rewardSchoolAeasMockProgressV2";
 const rawMathQuestionGroups = window.aeasMockMathQuestionsByType || {};
 const rawReadingQuestionGroups = window.aeasMockReadingQuestionsByType || {};
 const rawVocabularyQuestionGroups = window.aeasMockVocabularyQuestionsByType || {};
@@ -9,6 +9,7 @@ const rawSpeakingQuestionGroups = window.aeasMockSpeakingQuestionsByType || {};
 const rawNonVerbalQuestionGroups = window.aeasMockNonVerbalQuestionsByType || {};
 const nonVerbalMeta = window.aeasMockNonVerbalMeta || {};
 const pendingAiReviewKeys = new Set();
+const AI_REVIEW_SESSION_COOLDOWN_MS = 60 * 1000;
 const mathQuestionGroups = Object.fromEntries(
   Object.entries(rawMathQuestionGroups).map(([typeId, questions]) => [
     typeId,
@@ -1187,7 +1188,7 @@ function renderAnswerOptions(question, record, correctAnswer) {
                 : ""
             : "";
           const optionImage = image
-            ? `<span class="mock-option-image"><img src="${image}" alt="选项 ${value}" /></span>`
+            ? `<span class="mock-option-image"><img src="${image}" alt="选项 ${value}" loading="lazy" decoding="async" /></span>`
             : "";
           return `
             <label class="mock-option-card ${optionClass}">
@@ -1347,7 +1348,7 @@ function renderListeningGroup(subject, type, groupId) {
           <p>先浏览下方所有题目，再播放音频。音频只需要播放一次，答案会自动保存在本地。</p>
           <p class="mock-listening-stats">${groupStats.attempted}/${groupStats.total} 已做 · 已批改 ${groupStats.graded} 题 · 正确 ${groupStats.correct} 题</p>
         </div>
-        <audio controls preload="metadata" src="${escapeHTML(firstQuestion.audioSrc)}"></audio>
+        <audio controls preload="none" src="${escapeHTML(firstQuestion.audioSrc)}"></audio>
       </section>
       <section class="mock-listening-paper">
         ${questionCards}
@@ -1648,7 +1649,7 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           </div>
           ${
             recording
-              ? `<audio class="mock-speaking-audio" controls src="${escapeHTML(recording.url)}"></audio>`
+              ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
               : `<div class="mock-speaking-empty">No recording yet.</div>`
           }
         </article>
@@ -1749,7 +1750,7 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           </div>
           ${
             recording
-              ? `<audio class="mock-speaking-audio" controls src="${escapeHTML(recording.url)}"></audio>`
+              ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
               : `<div class="mock-speaking-empty">No recording yet.</div>`
           }
         </article>
@@ -1769,7 +1770,7 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           <h3>${escapeHTML(question.imageTitle || "Picture Task")}</h3>
           <p class="mock-speaking-type">Look at the picture and answer all questions</p>
           <div class="mock-speaking-image-card">
-            <img src="${escapeHTML(question.image)}" alt="${escapeHTML(question.imageTitle || "Speaking picture")}" />
+            <img src="${escapeHTML(question.image)}" alt="${escapeHTML(question.imageTitle || "Speaking picture")}" loading="lazy" decoding="async" />
           </div>
           <div class="mock-speaking-meta">
             <span>${expectedSegmentCount} questions</span>
@@ -1868,7 +1869,7 @@ function renderSpeakingQuestion(subject, type, questionIndex) {
           </div>
           ${
             recording
-              ? `<audio class="mock-speaking-audio" controls src="${escapeHTML(recording.url)}"></audio>`
+              ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
               : `<div class="mock-speaking-empty">No recording yet.</div>`
           }
           <p class="mock-answer-note">录音只保存在当前浏览器页面中，不会上传，也不会计分。</p>
@@ -1933,7 +1934,7 @@ function renderQuestion(subject, type, questionIndex) {
     ${renderWordBank(question)}
   `;
   const questionImage = question?.image
-    ? `<div class="mock-question-visual"><img src="${question.image}" alt="${type.title} question ${questionIndex} visual" /></div>`
+    ? `<div class="mock-question-visual"><img src="${question.image}" alt="${type.title} question ${questionIndex} visual" loading="lazy" decoding="async" /></div>`
     : "";
   const aiReviewNotice = isAiReviewQuestion(question)
     ? `
@@ -2411,9 +2412,21 @@ async function requestAiWritingReview(question, essay, modelConfig) {
   });
   return {
     ...normalizeAiWritingReviewResult(payload),
-    model: payload.model || model,
+    model,
     modelLabel: payload.modelLabel || modelLabel,
+    backendModel: payload.model,
   };
+}
+
+function getAiReviewCooldownRemainingMs() {
+  const lastSubmittedAt = Number(mockProgress.aiReviewLastSubmittedAt || 0);
+  if (!Number.isFinite(lastSubmittedAt) || lastSubmittedAt <= 0) return 0;
+  return Math.max(0, AI_REVIEW_SESSION_COOLDOWN_MS - (Date.now() - lastSubmittedAt));
+}
+
+function markAiReviewSubmitted() {
+  mockProgress.aiReviewLastSubmittedAt = Date.now();
+  saveProgress();
 }
 
 async function submitAiWritingReview(subject, type, questionIndex) {
@@ -2439,7 +2452,16 @@ async function submitAiWritingReview(subject, type, questionIndex) {
     return;
   }
   if (pendingAiReviewKeys.has(pendingKey)) return;
+
+  const cooldownRemainingMs = getAiReviewCooldownRemainingMs();
+  if (cooldownRemainingMs > 0) {
+    const seconds = Math.ceil(cooldownRemainingMs / 1000);
+    window.alert(`This session can submit one AI review per minute. Please wait ${seconds} second${seconds === 1 ? "" : "s"} before submitting again.`);
+    return;
+  }
+
   pendingAiReviewKeys.add(pendingKey);
+  markAiReviewSubmitted();
   openAiWritingReview(subject, type, questionIndex, "loading");
 
   try {
@@ -2742,3 +2764,4 @@ document.addEventListener("keydown", (event) => {
 window.addEventListener("beforeunload", () => {
   cleanupSpeakingStream();
 });
+
