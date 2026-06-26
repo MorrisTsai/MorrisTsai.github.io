@@ -61,7 +61,7 @@ window.rewardSchoolApi = {
   async reviewSpeakingSection2({ topicCard, prompts, segments, sourceId, onProgress }) {
     const config = window.rewardSchoolAiConfig || {};
     const endpoint = getSpeakingSection2ReviewEndpoint(config);
-    const timeoutMs = Number(config.speakingRequestTimeoutMs || 360000);
+    const timeoutMs = Number(config.speakingRequestTimeoutMs || 600000);
     window.rewardSchoolApi.lastSpeakingEndpoint = endpoint;
     const reportProgress = typeof onProgress === "function" ? onProgress : () => {};
     const totalSegments = (segments || []).length;
@@ -76,7 +76,7 @@ window.rewardSchoolApi = {
     (segments || []).forEach((segment, index) => {
       const extension = getAudioExtension(segment.blob?.type || "");
       body.append(`audio${String(index).padStart(2, "0")}`, segment.blob, `${segment.id || `segment-${index + 1}`}.${extension}`);
-      reportProgress(`第 ${index + 1}/${totalSegments} 段音频已加入评分队列。`);
+      reportProgress(`第 ${index + 1}/${totalSegments} 段录音已加入评分队列。`);
     });
 
     let response;
@@ -94,7 +94,7 @@ window.rewardSchoolApi = {
 
     try {
       (segments || []).forEach((_, index) => {
-        reportProgress(`第 ${index + 1}/${totalSegments} 段音频已送出，正在等待分析结果。`);
+        reportProgress(`第 ${index + 1}/${totalSegments} 段录音已送出，正在等待分析结果。`);
       });
 
       response = await Promise.race([fetch(endpoint, {
@@ -112,7 +112,7 @@ window.rewardSchoolApi = {
         const payload = JSON.parse(responseText);
         const returnedSegments = Array.isArray(payload?.segments) && payload.segments.length ? payload.segments : segments || [];
         returnedSegments.forEach((_, index) => {
-          reportProgress(`已取得第 ${index + 1}/${totalSegments} 段语音分析结果。`);
+          reportProgress(`已取得第 ${index + 1}/${totalSegments} 段录音分析结果。`);
         });
         reportProgress("正在生成综合评分与中文反馈。");
         return payload;
@@ -124,6 +124,85 @@ window.rewardSchoolApi = {
         throw timeoutError;
       }
       if (error?.message?.startsWith("Speaking review API")) throw error;
+      if (config.requiresSecureApi && endpoint.startsWith("http://")) {
+        throw new Error(
+          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html"} for AI review.`
+        );
+      }
+      throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
+    } finally {
+      window.clearTimeout(timeoutId);
+    }
+  },
+
+  async reviewSpeakingType3({ imageTitle, imageDescription, pictureQuestions, segments, sourceId, onProgress }) {
+    const config = window.rewardSchoolAiConfig || {};
+    const endpoint = getSpeakingType3ReviewEndpoint(config);
+    const timeoutMs = Number(config.speakingRequestTimeoutMs || 600000);
+    window.rewardSchoolApi.lastSpeakingEndpoint = endpoint;
+    const reportProgress = typeof onProgress === "function" ? onProgress : () => {};
+    const totalSegments = (segments || []).length;
+
+    const body = new FormData();
+    body.append("imageTitle", imageTitle || "");
+    body.append("imageDescriptionCore", imageDescription?.core || "");
+    body.append("visibleDetails", JSON.stringify(imageDescription?.visibleDetails || []));
+    body.append("activities", JSON.stringify(imageDescription?.activities || []));
+    body.append("pictureQuestions", JSON.stringify(pictureQuestions || []));
+    body.append("segmentIds", JSON.stringify((segments || []).map((segment) => segment.id || "")));
+    body.append("segmentTypes", JSON.stringify((segments || []).map((segment) => segment.type || "")));
+    if (sourceId) body.append("sourceId", sourceId);
+    (segments || []).forEach((segment, index) => {
+      const extension = getAudioExtension(segment.blob?.type || "");
+      body.append(`audio${String(index).padStart(2, "0")}`, segment.blob, `${segment.id || `segment-${index + 1}`}.${extension}`);
+      reportProgress(`第 ${index + 1}/${totalSegments} 段录音已加入评分队列。`);
+    });
+
+    let response;
+    const controller = new AbortController();
+    let didTimeout = false;
+    let timeoutId = 0;
+    const timeoutError = new Error(`Speaking type 3 review API timed out after ${Math.round(timeoutMs / 1000)} seconds at ${endpoint}.`);
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = window.setTimeout(() => {
+        didTimeout = true;
+        controller.abort();
+        reject(timeoutError);
+      }, timeoutMs);
+    });
+
+    try {
+      (segments || []).forEach((_, index) => {
+        reportProgress(`第 ${index + 1}/${totalSegments} 段录音已送出，正在等待分析结果。`);
+      });
+
+      response = await Promise.race([fetch(endpoint, {
+        method: "POST",
+        signal: controller.signal,
+        body,
+      }), timeoutPromise]);
+
+      const responseText = await Promise.race([response.text(), timeoutPromise]);
+      if (!response.ok) {
+        throw new Error(`Speaking type 3 review API failed at ${endpoint}: ${response.status} ${responseText.slice(0, 180)}`);
+      }
+
+      try {
+        const payload = JSON.parse(responseText);
+        const returnedSegments = Array.isArray(payload?.segments) && payload.segments.length ? payload.segments : segments || [];
+        returnedSegments.forEach((_, index) => {
+          reportProgress(`已取得第 ${index + 1}/${totalSegments} 段录音分析结果。`);
+        });
+        reportProgress("正在生成图片口说综合评分与中文反馈。");
+        return payload;
+      } catch (error) {
+        throw new Error(`Speaking type 3 review API returned invalid JSON from ${endpoint}: ${responseText.slice(0, 180)}`);
+      }
+    } catch (error) {
+      if (didTimeout || error === timeoutError || error?.name === "AbortError") {
+        throw timeoutError;
+      }
+      if (error?.message?.startsWith("Speaking type 3 review API")) throw error;
       if (config.requiresSecureApi && endpoint.startsWith("http://")) {
         throw new Error(
           `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html"} for AI review.`
@@ -177,6 +256,28 @@ function getSpeakingSection2ReviewEndpoint(config) {
 
   const defaultWritingEndpoint = getDefaultWritingReviewEndpoint();
   return defaultWritingEndpoint.replace(/\/aeas\/writing\/review$/, "/aeas/speaking/section2/review");
+}
+
+function getSpeakingType3ReviewEndpoint(config) {
+  if (config.speakingType3ReviewEndpoint) {
+    return config.speakingType3ReviewEndpoint;
+  }
+
+  const mode = getApiMode();
+  if (mode === "local") {
+    return "http://localhost:5132/api/aeas/speaking/type3/review";
+  }
+
+  if (mode === "online") {
+    return "http://39.105.34.236/api/aeas/speaking/type3/review";
+  }
+
+  if (isLocalApiPage()) {
+    return "http://localhost:5132/api/aeas/speaking/type3/review";
+  }
+
+  const defaultWritingEndpoint = getDefaultWritingReviewEndpoint();
+  return defaultWritingEndpoint.replace(/\/aeas\/writing\/review$/, "/aeas/speaking/type3/review");
 }
 
 function isLocalApiPage() {

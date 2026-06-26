@@ -120,6 +120,9 @@ let activeSpeakingRecorder = null;
 let activeSpeakingStream = null;
 let activeSpeakingChunks = [];
 let activeSpeakingKey = "";
+let activeSpeakingStartedAt = 0;
+let activeSpeakingMaxSeconds = 0;
+let activeSpeakingTimerInterval = null;
 let speakingAudioContext = null;
 let speakingAnalyser = null;
 let speakingMeterSource = null;
@@ -249,6 +252,29 @@ function formatTimerSeconds(totalSeconds) {
   const minutes = Math.floor(safeSeconds / 60);
   const seconds = safeSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function cssEscape(value) {
+  if (window.CSS?.escape) return window.CSS.escape(String(value));
+  return String(value).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+}
+
+function parseSpeakingDurationSeconds(value) {
+  const text = String(value || "").toLowerCase();
+  const match = text.match(/(\d+(?:\.\d+)?)/);
+  if (!match) return 30;
+  const amount = Number(match[1]);
+  if (!Number.isFinite(amount) || amount <= 0) return 30;
+  if (text.includes("minute") || text.includes("分钟") || text.includes("分鐘") || text.includes("min")) {
+    return Math.round(amount * 60);
+  }
+  return Math.round(amount);
+}
+
+function getSpeakingRecordingMaxSeconds(segment) {
+  const suggestedSeconds = parseSpeakingDurationSeconds(segment?.timeLimit);
+  const bufferSeconds = suggestedSeconds >= 120 ? 20 : 10;
+  return suggestedSeconds + bufferSeconds;
 }
 
 function ensureQuestionTimer(subjectId, typeId, questionIndex, durationSeconds) {
@@ -1964,6 +1990,45 @@ function isSpeakingRecording(questionKey) {
   return activeSpeakingRecorder?.state === "recording" && activeSpeakingKey === questionKey;
 }
 
+function getActiveSpeakingElapsedSeconds() {
+  return activeSpeakingStartedAt ? Math.floor((Date.now() - activeSpeakingStartedAt) / 1000) : 0;
+}
+
+function updateSpeakingRecordingTimerDisplay() {
+  if (!activeSpeakingKey || !activeSpeakingMaxSeconds) return;
+  const elapsedSeconds = getActiveSpeakingElapsedSeconds();
+  const remainingSeconds = Math.max(0, activeSpeakingMaxSeconds - elapsedSeconds);
+  const escapedKey = cssEscape(activeSpeakingKey);
+  const timerNodes = document.querySelectorAll(`[data-speaking-recording-timer="${escapedKey}"]`);
+  timerNodes.forEach((node) => {
+    node.textContent = `${formatTimerSeconds(elapsedSeconds)} / ${formatTimerSeconds(activeSpeakingMaxSeconds)}`;
+    node.classList.toggle("is-warning", remainingSeconds <= 10 && remainingSeconds > 0);
+    node.classList.toggle("is-expired", remainingSeconds <= 0);
+  });
+  const progressNodes = document.querySelectorAll(`[data-speaking-recording-progress="${escapedKey}"]`);
+  progressNodes.forEach((node) => {
+    node.style.setProperty("--speaking-recording-progress", `${Math.min(100, (elapsedSeconds / activeSpeakingMaxSeconds) * 100)}%`);
+  });
+  if (elapsedSeconds >= activeSpeakingMaxSeconds) {
+    stopSpeakingRecording();
+  }
+}
+
+function stopSpeakingRecordingTimer() {
+  if (activeSpeakingTimerInterval) {
+    window.clearInterval(activeSpeakingTimerInterval);
+    activeSpeakingTimerInterval = null;
+  }
+}
+
+function startSpeakingRecordingTimer(maxSeconds) {
+  stopSpeakingRecordingTimer();
+  activeSpeakingStartedAt = Date.now();
+  activeSpeakingMaxSeconds = maxSeconds;
+  updateSpeakingRecordingTimerDisplay();
+  activeSpeakingTimerInterval = window.setInterval(updateSpeakingRecordingTimerDisplay, 250);
+}
+
 function saveSpeakingAttempt(subject, type, questionIndex, question) {
   const key = getSpeakingProgressKey(subject.id, type.id, questionIndex);
   const segments = getSpeakingSegments(subject, type, questionIndex, question);
@@ -1995,15 +2060,21 @@ async function startSpeakingRecording(subject, type, questionIndex, segmentId = 
 
   const question = getQuestion(type, questionIndex);
   const key = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segmentId);
+  const segment = getSpeakingSegments(subject, type, questionIndex, question, { drawNext: false }).find((item) => item.id === segmentId)
+    || { timeLimit: question?.timeLimit || "30 seconds" };
+  const maxRecordingSeconds = getSpeakingRecordingMaxSeconds(segment);
   try {
     const stream = await getReusableSpeakingStream();
     activeSpeakingChunks = [];
     activeSpeakingKey = key;
+    activeSpeakingStartedAt = Date.now();
+    activeSpeakingMaxSeconds = maxRecordingSeconds;
     activeSpeakingRecorder = new MediaRecorder(stream);
     activeSpeakingRecorder.addEventListener("dataavailable", (event) => {
       if (event.data?.size) activeSpeakingChunks.push(event.data);
     });
     activeSpeakingRecorder.addEventListener("stop", async () => {
+      stopSpeakingRecordingTimer();
       stopSpeakingMeter();
       const blob = new Blob(activeSpeakingChunks, { type: activeSpeakingRecorder.mimeType || "audio/webm" });
       const previous = speakingRecordings.get(key);
@@ -2017,6 +2088,8 @@ async function startSpeakingRecording(subject, type, questionIndex, segmentId = 
       activeSpeakingRecorder = null;
       activeSpeakingChunks = [];
       activeSpeakingKey = "";
+      activeSpeakingStartedAt = 0;
+      activeSpeakingMaxSeconds = 0;
       try {
         await persistSpeakingRecording(subject, type, questionIndex, segmentId, recording);
       } catch (error) {
@@ -2027,12 +2100,16 @@ async function startSpeakingRecording(subject, type, questionIndex, segmentId = 
     });
     activeSpeakingRecorder.start();
     renderSpeakingQuestion(subject, type, questionIndex);
+    startSpeakingRecordingTimer(maxRecordingSeconds);
     startSpeakingMeter(stream, key);
   } catch (error) {
+    stopSpeakingRecordingTimer();
     cleanupSpeakingStream();
     activeSpeakingRecorder = null;
     activeSpeakingChunks = [];
     activeSpeakingKey = "";
+    activeSpeakingStartedAt = 0;
+    activeSpeakingMaxSeconds = 0;
     window.alert("无法开启麦克风。请检查浏览器麦克风权限后再试。");
   }
 }
@@ -2041,6 +2118,21 @@ function stopSpeakingRecording() {
   if (activeSpeakingRecorder?.state === "recording") {
     activeSpeakingRecorder.stop();
   }
+}
+
+function renderSpeakingRecordingTimer(recordingKey, segment, recordingNow) {
+  const maxSeconds = recordingNow && activeSpeakingKey === recordingKey && activeSpeakingMaxSeconds
+    ? activeSpeakingMaxSeconds
+    : getSpeakingRecordingMaxSeconds(segment);
+  const elapsedSeconds = recordingNow && activeSpeakingKey === recordingKey
+    ? getActiveSpeakingElapsedSeconds()
+    : 0;
+  const progress = maxSeconds ? Math.min(100, (elapsedSeconds / maxSeconds) * 100) : 0;
+  return `
+    <div class="mock-speaking-recording-timer" data-speaking-recording-progress="${escapeHTML(recordingKey)}" style="--speaking-recording-progress: ${progress}%">
+      <span data-speaking-recording-timer="${escapeHTML(recordingKey)}">${formatTimerSeconds(elapsedSeconds)} / ${formatTimerSeconds(maxSeconds)}</span>
+    </div>
+  `;
 }
 
 function clearSpeakingRecording(subject, type, questionIndex) {
@@ -2098,6 +2190,7 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           <div class="mock-speaking-meter ${recordingNow ? "is-active" : ""}" aria-label="Microphone input level" data-speaking-meter="${escapeHTML(recordingKey)}">
             <span></span>
           </div>
+          ${renderSpeakingRecordingTimer(recordingKey, segment, recordingNow)}
           <div class="mock-speaking-actions">
             <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"} data-speaking-segment="${segment.id}" ${!recordingNow && anyRecordingNow ? "disabled" : ""}>
               ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
@@ -2199,6 +2292,7 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           <div class="mock-speaking-meter ${recordingNow ? "is-active" : ""}" aria-label="Microphone input level" data-speaking-meter="${escapeHTML(recordingKey)}">
             <span></span>
           </div>
+          ${renderSpeakingRecordingTimer(recordingKey, segment, recordingNow)}
           <div class="mock-speaking-actions">
             <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"} data-speaking-segment="${segment.id}" ${!recordingNow && anyRecordingNow ? "disabled" : ""}>
               ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
@@ -2290,6 +2384,7 @@ function renderSpeakingQuestion(subject, type, questionIndex) {
     const key = getSpeakingRecordingKey(subject.id, type.id, questionIndex);
     const recording = speakingRecordings.get(key);
     const recordingNow = isSpeakingRecording(key);
+    const segment = { id: "answer", label: "Answer", prompt: question?.text || "", timeLimit: question?.timeLimit || "30 seconds" };
     const statusText = recordingNow
       ? "Recording now..."
       : recording
@@ -2320,6 +2415,7 @@ function renderSpeakingQuestion(subject, type, questionIndex) {
           <div class="mock-speaking-meter ${recordingNow ? "is-active" : ""}" aria-label="Microphone input level" data-speaking-meter="${escapeHTML(key)}">
             <span></span>
           </div>
+          ${renderSpeakingRecordingTimer(key, segment, recordingNow)}
           <div class="mock-speaking-actions">
             <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"}>
               ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
@@ -2673,7 +2769,7 @@ function getSpeakingReviewItems() {
 function sanitizeReviewMessage(value) {
   return String(value || "")
     .replace(/DeepSeek/gi, "综合评分服务")
-    .replace(/Xfyun|讯飞|科大讯飞/gi, "语音分析服务")
+    .replace(/Xfyun|讯飞|科大讯飞|ISE/gi, "语音分析服务")
     .replace(/AI\s*/gi, "")
     .trim();
 }
@@ -3010,15 +3106,31 @@ function renderSpeakingReviewProgressLines(lines) {
 
 function startSpeakingReviewProgress(progressKey, segmentCount) {
   const total = Math.max(1, Number(segmentCount) || 1);
-  let activeSegment = 0;
-  setSpeakingReviewProgress(progressKey, [
-    `正在准备 ${total} 段音频评分。`,
-  ]);
+  const startedAt = Date.now();
+  setSpeakingReviewProgress(progressKey, [`正在上传 ${total} 段录音，请稍等。`]);
 
   const timer = window.setInterval(() => {
-    activeSegment = Math.min(total - 1, activeSegment + 1);
-    appendSpeakingReviewProgress(progressKey, `正在分析第 ${activeSegment + 1}/${total} 段音频，请稍等。`);
-  }, 4500);
+    const elapsedSeconds = Math.floor((Date.now() - startedAt) / 1000);
+    const estimatedSegmentSeconds = 42;
+    const segmentIndex = Math.min(total, Math.max(1, Math.floor(elapsedSeconds / estimatedSegmentSeconds) + 1));
+    if (segmentIndex < total) {
+      setSpeakingReviewProgress(progressKey, [`正在分析第 ${segmentIndex}/${total} 段录音，请稍等。`]);
+      return;
+    }
+    if (elapsedSeconds < total * estimatedSegmentSeconds) {
+      setSpeakingReviewProgress(progressKey, [`正在分析第 ${total}/${total} 段录音，长回答可能需要久一点。`]);
+      return;
+    }
+    if (elapsedSeconds < total * estimatedSegmentSeconds + 45) {
+      setSpeakingReviewProgress(progressKey, ["正在整理全部录音的分析结果。"]);
+      return;
+    }
+    if (elapsedSeconds < total * estimatedSegmentSeconds + 120) {
+      setSpeakingReviewProgress(progressKey, ["正在生成综合评分与中文反馈。"]);
+      return;
+    }
+    setSpeakingReviewProgress(progressKey, ["评分仍在处理中，请不要关闭页面；完成后会显示结果。"]);
+  }, 5000);
   speakingReviewProgressTimers.set(progressKey, timer);
 }
 
@@ -3058,6 +3170,58 @@ async function requestAiSpeakingSection2Review(subject, type, questionIndex, que
     ),
   });
   return normalizeAiSpeakingReviewResult(payload);
+}
+
+async function requestAiSpeakingType3Review(subject, type, questionIndex, question) {
+  if (!window.rewardSchoolApi?.reviewSpeakingType3) throw new Error("Reward School speaking type 3 API client is missing.");
+
+  const segments = getSpeakingSegments(subject, type, questionIndex, question);
+  const payloadSegments = segments.map((segment, index) => {
+    const recording = speakingRecordings.get(getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id));
+    return {
+      id: `pictureQuestion${index + 1}`,
+      type: "pictureQuestion",
+      question: segment.prompt,
+      blob: recording?.blob,
+    };
+  });
+
+  if (payloadSegments.some((segment) => !segment.blob)) {
+    throw new Error("请先完成所有图片口说录音，再提交评分。");
+  }
+
+  const payload = await window.rewardSchoolApi.reviewSpeakingType3({
+    imageTitle: question.imageTitle || question.text || "Picture-based Questions",
+    imageDescription: question.scoringImageDescription || {},
+    pictureQuestions: question.pictureQuestions || segments.map((segment) => segment.prompt),
+    segments: payloadSegments,
+    sourceId: String(question.sourceId || question.id || question.number || ""),
+    onProgress: (line) => appendSpeakingReviewProgress(
+      `${subject.id}:${type.id}:${questionIndex}:speaking`,
+      line
+    ),
+  });
+  return normalizeAiSpeakingReviewResult(payload);
+}
+
+function getSpeakingReviewHeading(question) {
+  return question?.speakingMode === "picture-response" ? "口说第三题型" : "口说第二题型";
+}
+
+function getSpeakingReviewSubheading(question, isLoading, hasReview) {
+  if (question?.speakingMode === "picture-response") {
+    return isLoading
+      ? "正在批量提交图片口说录音并评分，请稍等。"
+      : hasReview
+        ? "以下为图片描述题五项评分与中文反馈。"
+        : "提交后会显示图片口说评分结果。";
+  }
+
+  return isLoading
+    ? "正在批量提交录音并评分，请稍等。"
+    : hasReview
+      ? "以下为 Section 2 五项评分与中文反馈。"
+      : "提交后会显示口说评分结果。";
 }
 
 function renderAiSpeakingModelResult(review, isLoading) {
@@ -3129,9 +3293,9 @@ function renderAiSpeakingReview(subject, type, questionIndex, status = "ready", 
       <div class="mock-ai-review-dialog" role="dialog" aria-modal="true" aria-label="Speaking AI review">
         <div class="mock-review-header">
           <div>
-            <p class="eyebrow">口说第二题型</p>
+            <p class="eyebrow">${escapeHTML(getSpeakingReviewHeading(question))}</p>
             <h3>口说评分反馈</h3>
-            <p>${isLoading ? "正在批量提交录音并评分，请稍等。" : hasReview ? "以下为 Section 2 五项评分与中文反馈。" : "提交后会显示口说评分结果。"} ${escapeHTML(question?.speakingTitle || "")}</p>
+            <p>${escapeHTML(getSpeakingReviewSubheading(question, isLoading, hasReview))} ${escapeHTML(question?.speakingTitle || "")}</p>
           </div>
           <button class="mock-review-close" type="button" data-close-ai-review>关闭</button>
         </div>
@@ -3279,8 +3443,8 @@ async function submitAiWritingReview(subject, type, questionIndex) {
 
 async function submitSpeakingSection2Review(subject, type, questionIndex) {
   const question = getQuestion(type, questionIndex);
-  if (!question || question.speakingMode !== "monologue") {
-    window.alert("当前只开放 Section 2 Monologue 口说评分。");
+  if (!question || !["monologue", "picture-response"].includes(question.speakingMode)) {
+    window.alert("当前题型暂未开放口说评分。");
     return;
   }
 
@@ -3319,7 +3483,9 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
   openAiSpeakingReview(subject, type, questionIndex, "loading");
 
   try {
-    const speakingReview = await requestAiSpeakingSection2Review(subject, type, questionIndex, question);
+    const speakingReview = question.speakingMode === "picture-response"
+      ? await requestAiSpeakingType3Review(subject, type, questionIndex, question)
+      : await requestAiSpeakingSection2Review(subject, type, questionIndex, question);
     finishSpeakingReviewProgress(pendingKey);
     mockProgress.answers[key] = {
       ...(mockProgress.answers[key] || {}),

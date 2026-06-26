@@ -56,6 +56,9 @@ const REWARD_SCHOOL_WRITING_REVIEW_ENDPOINT = REWARD_SCHOOL_API_BASE_URL
 const REWARD_SCHOOL_SPEAKING_SECTION2_REVIEW_ENDPOINT = REWARD_SCHOOL_API_BASE_URL
   ? `${REWARD_SCHOOL_API_BASE_URL.replace(/\/$/, "")}/aeas/speaking/section2/review`
   : "/api/aeas/speaking/section2/review";
+const REWARD_SCHOOL_SPEAKING_TYPE3_REVIEW_ENDPOINT = REWARD_SCHOOL_API_BASE_URL
+  ? `${REWARD_SCHOOL_API_BASE_URL.replace(/\/$/, "")}/aeas/speaking/type3/review`
+  : "/api/aeas/speaking/type3/review";
 
 window.rewardSchoolAiConfig = {
   provider: "reward-school-api",
@@ -63,10 +66,11 @@ window.rewardSchoolAiConfig = {
   apiBaseUrl: REWARD_SCHOOL_API_BASE_URL,
   writingReviewEndpoint: REWARD_SCHOOL_WRITING_REVIEW_ENDPOINT,
   speakingSection2ReviewEndpoint: REWARD_SCHOOL_SPEAKING_SECTION2_REVIEW_ENDPOINT,
+  speakingType3ReviewEndpoint: REWARD_SCHOOL_SPEAKING_TYPE3_REVIEW_ENDPOINT,
   onlineFrontendUrl: REWARD_SCHOOL_ONLINE_FRONTEND_URL,
   requiresSecureApi: window.location.protocol === "https:" && isRewardSchoolMarketingHost(window.location.hostname),
   requestTimeoutMs: 65000,
-  speakingRequestTimeoutMs: 360000,
+  speakingRequestTimeoutMs: 600000,
   models: [{ id: "deepseek-v4-pro", label: "AI Review" }],
 };
 

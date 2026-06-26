@@ -1998,6 +1998,45 @@ a.service-card:focus-visible {
   background: linear-gradient(90deg, var(--blue), #18a06d, #d08a1d);
 }
 
+.mock-speaking-recording-timer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-width: 132px;
+  height: 28px;
+  padding: 0 10px;
+  overflow: hidden;
+  color: var(--blue);
+  background: #f4f8fe;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+}
+
+.mock-speaking-recording-timer::before {
+  position: absolute;
+  inset: 0;
+  width: var(--speaking-recording-progress, 0%);
+  content: "";
+  background: rgba(24, 160, 109, 0.14);
+}
+
+.mock-speaking-recording-timer span {
+  position: relative;
+  z-index: 1;
+}
+
+.mock-speaking-recording-timer span.is-warning {
+  color: #b66b00;
+}
+
+.mock-speaking-recording-timer span.is-expired {
+  color: #b22b2b;
+}
+
 .mock-speaking-actions {
   display: flex;
   flex-wrap: wrap;
