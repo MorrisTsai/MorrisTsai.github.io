@@ -34,10 +34,16 @@ server {
 
     root /var/www/reward-school-web;
     index index.html;
+    client_max_body_size 80m;
+    client_body_timeout 420s;
 
     location /api/ {
         proxy_pass http://127.0.0.1:5132/api/;
         proxy_http_version 1.1;
+        proxy_request_buffering off;
+        proxy_connect_timeout 420s;
+        proxy_send_timeout 420s;
+        proxy_read_timeout 420s;
         proxy_set_header Host `$host;
         proxy_set_header X-Real-IP `$remote_addr;
         proxy_set_header X-Forwarded-For `$proxy_add_x_forwarded_for;

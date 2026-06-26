@@ -9,9 +9,13 @@ const rawSpeakingQuestionGroups = window.aeasMockSpeakingQuestionsByType || {};
 const rawNonVerbalQuestionGroups = window.aeasMockNonVerbalQuestionsByType || {};
 const nonVerbalMeta = window.aeasMockNonVerbalMeta || {};
 const pendingAiReviewKeys = new Set();
+const pendingAiReviewMeta = new Map();
 const speakingReviewProgressLogs = new Map();
 const speakingReviewProgressTimers = new Map();
 const AI_REVIEW_SESSION_COOLDOWN_MS = 60 * 1000;
+const SPEAKING_RECORDINGS_DB_NAME = "rewardSchoolAeasMockRecordings";
+const SPEAKING_RECORDINGS_DB_VERSION = 1;
+const SPEAKING_RECORDINGS_STORE = "recordings";
 const mathQuestionGroups = Object.fromEntries(
   Object.entries(rawMathQuestionGroups).map(([typeId, questions]) => [
     typeId,
@@ -144,8 +148,34 @@ function loadProgress() {
   };
 }
 
+function compactMockProgressForStorage(progress) {
+  const compact = JSON.parse(JSON.stringify(progress));
+  Object.values(compact.answers || {}).forEach((answer) => {
+    if (!answer?.speakingRecordings) return;
+    Object.values(answer.speakingRecordings).forEach((recording) => {
+      delete recording.dataUrl;
+    });
+  });
+  return compact;
+}
+
 function saveProgress() {
-  localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(mockProgress));
+  try {
+    localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+    return;
+  } catch (error) {
+    console.warn("Could not save full mock progress:", error);
+  }
+
+  try {
+    const fallback = compactMockProgressForStorage(mockProgress);
+    Object.values(fallback.answers || {}).forEach((answer) => {
+      delete answer.speakingRecordings;
+    });
+    localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(fallback));
+  } catch (error) {
+    console.warn("Could not save mock progress even without recordings:", error);
+  }
 }
 
 function resetProgress() {
@@ -350,7 +380,55 @@ function isAnswerGradable(correctAnswer) {
 }
 
 function isAiReviewQuestion(question) {
-  return question?.reviewMode === "ai";
+  return question?.reviewMode === "ai" || question?.speakingMode === "monologue";
+}
+
+function isSpeakingScoredQuestion(question) {
+  return question?.speakingMode === "monologue";
+}
+
+function parseReviewDetailTarget(detailButton) {
+  const subjectId = detailButton?.dataset?.detailSubject;
+  const typeId = detailButton?.dataset?.detailType;
+  const questionIndex = Number(detailButton?.dataset?.detailQuestion);
+  if (!subjectId || !typeId || !Number.isFinite(questionIndex) || questionIndex <= 0) return null;
+
+  const subject = findSubject(subjectId);
+  const type = findType(subject, typeId);
+  if (!subject || !type) return null;
+  return { subject, type, questionIndex };
+}
+
+function openAiReviewFromDetail(detailButton) {
+  const target = parseReviewDetailTarget(detailButton);
+  if (!target) return false;
+
+  const { subject, type, questionIndex } = target;
+  const question = getQuestion(type, questionIndex);
+  const record = getQuestionRecord(subject.id, type.id, questionIndex);
+
+  if (isSpeakingScoredQuestion(question)) {
+    const status = record?.speakingReviewStatus === "loading"
+      ? "loading"
+      : record?.speakingReview?.error || record?.speakingReviewStatus === "error"
+        ? "error"
+        : "ready";
+    openAiSpeakingReview(subject, type, questionIndex, status, record?.speakingReview?.error || "");
+    return true;
+  }
+
+  if (question?.reviewMode === "ai") {
+    const status = record?.aiReviewStatus === "loading"
+      ? "loading"
+      : record?.aiReviews?.some?.((review) => review.error) || record?.aiReviewStatus === "error"
+        ? "error"
+        : "ready";
+    const errorMessage = record?.aiReviews?.find?.((review) => review.error)?.error || "";
+    openAiWritingReview(subject, type, questionIndex, status, errorMessage);
+    return true;
+  }
+
+  return false;
 }
 
 function compareAnswers(recordAnswer, correctAnswer, question) {
@@ -640,7 +718,13 @@ function renderSubjectReview(subject) {
         const status = isAiQuestion
           ? !record
             ? "未作答"
-            : "已做"
+            : record.speakingReviewStatus === "loading" || record.aiReviewStatus === "loading"
+              ? "批改中"
+              : hasSuccessfulAiReview(record)
+                ? "已批改"
+                : record.speakingReview?.error || record.aiReviews?.some?.((review) => review.error)
+                  ? "批改失败"
+                  : "未批改"
           : !record
             ? "未作答"
             : !record.graded
@@ -662,8 +746,10 @@ function renderSubjectReview(subject) {
         const answer = formatStoredAnswer(record?.answer, question);
         const correctAnswer = isAiQuestion
           ? hasSuccessfulAiReview(record)
-            ? "AI feedback"
-            : "AI pending"
+            ? "已有反馈"
+            : record?.speakingReviewStatus === "loading" || record?.aiReviewStatus === "loading"
+              ? "批改中"
+              : "待补充"
           : isAnswerGradable(getCorrectAnswer(type, number))
             ? formatStoredAnswer(getCorrectAnswer(type, number), question)
             : "待补充";
@@ -676,7 +762,7 @@ function renderSubjectReview(subject) {
             <td>${escapeHTML(answer)}</td>
             <td>${escapeHTML(correctAnswer)}</td>
             <td><span class="mock-review-status ${statusClass}">${status}</span></td>
-            <td><button class="mock-detail-button" type="button" data-toggle-detail="${detailId}">详解</button></td>
+            <td><button class="mock-detail-button" type="button" data-toggle-detail="${detailId}" data-detail-subject="${subject.id}" data-detail-type="${type.id}" data-detail-question="${number}">详解</button></td>
           </tr>
           <tr class="mock-detail-row" data-detail-row="${detailId}" data-review-type="${type.id}" hidden>
             <td colspan="6">${detailContent}</td>
@@ -735,13 +821,20 @@ function renderSubjectReview(subject) {
   `;
 }
 
-function openSubjectReview(subjectId) {
+function openSubjectReview(subjectId, filterTypeId = "") {
   const subject = findSubject(subjectId);
   if (!subject) return;
   gradeSubjectAnswers(subject);
   renderMockApp();
   renderProgressPanel();
   document.body.insertAdjacentHTML("beforeend", renderSubjectReview(subject));
+  const overlay = document.querySelector("[data-review-overlay]");
+  if (overlay && filterTypeId) {
+    overlay.querySelectorAll("[data-review-filter]").forEach((input) => {
+      input.checked = input.value === filterTypeId;
+    });
+    updateReviewFilters(overlay);
+  }
 }
 
 function closeSubjectReview() {
@@ -750,6 +843,12 @@ function closeSubjectReview() {
 }
 
 function renderAiFeedbackDetail(record) {
+  if (record?.speakingReviewStatus === "loading") {
+    return formatBilingualFeedback("口说评分仍在进行中。你可以留在当前页面，也可以稍后回来点击详解查看结果。");
+  }
+  if (record?.speakingReview?.error) {
+    return formatBilingualFeedback(`口说评分失败：${sanitizeReviewMessage(record.speakingReview.error)}`);
+  }
   if (record?.speakingReview && !record.speakingReview.error) {
     const review = record.speakingReview;
     return `
@@ -762,6 +861,10 @@ function renderAiFeedbackDetail(record) {
         ${renderListItems(review.improvements, "暂无改进建议。")}
       </div>
     `;
+  }
+
+  if (record?.aiReviewStatus === "loading") {
+    return formatBilingualFeedback("写作批改仍在进行中。你可以稍后回来点击详解查看结果。");
   }
 
   const reviews = Array.isArray(record?.aiReviews) ? record.aiReviews.filter((review) => !review.error) : [];
@@ -856,6 +959,54 @@ function hasChineseAiFeedback(review) {
 
 function hasPendingAiReview() {
   return pendingAiReviewKeys.size > 0;
+}
+
+function isCurrentQuestion(subjectId, typeId, questionIndex) {
+  return mockState.subjectId === subjectId &&
+    mockState.typeId === typeId &&
+    Number(mockState.questionIndex) === Number(questionIndex);
+}
+
+function setPendingReviewMeta(pendingKey, meta) {
+  pendingAiReviewMeta.set(pendingKey, {
+    ...meta,
+    startedAt: new Date().toISOString(),
+  });
+}
+
+function clearPendingReviewMeta(pendingKey) {
+  pendingAiReviewMeta.delete(pendingKey);
+}
+
+function showReviewToast(message, meta) {
+  document.querySelector("[data-review-toast]")?.remove();
+  const toast = document.createElement("button");
+  toast.type = "button";
+  toast.className = "mock-review-toast";
+  toast.dataset.reviewToast = "1";
+  toast.innerHTML = `
+    <strong>${escapeHTML(message)}</strong>
+    <span>点击查看结果</span>
+  `;
+  toast.addEventListener("click", () => {
+    toast.remove();
+    if (meta?.kind === "speaking") {
+      openAiSpeakingReview(meta.subject, meta.type, meta.questionIndex, meta.status || "ready", meta.errorMessage || "");
+      return;
+    }
+    if (meta?.kind === "writing") {
+      openAiWritingReview(meta.subject, meta.type, meta.questionIndex, meta.status || "ready", meta.errorMessage || "");
+    }
+  });
+  document.body.appendChild(toast);
+  window.setTimeout(() => toast.remove(), 5000);
+}
+
+function maybeNotifyReviewComplete(meta, isError = false) {
+  if (!meta || isCurrentQuestion(meta.subject.id, meta.type.id, meta.questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+    return;
+  }
+  showReviewToast(isError ? "批改遇到问题" : "批改结果已完成", meta);
 }
 
 function getQuestionStatusClass(record, question) {
@@ -963,9 +1114,17 @@ function renderQuestionList(subject, type) {
     mockStage.innerHTML = `
       <div class="mock-stage-heading">
         <button class="mock-back" type="button" data-reset="types">返回题型</button>
-        <p class="eyebrow">Step 04</p>
-        <h3>${type.subtitle} / ${type.title}</h3>
-        <p>请先进入题组浏览所有题目，再播放音频作答。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
+        <div class="mock-stage-title-row">
+          <div>
+            <p class="eyebrow">Step 04</p>
+            <h3>${type.subtitle} / ${type.title}</h3>
+            <p>请先进入题组浏览所有题目，再播放音频作答。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
+          </div>
+          <button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
+            批改 / 查看结果
+            <span>只看本题型</span>
+          </button>
+        </div>
       </div>
       <div class="mock-construction-card mock-listening-test-note">
         <strong>完整听力套题结构</strong>
@@ -1041,9 +1200,17 @@ function renderQuestionList(subject, type) {
     mockStage.innerHTML = `
       <div class="mock-stage-heading">
         <button class="mock-back" type="button" data-reset="types">返回题型</button>
-        <p class="eyebrow">Step 04</p>
-        <h3>Speaking Interview</h3>
-        <p>口说练习分成三个类型：Warm-up 不评分，Monologue 完成主答与随机追问后再整体评分，Picture-based Questions 根据图片逐题作答。</p>
+        <div class="mock-stage-title-row">
+          <div>
+            <p class="eyebrow">Step 04</p>
+            <h3>Speaking Interview</h3>
+            <p>口说练习分成三个类型：Warm-up 不评分，Monologue 完成主答与随机追问后再整体评分，Picture-based Questions 根据图片逐题作答。</p>
+          </div>
+          <button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
+            批改 / 查看结果
+            <span>只看本题型</span>
+          </button>
+        </div>
       </div>
       <div class="mock-reading-group-list">
         ${sectionMarkup}
@@ -1107,9 +1274,17 @@ function renderQuestionList(subject, type) {
   mockStage.innerHTML = `
     <div class="mock-stage-heading">
       <button class="mock-back" type="button" data-reset="types">返回题型</button>
-      <p class="eyebrow">Step 04</p>
-      <h3>${type.subtitle} / ${type.title}</h3>
-      <p>请选择题号进入练习。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
+      <div class="mock-stage-title-row">
+        <div>
+          <p class="eyebrow">Step 04</p>
+          <h3>${type.subtitle} / ${type.title}</h3>
+          <p>请选择题号进入练习。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
+        </div>
+        <button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
+          批改 / 查看结果
+          <span>只看本题型</span>
+        </button>
+      </div>
     </div>
     ${questionListMarkup}
   `;
@@ -1406,6 +1581,238 @@ function getSpeakingProgressKey(subjectId, typeId, questionIndex) {
   return getQuestionKey(subjectId, typeId, questionIndex);
 }
 
+function getSpeakingRecordingStorageKey(subjectId, typeId, questionIndex, segmentId) {
+  return `${MOCK_STORAGE_KEY}:${subjectId}.${typeId}.${questionIndex}:${segmentId}`;
+}
+
+function openSpeakingRecordingsDb() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) {
+      reject(new Error("IndexedDB is not available in this browser."));
+      return;
+    }
+
+    const request = window.indexedDB.open(SPEAKING_RECORDINGS_DB_NAME, SPEAKING_RECORDINGS_DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(SPEAKING_RECORDINGS_STORE)) {
+        db.createObjectStore(SPEAKING_RECORDINGS_STORE);
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error("Could not open speaking recordings database."));
+  });
+}
+
+async function saveSpeakingRecordingBlob(storageKey, blob, metadata = {}) {
+  const db = await openSpeakingRecordingsDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(SPEAKING_RECORDINGS_STORE, "readwrite");
+    tx.objectStore(SPEAKING_RECORDINGS_STORE).put({ blob, ...metadata }, storageKey);
+    tx.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+    tx.onerror = () => {
+      db.close();
+      reject(tx.error || new Error("Could not save speaking recording."));
+    };
+  });
+}
+
+async function loadSpeakingRecordingBlob(storageKey) {
+  const db = await openSpeakingRecordingsDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(SPEAKING_RECORDINGS_STORE, "readonly");
+    const request = tx.objectStore(SPEAKING_RECORDINGS_STORE).get(storageKey);
+    request.onsuccess = () => {
+      db.close();
+      resolve(request.result || null);
+    };
+    request.onerror = () => {
+      db.close();
+      reject(request.error || new Error("Could not load speaking recording."));
+    };
+  });
+}
+
+async function deleteSpeakingRecordingBlobs(storageKeys) {
+  if (!storageKeys.length || !window.indexedDB) return;
+
+  const db = await openSpeakingRecordingsDb();
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction(SPEAKING_RECORDINGS_STORE, "readwrite");
+    const store = tx.objectStore(SPEAKING_RECORDINGS_STORE);
+    storageKeys.forEach((storageKey) => store.delete(storageKey));
+    tx.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+    tx.onerror = () => {
+      db.close();
+      reject(tx.error || new Error("Could not delete speaking recordings."));
+    };
+  });
+}
+
+function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve(String(reader.result || "")));
+    reader.addEventListener("error", () => reject(reader.error || new Error("Could not save recording.")));
+    reader.readAsDataURL(blob);
+  });
+}
+
+function dataUrlToBlob(dataUrl, fallbackType = "audio/webm") {
+  const [header, base64Data = ""] = String(dataUrl || "").split(",");
+  const typeMatch = header.match(/^data:([^;]+);base64$/i);
+  const contentType = typeMatch?.[1] || fallbackType;
+  const binary = window.atob(base64Data);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+  return new Blob([bytes], { type: contentType });
+}
+
+async function persistSpeakingRecording(subject, type, questionIndex, segmentId, recording) {
+  if (!recording?.blob) return;
+  const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const existing = mockProgress.answers[progressKey] || {};
+  const storedRecordings = { ...(existing.speakingRecordings || {}) };
+  const storageKey = getSpeakingRecordingStorageKey(subject.id, type.id, questionIndex, segmentId);
+
+  try {
+    await saveSpeakingRecordingBlob(storageKey, recording.blob, {
+      type: recording.blob.type || "audio/webm",
+      recordedAt: recording.recordedAt || new Date().toISOString(),
+    });
+  } catch (error) {
+    console.warn("Could not persist speaking recording to IndexedDB:", error);
+    return;
+  }
+
+  storedRecordings[segmentId] = {
+    storageKey,
+    type: recording.blob.type || "audio/webm",
+    size: recording.blob.size || 0,
+    recordedAt: recording.recordedAt || new Date().toISOString(),
+  };
+  mockProgress.answers[progressKey] = {
+    ...existing,
+    speakingRecordings: storedRecordings,
+    updatedAt: new Date().toISOString(),
+  };
+  saveProgress();
+}
+
+async function restoreSpeakingRecordings(subject, type, questionIndex, question) {
+  const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const storedRecordings = { ...(mockProgress.answers[progressKey]?.speakingRecordings || {}) };
+  const segments = getSpeakingSegments(subject, type, questionIndex, question);
+  let didStripLegacyData = false;
+
+  for (const segment of segments) {
+    const stored = storedRecordings[segment.id];
+    const recordingKey = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id);
+    if (!stored || speakingRecordings.has(recordingKey)) continue;
+
+    try {
+      let blob = null;
+      if (stored.storageKey) {
+        const entry = await loadSpeakingRecordingBlob(stored.storageKey);
+        blob = entry?.blob || null;
+      } else if (stored.dataUrl) {
+        blob = dataUrlToBlob(stored.dataUrl, stored.type || "audio/webm");
+        const storageKey = getSpeakingRecordingStorageKey(subject.id, type.id, questionIndex, segment.id);
+        await saveSpeakingRecordingBlob(storageKey, blob, {
+          type: stored.type || blob.type || "audio/webm",
+          recordedAt: stored.recordedAt || new Date().toISOString(),
+        });
+        storedRecordings[segment.id] = {
+          storageKey,
+          type: stored.type || blob.type || "audio/webm",
+          size: stored.size || blob.size || 0,
+          recordedAt: stored.recordedAt || new Date().toISOString(),
+        };
+        didStripLegacyData = true;
+      }
+
+      if (!blob) {
+        delete storedRecordings[segment.id];
+        didStripLegacyData = true;
+        continue;
+      }
+
+      speakingRecordings.set(recordingKey, {
+        blob,
+        url: URL.createObjectURL(blob),
+        recordedAt: stored.recordedAt || new Date().toISOString(),
+      });
+    } catch (error) {
+      delete storedRecordings[segment.id];
+      didStripLegacyData = true;
+    }
+  }
+
+  if (didStripLegacyData) {
+    mockProgress.answers[progressKey] = {
+      ...(mockProgress.answers[progressKey] || {}),
+      speakingRecordings: storedRecordings,
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+  }
+}
+
+async function migrateAllLegacySpeakingRecordings() {
+  if (!window.indexedDB) return;
+
+  let didMigrate = false;
+  for (const [progressKey, answer] of Object.entries(mockProgress.answers || {})) {
+    const parts = progressKey.split(".");
+    if (parts.length !== 3) continue;
+
+    const [subjectId, typeId, questionIndex] = parts;
+    const storedRecordings = { ...(answer?.speakingRecordings || {}) };
+    let questionRecordingsChanged = false;
+
+    for (const [segmentId, stored] of Object.entries(storedRecordings)) {
+      if (!stored?.dataUrl || stored.storageKey) continue;
+
+      try {
+        const blob = dataUrlToBlob(stored.dataUrl, stored.type || "audio/webm");
+        const storageKey = getSpeakingRecordingStorageKey(subjectId, typeId, Number(questionIndex), segmentId);
+        await saveSpeakingRecordingBlob(storageKey, blob, {
+          type: stored.type || blob.type || "audio/webm",
+          recordedAt: stored.recordedAt || new Date().toISOString(),
+        });
+        storedRecordings[segmentId] = {
+          storageKey,
+          type: stored.type || blob.type || "audio/webm",
+          size: stored.size || blob.size || 0,
+          recordedAt: stored.recordedAt || new Date().toISOString(),
+        };
+        questionRecordingsChanged = true;
+        didMigrate = true;
+      } catch (error) {
+        console.warn("Could not migrate legacy speaking recording:", error);
+      }
+    }
+
+    if (questionRecordingsChanged) {
+      mockProgress.answers[progressKey] = {
+        ...answer,
+        speakingRecordings: storedRecordings,
+        updatedAt: new Date().toISOString(),
+      };
+    }
+  }
+
+  if (didMigrate) saveProgress();
+}
+
 function shuffleArray(items) {
   const copy = [...items];
   for (let index = copy.length - 1; index > 0; index -= 1) {
@@ -1596,19 +2003,25 @@ async function startSpeakingRecording(subject, type, questionIndex, segmentId = 
     activeSpeakingRecorder.addEventListener("dataavailable", (event) => {
       if (event.data?.size) activeSpeakingChunks.push(event.data);
     });
-    activeSpeakingRecorder.addEventListener("stop", () => {
+    activeSpeakingRecorder.addEventListener("stop", async () => {
       stopSpeakingMeter();
       const blob = new Blob(activeSpeakingChunks, { type: activeSpeakingRecorder.mimeType || "audio/webm" });
       const previous = speakingRecordings.get(key);
       if (previous?.url) URL.revokeObjectURL(previous.url);
-      speakingRecordings.set(key, {
+      const recording = {
         blob,
         url: URL.createObjectURL(blob),
         recordedAt: new Date().toISOString(),
-      });
+      };
+      speakingRecordings.set(key, recording);
       activeSpeakingRecorder = null;
       activeSpeakingChunks = [];
       activeSpeakingKey = "";
+      try {
+        await persistSpeakingRecording(subject, type, questionIndex, segmentId, recording);
+      } catch (error) {
+        window.alert("录音已保留在当前页面，但保存到浏览器本地失败。请先不要刷新页面，直接提交评分。");
+      }
       saveSpeakingAttempt(subject, type, questionIndex, question);
       renderSpeakingQuestion(subject, type, questionIndex);
     });
@@ -1633,12 +2046,16 @@ function stopSpeakingRecording() {
 function clearSpeakingRecording(subject, type, questionIndex) {
   const question = getQuestion(type, questionIndex);
   const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const storageKeys = getSpeakingSegments(subject, type, questionIndex, question).map((segment) =>
+    getSpeakingRecordingStorageKey(subject.id, type.id, questionIndex, segment.id)
+  );
   getSpeakingSegments(subject, type, questionIndex, question).forEach((segment) => {
     const recordingKey = getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id);
     const recording = speakingRecordings.get(recordingKey);
     if (recording?.url) URL.revokeObjectURL(recording.url);
     speakingRecordings.delete(recordingKey);
   });
+  void deleteSpeakingRecordingBlobs(storageKeys);
   delete mockProgress.answers[progressKey];
   saveProgress();
   renderSpeakingQuestion(subject, type, questionIndex);
@@ -1854,29 +2271,32 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
 function renderSpeakingQuestion(subject, type, questionIndex) {
   if (!mockStage) return;
 
-  const questionNumbers = getQuestionNumbers(type);
-  const currentPosition = questionNumbers.indexOf(questionIndex);
-  const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
-  const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
   const question = getQuestion(type, questionIndex);
-  if (question?.speakingMode === "monologue") {
-    renderSpeakingMonologue(subject, type, questionIndex, question);
-    return;
-  }
-  if (question?.speakingMode === "picture-response") {
-    renderSpeakingPictureResponse(subject, type, questionIndex, question);
-    return;
-  }
-  const key = getSpeakingRecordingKey(subject.id, type.id, questionIndex);
-  const recording = speakingRecordings.get(key);
-  const recordingNow = isSpeakingRecording(key);
-  const statusText = recordingNow
-    ? "Recording now..."
-    : recording
-      ? "Recording saved for this session. You can listen back or record again."
-      : "This warm-up question is not scored. Record your answer and listen back to check clarity.";
+  void (async () => {
+    await restoreSpeakingRecordings(subject, type, questionIndex, question);
+    if (question?.speakingMode === "monologue") {
+      renderSpeakingMonologue(subject, type, questionIndex, question);
+      return;
+    }
+    if (question?.speakingMode === "picture-response") {
+      renderSpeakingPictureResponse(subject, type, questionIndex, question);
+      return;
+    }
 
-  mockStage.innerHTML = `
+    const questionNumbers = getQuestionNumbers(type);
+    const currentPosition = questionNumbers.indexOf(questionIndex);
+    const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
+    const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
+    const key = getSpeakingRecordingKey(subject.id, type.id, questionIndex);
+    const recording = speakingRecordings.get(key);
+    const recordingNow = isSpeakingRecording(key);
+    const statusText = recordingNow
+      ? "Recording now..."
+      : recording
+        ? "Recording saved for this session. You can listen back or record again."
+        : "This warm-up question is not scored. Record your answer and listen back to check clarity.";
+
+    mockStage.innerHTML = `
     <div class="mock-question-view">
       <div class="mock-question-topbar">
         <button class="mock-back" type="button" data-reset="questions">返回题号</button>
@@ -1911,7 +2331,7 @@ function renderSpeakingQuestion(subject, type, questionIndex) {
               ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
               : `<div class="mock-speaking-empty">No recording yet.</div>`
           }
-          <p class="mock-answer-note">录音只保存在当前浏览器页面中，不会上传，也不会计分。</p>
+          <p class="mock-answer-note">录音会保存在当前浏览器中；关闭网页后回来仍可继续使用本题录音。</p>
           <div class="mock-question-actions">
             <button class="button ghost dark" type="button" ${previous && !recordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
             <button class="button ghost dark" type="button" data-reset="questions" ${recordingNow ? "disabled" : ""}>返回题号</button>
@@ -1921,6 +2341,7 @@ function renderSpeakingQuestion(subject, type, questionIndex) {
       </div>
     </div>
   `;
+  })();
 }
 
 function renderQuestion(subject, type, questionIndex) {
@@ -2783,7 +3204,10 @@ async function submitAiWritingReview(subject, type, questionIndex) {
     window.alert("已有一篇作文正在批改中，请等分数回来后再提交下一篇。");
     return;
   }
-  if (pendingAiReviewKeys.has(pendingKey)) return;
+  if (pendingAiReviewKeys.has(pendingKey)) {
+    openAiWritingReview(subject, type, questionIndex, "loading");
+    return;
+  }
 
   const cooldownRemainingMs = getAiReviewCooldownRemainingMs();
   if (cooldownRemainingMs > 0) {
@@ -2793,7 +3217,15 @@ async function submitAiWritingReview(subject, type, questionIndex) {
   }
 
   pendingAiReviewKeys.add(pendingKey);
+  setPendingReviewMeta(pendingKey, { kind: "writing", subject, type, questionIndex, status: "loading" });
   markAiReviewSubmitted();
+  const key = getQuestionKey(subject.id, type.id, questionIndex);
+  mockProgress.answers[key] = {
+    ...(mockProgress.answers[key] || {}),
+    aiReviewStatus: "loading",
+    updatedAt: new Date().toISOString(),
+  };
+  saveProgress();
   openAiWritingReview(subject, type, questionIndex, "loading");
 
   try {
@@ -2810,20 +3242,38 @@ async function submitAiWritingReview(subject, type, questionIndex) {
         reviewedAt: new Date().toISOString(),
       };
     });
-    const key = getQuestionKey(subject.id, type.id, questionIndex);
     mockProgress.answers[key] = {
       ...(mockProgress.answers[key] || {}),
       graded: aiReviews.some((review) => !review.error),
       correct: null,
       aiReviews,
+      aiReviewStatus: "done",
       updatedAt: new Date().toISOString(),
     };
     saveProgress();
-    openAiWritingReview(subject, type, questionIndex, "ready");
+    const meta = { kind: "writing", subject, type, questionIndex, status: "ready" };
+    if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+      openAiWritingReview(subject, type, questionIndex, "ready");
+    } else {
+      maybeNotifyReviewComplete(meta);
+    }
   } catch (error) {
-    openAiWritingReview(subject, type, questionIndex, "error", sanitizeReviewMessage(error.message || "批改失败，请稍后再试。"));
+    const errorMessage = sanitizeReviewMessage(error.message || "批改失败，请稍后再试。");
+    mockProgress.answers[key] = {
+      ...(mockProgress.answers[key] || {}),
+      aiReviewStatus: "error",
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+    const meta = { kind: "writing", subject, type, questionIndex, status: "error", errorMessage };
+    if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+      openAiWritingReview(subject, type, questionIndex, "error", errorMessage);
+    } else {
+      maybeNotifyReviewComplete(meta, true);
+    }
   } finally {
     pendingAiReviewKeys.delete(pendingKey);
+    clearPendingReviewMeta(pendingKey);
   }
 }
 
@@ -2849,9 +3299,22 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
   }
 
   const pendingKey = `${subject.id}:${type.id}:${questionIndex}:speaking`;
-  if (pendingAiReviewKeys.has(pendingKey)) return;
+  if (pendingAiReviewKeys.has(pendingKey)) {
+    openAiSpeakingReview(subject, type, questionIndex, "loading");
+    return;
+  }
 
   pendingAiReviewKeys.add(pendingKey);
+  setPendingReviewMeta(pendingKey, { kind: "speaking", subject, type, questionIndex, status: "loading" });
+  mockProgress.answers[key] = {
+    ...(mockProgress.answers[key] || {}),
+    answer: "completed",
+    graded: false,
+    correct: null,
+    speakingReviewStatus: "loading",
+    updatedAt: new Date().toISOString(),
+  };
+  saveProgress();
   startSpeakingReviewProgress(pendingKey, segments.length);
   openAiSpeakingReview(subject, type, questionIndex, "loading");
 
@@ -2864,10 +3327,16 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
       graded: true,
       correct: null,
       speakingReview,
+      speakingReviewStatus: "done",
       updatedAt: new Date().toISOString(),
     };
     saveProgress();
-    openAiSpeakingReview(subject, type, questionIndex, "ready");
+    const meta = { kind: "speaking", subject, type, questionIndex, status: "ready" };
+    if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+      openAiSpeakingReview(subject, type, questionIndex, "ready");
+    } else {
+      maybeNotifyReviewComplete(meta);
+    }
     window.setTimeout(() => clearSpeakingReviewProgress(pendingKey), 3000);
   } catch (error) {
     const timer = speakingReviewProgressTimers.get(pendingKey);
@@ -2880,12 +3349,20 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
         error: sanitizeReviewMessage(error.message || "口说评分失败。"),
         reviewedAt: new Date().toISOString(),
       },
+      speakingReviewStatus: "error",
       updatedAt: new Date().toISOString(),
     };
     saveProgress();
-    openAiSpeakingReview(subject, type, questionIndex, "error", sanitizeReviewMessage(error.message || "口说评分失败，请稍后再试。"));
+    const errorMessage = sanitizeReviewMessage(error.message || "口说评分失败，请稍后再试。");
+    const meta = { kind: "speaking", subject, type, questionIndex, status: "error", errorMessage };
+    if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+      openAiSpeakingReview(subject, type, questionIndex, "error", errorMessage);
+    } else {
+      maybeNotifyReviewComplete(meta, true);
+    }
   } finally {
     pendingAiReviewKeys.delete(pendingKey);
+    clearPendingReviewMeta(pendingKey);
   }
 }
 
@@ -2974,7 +3451,7 @@ if (mockApp) {
     }
 
     if (target.dataset.reviewSubject) {
-      openSubjectReview(target.dataset.reviewSubject);
+      openSubjectReview(target.dataset.reviewSubject, target.dataset.reviewType || "");
       return;
     }
 
@@ -3124,6 +3601,8 @@ document.addEventListener("click", (event) => {
 
   const detailButton = event.target?.closest?.("[data-toggle-detail]");
   if (detailButton) {
+    if (openAiReviewFromDetail(detailButton)) return;
+
     const row = document.querySelector(`[data-detail-row="${detailButton.dataset.toggleDetail}"]`);
     if (row) row.hidden = !row.hidden;
     return;
@@ -3179,3 +3658,4 @@ window.addEventListener("beforeunload", () => {
   cleanupSpeakingStream();
 });
 
+void migrateAllLegacySpeakingRecordings();

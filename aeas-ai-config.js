@@ -66,6 +66,7 @@ window.rewardSchoolAiConfig = {
   onlineFrontendUrl: REWARD_SCHOOL_ONLINE_FRONTEND_URL,
   requiresSecureApi: window.location.protocol === "https:" && isRewardSchoolMarketingHost(window.location.hostname),
   requestTimeoutMs: 65000,
+  speakingRequestTimeoutMs: 360000,
   models: [{ id: "deepseek-v4-pro", label: "AI Review" }],
 };
 

@@ -61,7 +61,7 @@ window.rewardSchoolApi = {
   async reviewSpeakingSection2({ topicCard, prompts, segments, sourceId, onProgress }) {
     const config = window.rewardSchoolAiConfig || {};
     const endpoint = getSpeakingSection2ReviewEndpoint(config);
-    const timeoutMs = Number(config.speakingRequestTimeoutMs || 180000);
+    const timeoutMs = Number(config.speakingRequestTimeoutMs || 360000);
     window.rewardSchoolApi.lastSpeakingEndpoint = endpoint;
     const reportProgress = typeof onProgress === "function" ? onProgress : () => {};
     const totalSegments = (segments || []).length;
@@ -137,34 +137,42 @@ window.rewardSchoolApi = {
 };
 
 function getWritingReviewEndpoint(config) {
-  const mode = getApiMode();
-  if (mode === "local" || isLocalApiPage()) {
-    return "http://localhost:5132/api/aeas/writing/review";
-  }
-
   if (config.writingReviewEndpoint) {
     return config.writingReviewEndpoint;
+  }
+
+  const mode = getApiMode();
+  if (mode === "local") {
+    return "http://localhost:5132/api/aeas/writing/review";
   }
 
   if (mode === "online") {
     return "http://39.105.34.236/api/aeas/writing/review";
   }
 
+  if (isLocalApiPage()) {
+    return "http://localhost:5132/api/aeas/writing/review";
+  }
+
   return getDefaultWritingReviewEndpoint();
 }
 
 function getSpeakingSection2ReviewEndpoint(config) {
-  const mode = getApiMode();
-  if (mode === "local" || isLocalApiPage()) {
-    return "http://localhost:5132/api/aeas/speaking/section2/review";
-  }
-
   if (config.speakingSection2ReviewEndpoint) {
     return config.speakingSection2ReviewEndpoint;
   }
 
+  const mode = getApiMode();
+  if (mode === "local") {
+    return "http://localhost:5132/api/aeas/speaking/section2/review";
+  }
+
   if (mode === "online") {
     return "http://39.105.34.236/api/aeas/speaking/section2/review";
+  }
+
+  if (isLocalApiPage()) {
+    return "http://localhost:5132/api/aeas/speaking/section2/review";
   }
 
   const defaultWritingEndpoint = getDefaultWritingReviewEndpoint();

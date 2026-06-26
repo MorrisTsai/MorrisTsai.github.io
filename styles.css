@@ -2657,6 +2657,33 @@ a.service-card:focus-visible {
   margin: 0;
 }
 
+.mock-review-toast {
+  position: fixed;
+  z-index: 80;
+  top: 18px;
+  right: 18px;
+  width: min(320px, calc(100vw - 36px));
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid rgba(0, 70, 150, 0.18);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgba(0, 24, 70, 0.18);
+  color: var(--navy);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mock-review-toast strong {
+  font-size: 15px;
+}
+
+.mock-review-toast span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .mock-speaking-review-log {
   margin: 0 28px 16px;
   padding: 12px 16px;
