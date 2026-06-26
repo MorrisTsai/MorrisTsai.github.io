@@ -1408,6 +1408,120 @@ a.service-card:focus-visible {
   line-height: 1.5;
 }
 
+.mock-auth-card {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.mock-auth-card span,
+.mock-auth-card strong,
+.mock-auth-card small {
+  display: block;
+}
+
+.mock-auth-card span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.mock-auth-card strong {
+  color: var(--navy);
+  font-size: 17px;
+}
+
+.mock-auth-card small {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.mock-auth-card small.is-error {
+  color: #b42318;
+}
+
+.mock-auth-card input {
+  width: 100%;
+  padding: 10px 11px;
+  color: var(--ink);
+  background: #f8fbff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+}
+
+.mock-auth-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mock-auth-card button {
+  padding: 10px 11px;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.mock-auth-card button[data-auth-action="register"],
+.mock-auth-card button[data-auth-logout] {
+  color: var(--blue);
+  background: var(--sky);
+}
+
+.mock-auth-dialog {
+  width: min(460px, 100%);
+  overflow: hidden;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+}
+
+.mock-auth-dialog-body {
+  display: grid;
+  gap: 12px;
+  padding: 22px 28px 28px;
+}
+
+.mock-auth-dialog input {
+  width: 100%;
+  padding: 12px 13px;
+  color: var(--ink);
+  background: #f8fbff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.mock-auth-dialog button[type="submit"] {
+  padding: 12px 14px;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.mock-auth-switch {
+  color: var(--blue);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
 .mock-reset-button {
   width: 100%;
   padding: 11px 13px;
@@ -2593,10 +2707,12 @@ a.service-card:focus-visible {
 }
 
 .mock-review-dialog {
+  display: flex;
+  flex-direction: column;
   width: min(1040px, 100%);
   min-height: min(620px, 92vh);
   max-height: min(760px, 92vh);
-  overflow: visible;
+  overflow: hidden;
   background: #fff;
   border-radius: 22px;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
@@ -2959,7 +3075,9 @@ a.service-card:focus-visible {
 }
 
 .mock-review-table-wrap {
-  max-height: 420px;
+  flex: 1 1 auto;
+  max-height: calc(92vh - 330px);
+  min-height: 0;
   overflow: auto;
   padding: 0 28px 28px;
 }

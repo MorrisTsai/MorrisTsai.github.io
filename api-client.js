@@ -1,4 +1,80 @@
 window.rewardSchoolApi = {
+  async register({ email, password, displayName }) {
+    return fetchJson(getApiEndpoint("/auth/register"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, displayName }),
+    });
+  },
+
+  async login({ email, password }) {
+    return fetchJson(getApiEndpoint("/auth/login"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+  },
+
+  async logout({ token }) {
+    await fetchJson(getApiEndpoint("/auth/logout"), {
+      method: "POST",
+      headers: getAuthHeaders(token),
+      expectNoContent: true,
+    });
+  },
+
+  async getCurrentUser({ token }) {
+    return fetchJson(getApiEndpoint("/auth/me"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getPracticeProgress({ token, kind = "aeas-mock" }) {
+    const endpoint = `${getApiEndpoint("/practice/progress")}?kind=${encodeURIComponent(kind)}`;
+    return fetchJson(endpoint, {
+      headers: getAuthHeaders(token),
+      allowNotFound: true,
+    });
+  },
+
+  async savePracticeProgress({ token, kind = "aeas-mock", sessionId, progress }) {
+    await fetchJson(getApiEndpoint("/practice/progress"), {
+      method: "PUT",
+      headers: {
+        ...getAuthHeaders(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ kind, sessionId, progress }),
+      expectNoContent: true,
+    });
+  },
+
+  async savePracticeAttempt({ token, attempt }) {
+    return fetchJson(getApiEndpoint("/practice/attempts"), {
+      method: "POST",
+      headers: {
+        ...getAuthHeaders(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(attempt),
+    });
+  },
+
+  async uploadPracticeAudio({ token, kind = "aeas-mock", sessionId, questionKey, segmentId, blob }) {
+    const body = new FormData();
+    body.append("kind", kind);
+    body.append("sessionId", sessionId);
+    body.append("questionKey", questionKey);
+    body.append("segmentId", segmentId);
+    body.append("audio", blob, `${segmentId || "recording"}.${getAudioExtension(blob?.type || "")}`);
+
+    return fetchJson(getApiEndpoint("/practice/audio"), {
+      method: "POST",
+      headers: getAuthHeaders(token),
+      body,
+    });
+  },
+
   async reviewWriting({ question, essay, sourceId }) {
     const config = window.rewardSchoolAiConfig || {};
     const endpoint = getWritingReviewEndpoint(config);
@@ -214,6 +290,85 @@ window.rewardSchoolApi = {
     }
   },
 };
+
+async function fetchJson(endpoint, options = {}) {
+  let response;
+  const timeoutMs = Number(options.timeoutMs || 12000);
+  const controller = options.signal ? null : new AbortController();
+  const signal = options.signal || controller?.signal;
+  let timeoutId = 0;
+
+  if (controller && timeoutMs > 0) {
+    timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+  }
+
+  try {
+    response = await fetch(endpoint, {
+      method: options.method || "GET",
+      headers: options.headers || {},
+      body: options.body,
+      signal,
+    });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error(`API request timed out after ${Math.round(timeoutMs / 1000)} seconds: ${endpoint}`);
+    }
+    throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
+  } finally {
+    if (timeoutId) window.clearTimeout(timeoutId);
+  }
+
+  if (options.allowNotFound && response.status === 404) return null;
+  if (options.expectNoContent && response.status === 204) return null;
+
+  const responseText = await response.text();
+  if (!response.ok) {
+    let message = responseText.slice(0, 240);
+    try {
+      message = JSON.parse(responseText)?.error || message;
+    } catch (error) {
+      // Keep the raw server response text.
+    }
+    throw new Error(message || `Request failed: ${response.status}`);
+  }
+
+  return responseText ? JSON.parse(responseText) : null;
+}
+
+function getApiEndpoint(path) {
+  const config = window.rewardSchoolAiConfig || {};
+  const baseUrl = config.apiBaseUrl || getFallbackApiBaseUrl();
+  if (baseUrl) {
+    const normalized = baseUrl.replace(/\/$/, "");
+    const apiBase = normalized.endsWith("/api") ? normalized : `${normalized}/api`;
+    return `${apiBase}${path}`;
+  }
+
+  return `/api${path}`;
+}
+
+function getFallbackApiBaseUrl() {
+  const mode = getApiMode();
+  if (mode === "local") return "http://localhost:5132";
+  if (mode === "online") return "http://39.105.34.236/api";
+
+  if (window.location.protocol === "file:" ||
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname === "::1") {
+    return "http://localhost:5132";
+  }
+
+  if (window.location.hostname === "39.105.34.236") {
+    return `${window.location.origin}/api`;
+  }
+
+  return "";
+}
+
+function getAuthHeaders(token) {
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 function getWritingReviewEndpoint(config) {
   if (config.writingReviewEndpoint) {

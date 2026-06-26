@@ -22,7 +22,7 @@ function setupHiddenDebugBadge() {
     right: "16px",
     bottom: "16px",
     zIndex: "99999",
-    display: params.get("debug") === "1" || params.get("apiDebug") === "1" ? "block" : "none",
+    display: params.get("apiDebug") === "1" ? "block" : "none",
     maxWidth: "min(560px, calc(100vw - 32px))",
     padding: "10px 14px",
     borderRadius: "999px",

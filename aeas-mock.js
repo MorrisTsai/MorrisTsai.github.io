@@ -1,4 +1,6 @@
 ﻿const MOCK_STORAGE_KEY = "rewardSchoolAeasMockProgressV2";
+const MOCK_AUTH_STORAGE_KEY = "rewardSchoolAeasAuthV1";
+const PRACTICE_KIND = "aeas-mock";
 const rawMathQuestionGroups = window.aeasMockMathQuestionsByType || {};
 const rawReadingQuestionGroups = window.aeasMockReadingQuestionsByType || {};
 const rawVocabularyQuestionGroups = window.aeasMockVocabularyQuestionsByType || {};
@@ -115,6 +117,13 @@ let mockState = {
 };
 
 let mockProgress = loadProgress();
+let authSession = loadAuthSession();
+if (authSession?.user?.id && mockProgress?.ownerUserId !== authSession.user.id) {
+  mockProgress = createEmptyProgress(authSession.user.id);
+}
+let progressSyncTimer = 0;
+let progressSyncInFlight = false;
+let progressSyncPending = false;
 let writingTimerInterval = null;
 let activeSpeakingRecorder = null;
 let activeSpeakingStream = null;
@@ -151,8 +160,56 @@ function loadProgress() {
   };
 }
 
+function loadAuthSession() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(MOCK_AUTH_STORAGE_KEY) || "null");
+    if (saved?.token && saved?.user?.email) return saved;
+  } catch (error) {
+    // Ignore corrupted auth state and let the user sign in again.
+  }
+
+  return null;
+}
+
+function saveAuthSession(session) {
+  authSession = session;
+  if (session?.token) {
+    localStorage.setItem(MOCK_AUTH_STORAGE_KEY, JSON.stringify(session));
+  } else {
+    localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
+  }
+  renderProgressPanel();
+}
+
+function getAuthToken() {
+  return authSession?.token || "";
+}
+
+function isAuthenticated() {
+  return Boolean(getAuthToken() && authSession?.user?.id);
+}
+
+function getPracticeScopeId() {
+  return authSession?.user?.id || mockProgress.sessionId;
+}
+
+function createEmptyProgress(ownerUserId = authSession?.user?.id || null) {
+  return {
+    sessionId: createSessionId(),
+    startedAt: new Date().toISOString(),
+    ownerUserId,
+    answers: {},
+    timers: {},
+  };
+}
+
 function compactMockProgressForStorage(progress) {
   const compact = JSON.parse(JSON.stringify(progress));
+  if (authSession?.user?.id) {
+    compact.ownerUserId = authSession.user.id;
+  } else {
+    delete compact.ownerUserId;
+  }
   Object.values(compact.answers || {}).forEach((answer) => {
     if (!answer?.speakingRecordings) return;
     Object.values(answer.speakingRecordings).forEach((recording) => {
@@ -165,6 +222,7 @@ function compactMockProgressForStorage(progress) {
 function saveProgress() {
   try {
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+    queueProgressSync();
     return;
   } catch (error) {
     console.warn("Could not save full mock progress:", error);
@@ -176,9 +234,94 @@ function saveProgress() {
       delete answer.speakingRecordings;
     });
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(fallback));
+    queueProgressSync();
   } catch (error) {
     console.warn("Could not save mock progress even without recordings:", error);
   }
+}
+
+function queueProgressSync(delayMs = 1200) {
+  if (!getAuthToken() || !window.rewardSchoolApi?.savePracticeProgress) return;
+  window.clearTimeout(progressSyncTimer);
+  progressSyncTimer = window.setTimeout(() => {
+    void syncProgressNow();
+  }, delayMs);
+}
+
+async function syncProgressNow() {
+  if (!getAuthToken() || !window.rewardSchoolApi?.savePracticeProgress) return;
+  if (progressSyncInFlight) {
+    progressSyncPending = true;
+    return;
+  }
+
+  progressSyncInFlight = true;
+  try {
+    await window.rewardSchoolApi.savePracticeProgress({
+      token: getAuthToken(),
+      kind: PRACTICE_KIND,
+      sessionId: getPracticeScopeId(),
+      progress: compactMockProgressForStorage(mockProgress),
+    });
+    progressSyncPending = false;
+  } catch (error) {
+    console.warn("Could not sync practice progress:", error);
+  } finally {
+    progressSyncInFlight = false;
+    if (progressSyncPending) {
+      progressSyncPending = false;
+      queueProgressSync(600);
+    }
+  }
+}
+
+function countProgressAnswers(progress) {
+  return Object.keys(progress?.answers || {}).length;
+}
+
+async function hydrateProgressAfterLogin() {
+  if (!getAuthToken() || !window.rewardSchoolApi?.getPracticeProgress) return;
+  const userId = authSession?.user?.id || null;
+
+  try {
+    const remote = await window.rewardSchoolApi.getPracticeProgress({
+      token: getAuthToken(),
+      kind: PRACTICE_KIND,
+    });
+    const remoteProgress = remote?.progress;
+    mockProgress = remoteProgress?.sessionId
+      ? { ...remoteProgress, ownerUserId: userId }
+      : createEmptyProgress(userId);
+    localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+    renderMockApp();
+    if (!remoteProgress?.sessionId) queueProgressSync(100);
+  } catch (error) {
+    console.warn("Could not load cloud practice progress:", error);
+  }
+}
+
+function recordPracticeAttempt(subject, type, questionIndex, answerKind, answer, result = {}) {
+  if (!getAuthToken() || !window.rewardSchoolApi?.savePracticeAttempt) return;
+  if (!subject || !type || !Number.isFinite(Number(questionIndex))) return;
+
+  const attempt = {
+    kind: PRACTICE_KIND,
+    sessionId: getPracticeScopeId(),
+    questionKey: getQuestionKey(subject.id, type.id, questionIndex),
+    subjectId: subject.id,
+    typeId: type.id,
+    questionIndex: Number(questionIndex),
+    answerKind,
+    answer,
+    result,
+  };
+
+  window.rewardSchoolApi.savePracticeAttempt({
+    token: getAuthToken(),
+    attempt,
+  }).catch((error) => {
+    console.warn("Could not save practice attempt:", error);
+  });
 }
 
 function resetProgress() {
@@ -186,14 +329,20 @@ function resetProgress() {
     if (recording?.url) URL.revokeObjectURL(recording.url);
   });
   speakingRecordings.clear();
-  mockProgress = {
-    sessionId: createSessionId(),
-    startedAt: new Date().toISOString(),
-    answers: {},
-    timers: {},
-  };
+  mockProgress = createEmptyProgress(authSession?.user?.id || null);
   saveProgress();
   setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+}
+
+function resetLocalPracticeForSignedOutUser() {
+  window.clearTimeout(progressSyncTimer);
+  progressSyncPending = false;
+  speakingRecordings.forEach((recording) => {
+    if (recording?.url) URL.revokeObjectURL(recording.url);
+  });
+  speakingRecordings.clear();
+  mockProgress = createEmptyProgress(null);
+  localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
 }
 
 function findSubject(subjectId) {
@@ -591,8 +740,9 @@ function renderProgressPanel() {
 
   mockProgressPanel.innerHTML = `
     <div class="mock-progress-card">
-      <span>Session</span>
-      <strong>${mockProgress.sessionId}</strong>
+      <span>练习账号</span>
+      <strong>${authSession?.user ? escapeHTML(authSession.user.displayName || authSession.user.email) : "未登录"}</strong>
+      <small>${authSession?.user ? "当前练习记录绑定到此账号" : "登录后才能进入题库"}</small>
     </div>
     <div class="mock-progress-card">
       <span>整体做题情况</span>
@@ -610,8 +760,71 @@ function renderProgressPanel() {
         `
         : ""
     }
-    <button class="mock-reset-button" type="button" data-reset-practice>重新练习</button>
+    ${renderAuthPanel()}
+    <button class="mock-reset-button" type="button" data-reset-practice>开始新一轮练习</button>
   `;
+}
+
+function renderAuthPanel() {
+  if (authSession?.user) {
+    return `
+      <div class="mock-auth-card">
+        <span>Cloud Account</span>
+        <strong>${escapeHTML(authSession.user.displayName || authSession.user.email)}</strong>
+        <small>${escapeHTML(authSession.user.email)} · 练习记录会自动同步</small>
+        <button type="button" data-auth-logout>退出登录</button>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="mock-auth-card">
+      <span>Cloud Account</span>
+      <strong>登录后开始练习</strong>
+      <small>所有练习、作文和录音都会绑定到账号。</small>
+      <div class="mock-auth-actions">
+        <button type="button" data-open-auth="login">登录</button>
+        <button type="button" data-open-auth="register">注册</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderAuthModal(mode = "login") {
+  const isRegister = mode === "register";
+  return `
+    <div class="mock-review-overlay" data-auth-overlay>
+      <form class="mock-auth-dialog" data-auth-form data-auth-mode="${isRegister ? "register" : "login"}">
+        <div class="mock-review-header">
+          <div>
+            <p class="eyebrow">Cloud Account</p>
+            <h3>${isRegister ? "注册账号" : "登录账号"}</h3>
+            <p>${isRegister ? "创建账号后即可开始保存练习记录。" : "登录后继续你的练习记录。"}</p>
+          </div>
+          <button class="mock-review-close" type="button" data-close-auth>关闭</button>
+        </div>
+        <div class="mock-auth-dialog-body">
+          <input type="email" name="email" autocomplete="email" placeholder="Email" required />
+          <input type="password" name="password" autocomplete="${isRegister ? "new-password" : "current-password"}" placeholder="Password" required minlength="8" />
+          ${isRegister ? `<input type="text" name="displayName" autocomplete="name" placeholder="Name" required />` : ""}
+          <button type="submit">${isRegister ? "注册" : "登录"}</button>
+          <button type="button" class="mock-auth-switch" data-open-auth="${isRegister ? "login" : "register"}">
+            ${isRegister ? "已有账号，去登录" : "没有账号，去注册"}
+          </button>
+          <small data-auth-message></small>
+        </div>
+      </form>
+    </div>
+  `;
+}
+
+function openAuthModal(mode = "login") {
+  document.querySelector("[data-auth-overlay]")?.remove();
+  document.body.insertAdjacentHTML("beforeend", renderAuthModal(mode));
+}
+
+function closeAuthModal() {
+  document.querySelector("[data-auth-overlay]")?.remove();
 }
 
 function renderGradeBandList() {
@@ -1465,6 +1678,7 @@ function saveListeningGroupAnswers(subject, type) {
         correct: null,
         updatedAt: new Date().toISOString(),
       };
+      recordPracticeAttempt(subject, type, questionNumber, "answer", { answer: values });
       return;
     }
 
@@ -1479,6 +1693,7 @@ function saveListeningGroupAnswers(subject, type) {
       correct: null,
       updatedAt: new Date().toISOString(),
     };
+    recordPracticeAttempt(subject, type, questionNumber, "answer", { answer: selected.value });
   });
   saveProgress();
   renderProgressPanel();
@@ -1731,6 +1946,37 @@ async function persistSpeakingRecording(subject, type, questionIndex, segmentId,
     updatedAt: new Date().toISOString(),
   };
   saveProgress();
+
+  if (getAuthToken() && window.rewardSchoolApi?.uploadPracticeAudio) {
+    try {
+      const upload = await window.rewardSchoolApi.uploadPracticeAudio({
+        token: getAuthToken(),
+        kind: PRACTICE_KIND,
+        sessionId: mockProgress.sessionId,
+        questionKey: progressKey,
+        segmentId,
+        blob: recording.blob,
+      });
+      const latest = mockProgress.answers[progressKey] || {};
+      const latestRecordings = { ...(latest.speakingRecordings || {}) };
+      latestRecordings[segmentId] = {
+        ...(latestRecordings[segmentId] || storedRecordings[segmentId]),
+        serverUpload: upload,
+      };
+      mockProgress.answers[progressKey] = {
+        ...latest,
+        speakingRecordings: latestRecordings,
+        updatedAt: new Date().toISOString(),
+      };
+      saveProgress();
+      recordPracticeAttempt(subject, type, questionIndex, "speaking-recording", {
+        segmentId,
+        upload,
+      });
+    } catch (error) {
+      console.warn("Could not upload speaking recording:", error);
+    }
+  }
 }
 
 async function restoreSpeakingRecordings(subject, type, questionIndex, question) {
@@ -1977,7 +2223,7 @@ function startSpeakingMeter(stream, meterKey = "") {
       sum += value * value;
     });
     const rms = Math.sqrt(sum / samples.length);
-    const level = Math.min(1, rms / 34);
+    const level = Math.min(1, rms / 18);
     meter.style.setProperty("--speaking-level", `${Math.max(0.04, level) * 100}%`);
     meter.classList.toggle("is-live", level > 0.08);
     speakingMeterFrame = window.requestAnimationFrame(update);
@@ -2090,16 +2336,21 @@ async function startSpeakingRecording(subject, type, questionIndex, segmentId = 
       activeSpeakingKey = "";
       activeSpeakingStartedAt = 0;
       activeSpeakingMaxSeconds = 0;
-      try {
-        await persistSpeakingRecording(subject, type, questionIndex, segmentId, recording);
-      } catch (error) {
-        window.alert("录音已保留在当前页面，但保存到浏览器本地失败。请先不要刷新页面，直接提交评分。");
-      }
       saveSpeakingAttempt(subject, type, questionIndex, question);
       renderSpeakingQuestion(subject, type, questionIndex);
+      persistSpeakingRecording(subject, type, questionIndex, segmentId, recording)
+        .then(() => {
+          saveSpeakingAttempt(subject, type, questionIndex, question);
+          if (isCurrentQuestion(subject.id, type.id, questionIndex)) {
+            renderSpeakingQuestion(subject, type, questionIndex);
+          }
+        })
+        .catch((error) => {
+          console.warn("Could not persist speaking recording:", error);
+        });
     });
     activeSpeakingRecorder.start();
-    renderSpeakingQuestion(subject, type, questionIndex);
+    await renderSpeakingQuestion(subject, type, questionIndex);
     startSpeakingRecordingTimer(maxRecordingSeconds);
     startSpeakingMeter(stream, key);
   } catch (error) {
@@ -2116,7 +2367,15 @@ async function startSpeakingRecording(subject, type, questionIndex, segmentId = 
 
 function stopSpeakingRecording() {
   if (activeSpeakingRecorder?.state === "recording") {
+    const subject = findSubject(mockState.subjectId);
+    const type = findType(subject, mockState.typeId);
+    const questionIndex = mockState.questionIndex;
     activeSpeakingRecorder.stop();
+    stopSpeakingRecordingTimer();
+    stopSpeakingMeter();
+    if (subject && type && questionIndex) {
+      renderSpeakingQuestion(subject, type, questionIndex);
+    }
   }
 }
 
@@ -2149,6 +2408,20 @@ function clearSpeakingRecording(subject, type, questionIndex) {
   });
   void deleteSpeakingRecordingBlobs(storageKeys);
   delete mockProgress.answers[progressKey];
+  saveProgress();
+  renderSpeakingQuestion(subject, type, questionIndex);
+}
+
+function resetSpeakingReview(subject, type, questionIndex) {
+  const key = getQuestionKey(subject.id, type.id, questionIndex);
+  const existing = mockProgress.answers[key] || {};
+  const { speakingReview, speakingReviewStatus, ...rest } = existing;
+  mockProgress.answers[key] = {
+    ...rest,
+    graded: false,
+    correct: null,
+    updatedAt: new Date().toISOString(),
+  };
   saveProgress();
   renderSpeakingQuestion(subject, type, questionIndex);
 }
@@ -2240,7 +2513,9 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           <p class="mock-answer-note">Monologue 会把主陈述和 3 个追问一起提交到后端评分；语音分析与 AI 总评都在后端完成。</p>
           <div class="mock-question-actions">
             <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
-            <button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>提交评分</button>
+            ${record.speakingReview && !record.speakingReview.error
+              ? `<button class="button primary" type="button" data-reset-speaking-review>重新练习</button>`
+              : `<button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>${record.speakingReviewStatus === "loading" ? "评分中" : "提交评分"}</button>`}
             <button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
             <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
           </div>
@@ -2340,7 +2615,9 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           <p class="mock-answer-note">图片说明会保存在后台数据中用于未来评分，不会显示给学生。当前录音只保存在当前浏览器页面。</p>
           <div class="mock-question-actions">
             <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
-            <button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>提交评分</button>
+            ${record.speakingReview && !record.speakingReview.error
+              ? `<button class="button primary" type="button" data-reset-speaking-review>重新练习</button>`
+              : `<button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>${record.speakingReviewStatus === "loading" ? "评分中" : "提交评分"}</button>`}
             <button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
             <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
           </div>
@@ -2362,20 +2639,19 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
   }
 }
 
-function renderSpeakingQuestion(subject, type, questionIndex) {
+async function renderSpeakingQuestion(subject, type, questionIndex) {
   if (!mockStage) return;
 
   const question = getQuestion(type, questionIndex);
-  void (async () => {
-    await restoreSpeakingRecordings(subject, type, questionIndex, question);
-    if (question?.speakingMode === "monologue") {
-      renderSpeakingMonologue(subject, type, questionIndex, question);
-      return;
-    }
-    if (question?.speakingMode === "picture-response") {
-      renderSpeakingPictureResponse(subject, type, questionIndex, question);
-      return;
-    }
+  await restoreSpeakingRecordings(subject, type, questionIndex, question);
+  if (question?.speakingMode === "monologue") {
+    renderSpeakingMonologue(subject, type, questionIndex, question);
+    return;
+  }
+  if (question?.speakingMode === "picture-response") {
+    renderSpeakingPictureResponse(subject, type, questionIndex, question);
+    return;
+  }
 
     const questionNumbers = getQuestionNumbers(type);
     const currentPosition = questionNumbers.indexOf(questionIndex);
@@ -2437,7 +2713,6 @@ function renderSpeakingQuestion(subject, type, questionIndex) {
       </div>
     </div>
   `;
-  })();
 }
 
 function renderQuestion(subject, type, questionIndex) {
@@ -2625,6 +2900,11 @@ function renderMockApp() {
     return;
   }
 
+  if (!isAuthenticated()) {
+    setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+    return;
+  }
+
   if (mockState.gradeBand === "7-9") {
     renderGradeConstruction();
     return;
@@ -2722,15 +3002,19 @@ function saveCurrentAnswer(answer) {
 
   const key = getQuestionKey(subject.id, type.id, mockState.questionIndex);
   const existing = mockProgress.answers[key] || {};
+  const question = getQuestion(type, mockState.questionIndex);
   mockProgress.answers[key] = {
     ...existing,
     answer,
     graded: false,
     correct: null,
-      updatedAt: new Date().toISOString(),
-    };
-    saveProgress();
-    renderProgressPanel();
+    updatedAt: new Date().toISOString(),
+  };
+  saveProgress();
+  if (!isAiReviewQuestion(question)) {
+    recordPracticeAttempt(subject, type, mockState.questionIndex, "answer", { answer });
+  }
+  renderProgressPanel();
 }
 
 function getWritingReviewItems(question) {
@@ -3107,25 +3391,23 @@ function renderSpeakingReviewProgressLines(lines) {
 function startSpeakingReviewProgress(progressKey, segmentCount) {
   const total = Math.max(1, Number(segmentCount) || 1);
   const startedAt = Date.now();
-  setSpeakingReviewProgress(progressKey, [`正在上传 ${total} 段录音，请稍等。`]);
+  setSpeakingReviewProgress(progressKey, [`正在准备 ${total} 段录音并提交评分。`]);
 
   const timer = window.setInterval(() => {
     const elapsedSeconds = Math.floor((Date.now() - startedAt) / 1000);
-    const estimatedSegmentSeconds = 42;
-    const segmentIndex = Math.min(total, Math.max(1, Math.floor(elapsedSeconds / estimatedSegmentSeconds) + 1));
-    if (segmentIndex < total) {
-      setSpeakingReviewProgress(progressKey, [`正在分析第 ${segmentIndex}/${total} 段录音，请稍等。`]);
+    if (elapsedSeconds < 10) {
+      setSpeakingReviewProgress(progressKey, ["正在上传录音并建立评分任务。"]);
       return;
     }
-    if (elapsedSeconds < total * estimatedSegmentSeconds) {
-      setSpeakingReviewProgress(progressKey, [`正在分析第 ${total}/${total} 段录音，长回答可能需要久一点。`]);
+    if (elapsedSeconds < 55) {
+      setSpeakingReviewProgress(progressKey, ["语音分析服务正在处理录音。"]);
       return;
     }
-    if (elapsedSeconds < total * estimatedSegmentSeconds + 45) {
-      setSpeakingReviewProgress(progressKey, ["正在整理全部录音的分析结果。"]);
+    if (elapsedSeconds < 100) {
+      setSpeakingReviewProgress(progressKey, ["正在整理语音分析结果。"]);
       return;
     }
-    if (elapsedSeconds < total * estimatedSegmentSeconds + 120) {
+    if (elapsedSeconds < 170) {
       setSpeakingReviewProgress(progressKey, ["正在生成综合评分与中文反馈。"]);
       return;
     }
@@ -3415,6 +3697,18 @@ async function submitAiWritingReview(subject, type, questionIndex) {
       updatedAt: new Date().toISOString(),
     };
     saveProgress();
+    recordPracticeAttempt(
+      subject,
+      type,
+      questionIndex,
+      "writing-review",
+      {
+        essay,
+        question: question.text || "",
+        sourceId: String(question.sourceId || question.id || question.number || ""),
+      },
+      { aiReviews }
+    );
     const meta = { kind: "writing", subject, type, questionIndex, status: "ready" };
     if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
       openAiWritingReview(subject, type, questionIndex, "ready");
@@ -3497,6 +3791,17 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
       updatedAt: new Date().toISOString(),
     };
     saveProgress();
+    recordPracticeAttempt(
+      subject,
+      type,
+      questionIndex,
+      "speaking-review",
+      {
+        question: question.text || question.title || "",
+        speakingMode: question.speakingMode || "",
+      },
+      { speakingReview }
+    );
     const meta = { kind: "speaking", subject, type, questionIndex, status: "ready" };
     if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
       openAiSpeakingReview(subject, type, questionIndex, "ready");
@@ -3565,8 +3870,67 @@ function showSecureApiNotice() {
   mockApp?.insertAdjacentElement("afterbegin", notice);
 }
 
+async function handleAuthSubmit(form, action) {
+  if (!window.rewardSchoolApi?.login || !window.rewardSchoolApi?.register) {
+    setAuthMessage(form, "账号服务还没有加载完成。", true);
+    return;
+  }
+
+  const mode = action || form.dataset.authMode || "login";
+  const email = form.elements.email?.value?.trim() || "";
+  const password = form.elements.password?.value || "";
+  const displayName = form.elements.displayName?.value?.trim() || "";
+  setAuthMessage(form, mode === "register" ? "正在注册..." : "正在登录...");
+
+  try {
+    const session = mode === "register"
+      ? await window.rewardSchoolApi.register({ email, password, displayName })
+      : await window.rewardSchoolApi.login({ email, password });
+    saveAuthSession(session);
+    mockProgress = createEmptyProgress(session?.user?.id || null);
+    localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+    setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+    closeAuthModal();
+    renderMockApp();
+    void hydrateProgressAfterLogin();
+  } catch (error) {
+    setAuthMessage(form, error.message || "账号操作失败。", true);
+  }
+}
+
+async function handleAuthLogout() {
+  const token = getAuthToken();
+  saveAuthSession(null);
+  resetLocalPracticeForSignedOutUser();
+  closeAuthModal();
+  setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+
+  if (token && window.rewardSchoolApi?.logout) {
+    window.rewardSchoolApi.logout({ token }).catch((error) => {
+      console.warn("Could not logout cleanly:", error);
+    });
+  }
+}
+
+function setAuthMessage(form, message, isError = false) {
+  const node = form?.querySelector?.("[data-auth-message]");
+  if (!node) return;
+  node.textContent = message;
+  node.classList.toggle("is-error", isError);
+}
+
 if (mockApp) {
   showSecureApiNotice();
+  mockApp.addEventListener("submit", (event) => {
+    const form = event.target.closest?.("[data-auth-form]");
+    if (!form) return;
+
+    event.preventDefault();
+    const submitter = event.submitter;
+    const action = submitter?.dataset?.authAction || "login";
+    void handleAuthSubmit(form, action);
+  });
+
   mockApp.addEventListener("change", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
@@ -3611,8 +3975,18 @@ if (mockApp) {
     if (!target) return;
 
     if (target.dataset.resetPractice !== undefined) {
-      const confirmed = window.confirm("确定要重新练习吗？当前浏览器里的做题记录会被清空。");
+      const confirmed = window.confirm("确定要开始新一轮练习吗？当前这一轮会保留在云端历史中，本机画面会从空白进度开始。");
       if (confirmed) resetProgress();
+      return;
+    }
+
+    if (target.dataset.authLogout !== undefined) {
+      void handleAuthLogout();
+      return;
+    }
+
+    if (target.dataset.openAuth) {
+      openAuthModal(target.dataset.openAuth);
       return;
     }
 
@@ -3640,6 +4014,10 @@ if (mockApp) {
     }
 
     if (target.dataset.gradeBand) {
+      if (!isAuthenticated()) {
+        openAuthModal("login");
+        return;
+      }
       setMockState({ gradeBand: target.dataset.gradeBand, subjectId: null, typeId: null, questionIndex: null });
       return;
     }
@@ -3717,6 +4095,15 @@ if (mockApp) {
       return;
     }
 
+    if (target.dataset.resetSpeakingReview !== undefined) {
+      const subject = findSubject(mockState.subjectId);
+      const type = findType(subject, mockState.typeId);
+      if (subject && type && mockState.questionIndex) {
+        resetSpeakingReview(subject, type, mockState.questionIndex);
+      }
+      return;
+    }
+
     if (target.dataset.submitSpeakingReview !== undefined) {
       const subject = findSubject(mockState.subjectId);
       const type = findType(subject, mockState.typeId);
@@ -3733,6 +4120,9 @@ if (mockApp) {
   });
 
   renderMockApp();
+  if (getAuthToken()) {
+    void hydrateProgressAfterLogin();
+  }
 }
 
 document.addEventListener(
@@ -3761,6 +4151,18 @@ document.addEventListener(
 );
 
 document.addEventListener("click", (event) => {
+  const openAuthButton = event.target?.closest?.("[data-open-auth]");
+  if (openAuthButton) {
+    openAuthModal(openAuthButton.dataset.openAuth);
+    return;
+  }
+
+  const closeAuthButton = event.target?.closest?.("[data-close-auth]");
+  if (closeAuthButton || event.target?.matches?.("[data-auth-overlay]")) {
+    closeAuthModal();
+    return;
+  }
+
   document.querySelectorAll(".mock-review-filter-dropdown[open]").forEach((dropdown) => {
     if (!dropdown.contains(event.target)) dropdown.open = false;
   });
@@ -3793,6 +4195,14 @@ document.addEventListener("click", (event) => {
   if (event.target?.matches?.("[data-ai-review-overlay]")) {
     closeAiWritingReview();
   }
+});
+
+document.addEventListener("submit", (event) => {
+  const form = event.target?.closest?.("[data-auth-form]");
+  if (!form || form.closest("[data-mock-app]")) return;
+
+  event.preventDefault();
+  void handleAuthSubmit(form, form.dataset.authMode || "login");
 });
 
 document.addEventListener("change", (event) => {
