@@ -9,6 +9,8 @@ const rawSpeakingQuestionGroups = window.aeasMockSpeakingQuestionsByType || {};
 const rawNonVerbalQuestionGroups = window.aeasMockNonVerbalQuestionsByType || {};
 const nonVerbalMeta = window.aeasMockNonVerbalMeta || {};
 const pendingAiReviewKeys = new Set();
+const speakingReviewProgressLogs = new Map();
+const speakingReviewProgressTimers = new Map();
 const AI_REVIEW_SESSION_COOLDOWN_MS = 60 * 1000;
 const mathQuestionGroups = Object.fromEntries(
   Object.entries(rawMathQuestionGroups).map(([typeId, questions]) => [
@@ -748,19 +750,33 @@ function closeSubjectReview() {
 }
 
 function renderAiFeedbackDetail(record) {
+  if (record?.speakingReview && !record.speakingReview.error) {
+    const review = record.speakingReview;
+    return `
+      <div class="mock-ai-detail">
+        <h4>口说评分 · ${escapeHTML(review.total)}/20 · ${escapeHTML(review.level)}</h4>
+        <p>${formatBilingualFeedback(review.overall_feedback || "")}</p>
+        <strong>主要问题</strong>
+        ${renderListItems(review.main_issues, "暂无主要问题反馈。")}
+        <strong>改进建议</strong>
+        ${renderListItems(review.improvements, "暂无改进建议。")}
+      </div>
+    `;
+  }
+
   const reviews = Array.isArray(record?.aiReviews) ? record.aiReviews.filter((review) => !review.error) : [];
   if (!reviews.length) {
-    return formatBilingualFeedback("这道题暂无 AI 反馈。提交并批改后，反馈会显示在这里。English note: Submit your response to see bilingual feedback.");
+    return formatBilingualFeedback("这道题暂无评分反馈。提交并批改后，反馈会显示在这里。");
   }
 
   return reviews
     .map(
       (review) => `
         <div class="mock-ai-detail">
-          <h4>${escapeHTML(review.modelLabel || review.model || "AI Review")} · ${escapeHTML(review.total)}/20 · ${escapeHTML(review.level)}</h4>
-          <p>${formatBilingualFeedback(review.overall_feedback || "")}</p>
-          <strong>Top improvements</strong>
-          ${renderListItems(review.top_3_improvements, "暂无修改建议。English note: Practical revision advice will appear after review.")}
+          <h4>写作评分 · ${escapeHTML(review.total)}/20 · ${escapeHTML(review.level)}</h4>
+          <p>${formatBilingualFeedback(review.overall_feedback_zh || review.overall_feedback || "")}</p>
+          <strong>重点改进</strong>
+          ${renderListItems(review.top_3_improvements_zh || review.top_3_improvements, "暂无修改建议。")}
         </div>
       `
     )
@@ -814,6 +830,10 @@ function updateReviewFilters(overlay) {
 }
 
 function hasSuccessfulAiReview(record) {
+  if (record?.speakingReview && !record.speakingReview.error && Number.isFinite(Number(record.speakingReview.total))) {
+    return true;
+  }
+
   return Array.isArray(record?.aiReviews) && record.aiReviews.some((review) => (
     !review.error &&
     Number.isFinite(Number(review.total)) &&
@@ -850,7 +870,7 @@ function getQuestionStatusClass(record, question) {
 function getQuestionStatusText(record, question) {
   if (!record) return "未作答";
   if (question?.speakingMode === "warmup-recording") return "已录音";
-  if (question?.speakingMode === "monologue") return record.answer === "completed" ? "已完成" : "进行中";
+  if (question?.speakingMode === "monologue") return hasSuccessfulAiReview(record) ? "已评分" : record.answer === "completed" ? "已完成" : "进行中";
   if (question?.speakingMode === "picture-response") return record.answer === "completed" ? "已完成" : "进行中";
   if (isAiReviewQuestion(question)) return "已做";
   if (!record.graded) return "已作答";
@@ -1542,8 +1562,10 @@ function saveSpeakingAttempt(subject, type, questionIndex, question) {
   const segments = getSpeakingSegments(subject, type, questionIndex, question);
   const completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
   const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
+  const existing = mockProgress.answers[key] || {};
+  const { speakingReview, ...rest } = existing;
   mockProgress.answers[key] = {
-    ...(mockProgress.answers[key] || {}),
+    ...rest,
     answer: completed.length >= expectedSegmentCount ? "completed" : "in-progress",
     graded: false,
     correct: null,
@@ -1705,7 +1727,7 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           <div class="mock-speaking-segment-list">
             ${segmentCards}
           </div>
-          <p class="mock-answer-note">Monologue 会把主陈述和 3 个追问一起提交评分。当前评分接口先预留，录音只保存在当前浏览器页面中。</p>
+          <p class="mock-answer-note">Monologue 会把主陈述和 3 个追问一起提交到后端评分；语音分析与 AI 总评都在后端完成。</p>
           <div class="mock-question-actions">
             <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
             <button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>提交评分</button>
@@ -2199,22 +2221,49 @@ function getWritingReviewItems(question) {
     {
       key: "language_accuracy",
       reasonKey: "language_accuracy_reason",
-      title: "Language Accuracy",
+      title: "语言准确度",
       max: 8,
     },
     {
       key: "vocabulary",
       reasonKey: "vocabulary_reason",
-      title: "Vocabulary",
+      title: "词汇",
       max: 4,
     },
     {
       key: "content_organisation",
       reasonKey: "content_organisation_reason",
-      title: "Content and Organisation",
+      title: "内容与结构",
       max: 8,
     },
   ];
+}
+
+function getSpeakingReviewItems() {
+  return [
+    { key: "fluency", reasonKey: "fluency_reason", title: "流利度", max: 4 },
+    { key: "pronunciation", reasonKey: "pronunciation_reason", title: "发音", max: 4 },
+    { key: "vocabulary", reasonKey: "vocabulary_reason", title: "词汇", max: 4 },
+    { key: "grammar", reasonKey: "grammar_reason", title: "语法", max: 4 },
+    { key: "content_task_response", reasonKey: "content_task_response_reason", title: "内容与任务完成度", max: 4 },
+  ];
+}
+
+function sanitizeReviewMessage(value) {
+  return String(value || "")
+    .replace(/DeepSeek/gi, "综合评分服务")
+    .replace(/Xfyun|讯飞|科大讯飞/gi, "语音分析服务")
+    .replace(/AI\s*/gi, "")
+    .trim();
+}
+
+function getChineseReviewText(primary, fallback = "") {
+  const text = sanitizeReviewMessage(primary || fallback);
+  const englishMatch = text.match(/\b(English note|English focus|Student note|Practice note)\s*:\s*/i);
+  if (englishMatch && englishMatch.index > 0) {
+    return text.slice(0, englishMatch.index).trim();
+  }
+  return text;
 }
 
 function renderListItems(items, fallback) {
@@ -2249,17 +2298,17 @@ function formatBilingualFeedback(value) {
 
 function renderAiWritingModelResult(review, isLoading) {
   const hasScore = Number.isFinite(Number(review?.total));
-  const modelError = review?.error || "";
+  const modelError = sanitizeReviewMessage(review?.error || "");
   const rubricRows = getWritingReviewItems()
     .map((item) => {
       const score = hasScore ? review[item.key] : "--";
       const reason = hasScore
-          ? review[item.reasonKey]
+          ? getChineseReviewText(review[`${item.reasonKey}_zh`], review[item.reasonKey])
           : modelError
             ? modelError
           : isLoading
-            ? "AI 正在批改，请稍等。English note: Your feedback will appear here soon."
-            : "提交后会显示批改意见。English note: Submit your response to generate feedback.";
+            ? "正在批改，请稍等。"
+            : "提交后会显示批改意见。";
       return `
         <div class="mock-ai-score-card">
           <span>${escapeHTML(item.title)}</span>
@@ -2274,28 +2323,28 @@ function renderAiWritingModelResult(review, isLoading) {
     <section class="mock-ai-model-result">
       ${modelError ? `<div class="mock-ai-error">${escapeHTML(modelError)}</div>` : ""}
       <div class="mock-ai-review-total">
-        <span>Total Score</span>
+        <span>总分</span>
         <strong>${hasScore ? escapeHTML(review.total) : "--"}/20</strong>
-        <small>${hasScore ? escapeHTML(review.level) : modelError ? "Review failed" : isLoading ? "Reviewing..." : "Not reviewed yet"}</small>
+        <small>${hasScore ? escapeHTML(review.level) : modelError ? "评分失败" : isLoading ? "评分中..." : "尚未评分"}</small>
       </div>
       <div class="mock-ai-score-grid">
         ${rubricRows}
       </div>
       <div class="mock-ai-feedback-block">
-        <h4>Overall Feedback</h4>
-        <p>${formatBilingualFeedback(hasScore ? review.overall_feedback : isLoading ? "AI 正在生成整体反馈。English note: The review is being prepared." : "提交后会显示整体反馈。English note: Submit your response to generate feedback.")}</p>
+        <h4>整体反馈</h4>
+        <p>${formatBilingualFeedback(hasScore ? getChineseReviewText(review.overall_feedback_zh, review.overall_feedback) : isLoading ? "正在生成整体反馈。" : "提交后会显示整体反馈。")}</p>
       </div>
       <div class="mock-ai-feedback-block">
-        <h4>Strengths</h4>
-        ${renderListItems(hasScore ? review.strengths : [], isLoading ? "正在分析亮点。English note: Strengths will appear shortly." : "暂无亮点反馈。English note: Submit your response to generate strengths.")}
+        <h4>亮点</h4>
+        ${renderListItems(hasScore ? review.strengths_zh || review.strengths : [], isLoading ? "正在分析亮点。" : "暂无亮点反馈。")}
       </div>
       <div class="mock-ai-feedback-block">
-        <h4>Weaknesses</h4>
-        ${renderListItems(hasScore ? review.weaknesses : [], isLoading ? "正在分析薄弱点。English note: Weaknesses will appear shortly." : "暂无薄弱点反馈。English note: Submit your response to generate weaknesses.")}
+        <h4>薄弱点</h4>
+        ${renderListItems(hasScore ? review.weaknesses_zh || review.weaknesses : [], isLoading ? "正在分析薄弱点。" : "暂无薄弱点反馈。")}
       </div>
       <div class="mock-ai-feedback-block">
-        <h4>Top 3 Improvements</h4>
-        ${renderListItems(hasScore ? review.top_3_improvements : [], isLoading ? "正在生成改进建议。English note: Practical next steps will appear shortly." : "暂无改进建议。English note: Submit your response to generate next steps.")}
+        <h4>三项改进建议</h4>
+        ${renderListItems(hasScore ? review.top_3_improvements_zh || review.top_3_improvements : [], isLoading ? "正在生成改进建议。" : "暂无改进建议。")}
       </div>
     </section>
   `;
@@ -2327,13 +2376,13 @@ function renderAiWritingReview(subject, type, questionIndex, status = "ready", e
       <div class="mock-ai-review-dialog" role="dialog" aria-modal="true" aria-label="Writing AI review">
         <div class="mock-review-header">
           <div>
-            <p class="eyebrow">AI Bilingual Review</p>
-            <h3>AI 批改反馈</h3>
-            <p>${isLoading ? "AI 正在批改，请稍等。" : hasReview ? "以下为 AI 根据诊断维度生成的中英双语评分与反馈。" : "提交后会显示 AI 中英双语批改结果。"} Word count: ${wordCount}</p>
+            <p class="eyebrow">写作评分</p>
+            <h3>写作批改反馈</h3>
+            <p>${isLoading ? "正在批改，请稍等。" : hasReview ? "以下为根据诊断维度生成的中文评分与反馈。" : "提交后会显示中文批改结果。"} 字数：${wordCount}</p>
           </div>
           <button class="mock-review-close" type="button" data-close-ai-review>关闭</button>
         </div>
-        ${errorMessage ? `<div class="mock-ai-error">${escapeHTML(errorMessage)}</div>` : ""}
+        ${errorMessage ? `<div class="mock-ai-error">${escapeHTML(sanitizeReviewMessage(errorMessage))}</div>` : ""}
         <div class="mock-ai-model-results">
           ${reviewSections}
         </div>
@@ -2468,6 +2517,220 @@ function normalizeAiWritingReviewResult(raw) {
   };
 }
 
+function normalizeAiSpeakingReviewResult(raw) {
+  const fluency = normalizeScore(raw.fluency, 4);
+  const pronunciation = normalizeScore(raw.pronunciation, 4);
+  const vocabulary = normalizeScore(raw.vocabulary, 4);
+  const grammar = normalizeScore(raw.grammar, 4);
+  const contentTaskResponse = normalizeScore(raw.content_task_response, 4);
+  const total = normalizeScore(raw.total ?? fluency + pronunciation + vocabulary + grammar + contentTaskResponse, 20);
+  return {
+    fluency,
+    fluency_reason: getChineseReviewText(raw.fluency_reason_zh, raw.fluency_reason),
+    pronunciation,
+    pronunciation_reason: getChineseReviewText(raw.pronunciation_reason_zh, raw.pronunciation_reason),
+    vocabulary,
+    vocabulary_reason: getChineseReviewText(raw.vocabulary_reason_zh, raw.vocabulary_reason),
+    grammar,
+    grammar_reason: getChineseReviewText(raw.grammar_reason_zh, raw.grammar_reason),
+    content_task_response: contentTaskResponse,
+    content_task_response_reason: getChineseReviewText(raw.content_task_response_reason_zh, raw.content_task_response_reason),
+    total,
+    level: String(raw.level || "").trim(),
+    overall_feedback: getChineseReviewText(raw.overall_feedback_zh, raw.overall_feedback),
+    main_issues: normalizeStringArray(raw.main_issues_zh || raw.main_issues).map(sanitizeReviewMessage),
+    improvements: normalizeStringArray(raw.improvements_zh || raw.improvements).map(sanitizeReviewMessage),
+    better_answer_direction: getChineseReviewText(raw.better_answer_direction_zh, raw.better_answer_direction),
+    segments: Array.isArray(raw.segments) ? raw.segments : [],
+    model: raw.model || "deepseek-v4-pro",
+    modelLabel: raw.modelLabel || "AI Review",
+    reviewedAt: raw.reviewedAt || new Date().toISOString(),
+  };
+}
+
+function setSpeakingReviewProgress(progressKey, lines) {
+  const latestLine = normalizeStringArray(lines).at(-1) || "";
+  speakingReviewProgressLogs.set(progressKey, latestLine ? [latestLine] : []);
+  updateSpeakingReviewProgressNode(progressKey);
+}
+
+function appendSpeakingReviewProgress(progressKey, line) {
+  const existing = speakingReviewProgressLogs.get(progressKey) || [];
+  setSpeakingReviewProgress(progressKey, [...existing, line]);
+}
+
+function clearSpeakingReviewProgress(progressKey) {
+  const timer = speakingReviewProgressTimers.get(progressKey);
+  if (timer) window.clearInterval(timer);
+  speakingReviewProgressTimers.delete(progressKey);
+  speakingReviewProgressLogs.delete(progressKey);
+  updateSpeakingReviewProgressNode(progressKey);
+}
+
+function updateSpeakingReviewProgressNode(progressKey) {
+  const escapedKey = window.CSS?.escape ? CSS.escape(progressKey) : progressKey.replace(/["\\]/g, "\\$&");
+  const node = document.querySelector(`[data-speaking-review-log="${escapedKey}"]`);
+  if (!node) return;
+  const lines = speakingReviewProgressLogs.get(progressKey) || [];
+  node.innerHTML = renderSpeakingReviewProgressLines(lines);
+}
+
+function renderSpeakingReviewProgressLines(lines) {
+  const cleanLines = normalizeStringArray(lines);
+  if (!cleanLines.length) return "";
+  const latestLine = cleanLines.at(-1);
+  return `
+    <div class="mock-speaking-review-log">
+      <strong>评分进度</strong>
+      <p>${escapeHTML(sanitizeReviewMessage(latestLine))}</p>
+    </div>
+  `;
+}
+
+function startSpeakingReviewProgress(progressKey, segmentCount) {
+  const total = Math.max(1, Number(segmentCount) || 1);
+  let activeSegment = 0;
+  setSpeakingReviewProgress(progressKey, [
+    `正在准备 ${total} 段音频评分。`,
+  ]);
+
+  const timer = window.setInterval(() => {
+    activeSegment = Math.min(total - 1, activeSegment + 1);
+    appendSpeakingReviewProgress(progressKey, `正在分析第 ${activeSegment + 1}/${total} 段音频，请稍等。`);
+  }, 4500);
+  speakingReviewProgressTimers.set(progressKey, timer);
+}
+
+function finishSpeakingReviewProgress(progressKey) {
+  const timer = speakingReviewProgressTimers.get(progressKey);
+  if (timer) window.clearInterval(timer);
+  speakingReviewProgressTimers.delete(progressKey);
+  appendSpeakingReviewProgress(progressKey, "综合评分已完成。");
+}
+
+async function requestAiSpeakingSection2Review(subject, type, questionIndex, question) {
+  if (!window.rewardSchoolApi?.reviewSpeakingSection2) throw new Error("Reward School speaking API client is missing.");
+
+  const segments = getSpeakingSegments(subject, type, questionIndex, question);
+  const payloadSegments = segments.map((segment, index) => {
+    const recording = speakingRecordings.get(getSpeakingRecordingKey(subject.id, type.id, questionIndex, segment.id));
+    return {
+      id: index === 0 ? "monologue" : `followUp${index}`,
+      type: index === 0 ? "monologue" : "followUp",
+      question: segment.prompt,
+      blob: recording?.blob,
+    };
+  });
+
+  if (payloadSegments.some((segment) => !segment.blob)) {
+    throw new Error("请先完成所有口说录音，再提交评分。");
+  }
+
+  const payload = await window.rewardSchoolApi.reviewSpeakingSection2({
+    topicCard: question.text || "",
+    prompts: question.prompts || [],
+    segments: payloadSegments,
+    sourceId: String(question.sourceId || question.id || question.number || ""),
+    onProgress: (line) => appendSpeakingReviewProgress(
+      `${subject.id}:${type.id}:${questionIndex}:speaking`,
+      line
+    ),
+  });
+  return normalizeAiSpeakingReviewResult(payload);
+}
+
+function renderAiSpeakingModelResult(review, isLoading) {
+  const hasScore = Number.isFinite(Number(review?.total));
+  const modelError = sanitizeReviewMessage(review?.error || "");
+  const rubricRows = getSpeakingReviewItems()
+    .map((item) => {
+      const score = hasScore ? review[item.key] : "--";
+      const reason = hasScore
+        ? review[item.reasonKey]
+        : modelError
+          ? modelError
+          : isLoading
+            ? "正在上传全部录音并等待评分结果。"
+            : "提交后会显示口说评分。";
+      return `
+        <div class="mock-ai-score-card">
+          <span>${escapeHTML(item.title)}</span>
+          <strong>${escapeHTML(score)}/${item.max}</strong>
+          <small>${formatBilingualFeedback(reason)}</small>
+        </div>
+      `;
+    })
+    .join("");
+
+  return `
+    <section class="mock-ai-model-result">
+      ${modelError ? `<div class="mock-ai-error">${escapeHTML(modelError)}</div>` : ""}
+      <div class="mock-ai-review-total">
+        <span>总分</span>
+        <strong>${hasScore ? escapeHTML(review.total) : "--"}/20</strong>
+        <small>${hasScore ? escapeHTML(review.level) : modelError ? "评分失败" : isLoading ? "评分中..." : "尚未评分"}</small>
+      </div>
+      <div class="mock-ai-score-grid">
+        ${rubricRows}
+      </div>
+      <div class="mock-ai-feedback-block">
+        <h4>整体反馈</h4>
+        <p>${formatBilingualFeedback(hasScore ? review.overall_feedback : "录音提交后，系统会先做语音分析，再生成 Section 2 总评。")}</p>
+      </div>
+      <div class="mock-ai-feedback-block">
+        <h4>主要问题</h4>
+        ${renderListItems(hasScore ? review.main_issues : [], isLoading ? "正在分析主要问题。" : "暂无问题反馈。")}
+      </div>
+      <div class="mock-ai-feedback-block">
+        <h4>改进建议</h4>
+        ${renderListItems(hasScore ? review.improvements : [], isLoading ? "正在生成改进建议。" : "暂无改进建议。")}
+      </div>
+      <div class="mock-ai-feedback-block">
+        <h4>更好的回答方向</h4>
+        <p>${formatBilingualFeedback(hasScore ? review.better_answer_direction : "提交后会给出更好的回答方向，但不会生成整篇背诵稿。")}</p>
+      </div>
+    </section>
+  `;
+}
+
+function renderAiSpeakingReview(subject, type, questionIndex, status = "ready", errorMessage = "") {
+  const question = getQuestion(type, questionIndex);
+  const record = getQuestionRecord(subject.id, type.id, questionIndex);
+  const review = record?.speakingReview;
+  const progressKey = `${subject.id}:${type.id}:${questionIndex}:speaking`;
+  const progressLines = speakingReviewProgressLogs.get(progressKey) || [];
+  const isLoading = status === "loading";
+  const hasReview = review && !review.error && Number.isFinite(Number(review.total));
+  const reviewSection = renderAiSpeakingModelResult(hasReview ? review : { modelLabel: "评分服务", error: status === "error" ? sanitizeReviewMessage(errorMessage) : "" }, isLoading || !hasReview);
+
+  return `
+    <div class="mock-review-overlay" data-ai-review-overlay>
+      <div class="mock-ai-review-dialog" role="dialog" aria-modal="true" aria-label="Speaking AI review">
+        <div class="mock-review-header">
+          <div>
+            <p class="eyebrow">口说第二题型</p>
+            <h3>口说评分反馈</h3>
+            <p>${isLoading ? "正在批量提交录音并评分，请稍等。" : hasReview ? "以下为 Section 2 五项评分与中文反馈。" : "提交后会显示口说评分结果。"} ${escapeHTML(question?.speakingTitle || "")}</p>
+          </div>
+          <button class="mock-review-close" type="button" data-close-ai-review>关闭</button>
+        </div>
+        ${errorMessage ? `<div class="mock-ai-error">${escapeHTML(sanitizeReviewMessage(errorMessage))}</div>` : ""}
+        <div data-speaking-review-log="${escapeHTML(progressKey)}">
+          ${renderSpeakingReviewProgressLines(progressLines)}
+        </div>
+        <div class="mock-ai-model-results">
+          ${reviewSection}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function openAiSpeakingReview(subject, type, questionIndex, status = "ready", errorMessage = "") {
+  document.querySelector("[data-ai-review-overlay]")?.remove();
+  document.body.insertAdjacentHTML("beforeend", renderAiSpeakingReview(subject, type, questionIndex, status, errorMessage));
+}
+
 async function requestAiWritingReview(question, essay, modelConfig) {
   const model = typeof modelConfig === "string" ? modelConfig : modelConfig.id;
   const modelLabel = typeof modelConfig === "string" ? modelConfig : modelConfig.label || modelConfig.id;
@@ -2543,7 +2806,7 @@ async function submitAiWritingReview(subject, type, questionIndex) {
       return {
         model,
         modelLabel,
-        error: result.reason?.message || "AI review failed.",
+        error: sanitizeReviewMessage(result.reason?.message || "评分失败。"),
         reviewedAt: new Date().toISOString(),
       };
     });
@@ -2558,7 +2821,69 @@ async function submitAiWritingReview(subject, type, questionIndex) {
     saveProgress();
     openAiWritingReview(subject, type, questionIndex, "ready");
   } catch (error) {
-    openAiWritingReview(subject, type, questionIndex, "error", error.message || "AI 批改失败，请稍后再试。");
+    openAiWritingReview(subject, type, questionIndex, "error", sanitizeReviewMessage(error.message || "批改失败，请稍后再试。"));
+  } finally {
+    pendingAiReviewKeys.delete(pendingKey);
+  }
+}
+
+async function submitSpeakingSection2Review(subject, type, questionIndex) {
+  const question = getQuestion(type, questionIndex);
+  if (!question || question.speakingMode !== "monologue") {
+    window.alert("当前只开放 Section 2 Monologue 口说评分。");
+    return;
+  }
+
+  const segments = getSpeakingSegments(subject, type, questionIndex, question);
+  const completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
+  if (completed.length < getSpeakingExpectedSegmentCount(question) || completed.length < segments.length) {
+    window.alert("请先完成主陈述和 3 个 follow-up 录音，再提交评分。");
+    return;
+  }
+
+  const key = getQuestionKey(subject.id, type.id, questionIndex);
+  const record = mockProgress.answers[key] || {};
+  if (record.speakingReview && !record.speakingReview.error) {
+    openAiSpeakingReview(subject, type, questionIndex, "ready");
+    return;
+  }
+
+  const pendingKey = `${subject.id}:${type.id}:${questionIndex}:speaking`;
+  if (pendingAiReviewKeys.has(pendingKey)) return;
+
+  pendingAiReviewKeys.add(pendingKey);
+  startSpeakingReviewProgress(pendingKey, segments.length);
+  openAiSpeakingReview(subject, type, questionIndex, "loading");
+
+  try {
+    const speakingReview = await requestAiSpeakingSection2Review(subject, type, questionIndex, question);
+    finishSpeakingReviewProgress(pendingKey);
+    mockProgress.answers[key] = {
+      ...(mockProgress.answers[key] || {}),
+      answer: "completed",
+      graded: true,
+      correct: null,
+      speakingReview,
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+    openAiSpeakingReview(subject, type, questionIndex, "ready");
+    window.setTimeout(() => clearSpeakingReviewProgress(pendingKey), 3000);
+  } catch (error) {
+    const timer = speakingReviewProgressTimers.get(pendingKey);
+    if (timer) window.clearInterval(timer);
+    speakingReviewProgressTimers.delete(pendingKey);
+    appendSpeakingReviewProgress(pendingKey, "评分过程中遇到问题，请稍后再试。");
+    mockProgress.answers[key] = {
+      ...(mockProgress.answers[key] || {}),
+      speakingReview: {
+        error: sanitizeReviewMessage(error.message || "口说评分失败。"),
+        reviewedAt: new Date().toISOString(),
+      },
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+    openAiSpeakingReview(subject, type, questionIndex, "error", sanitizeReviewMessage(error.message || "口说评分失败，请稍后再试。"));
   } finally {
     pendingAiReviewKeys.delete(pendingKey);
   }
@@ -2750,7 +3075,11 @@ if (mockApp) {
     }
 
     if (target.dataset.submitSpeakingReview !== undefined) {
-      window.alert("Speaking review interface is prepared. We will connect the scoring model after confirming the rubric and API path.");
+      const subject = findSubject(mockState.subjectId);
+      const type = findType(subject, mockState.typeId);
+      if (subject && type && mockState.questionIndex) {
+        submitSpeakingSection2Review(subject, type, mockState.questionIndex);
+      }
       return;
     }
 
