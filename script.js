@@ -1,9 +1,41 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
 const contactForm = document.querySelector(".contact-form");
-const REWARD_SCHOOL_FRONTEND_VERSION = "20260625-11";
+const REWARD_SCHOOL_FRONTEND_VERSION = "20260627-06";
 
 window.rewardSchoolFrontendVersion = REWARD_SCHOOL_FRONTEND_VERSION;
+
+function preserveRuntimeParamsOnLocalLinks() {
+  const currentParams = new URLSearchParams(window.location.search);
+  const paramNames = ["api", "debug", "apiDebug"];
+  const paramsToKeep = paramNames.filter((name) => currentParams.has(name));
+  if (!paramsToKeep.length) return;
+
+  document.querySelectorAll('a[href$=".html"], a[href*=".html#"], a[href*=".html?"]').forEach((link) => {
+    const rawHref = link.getAttribute("href") || "";
+    if (!rawHref || rawHref.startsWith("http://") || rawHref.startsWith("https://") || rawHref.startsWith("mailto:") || rawHref.startsWith("tel:")) {
+      return;
+    }
+
+    const hashIndex = rawHref.indexOf("#");
+    const beforeHash = hashIndex >= 0 ? rawHref.slice(0, hashIndex) : rawHref;
+    const hash = hashIndex >= 0 ? rawHref.slice(hashIndex) : "";
+    const queryIndex = beforeHash.indexOf("?");
+    const path = queryIndex >= 0 ? beforeHash.slice(0, queryIndex) : beforeHash;
+    const query = queryIndex >= 0 ? beforeHash.slice(queryIndex + 1) : "";
+    if (!path.toLowerCase().endsWith(".html")) return;
+
+    const targetParams = new URLSearchParams(query);
+    paramsToKeep.forEach((name) => {
+      if (!targetParams.has(name)) {
+        targetParams.set(name, currentParams.get(name));
+      }
+    });
+
+    const nextQuery = targetParams.toString();
+    link.setAttribute("href", `${path}${nextQuery ? `?${nextQuery}` : ""}${hash}`);
+  });
+}
 
 function getDebugBadgeText() {
   const apiConfig = window.rewardSchoolAiConfig;
@@ -56,6 +88,7 @@ function setupHiddenDebugBadge() {
 }
 
 setupHiddenDebugBadge();
+preserveRuntimeParamsOnLocalLinks();
 
 if (menuToggle && siteNav) {
   menuToggle.addEventListener("click", () => {

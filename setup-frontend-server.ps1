@@ -1,5 +1,5 @@
 param(
-  [string]$RemoteHost = "39.105.34.236",
+  [string]$RemoteHost = "47.239.62.81",
   [string]$RemoteUser = "root",
   [string]$RemoteWebDir = "/var/www/reward-school-web",
   [string]$PemFile = "C:\Users\mtsai\Desktop\workspace\demo-server.pem"

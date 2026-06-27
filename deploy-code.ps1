@@ -1,8 +1,8 @@
 param(
-  [string]$RemoteHost = "39.105.34.236",
+  [string]$RemoteHost = "47.239.62.81",
   [string]$RemoteUser = "root",
   [string]$RemoteWebDir = "/var/www/reward-school-web",
-  [string]$PemFile = "C:\Users\mtsai\Desktop\workspace\demo-server.pem"
+  [string]$PemFile = "C:\Users\mtsai\Desktop\workspace\MelAU-Website\rewardschoolsecret.pem"
 )
 
 $ErrorActionPreference = "Stop"
@@ -66,7 +66,7 @@ WEB_DIR="$RemoteWebDir"
 ARCHIVE="$RemoteArchivePath"
 
 if [ ! -d "`$WEB_DIR" ]; then
-  echo "Missing `$WEB_DIR. Run setup-frontend-server.bat once before deploying."
+  echo "Missing `$WEB_DIR. Create the frontend folder on the server before deploying."
   exit 20
 fi
 
@@ -93,7 +93,7 @@ echo "Frontend code files are ready in `$WEB_DIR"
 "@
 
 Write-Host "Deploying code on server..." -ForegroundColor Cyan
-$remoteScript | & ssh -i $PemFile "${RemoteUser}@${RemoteHost}" "bash -s"
+$remoteScript | & ssh -i $PemFile "${RemoteUser}@${RemoteHost}" "sudo bash -s"
 if ($LASTEXITCODE -ne 0) {
   throw "Remote deploy failed."
 }

@@ -1545,6 +1545,24 @@ function getAnswerPanelHeading(question) {
   return "Select Answer";
 }
 
+function isGroupedInputQuestion(question) {
+  return Boolean(question?.sourceRange && Array.isArray(question.inputFields) && question.inputFields.length > 1);
+}
+
+function getQuestionDisplayText(question, fallbackText) {
+  if (isGroupedInputQuestion(question) && /^Questions?\s+\d+/i.test(question?.text || "")) {
+    return "Definitions";
+  }
+
+  return question?.text || fallbackText;
+}
+
+function getInputFieldDisplayLabel(question, field) {
+  const label = field?.label || "";
+  if (!isGroupedInputQuestion(question)) return label;
+  return label.replace(/^\s*\d+\.\s*/, "");
+}
+
 function renderWordBank(question) {
   if (!Array.isArray(question?.wordBank) || !question.wordBank.length) return "";
 
@@ -1575,6 +1593,7 @@ function renderAnswerOptions(question, record, correctAnswer) {
         ${fields
           .map((field) => {
             const value = saved[field.id] || "";
+            const label = getInputFieldDisplayLabel(question, field);
             const acceptedValues = Array.isArray(parseStoredInputAnswer(correctAnswer)[field.id])
               ? parseStoredInputAnswer(correctAnswer)[field.id]
               : [parseStoredInputAnswer(correctAnswer)[field.id]];
@@ -1606,7 +1625,7 @@ function renderAnswerOptions(question, record, correctAnswer) {
                 `;
             return `
               <label class="mock-input-field ${field.type === "textarea" ? "is-textarea" : ""} ${gradedClass}">
-                <span>${escapeHTML(field.label)}</span>
+                <span>${escapeHTML(label)}</span>
                 ${fieldControl}
               </label>
             `;
@@ -2432,6 +2451,7 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
   const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
   const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
   const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const record = mockProgress.answers[progressKey] || {};
   const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
   const anyRecordingNow = activeSpeakingRecorder?.state === "recording";
   let segments = getSpeakingSegments(subject, type, questionIndex, question);
@@ -2543,6 +2563,7 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
   const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
   const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
   const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
+  const record = mockProgress.answers[progressKey] || {};
   const segments = getSpeakingSegments(subject, type, questionIndex, question);
   const completed = getSpeakingCompletedSegments(subject, type, questionIndex, question);
   const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
@@ -2639,11 +2660,29 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
   }
 }
 
-async function renderSpeakingQuestion(subject, type, questionIndex) {
+async function renderSpeakingQuestion(subject, type, questionIndex, skipRecordingRestore = false) {
   if (!mockStage) return;
 
   const question = getQuestion(type, questionIndex);
-  await restoreSpeakingRecordings(subject, type, questionIndex, question);
+  if (!question) {
+    renderQuestionList(subject, type);
+    return;
+  }
+
+  if (!skipRecordingRestore) {
+    void restoreSpeakingRecordings(subject, type, questionIndex, question)
+      .then(() => {
+        const isStillCurrentQuestion =
+          mockState.subjectId === subject.id && mockState.typeId === type.id && mockState.questionIndex === questionIndex;
+        if (isStillCurrentQuestion) {
+          renderSpeakingQuestion(subject, type, questionIndex, true);
+        }
+      })
+      .catch((error) => {
+        console.warn("Could not restore speaking recordings:", error);
+      });
+  }
+
   if (question?.speakingMode === "monologue") {
     renderSpeakingMonologue(subject, type, questionIndex, question);
     return;
@@ -2739,12 +2778,14 @@ function renderQuestion(subject, type, questionIndex) {
   const answerType = getQuestionAnswerType(question);
   if (!isAiReviewQuestion(question)) clearWritingTimerInterval();
   const isPlaceholder = !question?.context && !question?.text && !question?.image;
-  const sourceLabel = question?.sourceNumber ? `原题 ${question.sourceNumber}` : "";
+  const sourceLabel = question?.sourceNumber && !question?.sourceRange ? `原题 ${question.sourceNumber}` : "";
   const questionText = formatQuestionText(
-    question?.text ||
+    getQuestionDisplayText(
+      question,
       (question?.sharedStemImage
         ? `请根据下图完成${sourceLabel ? ` ${sourceLabel}` : ""} 的填空。`
         : "请根据题目图示作答。")
+    )
   );
   const questionContext = question?.context ? `<p class="mock-question-context">${escapeHTML(question.context)}</p>` : "";
   const hasPassage = Boolean(question?.passageText);
@@ -2829,7 +2870,7 @@ function renderQuestion(subject, type, questionIndex) {
       <div class="mock-question-view">
         <div class="mock-question-topbar">
           <button class="mock-back" type="button" data-reset="questions">返回题号</button>
-          <span>${subject.title} · ${type.title} · Question ${questionIndex}${sourceLabel ? ` · Source ${question.sourceNumber}` : ""}</span>
+          <span>${subject.title} · ${type.title} · Question ${questionIndex}</span>
         </div>
         <div class="mock-writing-layout">
           <section class="mock-writing-prompt">
@@ -2864,7 +2905,7 @@ function renderQuestion(subject, type, questionIndex) {
     <div class="mock-question-view">
       <div class="mock-question-topbar">
         <button class="mock-back" type="button" data-reset="questions">返回题号</button>
-        <span>${subject.title} · ${type.title} · Question ${questionIndex}${sourceLabel ? ` · Source ${question.sourceNumber}` : ""}</span>
+        <span>${subject.title} · ${type.title} · Question ${questionIndex}</span>
       </div>
       <div class="mock-question-layout ${hasPassage ? "has-reading-passage" : ""}">
         <div class="mock-question-content">
@@ -3865,7 +3906,7 @@ function showSecureApiNotice() {
   notice.innerHTML = `
     <strong>AI 批改需要切换到 HTTP 版本页面。</strong>
     当前是 HTTPS 页面，浏览器会拦截对 HTTP API 的请求。
-    <a href="${escapeHTML(config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html")}">打开可用版本</a>
+    <a href="${escapeHTML(config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html")}">打开可用版本</a>
   `;
   mockApp?.insertAdjacentElement("afterbegin", notice);
 }
@@ -4116,6 +4157,7 @@ if (mockApp) {
     if (target.dataset.question) {
       saveCurrentAnswerFromForm();
       setMockState({ questionIndex: Number(target.dataset.question) });
+      return;
     }
   });
 

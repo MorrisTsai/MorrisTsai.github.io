@@ -125,7 +125,7 @@ window.rewardSchoolApi = {
       if (error?.message?.startsWith("Writing review API")) throw error;
       if (config.requiresSecureApi && endpoint.startsWith("http://")) {
         throw new Error(
-          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html"} for AI review.`
+          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"} for AI review.`
         );
       }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
@@ -202,7 +202,7 @@ window.rewardSchoolApi = {
       if (error?.message?.startsWith("Speaking review API")) throw error;
       if (config.requiresSecureApi && endpoint.startsWith("http://")) {
         throw new Error(
-          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html"} for AI review.`
+          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"} for AI review.`
         );
       }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
@@ -281,7 +281,7 @@ window.rewardSchoolApi = {
       if (error?.message?.startsWith("Speaking type 3 review API")) throw error;
       if (config.requiresSecureApi && endpoint.startsWith("http://")) {
         throw new Error(
-          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://39.105.34.236/aeas-mock.html"} for AI review.`
+          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"} for AI review.`
         );
       }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
@@ -337,33 +337,40 @@ async function fetchJson(endpoint, options = {}) {
 
 function getApiEndpoint(path) {
   const config = window.rewardSchoolAiConfig || {};
-  const baseUrl = config.apiBaseUrl || getFallbackApiBaseUrl();
+  const baseUrl = config.apiBaseUrl || resolveApiBaseUrlFallback();
   if (baseUrl) {
     const normalized = baseUrl.replace(/\/$/, "");
     const apiBase = normalized.endsWith("/api") ? normalized : `${normalized}/api`;
     return `${apiBase}${path}`;
   }
 
-  return `/api${path}`;
+  if (config.requiresSecureApi) {
+    throw new Error(`当前 HTTPS 页面不能连接 HTTP API，请打开 ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"}。`);
+  }
+
+  throw new Error("API config is missing apiBaseUrl. Open this page with ?api=local or ?api=online.");
 }
 
-function getFallbackApiBaseUrl() {
-  const mode = getApiMode();
+function resolveApiBaseUrlFallback() {
+  const params = new URLSearchParams(window.location.search);
+  const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const mode = params.get("api") || hashParams.get("api");
+  const onlineHost = "www.rewardschool.com.au";
+  const onlineIpHost = "47.239.62.81";
+  const onlineBase = `https://${onlineHost}/api`;
+  const { protocol, hostname, host } = window.location;
+  const isLocal = protocol === "file:" ||
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1";
+
+  if (mode === "online") return onlineBase;
   if (mode === "local") return "http://localhost:5132";
-  if (mode === "online") return "http://39.105.34.236/api";
-
-  if (window.location.protocol === "file:" ||
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname === "::1") {
-    return "http://localhost:5132";
+  if (hostname === onlineHost || hostname === "rewardschool.com.au" || hostname === onlineIpHost) {
+    return `${protocol}//${host}/api`;
   }
-
-  if (window.location.hostname === "39.105.34.236") {
-    return `${window.location.origin}/api`;
-  }
-
-  return "";
+  if (isLocal) return "http://localhost:5132";
+  return onlineBase;
 }
 
 function getAuthHeaders(token) {
@@ -375,20 +382,7 @@ function getWritingReviewEndpoint(config) {
     return config.writingReviewEndpoint;
   }
 
-  const mode = getApiMode();
-  if (mode === "local") {
-    return "http://localhost:5132/api/aeas/writing/review";
-  }
-
-  if (mode === "online") {
-    return "http://39.105.34.236/api/aeas/writing/review";
-  }
-
-  if (isLocalApiPage()) {
-    return "http://localhost:5132/api/aeas/writing/review";
-  }
-
-  return getDefaultWritingReviewEndpoint();
+  return getApiEndpoint("/aeas/writing/review");
 }
 
 function getSpeakingSection2ReviewEndpoint(config) {
@@ -396,21 +390,7 @@ function getSpeakingSection2ReviewEndpoint(config) {
     return config.speakingSection2ReviewEndpoint;
   }
 
-  const mode = getApiMode();
-  if (mode === "local") {
-    return "http://localhost:5132/api/aeas/speaking/section2/review";
-  }
-
-  if (mode === "online") {
-    return "http://39.105.34.236/api/aeas/speaking/section2/review";
-  }
-
-  if (isLocalApiPage()) {
-    return "http://localhost:5132/api/aeas/speaking/section2/review";
-  }
-
-  const defaultWritingEndpoint = getDefaultWritingReviewEndpoint();
-  return defaultWritingEndpoint.replace(/\/aeas\/writing\/review$/, "/aeas/speaking/section2/review");
+  return getApiEndpoint("/aeas/speaking/section2/review");
 }
 
 function getSpeakingType3ReviewEndpoint(config) {
@@ -418,28 +398,7 @@ function getSpeakingType3ReviewEndpoint(config) {
     return config.speakingType3ReviewEndpoint;
   }
 
-  const mode = getApiMode();
-  if (mode === "local") {
-    return "http://localhost:5132/api/aeas/speaking/type3/review";
-  }
-
-  if (mode === "online") {
-    return "http://39.105.34.236/api/aeas/speaking/type3/review";
-  }
-
-  if (isLocalApiPage()) {
-    return "http://localhost:5132/api/aeas/speaking/type3/review";
-  }
-
-  const defaultWritingEndpoint = getDefaultWritingReviewEndpoint();
-  return defaultWritingEndpoint.replace(/\/aeas\/writing\/review$/, "/aeas/speaking/type3/review");
-}
-
-function isLocalApiPage() {
-  return window.location.protocol === "file:" ||
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1" ||
-    window.location.hostname === "::1";
+  return getApiEndpoint("/aeas/speaking/type3/review");
 }
 
 function getAudioExtension(contentType) {
@@ -449,22 +408,3 @@ function getAudioExtension(contentType) {
   return "webm";
 }
 
-function getApiMode() {
-  const searchParams = new URLSearchParams(window.location.search || "");
-  const hashText = (window.location.hash || "").replace(/^#/, "");
-  const hashParams = new URLSearchParams(hashText);
-  return searchParams.get("api") || hashParams.get("api") || "";
-}
-
-function getDefaultWritingReviewEndpoint() {
-  const config = window.rewardSchoolAiConfig || {};
-  if (config.writingReviewEndpoint) {
-    return config.writingReviewEndpoint;
-  }
-
-  if (window.location.hostname === "39.105.34.236") {
-    return `${window.location.origin}/api/aeas/writing/review`;
-  }
-
-  return "http://39.105.34.236/api/aeas/writing/review";
-}
