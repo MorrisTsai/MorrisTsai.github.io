@@ -14,7 +14,6 @@ const pendingAiReviewKeys = new Set();
 const pendingAiReviewMeta = new Map();
 const speakingReviewProgressLogs = new Map();
 const speakingReviewProgressTimers = new Map();
-const AI_REVIEW_SESSION_COOLDOWN_MS = 60 * 1000;
 const SPEAKING_RECORDINGS_DB_NAME = "rewardSchoolAeasMockRecordings";
 const SPEAKING_RECORDINGS_DB_VERSION = 1;
 const SPEAKING_RECORDINGS_STORE = "recordings";
@@ -163,7 +162,7 @@ function loadProgress() {
 function loadAuthSession() {
   try {
     const saved = JSON.parse(localStorage.getItem(MOCK_AUTH_STORAGE_KEY) || "null");
-    if (saved?.token && saved?.user?.email) return saved;
+    if (saved?.token) return { token: saved.token, user: null, status: "loading" };
   } catch (error) {
     // Ignore corrupted auth state and let the user sign in again.
   }
@@ -172,12 +171,20 @@ function loadAuthSession() {
 }
 
 function saveAuthSession(session) {
-  authSession = session;
-  if (session?.token) {
-    localStorage.setItem(MOCK_AUTH_STORAGE_KEY, JSON.stringify(session));
+  authSession = session?.token
+    ? { ...session, status: session.status || (session.user?.id ? "ready" : "loading") }
+    : null;
+  if (authSession?.token) {
+    localStorage.setItem(MOCK_AUTH_STORAGE_KEY, JSON.stringify({ token: authSession.token }));
   } else {
     localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
   }
+  renderProgressPanel();
+}
+
+function setAuthMemberStatus(status, user = authSession?.user || null) {
+  if (!authSession?.token) return;
+  authSession = { ...authSession, user, status };
   renderProgressPanel();
 }
 
@@ -186,7 +193,7 @@ function getAuthToken() {
 }
 
 function isAuthenticated() {
-  return Boolean(getAuthToken() && authSession?.user?.id);
+  return Boolean(getAuthToken() && authSession?.status === "ready" && authSession?.user?.id);
 }
 
 function getPracticeScopeId() {
@@ -281,7 +288,8 @@ function countProgressAnswers(progress) {
 
 async function hydrateProgressAfterLogin() {
   if (!getAuthToken() || !window.rewardSchoolApi?.getPracticeProgress) return;
-  const userId = authSession?.user?.id || null;
+  if (!isAuthenticated()) return;
+  const userId = authSession.user.id;
 
   try {
     const remote = await window.rewardSchoolApi.getPracticeProgress({
@@ -737,12 +745,26 @@ function renderProgressPanel() {
   const type = findType(subject, mockState.typeId);
   const overall = getOverallStats();
   const currentTypeStats = subject && type ? getTypeStats(subject, type) : null;
+  const accountName = authSession?.user
+    ? escapeHTML(authSession.user.displayName || authSession.user.email)
+    : authSession?.token && authSession.status === "loading"
+      ? "正在取得会员状态"
+      : authSession?.token && authSession.status === "failed"
+        ? "会员状态取得失败"
+        : "未登录";
+  const accountNote = authSession?.user
+    ? "当前练习记录绑定到此账号"
+    : authSession?.token && authSession.status === "loading"
+      ? "正在从服务器读取会员状态"
+      : authSession?.token && authSession.status === "failed"
+        ? "无法确认账号状态，请重新检查"
+        : "登录后才能进入题库";
 
   mockProgressPanel.innerHTML = `
     <div class="mock-progress-card">
       <span>练习账号</span>
-      <strong>${authSession?.user ? escapeHTML(authSession.user.displayName || authSession.user.email) : "未登录"}</strong>
-      <small>${authSession?.user ? "当前练习记录绑定到此账号" : "登录后才能进入题库"}</small>
+      <strong>${accountName}</strong>
+      <small>${accountNote}</small>
     </div>
     <div class="mock-progress-card">
       <span>整体做题情况</span>
@@ -766,12 +788,40 @@ function renderProgressPanel() {
 }
 
 function renderAuthPanel() {
+  if (authSession?.token && authSession.status === "loading") {
+    return `
+      <div class="mock-auth-card">
+        <span>Cloud Account</span>
+        <strong>正在取得会员状态</strong>
+        <small>正在从服务器确认账号、邮箱验证和权限。</small>
+        <button type="button" data-auth-refresh>重新检查</button>
+      </div>
+    `;
+  }
+
+  if (authSession?.token && authSession.status === "failed") {
+    return `
+      <div class="mock-auth-card">
+        <span>Cloud Account</span>
+        <strong>会员状态取得失败</strong>
+        <small>无法从服务器确认账号状态。请检查 API 连接，或重新登录。</small>
+        <button type="button" data-auth-refresh>重新检查</button>
+        <button type="button" data-auth-logout>退出登录</button>
+      </div>
+    `;
+  }
+
   if (authSession?.user) {
+    const verificationText = authSession.user.superUser
+      ? "超级账号 · AI 批改不限速"
+      : authSession.user.emailVerified
+        ? "邮箱已验证 · 可以使用 AI 批改"
+        : "邮箱未验证 · 验证后才能使用 AI 批改";
     return `
       <div class="mock-auth-card">
         <span>Cloud Account</span>
         <strong>${escapeHTML(authSession.user.displayName || authSession.user.email)}</strong>
-        <small>${escapeHTML(authSession.user.email)} · 练习记录会自动同步</small>
+        <small>${escapeHTML(authSession.user.email)} · ${verificationText}</small>
         <button type="button" data-auth-logout>退出登录</button>
       </div>
     `;
@@ -811,6 +861,8 @@ function renderAuthModal(mode = "login") {
           <button type="button" class="mock-auth-switch" data-open-auth="${isRegister ? "login" : "register"}">
             ${isRegister ? "已有账号，去登录" : "没有账号，去注册"}
           </button>
+          ${isRegister ? "" : `<button type="button" class="mock-auth-switch" data-request-password-reset>忘记密码？发送重设邮件</button>`}
+          <small>${isRegister ? "注册后请到邮箱点击验证链接；验证后才能使用 AI 批改。" : "AI 批改需要先完成邮箱验证。"}</small>
           <small data-auth-message></small>
         </div>
       </form>
@@ -825,6 +877,109 @@ function openAuthModal(mode = "login") {
 
 function closeAuthModal() {
   document.querySelector("[data-auth-overlay]")?.remove();
+}
+
+async function refreshAuthStateFromServer(options = {}) {
+  const token = getAuthToken();
+  if (!token || !window.rewardSchoolApi?.getCurrentUser) return null;
+  const hydrateProgress = Boolean(options.hydrateProgress);
+
+  setAuthMemberStatus("loading", null);
+  try {
+    const user = await window.rewardSchoolApi.getCurrentUser({ token });
+    authSession = { token, user, status: "ready" };
+    renderProgressPanel();
+
+    if (mockProgress?.ownerUserId !== user.id) {
+      if (!hydrateProgress && countProgressAnswers(mockProgress) > 0) {
+        mockProgress = { ...mockProgress, ownerUserId: user.id };
+        localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+      } else {
+      mockProgress = createEmptyProgress(user.id);
+      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+      }
+    }
+
+    renderMockApp();
+    if (hydrateProgress) void hydrateProgressAfterLogin();
+    return user;
+  } catch (error) {
+    if (error?.status === 401) {
+      saveAuthSession(null);
+      setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+      return null;
+    }
+
+    authSession = { token, user: null, status: "failed" };
+    renderProgressPanel();
+    setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+    return null;
+  }
+}
+
+function renderEmailVerificationModal(message = "") {
+  const email = authSession?.user?.email || "";
+  const displayName = authSession?.user?.displayName || authSession?.user?.email || "未登录";
+  return `
+    <div class="mock-review-overlay" data-email-verification-overlay>
+      <div class="mock-auth-dialog mock-email-dialog" role="dialog" aria-modal="true" aria-labelledby="email-verification-title">
+        <div class="mock-email-dialog-header">
+          <div>
+            <p class="eyebrow">Email Verification</p>
+            <h3 id="email-verification-title">需要先验证邮箱</h3>
+            <p>AI 批改只开放给已验证邮箱的账号使用。</p>
+          </div>
+          <button class="mock-review-close" type="button" data-close-email-verification>关闭</button>
+        </div>
+        <div class="mock-auth-dialog-body mock-email-dialog-body">
+          <div class="mock-email-account">
+            <span>当前账号</span>
+            <strong>${escapeHTML(displayName)}</strong>
+            ${email ? `<small>${escapeHTML(email)}</small>` : ""}
+          </div>
+          <button class="mock-email-primary" type="button" data-resend-verification>重新寄送验证信</button>
+          <p class="mock-email-note" data-email-verification-message>${escapeHTML(message)}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function openEmailVerificationModal(message = "请先到邮箱点击验证链接；验证后才能使用 AI 批改。") {
+  document.querySelector("[data-email-verification-overlay]")?.remove();
+  document.body.insertAdjacentHTML("beforeend", renderEmailVerificationModal(message));
+}
+
+function closeEmailVerificationModal() {
+  document.querySelector("[data-email-verification-overlay]")?.remove();
+}
+
+function setEmailVerificationMessage(message, isError = false) {
+  const node = document.querySelector("[data-email-verification-message]");
+  if (!node) return;
+  node.textContent = message;
+  node.classList.toggle("is-error", Boolean(isError));
+}
+
+async function handleResendVerification() {
+  const button = document.querySelector("[data-resend-verification]");
+  const token = getAuthToken();
+  if (!token || !window.rewardSchoolApi?.resendVerification) {
+    setEmailVerificationMessage("账号服务还没有加载完成，请稍后再试。", true);
+    return;
+  }
+
+  if (button) button.disabled = true;
+  setEmailVerificationMessage("正在重新寄送验证信...");
+
+  try {
+    const result = await window.rewardSchoolApi.resendVerification({ token });
+    setEmailVerificationMessage(result?.message || "验证信已寄出，请检查邮箱。");
+  } catch (error) {
+    setEmailVerificationMessage(error.message || "重新寄送验证信失败。", true);
+  } finally {
+    if (button) button.disabled = false;
+  }
 }
 
 function renderGradeBandList() {
@@ -1196,10 +1351,6 @@ function hasChineseAiFeedback(review) {
   return /[\u3400-\u9fff]/.test(text);
 }
 
-function hasPendingAiReview() {
-  return pendingAiReviewKeys.size > 0;
-}
-
 function isCurrentQuestion(subjectId, typeId, questionIndex) {
   return mockState.subjectId === subjectId &&
     mockState.typeId === typeId &&
@@ -1237,6 +1388,20 @@ function showReviewToast(message, meta) {
       openAiWritingReview(meta.subject, meta.type, meta.questionIndex, meta.status || "ready", meta.errorMessage || "");
     }
   });
+  document.body.appendChild(toast);
+  window.setTimeout(() => toast.remove(), 5000);
+}
+
+function showSystemToast(message, detail = "") {
+  document.querySelector("[data-review-toast]")?.remove();
+  const toast = document.createElement("div");
+  toast.className = "mock-review-toast mock-system-toast";
+  toast.dataset.reviewToast = "1";
+  toast.setAttribute("role", "status");
+  toast.innerHTML = `
+    <strong>${escapeHTML(message)}</strong>
+    ${detail ? `<span>${escapeHTML(detail)}</span>` : ""}
+  `;
   document.body.appendChild(toast);
   window.setTimeout(() => toast.remove(), 5000);
 }
@@ -2853,11 +3018,9 @@ function renderQuestion(subject, type, questionIndex) {
     </div>
   `;
   const canRetryAiReview = hasSuccessfulAiReview(record);
-  const aiSubmitLocked = !canRetryAiReview && hasPendingAiReview();
   const aiActionButtons = `
     <div class="mock-question-actions">
-      <button class="button ghost dark" type="button" ${previous ? `data-question="${previous}"` : "disabled"}>上一题</button>
-      <button class="button primary" type="button" ${canRetryAiReview ? "data-view-ai-review" : "data-submit-ai-review"} ${aiSubmitLocked ? "disabled" : ""}>
+      <button class="button primary" type="button" ${canRetryAiReview ? "data-view-ai-review" : "data-submit-ai-review"}>
         ${canRetryAiReview ? "看评论" : "提交并批改"}
       </button>
       ${canRetryAiReview ? `<button class="button ghost dark" type="button" data-retry-ai-question>再试一次</button>` : ""}
@@ -2983,11 +3146,28 @@ function initializeWritingTools(subjectId, typeId, questionIndex) {
   const timerWrap = timerNode?.closest("span");
   const durationSeconds = parseDurationSeconds(question.timeAllowed);
   const timer = ensureQuestionTimer(subjectId, typeId, questionIndex, durationSeconds);
+  const answerKey = getQuestionKey(subjectId, typeId, questionIndex);
 
   const updateWordCount = () => {
     if (wordCountNode && textarea) {
       wordCountNode.textContent = String(getWordCount(textarea.value));
     }
+  };
+
+  const saveWritingDraft = () => {
+    if (!textarea) return;
+    const existing = mockProgress.answers[answerKey] || {};
+    const values = parseStoredInputAnswer(existing.answer);
+    values.essay = textarea.value;
+    mockProgress.answers[answerKey] = {
+      ...existing,
+      answer: JSON.stringify(values),
+      graded: false,
+      correct: null,
+      updatedAt: new Date().toISOString(),
+    };
+    saveProgress();
+    renderProgressPanel();
   };
 
   const updateTimer = () => {
@@ -2997,7 +3177,10 @@ function initializeWritingTools(subjectId, typeId, questionIndex) {
     if (remaining <= 0) clearWritingTimerInterval();
   };
 
-  textarea?.addEventListener("input", updateWordCount);
+  textarea?.addEventListener("input", () => {
+    updateWordCount();
+    saveWritingDraft();
+  });
   updateWordCount();
   updateTimer();
   writingTimerInterval = window.setInterval(updateTimer, 1000);
@@ -3017,7 +3200,7 @@ function saveCurrentAnswerFromForm() {
     fields.forEach((field) => {
       const input = mockStage.querySelector(`[name="mock-input-${field.id}"]`);
       if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) {
-        values[field.id] = input.value.trim();
+        values[field.id] = input instanceof HTMLTextAreaElement ? input.value : input.value.trim();
       }
     });
     saveCurrentAnswer(JSON.stringify(values));
@@ -3240,6 +3423,18 @@ function openAiWritingReview(subject, type, questionIndex, status = "ready", err
 
 function closeAiWritingReview() {
   document.querySelector("[data-ai-review-overlay]")?.remove();
+}
+
+function isAiReviewCooldownError(error) {
+  return Number(error?.retryAfterSeconds) > 0 || /每\s*3\s*分钟|3 分钟|retry/i.test(String(error?.message || ""));
+}
+
+function formatAiReviewCooldownMessage(error) {
+  const seconds = Math.max(1, Math.ceil(Number(error?.retryAfterSeconds || 0)));
+  if (seconds > 0 && Number.isFinite(seconds)) {
+    return `每个账号每 3 分钟只能提交一次 AI 批改，请再等 ${seconds} 秒。`;
+  }
+  return sanitizeReviewMessage(error?.message || "每个账号每 3 分钟只能提交一次 AI 批改，请稍后再试。");
 }
 
 function resetAiWritingReview(subject, type, questionIndex) {
@@ -3487,6 +3682,7 @@ async function requestAiSpeakingSection2Review(subject, type, questionIndex, que
     prompts: question.prompts || [],
     segments: payloadSegments,
     sourceId: String(question.sourceId || question.id || question.number || ""),
+    token: getAuthToken(),
     onProgress: (line) => appendSpeakingReviewProgress(
       `${subject.id}:${type.id}:${questionIndex}:speaking`,
       line
@@ -3519,6 +3715,7 @@ async function requestAiSpeakingType3Review(subject, type, questionIndex, questi
     pictureQuestions: question.pictureQuestions || segments.map((segment) => segment.prompt),
     segments: payloadSegments,
     sourceId: String(question.sourceId || question.id || question.number || ""),
+    token: getAuthToken(),
     onProgress: (line) => appendSpeakingReviewProgress(
       `${subject.id}:${type.id}:${questionIndex}:speaking`,
       line
@@ -3639,6 +3836,10 @@ function openAiSpeakingReview(subject, type, questionIndex, status = "ready", er
   document.body.insertAdjacentHTML("beforeend", renderAiSpeakingReview(subject, type, questionIndex, status, errorMessage));
 }
 
+function closeAiSpeakingReview() {
+  document.querySelector("[data-ai-review-overlay]")?.remove();
+}
+
 async function requestAiWritingReview(question, essay, modelConfig) {
   const model = typeof modelConfig === "string" ? modelConfig : modelConfig.id;
   const modelLabel = typeof modelConfig === "string" ? modelConfig : modelConfig.label || modelConfig.id;
@@ -3649,6 +3850,7 @@ async function requestAiWritingReview(question, essay, modelConfig) {
     question: question.text || "",
     essay,
     sourceId: String(question.sourceId || question.id || question.number || ""),
+    token: getAuthToken(),
   });
   return {
     ...normalizeAiWritingReviewResult(payload),
@@ -3658,21 +3860,72 @@ async function requestAiWritingReview(question, essay, modelConfig) {
   };
 }
 
-function getAiReviewCooldownRemainingMs() {
-  const lastSubmittedAt = Number(mockProgress.aiReviewLastSubmittedAt || 0);
-  if (!Number.isFinite(lastSubmittedAt) || lastSubmittedAt <= 0) return 0;
-  return Math.max(0, AI_REVIEW_SESSION_COOLDOWN_MS - (Date.now() - lastSubmittedAt));
+async function refreshAuthUserFromServer() {
+  return refreshAuthStateFromServer();
 }
 
-function markAiReviewSubmitted() {
-  mockProgress.aiReviewLastSubmittedAt = Date.now();
-  saveProgress();
+function showAiReviewAccessError(error) {
+  if (isAiReviewCooldownError(error)) {
+    showSystemToast("AI 批改暂时不能提交", formatAiReviewCooldownMessage(error));
+    return;
+  }
+
+  const message = sanitizeReviewMessage(error?.message || "");
+  if (error?.status === 401) {
+    showSystemToast("请先登录", "登录后才能使用 AI 批改。");
+    return;
+  }
+  if (error?.status === 404) {
+    showSystemToast("线上 API 尚未更新", "请先部署后端，或改用本地服务器测试这个批改限制流程。");
+    return;
+  }
+  if (/verify|验证|邮箱/i.test(message)) {
+    showSystemToast("需要先验证邮箱", "请先到邮箱点击验证链接，验证后才能使用 AI 批改。");
+    return;
+  }
+
+  showSystemToast("暂时无法提交 AI 批改", message || "请稍后再试。");
+}
+
+async function canUseAiReview(kind = "writing") {
+  if (!getAuthToken()) {
+    showSystemToast("请先登录", "登录后才能使用 AI 批改。");
+    openAuthModal("login");
+    return false;
+  }
+
+  const user = await refreshAuthUserFromServer();
+  if (!user?.id) {
+    showSystemToast("会员状态取得失败", "无法从服务器确认账号状态，请检查 API 连接或重新登录。");
+    return false;
+  }
+
+  if (!user?.emailVerified && !user?.superUser) {
+    showSystemToast("需要先验证邮箱", "请先到邮箱点击验证链接，验证后才能使用 AI 批改。");
+    return false;
+  }
+
+  try {
+    await window.rewardSchoolApi.checkAiReviewAccess({
+      token: getAuthToken(),
+      kind,
+    });
+  } catch (error) {
+    showAiReviewAccessError(error);
+    return false;
+  }
+
+  return true;
 }
 
 async function submitAiWritingReview(subject, type, questionIndex) {
   const question = getQuestion(type, questionIndex);
   const record = getQuestionRecord(subject.id, type.id, questionIndex);
   const essay = parseStoredInputAnswer(record?.answer).essay || "";
+  const writingAnswer = JSON.stringify({
+    ...parseStoredInputAnswer(record?.answer),
+    essay,
+  });
   if (!essay.trim()) {
     window.alert("请先完成作文内容，再提交批改。");
     return;
@@ -3687,28 +3940,33 @@ async function submitAiWritingReview(subject, type, questionIndex) {
   }
 
   const pendingKey = `${subject.id}:${type.id}:${questionIndex}`;
-  if (hasPendingAiReview() && !pendingAiReviewKeys.has(pendingKey)) {
-    window.alert("已有一篇作文正在批改中，请等分数回来后再提交下一篇。");
-    return;
-  }
   if (pendingAiReviewKeys.has(pendingKey)) {
-    openAiWritingReview(subject, type, questionIndex, "loading");
+    showSystemToast("AI 批改正在提交", "请稍等，当前题目已经在处理。");
     return;
   }
 
-  const cooldownRemainingMs = getAiReviewCooldownRemainingMs();
-  if (cooldownRemainingMs > 0) {
-    const seconds = Math.ceil(cooldownRemainingMs / 1000);
-    window.alert(`This session can submit one AI review per minute. Please wait ${seconds} second${seconds === 1 ? "" : "s"} before submitting again.`);
-    return;
-  }
+  recordPracticeAttempt(
+    subject,
+    type,
+    questionIndex,
+    "writing-draft",
+    {
+      essay,
+      question: question.text || "",
+      sourceId: String(question.sourceId || question.id || question.number || ""),
+    },
+    { status: "submitted-for-review" }
+  );
+
+  if (!(await canUseAiReview("writing"))) return;
 
   pendingAiReviewKeys.add(pendingKey);
   setPendingReviewMeta(pendingKey, { kind: "writing", subject, type, questionIndex, status: "loading" });
-  markAiReviewSubmitted();
   const key = getQuestionKey(subject.id, type.id, questionIndex);
+  const previousAnswerState = { ...(mockProgress.answers[key] || {}) };
   mockProgress.answers[key] = {
     ...(mockProgress.answers[key] || {}),
+    answer: writingAnswer,
     aiReviewStatus: "loading",
     updatedAt: new Date().toISOString(),
   };
@@ -3716,21 +3974,10 @@ async function submitAiWritingReview(subject, type, questionIndex) {
   openAiWritingReview(subject, type, questionIndex, "loading");
 
   try {
-    const results = await Promise.allSettled(models.map((model) => requestAiWritingReview(question, essay, model)));
-    const aiReviews = results.map((result, index) => {
-      const modelConfig = models[index];
-      const model = typeof modelConfig === "string" ? modelConfig : modelConfig.id;
-      const modelLabel = typeof modelConfig === "string" ? modelConfig : modelConfig.label || modelConfig.id;
-      if (result.status === "fulfilled") return result.value;
-      return {
-        model,
-        modelLabel,
-        error: sanitizeReviewMessage(result.reason?.message || "评分失败。"),
-        reviewedAt: new Date().toISOString(),
-      };
-    });
+    const aiReviews = await Promise.all(models.map((model) => requestAiWritingReview(question, essay, model)));
     mockProgress.answers[key] = {
       ...(mockProgress.answers[key] || {}),
+      answer: writingAnswer,
       graded: aiReviews.some((review) => !review.error),
       correct: null,
       aiReviews,
@@ -3751,15 +3998,27 @@ async function submitAiWritingReview(subject, type, questionIndex) {
       { aiReviews }
     );
     const meta = { kind: "writing", subject, type, questionIndex, status: "ready" };
-    if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+    if (isCurrentQuestion(subject.id, type.id, questionIndex)) {
       openAiWritingReview(subject, type, questionIndex, "ready");
     } else {
       maybeNotifyReviewComplete(meta);
     }
   } catch (error) {
     const errorMessage = sanitizeReviewMessage(error.message || "批改失败，请稍后再试。");
+    if (isAiReviewCooldownError(error)) {
+      mockProgress.answers[key] = {
+        ...previousAnswerState,
+        updatedAt: new Date().toISOString(),
+      };
+      saveProgress();
+      closeAiWritingReview();
+      showSystemToast("AI 批改暂时不能提交", formatAiReviewCooldownMessage(error));
+      return;
+    }
+
     mockProgress.answers[key] = {
       ...(mockProgress.answers[key] || {}),
+      answer: writingAnswer,
       aiReviewStatus: "error",
       updatedAt: new Date().toISOString(),
     };
@@ -3796,12 +4055,16 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
     openAiSpeakingReview(subject, type, questionIndex, "ready");
     return;
   }
+  const previousAnswerState = { ...record };
 
   const pendingKey = `${subject.id}:${type.id}:${questionIndex}:speaking`;
   if (pendingAiReviewKeys.has(pendingKey)) {
-    openAiSpeakingReview(subject, type, questionIndex, "loading");
+    showSystemToast("AI 批改正在提交", "请稍等，当前题目已经在处理。");
     return;
   }
+
+  const reviewKind = question.speakingMode === "picture-response" ? "speaking-type3" : "speaking-section2";
+  if (!(await canUseAiReview(reviewKind))) return;
 
   pendingAiReviewKeys.add(pendingKey);
   setPendingReviewMeta(pendingKey, { kind: "speaking", subject, type, questionIndex, status: "loading" });
@@ -3844,7 +4107,7 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
       { speakingReview }
     );
     const meta = { kind: "speaking", subject, type, questionIndex, status: "ready" };
-    if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
+    if (isCurrentQuestion(subject.id, type.id, questionIndex)) {
       openAiSpeakingReview(subject, type, questionIndex, "ready");
     } else {
       maybeNotifyReviewComplete(meta);
@@ -3854,6 +4117,19 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
     const timer = speakingReviewProgressTimers.get(pendingKey);
     if (timer) window.clearInterval(timer);
     speakingReviewProgressTimers.delete(pendingKey);
+
+    if (isAiReviewCooldownError(error)) {
+      clearSpeakingReviewProgress(pendingKey);
+      mockProgress.answers[key] = {
+        ...previousAnswerState,
+        updatedAt: new Date().toISOString(),
+      };
+      saveProgress();
+      closeAiSpeakingReview();
+      showSystemToast("AI 批改暂时不能提交", formatAiReviewCooldownMessage(error));
+      return;
+    }
+
     appendSpeakingReviewProgress(pendingKey, "评分过程中遇到问题，请稍后再试。");
     mockProgress.answers[key] = {
       ...(mockProgress.answers[key] || {}),
@@ -3927,15 +4203,39 @@ async function handleAuthSubmit(form, action) {
     const session = mode === "register"
       ? await window.rewardSchoolApi.register({ email, password, displayName })
       : await window.rewardSchoolApi.login({ email, password });
-    saveAuthSession(session);
-    mockProgress = createEmptyProgress(session?.user?.id || null);
+    saveAuthSession({ token: session?.token || "", user: null, status: "loading" });
+    mockProgress = createEmptyProgress(null);
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
     setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
     closeAuthModal();
     renderMockApp();
-    void hydrateProgressAfterLogin();
+    const user = await refreshAuthStateFromServer({ hydrateProgress: true });
+    if (!user?.id) {
+      window.alert("会员状态取得失败，无法从服务器确认账号状态。请稍后重新登录或检查 API。");
+    }
   } catch (error) {
     setAuthMessage(form, error.message || "账号操作失败。", true);
+  }
+}
+
+async function handlePasswordResetRequest(form) {
+  if (!window.rewardSchoolApi?.requestPasswordReset) {
+    setAuthMessage(form, "账号服务还没有加载完成。", true);
+    return;
+  }
+
+  const email = form.elements.email?.value?.trim() || "";
+  if (!email) {
+    setAuthMessage(form, "请先填写邮箱。", true);
+    return;
+  }
+
+  setAuthMessage(form, "正在发送重设邮件...");
+  try {
+    await window.rewardSchoolApi.requestPasswordReset({ email });
+    setAuthMessage(form, "如果这个邮箱存在，重设密码邮件已经发送。请到邮箱打开链接。");
+  } catch (error) {
+    setAuthMessage(form, error.message || "发送重设邮件失败。", true);
   }
 }
 
@@ -4026,6 +4326,11 @@ if (mockApp) {
       return;
     }
 
+    if (target.dataset.authRefresh !== undefined) {
+      void refreshAuthStateFromServer();
+      return;
+    }
+
     if (target.dataset.openAuth) {
       openAuthModal(target.dataset.openAuth);
       return;
@@ -4056,7 +4361,12 @@ if (mockApp) {
 
     if (target.dataset.gradeBand) {
       if (!isAuthenticated()) {
-        openAuthModal("login");
+        if (getAuthToken()) {
+          void refreshAuthStateFromServer();
+          window.alert("正在重新取得会员状态，请稍后再进入题库。");
+        } else {
+          openAuthModal("login");
+        }
         return;
       }
       setMockState({ gradeBand: target.dataset.gradeBand, subjectId: null, typeId: null, questionIndex: null });
@@ -4163,7 +4473,7 @@ if (mockApp) {
 
   renderMockApp();
   if (getAuthToken()) {
-    void hydrateProgressAfterLogin();
+    void refreshAuthStateFromServer({ hydrateProgress: true });
   }
 }
 
@@ -4202,6 +4512,25 @@ document.addEventListener("click", (event) => {
   const closeAuthButton = event.target?.closest?.("[data-close-auth]");
   if (closeAuthButton || event.target?.matches?.("[data-auth-overlay]")) {
     closeAuthModal();
+    return;
+  }
+
+  const passwordResetButton = event.target?.closest?.("[data-request-password-reset]");
+  if (passwordResetButton) {
+    const form = passwordResetButton.closest("[data-auth-form]");
+    if (form) void handlePasswordResetRequest(form);
+    return;
+  }
+
+  const closeEmailVerificationButton = event.target?.closest?.("[data-close-email-verification]");
+  if (closeEmailVerificationButton || event.target?.matches?.("[data-email-verification-overlay]")) {
+    closeEmailVerificationModal();
+    return;
+  }
+
+  const resendVerificationButton = event.target?.closest?.("[data-resend-verification]");
+  if (resendVerificationButton) {
+    void handleResendVerification();
     return;
   }
 

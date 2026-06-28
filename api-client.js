@@ -7,11 +7,26 @@ window.rewardSchoolApi = {
     });
   },
 
+  async resendVerification({ token }) {
+    return fetchJson(getApiEndpoint("/auth/resend-verification"), {
+      method: "POST",
+      headers: getAuthHeaders(token),
+    });
+  },
+
   async login({ email, password }) {
     return fetchJson(getApiEndpoint("/auth/login"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+    });
+  },
+
+  async requestPasswordReset({ email }) {
+    return fetchJson(getApiEndpoint("/auth/request-password-reset"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
     });
   },
 
@@ -25,6 +40,13 @@ window.rewardSchoolApi = {
 
   async getCurrentUser({ token }) {
     return fetchJson(getApiEndpoint("/auth/me"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async checkAiReviewAccess({ token, kind = "writing" }) {
+    const endpoint = `${getApiEndpoint("/aeas/review/access")}?kind=${encodeURIComponent(kind || "writing")}`;
+    return fetchJson(endpoint, {
       headers: getAuthHeaders(token),
     });
   },
@@ -75,7 +97,7 @@ window.rewardSchoolApi = {
     });
   },
 
-  async reviewWriting({ question, essay, sourceId }) {
+  async reviewWriting({ question, essay, sourceId, token }) {
     const config = window.rewardSchoolAiConfig || {};
     const endpoint = getWritingReviewEndpoint(config);
     const timeoutMs = Number(config.requestTimeoutMs || 65000);
@@ -99,6 +121,7 @@ window.rewardSchoolApi = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...getAuthHeaders(token),
         },
         signal: controller.signal,
         body: JSON.stringify({
@@ -110,7 +133,7 @@ window.rewardSchoolApi = {
 
       const responseText = await Promise.race([response.text(), timeoutPromise]);
       if (!response.ok) {
-        throw new Error(`Writing review API failed at ${endpoint}: ${response.status} ${responseText.slice(0, 180)}`);
+        throw createReviewError(responseText, response.status, "Writing review API failed");
       }
 
       try {
@@ -134,7 +157,7 @@ window.rewardSchoolApi = {
     }
   },
 
-  async reviewSpeakingSection2({ topicCard, prompts, segments, sourceId, onProgress }) {
+  async reviewSpeakingSection2({ topicCard, prompts, segments, sourceId, token, onProgress }) {
     const config = window.rewardSchoolAiConfig || {};
     const endpoint = getSpeakingSection2ReviewEndpoint(config);
     const timeoutMs = Number(config.speakingRequestTimeoutMs || 600000);
@@ -175,13 +198,14 @@ window.rewardSchoolApi = {
 
       response = await Promise.race([fetch(endpoint, {
         method: "POST",
+        headers: getAuthHeaders(token),
         signal: controller.signal,
         body,
       }), timeoutPromise]);
 
       const responseText = await Promise.race([response.text(), timeoutPromise]);
       if (!response.ok) {
-        throw new Error(`Speaking review API failed at ${endpoint}: ${response.status} ${responseText.slice(0, 180)}`);
+        throw createReviewError(responseText, response.status, "Speaking review API failed");
       }
 
       try {
@@ -211,7 +235,7 @@ window.rewardSchoolApi = {
     }
   },
 
-  async reviewSpeakingType3({ imageTitle, imageDescription, pictureQuestions, segments, sourceId, onProgress }) {
+  async reviewSpeakingType3({ imageTitle, imageDescription, pictureQuestions, segments, sourceId, token, onProgress }) {
     const config = window.rewardSchoolAiConfig || {};
     const endpoint = getSpeakingType3ReviewEndpoint(config);
     const timeoutMs = Number(config.speakingRequestTimeoutMs || 600000);
@@ -254,13 +278,14 @@ window.rewardSchoolApi = {
 
       response = await Promise.race([fetch(endpoint, {
         method: "POST",
+        headers: getAuthHeaders(token),
         signal: controller.signal,
         body,
       }), timeoutPromise]);
 
       const responseText = await Promise.race([response.text(), timeoutPromise]);
       if (!response.ok) {
-        throw new Error(`Speaking type 3 review API failed at ${endpoint}: ${response.status} ${responseText.slice(0, 180)}`);
+        throw createReviewError(responseText, response.status, "Speaking type 3 review API failed");
       }
 
       try {
@@ -324,12 +349,23 @@ async function fetchJson(endpoint, options = {}) {
   const responseText = await response.text();
   if (!response.ok) {
     let message = responseText.slice(0, 240);
+    let retryAfterSeconds = 0;
     try {
-      message = JSON.parse(responseText)?.error || message;
+      const payload = JSON.parse(responseText);
+      retryAfterSeconds = Number(payload?.retryAfterSeconds || 0);
+      message = payload?.retryAfterSeconds > 0
+        ? payload?.error
+          ? `${payload.error} 请再等 ${payload.retryAfterSeconds} 秒。`
+          : `请再等 ${payload.retryAfterSeconds} 秒后重试。`
+        : payload?.error || message;
     } catch (error) {
       // Keep the raw server response text.
     }
-    throw new Error(message || `Request failed: ${response.status}`);
+    const error = new Error(message || `Request failed: ${response.status}`);
+    error.status = response.status;
+    error.responseText = responseText;
+    error.retryAfterSeconds = retryAfterSeconds;
+    throw error;
   }
 
   return responseText ? JSON.parse(responseText) : null;
@@ -375,6 +411,41 @@ function resolveApiBaseUrlFallback() {
 
 function getAuthHeaders(token) {
   return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+function getReviewErrorMessage(responseText, status, fallback) {
+  try {
+    const payload = JSON.parse(responseText);
+    if (payload?.retryAfterSeconds > 0) {
+      return `每个账号每 3 分钟只能提交一次 AI 批改，请再等 ${payload.retryAfterSeconds} 秒。`;
+    }
+    if (payload?.error) {
+      return payload.error;
+    }
+  } catch (error) {
+    // Keep fallback below.
+  }
+
+  return `${fallback}: ${status} ${responseText.slice(0, 180)}`;
+}
+
+function createReviewError(responseText, status, fallback) {
+  const error = new Error(getReviewErrorMessage(responseText, status, fallback));
+  error.status = status;
+
+  try {
+    const payload = JSON.parse(responseText);
+    if (payload?.error) {
+      error.serverError = payload.error;
+    }
+    if (payload?.retryAfterSeconds > 0) {
+      error.retryAfterSeconds = Number(payload.retryAfterSeconds);
+    }
+  } catch (parseError) {
+    // Keep the plain message.
+  }
+
+  return error;
 }
 
 function getWritingReviewEndpoint(config) {

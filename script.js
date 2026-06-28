@@ -1,7 +1,7 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
 const contactForm = document.querySelector(".contact-form");
-const REWARD_SCHOOL_FRONTEND_VERSION = "20260627-06";
+const REWARD_SCHOOL_FRONTEND_VERSION = "20260628-04";
 
 window.rewardSchoolFrontendVersion = REWARD_SCHOOL_FRONTEND_VERSION;
 
