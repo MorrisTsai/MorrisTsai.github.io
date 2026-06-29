@@ -175,7 +175,7 @@ window.rewardSchoolApi = {
     (segments || []).forEach((segment, index) => {
       const extension = getAudioExtension(segment.blob?.type || "");
       body.append(`audio${String(index).padStart(2, "0")}`, segment.blob, `${segment.id || `segment-${index + 1}`}.${extension}`);
-      reportProgress(`第 ${index + 1}/${totalSegments} 段录音已加入评分队列。`);
+      reportProgress(`第 ${index + 1}/${totalSegments} 段录音准备好了。`);
     });
 
     let response;
@@ -193,7 +193,7 @@ window.rewardSchoolApi = {
 
     try {
       (segments || []).forEach((_, index) => {
-        reportProgress(`第 ${index + 1}/${totalSegments} 段录音已送出，正在等待分析结果。`);
+        reportProgress(`第 ${index + 1}/${totalSegments} 段录音已送出。`);
       });
 
       response = await Promise.race([fetch(endpoint, {
@@ -212,9 +212,9 @@ window.rewardSchoolApi = {
         const payload = JSON.parse(responseText);
         const returnedSegments = Array.isArray(payload?.segments) && payload.segments.length ? payload.segments : segments || [];
         returnedSegments.forEach((_, index) => {
-          reportProgress(`已取得第 ${index + 1}/${totalSegments} 段录音分析结果。`);
+          reportProgress(`第 ${index + 1}/${totalSegments} 段录音已听完。`);
         });
-        reportProgress("正在生成综合评分与中文反馈。");
+        reportProgress("正在整理评分和建议。");
         return payload;
       } catch (error) {
         throw new Error(`Speaking review API returned invalid JSON from ${endpoint}: ${responseText.slice(0, 180)}`);
@@ -255,7 +255,7 @@ window.rewardSchoolApi = {
     (segments || []).forEach((segment, index) => {
       const extension = getAudioExtension(segment.blob?.type || "");
       body.append(`audio${String(index).padStart(2, "0")}`, segment.blob, `${segment.id || `segment-${index + 1}`}.${extension}`);
-      reportProgress(`第 ${index + 1}/${totalSegments} 段录音已加入评分队列。`);
+      reportProgress(`第 ${index + 1}/${totalSegments} 段录音准备好了。`);
     });
 
     let response;
@@ -273,7 +273,7 @@ window.rewardSchoolApi = {
 
     try {
       (segments || []).forEach((_, index) => {
-        reportProgress(`第 ${index + 1}/${totalSegments} 段录音已送出，正在等待分析结果。`);
+        reportProgress(`第 ${index + 1}/${totalSegments} 段录音已送出。`);
       });
 
       response = await Promise.race([fetch(endpoint, {
@@ -292,9 +292,9 @@ window.rewardSchoolApi = {
         const payload = JSON.parse(responseText);
         const returnedSegments = Array.isArray(payload?.segments) && payload.segments.length ? payload.segments : segments || [];
         returnedSegments.forEach((_, index) => {
-          reportProgress(`已取得第 ${index + 1}/${totalSegments} 段录音分析结果。`);
+          reportProgress(`第 ${index + 1}/${totalSegments} 段录音已听完。`);
         });
-        reportProgress("正在生成图片口说综合评分与中文反馈。");
+        reportProgress("正在整理评分和建议。");
         return payload;
       } catch (error) {
         throw new Error(`Speaking type 3 review API returned invalid JSON from ${endpoint}: ${responseText.slice(0, 180)}`);

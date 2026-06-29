@@ -14,6 +14,13 @@ const pendingAiReviewKeys = new Set();
 const pendingAiReviewMeta = new Map();
 const speakingReviewProgressLogs = new Map();
 const speakingReviewProgressTimers = new Map();
+const MOCK_SCRIPT_BASE_URL = (() => {
+  try {
+    return new URL(".", document.currentScript?.src || window.location.href).href;
+  } catch (error) {
+    return "";
+  }
+})();
 const SPEAKING_RECORDINGS_DB_NAME = "rewardSchoolAeasMockRecordings";
 const SPEAKING_RECORDINGS_DB_VERSION = 1;
 const SPEAKING_RECORDINGS_STORE = "recordings";
@@ -44,7 +51,188 @@ const nonVerbalTypes = Object.entries(nonVerbalMeta).map(([id, meta]) => ({
   questions: nonVerbalQuestionGroups[id] || [],
 }));
 
+const FULL_MOCK_TEST_INTERNAL_MINUTES = 30;
+const PRE_CLASS_MOCK_TEST_ID = "full-mock-test";
+const RANDOM_MOCK_TEST_ID = "random-mock-test";
+let randomMockSession = {
+  active: false,
+  completed: false,
+  awaitingStart: false,
+};
+
+function cloneQuestionForMockTest(question, number, sourceType) {
+  return {
+    ...question,
+    number,
+    sourceNumber: question.sourceNumber || question.number,
+    sourceType,
+  };
+}
+
+function takeQuestionsForMockTest(questions, count, sourceType) {
+  return (questions || [])
+    .slice(0, count)
+    .map((question, index) => cloneQuestionForMockTest(question, index + 1, sourceType));
+}
+
+function shuffleMockItems(items) {
+  const shuffled = [...(items || [])];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+function takeRandomQuestionsForMockTest(questions, count, sourceType) {
+  return shuffleMockItems(questions || [])
+    .slice(0, count)
+    .map((question, index) => cloneQuestionForMockTest(question, index + 1, sourceType));
+}
+
+function getFirstReadingMockGroup() {
+  const readingQuestions = rawReadingQuestionGroups.reading || [];
+  const firstPassageTitle = readingQuestions.find((question) => question.passageTitle)?.passageTitle;
+  const group = firstPassageTitle
+    ? readingQuestions.filter((question) => question.passageTitle === firstPassageTitle).slice(0, 6)
+    : readingQuestions.slice(0, 6);
+  return group.map((question, index) => cloneQuestionForMockTest(question, index + 1, "reading"));
+}
+
+function getRandomReadingMockGroup() {
+  const readingQuestions = rawReadingQuestionGroups.reading || [];
+  const groupsByPassage = readingQuestions.reduce((result, question) => {
+    const key = question.passageTitle || question.passageText || "default";
+    result[key] = result[key] || [];
+    result[key].push(question);
+    return result;
+  }, {});
+  const groups = Object.values(groupsByPassage).filter((group) => group.length);
+  const selectedGroup = groups.length ? shuffleMockItems(groups)[0] : readingQuestions;
+  return (selectedGroup || []).slice(0, 6).map((question, index) => cloneQuestionForMockTest(question, index + 1, "reading"));
+}
+
+function getMathMockQuestions() {
+  return Object.values(mathQuestionGroups)
+    .flat()
+    .slice(0, 4)
+    .map((question, index) => cloneQuestionForMockTest(question, index + 1, "math-reasoning"));
+}
+
+function getRandomMathMockQuestions() {
+  return takeRandomQuestionsForMockTest(Object.values(mathQuestionGroups).flat(), 4, "math-reasoning");
+}
+
+function getRandomMonologueMockQuestion() {
+  const monologues = (rawSpeakingQuestionGroups.speaking || []).filter((question) => question.speakingMode === "monologue");
+  const fallback = monologues[0];
+  const selected = monologues.length ? monologues[Math.floor(Math.random() * monologues.length)] : fallback;
+  return selected ? [cloneQuestionForMockTest(selected, 1, "speaking")] : [];
+}
+
+function createFullMockTestSubject() {
+  return {
+    id: PRE_CLASS_MOCK_TEST_ID,
+    title: "Pre-Class Assessment",
+    subtitle: "课前评估",
+    description: "固定题目，用来做课前能力诊断，最后统一查看评分结果。",
+    isFullMockTest: true,
+    internalTargetMinutes: FULL_MOCK_TEST_INTERNAL_MINUTES,
+    examStartedAt: null,
+    types: [
+      {
+        id: "mock-vocabulary",
+        title: "Vocabulary",
+        subtitle: "词汇",
+        internalMinutes: 6,
+        questions: takeQuestionsForMockTest(rawVocabularyQuestionGroups.vocabulary || [], 10, "vocabulary"),
+      },
+      {
+        id: "mock-gap-filling",
+        title: "Gap Filling",
+        subtitle: "词汇填空",
+        internalMinutes: 6,
+        questions: takeQuestionsForMockTest(rawGapFillingQuestionGroups["gap-filling"] || [], 10, "gap-filling"),
+      },
+      {
+        id: "mock-reading",
+        title: "Reading",
+        subtitle: "阅读",
+        internalMinutes: 10,
+        questions: getFirstReadingMockGroup(),
+      },
+      {
+        id: "mock-math",
+        title: "Mathematical Reasoning",
+        subtitle: "数学推理",
+        internalMinutes: 5,
+        questions: getMathMockQuestions(),
+      },
+      {
+        id: "speaking",
+        title: "Speaking Interview",
+        subtitle: "口语面试",
+        internalMinutes: 3,
+        questions: getRandomMonologueMockQuestion(),
+      },
+    ],
+  };
+}
+
+function createRandomMockTestSubject() {
+  return {
+    id: RANDOM_MOCK_TEST_ID,
+    title: "Random Mock Test",
+    subtitle: "随机模拟考",
+    description: "每次进入都会重新抽题。开始后请一次做完，离开等同放弃本次考试。",
+    isFullMockTest: true,
+    isStreamingMockTest: true,
+    internalTargetMinutes: FULL_MOCK_TEST_INTERNAL_MINUTES,
+    sessionId: `random-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    examStartedAt: null,
+    types: [
+      {
+        id: "mock-vocabulary",
+        title: "Vocabulary",
+        subtitle: "词汇",
+        internalMinutes: 6,
+        questions: takeRandomQuestionsForMockTest(rawVocabularyQuestionGroups.vocabulary || [], 10, "vocabulary"),
+      },
+      {
+        id: "mock-gap-filling",
+        title: "Gap Filling",
+        subtitle: "词汇填空",
+        internalMinutes: 6,
+        questions: takeRandomQuestionsForMockTest(rawGapFillingQuestionGroups["gap-filling"] || [], 10, "gap-filling"),
+      },
+      {
+        id: "mock-reading",
+        title: "Reading",
+        subtitle: "阅读",
+        internalMinutes: 10,
+        questions: getRandomReadingMockGroup(),
+      },
+      {
+        id: "mock-math",
+        title: "Mathematical Reasoning",
+        subtitle: "数学推理",
+        internalMinutes: 5,
+        questions: getRandomMathMockQuestions(),
+      },
+      {
+        id: "speaking",
+        title: "Speaking Interview",
+        subtitle: "口语面试",
+        internalMinutes: 3,
+        questions: getRandomMonologueMockQuestion(),
+      },
+    ],
+  };
+}
+
 const mockSubjects = [
+  createFullMockTestSubject(),
+  createRandomMockTestSubject(),
   {
     id: "english",
     title: "English Language Proficiency",
@@ -207,6 +395,7 @@ function createEmptyProgress(ownerUserId = authSession?.user?.id || null) {
     ownerUserId,
     answers: {},
     timers: {},
+    examReports: [],
   };
 }
 
@@ -300,6 +489,7 @@ async function hydrateProgressAfterLogin() {
     mockProgress = remoteProgress?.sessionId
       ? { ...remoteProgress, ownerUserId: userId }
       : createEmptyProgress(userId);
+    purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
     renderMockApp();
     if (!remoteProgress?.sessionId) queueProgressSync(100);
@@ -309,6 +499,7 @@ async function hydrateProgressAfterLogin() {
 }
 
 function recordPracticeAttempt(subject, type, questionIndex, answerKind, answer, result = {}) {
+  if (subject?.isFullMockTest) return;
   if (!getAuthToken() || !window.rewardSchoolApi?.savePracticeAttempt) return;
   if (!subject || !type || !Number.isFinite(Number(questionIndex))) return;
 
@@ -337,9 +528,74 @@ function resetProgress() {
     if (recording?.url) URL.revokeObjectURL(recording.url);
   });
   speakingRecordings.clear();
+  const fullMockIndex = mockSubjects.findIndex((subject) => subject.id === PRE_CLASS_MOCK_TEST_ID);
+  if (fullMockIndex >= 0) {
+    mockSubjects[fullMockIndex] = createFullMockTestSubject();
+  }
+  const randomMockIndex = mockSubjects.findIndex((subject) => subject.id === RANDOM_MOCK_TEST_ID);
+  if (randomMockIndex >= 0) {
+    mockSubjects[randomMockIndex] = createRandomMockTestSubject();
+  }
+  randomMockSession = { active: false, completed: false };
   mockProgress = createEmptyProgress(authSession?.user?.id || null);
   saveProgress();
   setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
+}
+
+function purgeSubjectProgress(subjectId) {
+  Object.keys(mockProgress.answers || {}).forEach((key) => {
+    if (key.startsWith(`${subjectId}.`)) delete mockProgress.answers[key];
+  });
+  mockProgress.attempts = (mockProgress.attempts || []).filter((attempt) => attempt.subjectId !== subjectId);
+  Object.keys(mockProgress.timers || {}).forEach((key) => {
+    if (key.startsWith(`${subjectId}.`)) delete mockProgress.timers[key];
+  });
+}
+
+function replaceRandomMockSubject() {
+  const randomMockIndex = mockSubjects.findIndex((subject) => subject.id === RANDOM_MOCK_TEST_ID);
+  if (randomMockIndex >= 0) {
+    mockSubjects[randomMockIndex] = createRandomMockTestSubject();
+  }
+  return mockSubjects[randomMockIndex] || null;
+}
+
+function startRandomMockTest() {
+  cleanupSpeakingStream();
+  purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
+  const randomSubject = replaceRandomMockSubject();
+  if (randomSubject) randomSubject.examStartedAt = new Date().toISOString();
+  randomMockSession = { active: true, completed: false };
+  saveProgress();
+  const subject = findSubject(RANDOM_MOCK_TEST_ID);
+  const firstType = subject?.types.find((type) => getQuestions(type).length);
+  const firstQuestion = firstType ? getQuestions(firstType)[0] : null;
+  if (!subject || !firstType || !firstQuestion) {
+    showSystemToast("暂时无法开始", "随机模拟考题库还没有准备好。");
+    return;
+  }
+  setMockState({ subjectId: subject.id, typeId: firstType.id, questionIndex: firstQuestion.number });
+}
+
+function showRandomMockIntro() {
+  randomMockSession = { active: false, completed: false, awaitingStart: true };
+  setMockState({ subjectId: RANDOM_MOCK_TEST_ID, typeId: null, questionIndex: null });
+}
+
+function ensureExamStartedAt(subject) {
+  if (!subject?.isFullMockTest || subject.examStartedAt) return;
+  subject.examStartedAt = new Date().toISOString();
+}
+
+function abandonRandomMockTest(options = {}) {
+  cleanupSpeakingStream();
+  purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
+  replaceRandomMockSubject();
+  randomMockSession = { active: false, completed: false };
+  saveProgress();
+  if (options.goHome !== false) {
+    setMockState({ subjectId: null, typeId: null, questionIndex: null });
+  }
 }
 
 function resetLocalPracticeForSignedOutUser() {
@@ -368,6 +624,55 @@ function escapeHTML(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function toAbsoluteUrl(path, baseUrl) {
+  try {
+    return new URL(path, baseUrl).href;
+  } catch (error) {
+    return "";
+  }
+}
+
+function getMockAssetCandidates(path) {
+  const normalized = String(path || "").replaceAll("\\", "/").trim();
+  if (!normalized) return [];
+  if (/^(https?:|data:|blob:|file:|\/)/i.test(normalized)) return [normalized];
+
+  const siteRelative = normalized.replace(/^\.?\/*github-pages-site\//, "");
+  const candidates = [
+    toAbsoluteUrl(siteRelative, MOCK_SCRIPT_BASE_URL || window.location.href),
+    toAbsoluteUrl(siteRelative, window.location.href),
+    toAbsoluteUrl(`github-pages-site/${siteRelative}`, window.location.origin ? `${window.location.origin}/` : window.location.href),
+    siteRelative,
+    `github-pages-site/${siteRelative}`,
+  ];
+
+  return [...new Set(candidates.filter(Boolean))];
+}
+
+function resolveMockAssetPath(path) {
+  return getMockAssetCandidates(path)[0] || "";
+}
+
+function getMockImageAttributes(path, altText) {
+  const candidates = getMockAssetCandidates(path);
+  const src = candidates[0] || "";
+  return `src="${escapeHTML(src)}" alt="${escapeHTML(altText)}" loading="lazy" decoding="async" data-mock-asset="${escapeHTML(path)}" data-mock-asset-attempt="0" onerror="retryMockAssetImage(this)"`;
+}
+
+function retryMockAssetImage(image) {
+  const candidates = getMockAssetCandidates(image?.dataset?.mockAsset || "");
+  const currentAttempt = Number(image?.dataset?.mockAssetAttempt || 0);
+  const nextAttempt = currentAttempt + 1;
+  const nextSrc = candidates[nextAttempt];
+  if (!image || !nextSrc) {
+    if (image) image.onerror = null;
+    return;
+  }
+
+  image.dataset.mockAssetAttempt = String(nextAttempt);
+  image.src = nextSrc;
 }
 
 function formatQuestionText(value) {
@@ -655,7 +960,7 @@ function getQuestionRecord(subjectId, typeId, questionIndex) {
 }
 
 function getAllQuestionKeys() {
-  return mockSubjects.flatMap((subject) =>
+  return mockSubjects.filter((subject) => !subject.isFullMockTest).flatMap((subject) =>
     subject.types.flatMap((type) =>
       getQuestionNumbers(type).map((number) => getQuestionKey(subject.id, type.id, number))
     )
@@ -879,6 +1184,145 @@ function closeAuthModal() {
   document.querySelector("[data-auth-overlay]")?.remove();
 }
 
+function isQuestionAttemptedForFullMock(subject, type, question) {
+  const record = getQuestionRecord(subject.id, type.id, question.number);
+  if (!record) return false;
+  if (question.speakingMode === "monologue") {
+    return getSpeakingCompletedSegments(subject, type, question.number, question).length >= getSpeakingExpectedSegmentCount(question);
+  }
+  if (question.reviewMode === "ai") {
+    return Boolean(parseStoredInputAnswer(record.answer).essay?.trim());
+  }
+  return Boolean(record.answer);
+}
+
+function getFullMockCompletion(subject) {
+  const questions = subject.types.flatMap((type) => getQuestions(type).map((question) => ({ type, question })));
+  const attempted = questions.filter(({ type, question }) => isQuestionAttemptedForFullMock(subject, type, question)).length;
+  return { attempted, total: questions.length, complete: questions.length > 0 && attempted === questions.length };
+}
+
+function getStreamingMockSteps(subject) {
+  return (subject?.types || []).flatMap((type) =>
+    getQuestions(type).map((question) => ({
+      type,
+      question,
+    }))
+  );
+}
+
+function getExamReportKind(subject) {
+  return subject?.id === RANDOM_MOCK_TEST_ID ? "random" : "pre-class";
+}
+
+function getExamReportTitle(subject) {
+  return subject?.id === RANDOM_MOCK_TEST_ID ? "随机模拟考" : "课前评估";
+}
+
+function buildExamReport(subject) {
+  const stats = getSubjectStats(subject);
+  const submittedAt = new Date().toISOString();
+  return {
+    id: `${subject.id}-${Date.now()}`,
+    subjectId: subject.id,
+    kind: getExamReportKind(subject),
+    title: getExamReportTitle(subject),
+    startedAt: subject.examStartedAt || submittedAt,
+    submittedAt,
+    stats,
+    typeStats: subject.types.map((type) => ({
+      typeId: type.id,
+      title: type.title,
+      subtitle: type.subtitle,
+      ...getTypeStats(subject, type),
+    })),
+  };
+}
+
+function saveExamReport(subject) {
+  if (!subject?.isFullMockTest) return null;
+  const report = buildExamReport(subject);
+  const reports = Array.isArray(mockProgress.examReports) ? mockProgress.examReports : [];
+  mockProgress.examReports = [report, ...reports].slice(0, 20);
+  saveProgress();
+  return report;
+}
+
+function getExamReports(kind = "") {
+  const reports = Array.isArray(mockProgress.examReports) ? mockProgress.examReports : [];
+  return kind ? reports.filter((report) => report.kind === kind) : reports;
+}
+
+function formatReportDate(value) {
+  if (!value) return "时间未记录";
+  try {
+    return new Intl.DateTimeFormat("zh-CN", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(new Date(value));
+  } catch (error) {
+    return value;
+  }
+}
+
+function getStreamingMockPosition(subject, typeId, questionIndex) {
+  return getStreamingMockSteps(subject).findIndex(
+    (step) => step.type.id === typeId && Number(step.question.number) === Number(questionIndex)
+  );
+}
+
+function getNextStreamingMockStep(subject, typeId, questionIndex) {
+  const steps = getStreamingMockSteps(subject);
+  const currentIndex = getStreamingMockPosition(subject, typeId, questionIndex);
+  return currentIndex >= 0 ? steps[currentIndex + 1] || null : steps[0] || null;
+}
+
+function isRandomMockInProgress() {
+  return Boolean(
+    randomMockSession.active &&
+      !randomMockSession.completed &&
+      mockState.gradeBand &&
+      mockState.subjectId === RANDOM_MOCK_TEST_ID
+  );
+}
+
+function getRandomMockLeaveMessage() {
+  return "随机模拟考还没做完。现在离开会放弃本次考试，已作答内容不会保留。";
+}
+
+function confirmAbandonRandomMockTest() {
+  if (!isRandomMockInProgress()) return true;
+  return window.confirm(getRandomMockLeaveMessage());
+}
+
+function goToNextStreamingMockStep() {
+  const subject = findSubject(mockState.subjectId);
+  const type = findType(subject, mockState.typeId);
+  if (!subject?.isStreamingMockTest || !type || !mockState.questionIndex) return;
+
+  saveCurrentAnswerFromForm();
+  const currentQuestion = getQuestion(type, mockState.questionIndex);
+  if (currentQuestion && !isQuestionAttemptedForFullMock(subject, type, currentQuestion)) {
+    showSystemToast("先完成这一题", "随机模拟考需要按顺序作答，完成当前题后才能继续。");
+    return;
+  }
+  const nextStep = getNextStreamingMockStep(subject, type.id, mockState.questionIndex);
+  if (nextStep) {
+    setMockState({ typeId: nextStep.type.id, questionIndex: nextStep.question.number });
+    return;
+  }
+
+  const completion = getFullMockCompletion(subject);
+  if (!completion.complete) {
+    showSystemToast("还有题目没完成", `目前已完成 ${completion.attempted}/${completion.total} 题，请先补齐再提交。`);
+    return;
+  }
+  randomMockSession.completed = true;
+  setMockState({ typeId: null, questionIndex: null });
+}
+
 async function refreshAuthStateFromServer(options = {}) {
   const token = getAuthToken();
   if (!token || !window.rewardSchoolApi?.getCurrentUser) return null;
@@ -1025,6 +1469,53 @@ function renderGradeConstruction() {
 
 function renderSubjectList() {
   if (!mockStage) return;
+  const preClassMockSubject = mockSubjects.find((subject) => subject.id === PRE_CLASS_MOCK_TEST_ID);
+  const randomMockSubject = mockSubjects.find((subject) => subject.id === RANDOM_MOCK_TEST_ID);
+  const practiceSubjects = mockSubjects.filter((subject) => !subject.isFullMockTest);
+  const examReports = getExamReports();
+  const fullMockMarkup = preClassMockSubject
+    ? (() => {
+        const completion = getFullMockCompletion(preClassMockSubject);
+        return `
+          <section class="mock-full-test-section">
+            <div class="mock-full-test-head">
+              <div>
+                <p class="eyebrow">Pre-Class Assessment</p>
+                <h4>课前评估</h4>
+                <p>固定题目，用来做课前能力诊断，最后统一提交评分。</p>
+              </div>
+              <span>${completion.attempted}/${completion.total} 已完成</span>
+            </div>
+            <button class="mock-full-test-card" type="button" data-subject="${preClassMockSubject.id}">
+              <span>${preClassMockSubject.subtitle}</span>
+              <strong>${preClassMockSubject.title}</strong>
+              <small>${preClassMockSubject.description}</small>
+              <em>进入课前评估</em>
+            </button>
+          </section>
+        `;
+      })()
+    : "";
+  const randomMockMarkup = randomMockSubject
+    ? `
+      <section class="mock-full-test-section mock-random-test-section">
+        <div class="mock-full-test-head">
+          <div>
+            <p class="eyebrow">Random Mock Test</p>
+            <h4>随机模拟考</h4>
+            <p>每次开始都会重新抽题。考试中离开会视为放弃，本次作答不会保留。</p>
+          </div>
+          <span>一次做完</span>
+        </div>
+        <button class="mock-full-test-card mock-random-test-card" type="button" data-start-random-mock-test>
+          <span>${randomMockSubject.subtitle}</span>
+          <strong>${randomMockSubject.title}</strong>
+          <small>${randomMockSubject.description}</small>
+          <em>开始随机模拟考</em>
+        </button>
+      </section>
+    `
+    : "";
   mockStage.innerHTML = `
     <div class="mock-stage-heading">
       <button class="mock-back" type="button" data-reset="grades">返回年级选择</button>
@@ -1032,8 +1523,12 @@ function renderSubjectList() {
       <h3>选择测试科目</h3>
       <p>选择科目与题型后进入题号列表。做题情况会记录在当前浏览器，完成后可查看批改结果与逐题详解。</p>
     </div>
+    ${randomMockMarkup}
+    <div class="mock-section-label">
+      <span>题型测试</span>
+    </div>
     <div class="mock-card-grid">
-      ${mockSubjects
+      ${practiceSubjects
         .map((subject) => {
           const total = subject.types.reduce((sum, type) => sum + getQuestionNumbers(type).length, 0);
           const attempted = subject.types.reduce((sum, type) => sum + getTypeStats(subject, type).attempted, 0);
@@ -1048,12 +1543,86 @@ function renderSubjectList() {
         })
         .join("")}
     </div>
+    <section class="mock-report-history">
+      <div class="mock-full-test-head">
+        <div>
+          <p class="eyebrow">Exam Reports</p>
+          <h4>考试成绩</h4>
+          <p>所有模拟考和课前测验的成绩单都在这里看，不会混入题型测试记录。</p>
+        </div>
+        <span>${examReports.length} 份记录</span>
+      </div>
+      <button class="mock-report-entry" type="button" data-open-exam-reports>
+        <strong>查看考试成绩单</strong>
+        <small>${examReports.length ? "点进去查看每次考试的开启时间、考试类型与成绩。" : "还没有成绩也可以点进去查看记录状态。"}</small>
+        <em>进入成绩单</em>
+      </button>
+    </section>
+    ${fullMockMarkup}
   `;
 }
 
 function renderTypeList(subject) {
   if (!mockStage) return;
   const subjectStats = getSubjectStats(subject);
+  const fullMockCompletion = subject.isFullMockTest ? getFullMockCompletion(subject) : null;
+  if (subject.isStreamingMockTest) {
+    const steps = getStreamingMockSteps(subject);
+    if (randomMockSession.awaitingStart) {
+      mockStage.innerHTML = `
+        <div class="mock-stage-heading">
+          <button class="mock-back" type="button" data-reset="subjects">返回科目</button>
+          <div class="mock-stage-title-row">
+            <div>
+              <p class="eyebrow">Random Mock Test</p>
+              <h3>随机模拟考说明</h3>
+              <p>这是一套考试流程，不是分题练习。点下方按钮后才会正式开始并重新抽题。</p>
+            </div>
+          </div>
+        </div>
+        <div class="mock-exam-brief">
+          <strong>开始前请确认</strong>
+          <ul>
+            <li>题型与课前评估相同：Vocabulary、Gap Filling、Reading、Mathematical Reasoning、Speaking Interview。</li>
+            <li>正式开始后会按顺序作答，不能跳题，也不能回到题号列表。</li>
+            <li>中途离开、返回题库或关闭页面，会视为放弃；下次进入会重新抽题。</li>
+            <li>全部完成后才统一提交评分，成绩会放在「考试成绩」区，不会进入分题练习记录。</li>
+          </ul>
+          <div class="mock-question-actions">
+            <button class="button ghost dark" type="button" data-reset="subjects">先不开始</button>
+            <button class="button primary" type="button" data-confirm-start-random-mock-test>正式开始</button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+    mockStage.innerHTML = `
+      <div class="mock-stage-heading">
+        <button class="mock-back" type="button" data-abandon-random-mock-test>放弃并返回</button>
+        <div class="mock-stage-title-row">
+          <div>
+            <p class="eyebrow">Random Mock Test</p>
+            <h3>${subject.title}</h3>
+            <p>${randomMockSession.completed ? "本次随机模拟考已完成，可以统一提交评分。" : "请按顺序完成题目。考试中离开会视为放弃本次考试。"}</p>
+          </div>
+          <button class="mock-review-button" type="button" data-submit-full-mock-test ${fullMockCompletion?.complete ? "" : "disabled"}>
+            提交整套评分
+            <span>${fullMockCompletion?.attempted || 0}/${fullMockCompletion?.total || 0} 已完成</span>
+          </button>
+        </div>
+      </div>
+      <div class="mock-streaming-summary">
+        <strong>${randomMockSession.completed ? "随机模拟考已结束" : "考试进行中"}</strong>
+        <span>${steps.length} 题 · Vocabulary / Gap Filling / Reading / Mathematical Reasoning / Speaking Interview</span>
+        ${
+          randomMockSession.completed
+            ? "<p>请点击上方按钮提交评分。评分完成后会显示本次成绩单；以后可回到入口页的「考试成绩」区查看历史记录。</p>"
+            : "<p>如果你离开页面、返回题库或关闭浏览器，本次随机卷会作废，下次会重新抽题。</p>"
+        }
+      </div>
+    `;
+    return;
+  }
   mockStage.innerHTML = `
     <div class="mock-stage-heading">
       <button class="mock-back" type="button" data-reset="subjects">返回科目</button>
@@ -1063,10 +1632,15 @@ function renderTypeList(subject) {
           <h3>${subject.title}</h3>
           <p>${subject.description}</p>
         </div>
-        <button class="mock-review-button" type="button" data-review-subject="${subject.id}">
-          批改 / 查看结果
-          <span>${subjectStats.correct}/${subjectStats.total} 正确 · 已做 ${subjectStats.attempted}</span>
-        </button>
+        ${subject.isFullMockTest
+          ? `<button class="mock-review-button" type="button" data-submit-full-mock-test ${fullMockCompletion?.complete ? "" : "disabled"}>
+              提交整套评分
+              <span>${fullMockCompletion?.attempted || 0}/${fullMockCompletion?.total || 0} 已完成</span>
+            </button>`
+          : `<button class="mock-review-button" type="button" data-review-subject="${subject.id}">
+              批改 / 查看结果
+              <span>${subjectStats.correct}/${subjectStats.total} 正确 · 已做 ${subjectStats.attempted}</span>
+            </button>`}
       </div>
     </div>
     <div class="mock-card-grid">
@@ -1074,14 +1648,17 @@ function renderTypeList(subject) {
         .map((type) => {
           const stats = getTypeStats(subject, type);
           const hasQuestions = stats.total > 0;
+          const label = subject.isFullMockTest
+            ? `${stats.total} 题 · ${stats.attempted}/${stats.total} 已完成`
+            : `${stats.total} 道练习题`;
           return `
             <button class="mock-select-card ${hasQuestions ? "" : "is-disabled"}" type="button" ${
               hasQuestions ? `data-type="${type.id}"` : "disabled"
             }>
               <span>${type.subtitle}</span>
               <strong>${type.title}</strong>
-              <small>${hasQuestions ? `${stats.total} 道练习题` : "题库整理中，暂未开放作答"}</small>
-              <em>${hasQuestions ? `${stats.attempted}/${stats.total} 已做 · 正确 ${stats.correct}` : "施工中"}</em>
+              <small>${hasQuestions ? label : "题库整理中，暂未开放作答"}</small>
+              <em>${hasQuestions ? (subject.isFullMockTest ? "完成后统一评分" : `${stats.attempted}/${stats.total} 已做 · 正确 ${stats.correct}`) : "施工中"}</em>
             </button>
           `;
         })
@@ -1215,6 +1792,102 @@ function renderSubjectReview(subject) {
   `;
 }
 
+function renderExamReport(report) {
+  const typeRows = (report.typeStats || [])
+    .map(
+      (item) => `
+        <tr>
+          <td>${escapeHTML(item.title)}</td>
+          <td>${item.attempted}/${item.total}</td>
+          <td>${item.graded}/${item.total}</td>
+          <td>${item.correct}</td>
+        </tr>
+      `
+    )
+    .join("");
+
+  return `
+    <div class="mock-review-overlay" data-exam-report-overlay>
+      <div class="mock-review-dialog" role="dialog" aria-modal="true" aria-label="${escapeHTML(report.title)} 成绩单">
+        <div class="mock-review-header">
+          <div>
+            <p class="eyebrow">Exam Report</p>
+            <h3>${escapeHTML(report.title)}</h3>
+            <p>开启：${escapeHTML(formatReportDate(report.startedAt || report.submittedAt))} · 提交：${escapeHTML(formatReportDate(report.submittedAt))} · 完成 ${report.stats.attempted}/${report.stats.total} 题，已批改 ${report.stats.graded} 题，正确 ${report.stats.correct} 题。</p>
+          </div>
+          <button class="mock-review-close" type="button" data-close-exam-report>关闭</button>
+        </div>
+        <div class="mock-review-summary">
+          <span>完成率 <strong>${report.stats.attempted}/${report.stats.total}</strong></span>
+          <span>批改率 <strong>${report.stats.graded}/${report.stats.total}</strong></span>
+          <span>正确题数 <strong>${report.stats.correct}</strong></span>
+        </div>
+        <div class="mock-review-table-wrap">
+          <table class="mock-review-table">
+            <thead>
+              <tr>
+                <th>小节</th>
+                <th>完成</th>
+                <th>批改</th>
+                <th>正确</th>
+              </tr>
+            </thead>
+            <tbody>${typeRows}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderExamReportsList() {
+  const reports = getExamReports();
+  const rows = reports.length
+    ? reports
+        .map(
+          (report) => `
+            <button class="mock-report-row" type="button" data-open-exam-report="${escapeHTML(report.id)}">
+              <span>开启时间：${escapeHTML(formatReportDate(report.startedAt || report.submittedAt))}</span>
+              <strong>${escapeHTML(report.title)}</strong>
+              <small>考试类型：${report.kind === "random" ? "模拟考" : "课前测试"} · 提交时间：${escapeHTML(formatReportDate(report.submittedAt))} · ${report.stats.attempted}/${report.stats.total} 完成</small>
+            </button>
+          `
+        )
+        .join("")
+    : `<div class="mock-report-empty">还没有纪录</div>`;
+
+  return `
+    <div class="mock-review-overlay" data-exam-reports-overlay>
+      <div class="mock-review-dialog" role="dialog" aria-modal="true" aria-label="考试成绩单">
+        <div class="mock-review-header">
+          <div>
+            <p class="eyebrow">Exam Reports</p>
+            <h3>考试成绩单</h3>
+            <p>这里会列出每次开启的考试、考试类型与提交后的成绩。</p>
+          </div>
+          <button class="mock-review-close" type="button" data-close-exam-reports>关闭</button>
+        </div>
+        <div class="mock-report-list">${rows}</div>
+      </div>
+    </div>
+  `;
+}
+
+function openExamReportsList() {
+  document.querySelector("[data-exam-reports-overlay]")?.remove();
+  document.body.insertAdjacentHTML("beforeend", renderExamReportsList());
+}
+
+function openExamReport(reportId) {
+  const report = getExamReports().find((item) => item.id === reportId);
+  if (!report) {
+    showSystemToast("找不到成绩单", "这份历史成绩可能已经被新的本地数据覆盖。");
+    return;
+  }
+  document.querySelector("[data-exam-report-overlay]")?.remove();
+  document.body.insertAdjacentHTML("beforeend", renderExamReport(report));
+}
+
 function openSubjectReview(subjectId, filterTypeId = "") {
   const subject = findSubject(subjectId);
   if (!subject) return;
@@ -1238,16 +1911,17 @@ function closeSubjectReview() {
 
 function renderAiFeedbackDetail(record) {
   if (record?.speakingReviewStatus === "loading") {
-    return formatBilingualFeedback("口说评分仍在进行中。你可以留在当前页面，也可以稍后回来点击详解查看结果。");
+    return formatBilingualFeedback("口语评分仍在进行中。你可以留在当前页面，也可以稍后回来点击详解查看结果。");
   }
   if (record?.speakingReview?.error) {
-    return formatBilingualFeedback(`口说评分失败：${sanitizeReviewMessage(record.speakingReview.error)}`);
+    return formatBilingualFeedback(`口语评分失败：${sanitizeReviewMessage(record.speakingReview.error)}`);
   }
   if (record?.speakingReview && !record.speakingReview.error) {
     const review = record.speakingReview;
+    const calibration = buildCalibrationMeta(review);
     return `
-      <div class="mock-ai-detail">
-        <h4>口说评分 · ${escapeHTML(review.total)}/20 · ${escapeHTML(review.level)}</h4>
+        <div class="mock-ai-detail">
+        <h4>口语评分 · ${escapeHTML(formatFivePointScore(calibration.score5))}/5 · ${escapeHTML(review.level || "")}</h4>
         <p>${formatBilingualFeedback(review.overall_feedback || "")}</p>
         <strong>主要问题</strong>
         ${renderListItems(review.main_issues, "暂无主要问题反馈。")}
@@ -1268,14 +1942,17 @@ function renderAiFeedbackDetail(record) {
 
   return reviews
     .map(
-      (review) => `
+      (review) => {
+        const calibration = buildCalibrationMeta(review);
+        return `
         <div class="mock-ai-detail">
-          <h4>写作评分 · ${escapeHTML(review.total)}/20 · ${escapeHTML(review.level)}</h4>
+          <h4>写作评分 · ${escapeHTML(formatFivePointScore(calibration.score5))}/5 · ${escapeHTML(review.level || "")}</h4>
           <p>${formatBilingualFeedback(review.overall_feedback_zh || review.overall_feedback || "")}</p>
           <strong>重点改进</strong>
           ${renderListItems(review.top_3_improvements_zh || review.top_3_improvements, "暂无修改建议。")}
         </div>
-      `
+      `;
+      }
     )
     .join("");
 }
@@ -1464,7 +2141,7 @@ function getQuestionGroupStats(subject, type, questions) {
 }
 
 function shouldGroupQuestionList(type) {
-  return ["reading", "listening"].includes(type.id) && getQuestions(type).some((question) => question.passageTitle || question.listeningGroupId);
+  return ["reading", "mock-reading", "listening"].includes(type.id) && getQuestions(type).some((question) => question.passageTitle || question.listeningGroupId);
 }
 
 function renderQuestionList(subject, type) {
@@ -1524,10 +2201,10 @@ function renderQuestionList(subject, type) {
             <h3>${type.subtitle} / ${type.title}</h3>
             <p>请先进入题组浏览所有题目，再播放音频作答。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
           </div>
-          <button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
+          ${subject.isFullMockTest ? "" : `<button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
             批改 / 查看结果
             <span>只看本题型</span>
-          </button>
+          </button>`}
         </div>
       </div>
       <div class="mock-construction-card mock-listening-test-note">
@@ -1540,6 +2217,39 @@ function renderQuestionList(subject, type) {
   }
 
   if (type.id === "speaking") {
+    if (subject.isFullMockTest) {
+      const questionListMarkup = `
+        <div class="mock-question-grid">
+          ${getQuestions(type)
+            .map((question) => {
+              const record = getQuestionRecord(subject.id, type.id, question.number);
+              return `
+                <button class="mock-question-button ${getQuestionStatusClass(record, question)}" type="button" data-question="${question.number}">
+                  <span>${getQuestionStatusText(record, question)}</span>
+                  <strong>${question.number}</strong>
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
+      `;
+
+      mockStage.innerHTML = `
+        <div class="mock-stage-heading">
+          <button class="mock-back" type="button" data-reset="types">返回模拟测试</button>
+          <div class="mock-stage-title-row">
+            <div>
+              <p class="eyebrow">Speaking Interview</p>
+              <h3>Monologue</h3>
+              <p>请完成这道口语题，回到模拟测试页面后统一提交评分。</p>
+            </div>
+          </div>
+        </div>
+        ${questionListMarkup}
+      `;
+      return;
+    }
+
     const speakingSections = [
       {
         id: "warmup",
@@ -1608,12 +2318,12 @@ function renderQuestionList(subject, type) {
           <div>
             <p class="eyebrow">Step 04</p>
             <h3>Speaking Interview</h3>
-            <p>口说练习分成三个类型：Warm-up 不评分，Monologue 完成主答与随机追问后再整体评分，Picture-based Questions 根据图片逐题作答。</p>
+          <p>${subject.isFullMockTest ? "请完成这道 Monologue 题，回到模拟测试页面后统一提交评分。" : "口语练习分成三个类型：Warm-up 不评分，Monologue 完成主答与随机追问后再整体评分，Picture-based Questions 根据图片逐题作答。"}</p>
           </div>
-          <button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
+          ${subject.isFullMockTest ? "" : `<button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
             批改 / 查看结果
             <span>只看本题型</span>
-          </button>
+          </button>`}
         </div>
       </div>
       <div class="mock-reading-group-list">
@@ -1682,12 +2392,12 @@ function renderQuestionList(subject, type) {
         <div>
           <p class="eyebrow">Step 04</p>
           <h3>${type.subtitle} / ${type.title}</h3>
-          <p>请选择题号进入练习。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。</p>
+          <p>${subject.isFullMockTest ? "请完成本小节题目，回到模拟测试页面后统一提交评分。" : `请选择题号进入练习。本题型已做 ${stats.attempted}/${stats.total} 题，已批改 ${stats.graded} 题。`}</p>
         </div>
-        <button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
+        ${subject.isFullMockTest ? "" : `<button class="mock-review-button" type="button" data-review-subject="${subject.id}" data-review-type="${type.id}">
           批改 / 查看结果
           <span>只看本题型</span>
-        </button>
+        </button>`}
       </div>
     </div>
     ${questionListMarkup}
@@ -1823,7 +2533,7 @@ function renderAnswerOptions(question, record, correctAnswer) {
                 : ""
             : "";
           const optionImage = image
-            ? `<span class="mock-option-image"><img src="${image}" alt="选项 ${value}" loading="lazy" decoding="async" /></span>`
+            ? `<span class="mock-option-image"><img ${getMockImageAttributes(image, `选项 ${value}`)} /></span>`
             : "";
           return `
             <label class="mock-option-card ${optionClass}">
@@ -2615,6 +3325,9 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
   const currentPosition = questionNumbers.indexOf(questionIndex);
   const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
   const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
+  const isStreamingMock = Boolean(subject.isStreamingMockTest);
+  const streamingPosition = isStreamingMock ? getStreamingMockPosition(subject, type.id, questionIndex) : -1;
+  const streamingTotal = isStreamingMock ? getStreamingMockSteps(subject).length : 0;
   const progressKey = getSpeakingProgressKey(subject.id, type.id, questionIndex);
   const record = mockProgress.answers[progressKey] || {};
   const expectedSegmentCount = getSpeakingExpectedSegmentCount(question);
@@ -2640,7 +3353,7 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           <div class="mock-speaking-segment-head">
             <div>
               <span>${escapeHTML(segment.label)}</span>
-              <strong>${recording ? "Recorded" : "Ready"}</strong>
+              <strong>${recording ? "已录音" : "待录音"}</strong>
             </div>
             <em>${escapeHTML(segment.timeLimit)}</em>
           </div>
@@ -2651,13 +3364,13 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           ${renderSpeakingRecordingTimer(recordingKey, segment, recordingNow)}
           <div class="mock-speaking-actions">
             <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"} data-speaking-segment="${segment.id}" ${!recordingNow && anyRecordingNow ? "disabled" : ""}>
-              ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
+              ${recordingNow ? "停止录音" : recording ? "重新录音" : "开始录音"}
             </button>
           </div>
           ${
             recording
               ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
-              : `<div class="mock-speaking-empty">No recording yet.</div>`
+              : `<div class="mock-speaking-empty">还没有录音。</div>`
           }
         </article>
       `;
@@ -2667,8 +3380,8 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
   mockStage.innerHTML = `
     <div class="mock-question-view">
       <div class="mock-question-topbar">
-        <button class="mock-back" type="button" data-reset="questions" ${anyRecordingNow ? "disabled" : ""}>返回题号</button>
-        <span>${subject.title} · ${type.title} · Monologue</span>
+        <button class="mock-back" type="button" ${isStreamingMock ? "data-abandon-random-mock-test" : "data-reset=\"questions\""} ${anyRecordingNow ? "disabled" : ""}>${isStreamingMock ? "放弃考试" : "返回题号"}</button>
+        <span>${subject.title} · ${type.title} · Monologue${isStreamingMock ? ` · ${streamingPosition + 1}/${streamingTotal}` : ""}</span>
       </div>
       <div class="mock-speaking-monologue-layout">
         <section class="mock-speaking-prompt-card">
@@ -2690,19 +3403,24 @@ function renderSpeakingMonologue(subject, type, questionIndex, question) {
           <p class="eyebrow">Recorder</p>
           <h3>Record Each Part</h3>
           <p class="mock-speaking-status ${anyRecordingNow ? "is-recording" : ""}">
-            ${anyRecordingNow ? "Recording now..." : allComplete ? "All recordings are ready. Submit them together for review." : "Record the current question. The next follow-up will appear only after you finish."}
+            ${anyRecordingNow ? "正在录音..." : allComplete ? "录音已完成，可以提交评分。" : "请先完成当前录音，再继续下一段。"}
           </p>
           <div class="mock-speaking-segment-list">
             ${segmentCards}
           </div>
-          <p class="mock-answer-note">Monologue 会把主陈述和 3 个追问一起提交到后端评分；语音分析与 AI 总评都在后端完成。</p>
           <div class="mock-question-actions">
             <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
             ${record.speakingReview && !record.speakingReview.error
               ? `<button class="button primary" type="button" data-reset-speaking-review>重新练习</button>`
-              : `<button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>${record.speakingReviewStatus === "loading" ? "评分中" : "提交评分"}</button>`}
-            <button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
-            <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
+              : subject.isFullMockTest
+                ? isStreamingMock
+                  ? `<button class="button primary" type="button" data-stream-next-question ${allComplete && !anyRecordingNow ? "" : "disabled"}>完成并提交</button>`
+                  : `<button class="button primary" type="button" data-reset="types" ${allComplete && !anyRecordingNow ? "" : "disabled"}>返回模拟测试</button>`
+                : `<button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>${record.speakingReviewStatus === "loading" ? "评分中" : "提交评分"}</button>`}
+            ${isStreamingMock
+              ? `<button class="button ghost dark" type="button" data-abandon-random-mock-test ${anyRecordingNow ? "disabled" : ""}>放弃考试</button>`
+              : `<button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
+                 <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>`}
           </div>
         </section>
       </div>
@@ -2745,7 +3463,7 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           <div class="mock-speaking-segment-head">
             <div>
               <span>${escapeHTML(segment.label)}</span>
-              <strong>${recording ? "Recorded" : "Ready"}</strong>
+              <strong>${recording ? "已录音" : "待录音"}</strong>
             </div>
             <em>${escapeHTML(segment.timeLimit)}</em>
           </div>
@@ -2756,13 +3474,13 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           ${renderSpeakingRecordingTimer(recordingKey, segment, recordingNow)}
           <div class="mock-speaking-actions">
             <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"} data-speaking-segment="${segment.id}" ${!recordingNow && anyRecordingNow ? "disabled" : ""}>
-              ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
+              ${recordingNow ? "停止录音" : recording ? "重新录音" : "开始录音"}
             </button>
           </div>
           ${
             recording
               ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
-              : `<div class="mock-speaking-empty">No recording yet.</div>`
+              : `<div class="mock-speaking-empty">还没有录音。</div>`
           }
         </article>
       `;
@@ -2781,7 +3499,7 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           <h3>${escapeHTML(question.imageTitle || "Picture Task")}</h3>
           <p class="mock-speaking-type">Look at the picture and answer all questions</p>
           <div class="mock-speaking-image-card">
-            <img src="${escapeHTML(question.image)}" alt="${escapeHTML(question.imageTitle || "Speaking picture")}" loading="lazy" decoding="async" />
+            <img ${getMockImageAttributes(question.image, question.imageTitle || "Speaking picture")} />
           </div>
           <div class="mock-speaking-meta">
             <span>${expectedSegmentCount} questions</span>
@@ -2793,17 +3511,18 @@ function renderSpeakingPictureResponse(subject, type, questionIndex, question) {
           <p class="eyebrow">Recorder</p>
           <h3>Answer the Questions</h3>
           <p class="mock-speaking-status ${anyRecordingNow ? "is-recording" : ""}">
-            ${anyRecordingNow ? "Recording now..." : allComplete ? "All recordings are ready. Submit them together for review." : "Record one answer for each picture question."}
+            ${anyRecordingNow ? "正在录音..." : allComplete ? "录音已完成，可以提交评分。" : "请为每个问题录一段回答。"}
           </p>
           <div class="mock-speaking-segment-list">
             ${segmentCards}
           </div>
-          <p class="mock-answer-note">图片说明会保存在后台数据中用于未来评分，不会显示给学生。当前录音只保存在当前浏览器页面。</p>
           <div class="mock-question-actions">
             <button class="button ghost dark" type="button" data-clear-speaking-recording ${completed.length && !anyRecordingNow ? "" : "disabled"}>全部重录</button>
             ${record.speakingReview && !record.speakingReview.error
               ? `<button class="button primary" type="button" data-reset-speaking-review>重新练习</button>`
-              : `<button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>${record.speakingReviewStatus === "loading" ? "评分中" : "提交评分"}</button>`}
+              : subject.isFullMockTest
+                ? `<button class="button primary" type="button" data-reset="types" ${allComplete && !anyRecordingNow ? "" : "disabled"}>返回模拟测试</button>`
+                : `<button class="button primary" type="button" data-submit-speaking-review ${allComplete && !anyRecordingNow ? "" : "disabled"}>${record.speakingReviewStatus === "loading" ? "评分中" : "提交评分"}</button>`}
             <button class="button ghost dark" type="button" ${previous && !anyRecordingNow ? `data-question="${previous}"` : "disabled"}>上一题</button>
             <button class="button primary" type="button" ${next && !anyRecordingNow ? `data-question="${next}"` : "disabled"}>下一题</button>
           </div>
@@ -2866,10 +3585,10 @@ async function renderSpeakingQuestion(subject, type, questionIndex, skipRecordin
     const recordingNow = isSpeakingRecording(key);
     const segment = { id: "answer", label: "Answer", prompt: question?.text || "", timeLimit: question?.timeLimit || "30 seconds" };
     const statusText = recordingNow
-      ? "Recording now..."
+      ? "正在录音..."
       : recording
-        ? "Recording saved for this session. You can listen back or record again."
-        : "This warm-up question is not scored. Record your answer and listen back to check clarity.";
+        ? "录音已保存，可以回听或重新录一遍。"
+        : "这题不计分。录完后可以回听，检查自己是否说清楚。";
 
     mockStage.innerHTML = `
     <div class="mock-question-view">
@@ -2898,14 +3617,14 @@ async function renderSpeakingQuestion(subject, type, questionIndex, skipRecordin
           ${renderSpeakingRecordingTimer(key, segment, recordingNow)}
           <div class="mock-speaking-actions">
             <button class="button primary" type="button" ${recordingNow ? "data-stop-speaking-recording" : "data-start-speaking-recording"}>
-              ${recordingNow ? "Stop" : recording ? "Record Again" : "Start Record"}
+              ${recordingNow ? "停止录音" : recording ? "重新录音" : "开始录音"}
             </button>
-            <button class="button ghost dark" type="button" data-clear-speaking-recording ${recording && !recordingNow ? "" : "disabled"}>Clear</button>
+            <button class="button ghost dark" type="button" data-clear-speaking-recording ${recording && !recordingNow ? "" : "disabled"}>清除录音</button>
           </div>
           ${
             recording
               ? `<audio class="mock-speaking-audio" controls preload="metadata" src="${escapeHTML(recording.url)}"></audio>`
-              : `<div class="mock-speaking-empty">No recording yet.</div>`
+              : `<div class="mock-speaking-empty">还没有录音。</div>`
           }
           <p class="mock-answer-note">录音会保存在当前浏览器中；关闭网页后回来仍可继续使用本题录音。</p>
           <div class="mock-question-actions">
@@ -2926,6 +3645,10 @@ function renderQuestion(subject, type, questionIndex) {
   const currentPosition = questionNumbers.indexOf(questionIndex);
   const previous = currentPosition > 0 ? questionNumbers[currentPosition - 1] : null;
   const next = currentPosition >= 0 && currentPosition < questionNumbers.length - 1 ? questionNumbers[currentPosition + 1] : null;
+  const isStreamingMock = Boolean(subject.isStreamingMockTest);
+  const streamingPosition = isStreamingMock ? getStreamingMockPosition(subject, type.id, questionIndex) : -1;
+  const streamingTotal = isStreamingMock ? getStreamingMockSteps(subject).length : 0;
+  const streamingNext = isStreamingMock ? getNextStreamingMockStep(subject, type.id, questionIndex) : null;
   const key = getQuestionKey(subject.id, type.id, questionIndex);
   const record = mockProgress.answers[key];
   const question = getQuestion(type, questionIndex);
@@ -2971,7 +3694,7 @@ function renderQuestion(subject, type, questionIndex) {
     ${renderWordBank(question)}
   `;
   const questionImage = question?.image
-    ? `<div class="mock-question-visual"><img src="${question.image}" alt="${type.title} question ${questionIndex} visual" loading="lazy" decoding="async" /></div>`
+    ? `<div class="mock-question-visual"><img ${getMockImageAttributes(question.image, `${type.title} question ${questionIndex} visual`)} /></div>`
     : "";
   const aiReviewNotice = isAiReviewQuestion(question)
     ? `
@@ -3004,7 +3727,7 @@ function renderQuestion(subject, type, questionIndex) {
     `
     : "";
   const answerNote = isAiReviewQuestion(question)
-    ? `<p class="mock-answer-note">请完成作文后点击“离开并批改”。目前会进入结果页并显示待 AI 批改状态。</p>`
+    ? `<p class="mock-answer-note">${subject.isFullMockTest ? "请先保存答案，完成整套模拟测试后统一提交评分。" : "请完成作文后点击“提交并批改”。"}</p>`
     : answerType === "input"
       ? `<p class="mock-answer-note">请直接在输入框填写数字或文字，不用从选项中选择。</p>`
       : answerType === "multiChoice"
@@ -3012,19 +3735,29 @@ function renderQuestion(subject, type, questionIndex) {
         : "";
   const actionButtons = `
     <div class="mock-question-actions">
-      <button class="button ghost dark" type="button" ${previous ? `data-question="${previous}"` : "disabled"}>上一题</button>
-      <button class="button ghost dark" type="button" data-leave-review>离开并批改</button>
-      <button class="button primary" type="button" ${next ? `data-question="${next}"` : "disabled"}>下一题</button>
+      ${
+        isStreamingMock
+          ? `<button class="button ghost dark" type="button" data-abandon-random-mock-test>放弃考试</button>
+             <button class="button primary" type="button" data-stream-next-question>${streamingNext ? "下一题" : "完成并提交"}</button>`
+          : `<button class="button ghost dark" type="button" ${previous ? `data-question="${previous}"` : "disabled"}>上一题</button>
+             ${subject.isFullMockTest ? `<button class="button ghost dark" type="button" data-reset="types">返回模拟测试</button>` : `<button class="button ghost dark" type="button" data-leave-review>离开并批改</button>`}
+             <button class="button primary" type="button" ${next ? `data-question="${next}"` : "disabled"}>下一题</button>`
+      }
     </div>
   `;
   const canRetryAiReview = hasSuccessfulAiReview(record);
   const aiActionButtons = `
     <div class="mock-question-actions">
-      <button class="button primary" type="button" ${canRetryAiReview ? "data-view-ai-review" : "data-submit-ai-review"}>
-        ${canRetryAiReview ? "看评论" : "提交并批改"}
-      </button>
-      ${canRetryAiReview ? `<button class="button ghost dark" type="button" data-retry-ai-question>再试一次</button>` : ""}
-      <button class="button ghost dark" type="button" data-abandon-ai-question>放弃</button>
+      ${subject.isFullMockTest
+        ? isStreamingMock
+          ? `<button class="button ghost dark" type="button" data-abandon-random-mock-test>放弃考试</button>
+             <button class="button primary" type="button" data-stream-next-question>${streamingNext ? "下一题" : "完成并提交"}</button>`
+          : `<button class="button ghost dark" type="button" data-reset="types">返回模拟测试</button>`
+        : `<button class="button primary" type="button" ${canRetryAiReview ? "data-view-ai-review" : "data-submit-ai-review"}>
+            ${canRetryAiReview ? "看评论" : "提交并批改"}
+          </button>
+          ${canRetryAiReview ? `<button class="button ghost dark" type="button" data-retry-ai-question>再试一次</button>` : ""}
+          <button class="button ghost dark" type="button" data-abandon-ai-question>放弃</button>`}
     </div>
   `;
 
@@ -3032,8 +3765,8 @@ function renderQuestion(subject, type, questionIndex) {
     mockStage.innerHTML = `
       <div class="mock-question-view">
         <div class="mock-question-topbar">
-          <button class="mock-back" type="button" data-reset="questions">返回题号</button>
-          <span>${subject.title} · ${type.title} · Question ${questionIndex}</span>
+          <button class="mock-back" type="button" ${isStreamingMock ? "data-abandon-random-mock-test" : "data-reset=\"questions\""}>${isStreamingMock ? "放弃考试" : "返回题号"}</button>
+          <span>${subject.title} · ${type.title} · Question ${questionIndex}${isStreamingMock ? ` · ${streamingPosition + 1}/${streamingTotal}` : ""}</span>
         </div>
         <div class="mock-writing-layout">
           <section class="mock-writing-prompt">
@@ -3067,8 +3800,8 @@ function renderQuestion(subject, type, questionIndex) {
   mockStage.innerHTML = `
     <div class="mock-question-view">
       <div class="mock-question-topbar">
-        <button class="mock-back" type="button" data-reset="questions">返回题号</button>
-        <span>${subject.title} · ${type.title} · Question ${questionIndex}</span>
+        <button class="mock-back" type="button" ${isStreamingMock ? "data-abandon-random-mock-test" : "data-reset=\"questions\""}>${isStreamingMock ? "放弃考试" : "返回题号"}</button>
+        <span>${subject.title} · ${type.title} · Question ${questionIndex}${isStreamingMock ? ` · ${streamingPosition + 1}/${streamingTotal}` : ""}</span>
       </div>
       <div class="mock-question-layout ${hasPassage ? "has-reading-passage" : ""}">
         <div class="mock-question-content">
@@ -3247,30 +3980,30 @@ function getWritingReviewItems(question) {
       key: "language_accuracy",
       reasonKey: "language_accuracy_reason",
       title: "语言准确度",
-      max: 8,
+      max: 5,
     },
     {
       key: "vocabulary",
       reasonKey: "vocabulary_reason",
       title: "词汇",
-      max: 4,
+      max: 5,
     },
     {
       key: "content_organisation",
       reasonKey: "content_organisation_reason",
       title: "内容与结构",
-      max: 8,
+      max: 5,
     },
   ];
 }
 
 function getSpeakingReviewItems() {
   return [
-    { key: "fluency", reasonKey: "fluency_reason", title: "流利度", max: 4 },
-    { key: "pronunciation", reasonKey: "pronunciation_reason", title: "发音", max: 4 },
-    { key: "vocabulary", reasonKey: "vocabulary_reason", title: "词汇", max: 4 },
-    { key: "grammar", reasonKey: "grammar_reason", title: "语法", max: 4 },
-    { key: "content_task_response", reasonKey: "content_task_response_reason", title: "内容与任务完成度", max: 4 },
+    { key: "fluency", reasonKey: "fluency_reason", title: "流利度", max: 5 },
+    { key: "pronunciation", reasonKey: "pronunciation_reason", title: "发音", max: 5 },
+    { key: "vocabulary", reasonKey: "vocabulary_reason", title: "词汇", max: 5 },
+    { key: "grammar", reasonKey: "grammar_reason", title: "语法", max: 5 },
+    { key: "content_task_response", reasonKey: "content_task_response_reason", title: "内容与任务完成度", max: 5 },
   ];
 }
 
@@ -3324,9 +4057,10 @@ function formatBilingualFeedback(value) {
 function renderAiWritingModelResult(review, isLoading) {
   const hasScore = Number.isFinite(Number(review?.total));
   const modelError = sanitizeReviewMessage(review?.error || "");
+  const calibration = buildCalibrationMeta(review);
   const rubricRows = getWritingReviewItems()
     .map((item) => {
-      const score = hasScore ? review[item.key] : "--";
+      const score = hasScore ? formatFivePointScore(review[item.key]) : "--";
       const reason = hasScore
           ? getChineseReviewText(review[`${item.reasonKey}_zh`], review[item.reasonKey])
           : modelError
@@ -3337,7 +4071,7 @@ function renderAiWritingModelResult(review, isLoading) {
       return `
         <div class="mock-ai-score-card">
           <span>${escapeHTML(item.title)}</span>
-          <strong>${escapeHTML(score)}/${item.max}</strong>
+          <strong>${escapeHTML(score)}/5</strong>
           <small>${formatBilingualFeedback(reason)}</small>
         </div>
       `;
@@ -3348,8 +4082,8 @@ function renderAiWritingModelResult(review, isLoading) {
     <section class="mock-ai-model-result">
       ${modelError ? `<div class="mock-ai-error">${escapeHTML(modelError)}</div>` : ""}
       <div class="mock-ai-review-total">
-        <span>总分</span>
-        <strong>${hasScore ? escapeHTML(review.total) : "--"}/20</strong>
+        <span>五分制评分</span>
+        <strong>${hasScore ? escapeHTML(formatFivePointScore(calibration.score5)) : "--"}/5</strong>
         <small>${hasScore ? escapeHTML(review.level) : modelError ? "评分失败" : isLoading ? "评分中..." : "尚未评分"}</small>
       </div>
       <div class="mock-ai-score-grid">
@@ -3486,6 +4220,62 @@ function normalizeScore(value, max) {
   return Math.max(0, Math.min(max, Math.round(number)));
 }
 
+function calibrationFromTotal(total) {
+  if (total >= 18) return { score_5: 4.5, aeas_score_range: "80+", ielts_reference: "IELTS 6.5+" };
+  if (total >= 16) return { score_5: 4.0, aeas_score_range: "67-79", ielts_reference: "IELTS 6.0" };
+  if (total >= 14) return { score_5: 3.5, aeas_score_range: "57-66", ielts_reference: "IELTS 5.5" };
+  if (total >= 12) return { score_5: 3.0, aeas_score_range: "46-56", ielts_reference: "IELTS 5.0" };
+  if (total >= 8) return { score_5: 2.0, aeas_score_range: "36-45", ielts_reference: "IELTS 4.0" };
+  if (total >= 6) return { score_5: 1.5, aeas_score_range: "26-35", ielts_reference: "IELTS 3.5-4.0" };
+  return { score_5: 1.0, aeas_score_range: "0-25", ielts_reference: "Below IELTS 4.0" };
+}
+
+function calibrationFromScore(score5) {
+  if (score5 >= 4.5) return { score_5: score5, aeas_score_range: "80+", ielts_reference: "IELTS 6.5+" };
+  if (score5 >= 4.0) return { score_5: score5, aeas_score_range: "67-79", ielts_reference: "IELTS 6.0" };
+  if (score5 >= 3.5) return { score_5: score5, aeas_score_range: "57-66", ielts_reference: "IELTS 5.5" };
+  if (score5 >= 3.0) return { score_5: score5, aeas_score_range: "46-56", ielts_reference: "IELTS 5.0" };
+  if (score5 >= 2.0) return { score_5: score5, aeas_score_range: "36-45", ielts_reference: "IELTS 4.0" };
+  if (score5 >= 1.5) return { score_5: score5, aeas_score_range: "26-35", ielts_reference: "IELTS 3.5-4.0" };
+  return { score_5: 1.0, aeas_score_range: "0-25", ielts_reference: "Below IELTS 4.0" };
+}
+
+function normalizeFivePointScore(value, total) {
+  const number = Number(value);
+  if (Number.isFinite(number) && number > 0) {
+    const bands = [1, 1.5, 2, 3, 3.5, 4, 4.5, 5];
+    const clamped = Math.max(1, Math.min(5, number));
+    return bands
+      .slice()
+      .sort((a, b) => Math.abs(a - clamped) - Math.abs(b - clamped) || a - b)[0];
+  }
+  return calibrationFromTotal(total).score_5;
+}
+
+function formatFivePointScore(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "--";
+  return number.toFixed(1);
+}
+
+function levelFromFivePointScore(value) {
+  const score = Number(value);
+  if (score >= 4.5) return "Excellent";
+  if (score >= 3.5) return "Good";
+  if (score >= 2.0) return "Developing";
+  return "Needs Improvement";
+}
+
+function buildCalibrationMeta(review) {
+  const total = Number(review?.total) || 0;
+  const fallback = calibrationFromTotal(total);
+  return {
+    score5: normalizeFivePointScore(review?.score_5, total),
+    aeasRange: String(review?.aeas_score_range || fallback.aeas_score_range).trim(),
+    ieltsReference: String(review?.ielts_reference || fallback.ielts_reference).trim(),
+  };
+}
+
 function normalizeStringArray(value) {
   if (!Array.isArray(value)) return [];
   return value.map((item) => String(item || "").trim()).filter(Boolean);
@@ -3519,10 +4309,12 @@ function hashString(value) {
 }
 
 function normalizeAiWritingReviewResult(raw) {
-  const languageAccuracy = normalizeScore(raw.language_accuracy, 8);
-  const vocabulary = normalizeScore(raw.vocabulary, 4);
-  const contentOrganisation = normalizeScore(raw.content_organisation, 8);
-  const total = normalizeScore(raw.total ?? languageAccuracy + vocabulary + contentOrganisation, 20);
+  const languageAccuracy = normalizeFivePointScore(raw.language_accuracy, 0);
+  const vocabulary = normalizeFivePointScore(raw.vocabulary, 0);
+  const contentOrganisation = normalizeFivePointScore(raw.content_organisation, 0);
+  const score5 = normalizeFivePointScore((languageAccuracy * 0.4) + (vocabulary * 0.2) + (contentOrganisation * 0.4), 0);
+  const total = normalizeScore(score5 * 4, 20);
+  const calibration = calibrationFromScore(score5);
   return {
     language_accuracy: languageAccuracy,
     language_accuracy_reason: composeBilingualText(raw.language_accuracy_reason_zh, raw.language_accuracy_reason_en, raw.language_accuracy_reason),
@@ -3537,7 +4329,10 @@ function normalizeAiWritingReviewResult(raw) {
     content_organisation_reason_zh: String(raw.content_organisation_reason_zh || "").trim(),
     content_organisation_reason_en: String(raw.content_organisation_reason_en || "").trim(),
     total,
-    level: String(raw.level || "").trim(),
+    score_5: score5,
+    aeas_score_range: String(raw.aeas_score_range || calibration.aeas_score_range).trim(),
+    ielts_reference: String(raw.ielts_reference || calibration.ielts_reference).trim(),
+    level: levelFromFivePointScore(score5),
     overall_feedback: composeBilingualText(raw.overall_feedback_zh, raw.overall_feedback_en, raw.overall_feedback),
     overall_feedback_zh: String(raw.overall_feedback_zh || "").trim(),
     overall_feedback_en: String(raw.overall_feedback_en || "").trim(),
@@ -3555,12 +4350,14 @@ function normalizeAiWritingReviewResult(raw) {
 }
 
 function normalizeAiSpeakingReviewResult(raw) {
-  const fluency = normalizeScore(raw.fluency, 4);
-  const pronunciation = normalizeScore(raw.pronunciation, 4);
-  const vocabulary = normalizeScore(raw.vocabulary, 4);
-  const grammar = normalizeScore(raw.grammar, 4);
-  const contentTaskResponse = normalizeScore(raw.content_task_response, 4);
-  const total = normalizeScore(raw.total ?? fluency + pronunciation + vocabulary + grammar + contentTaskResponse, 20);
+  const fluency = normalizeFivePointScore(raw.fluency, 0);
+  const pronunciation = normalizeFivePointScore(raw.pronunciation, 0);
+  const vocabulary = normalizeFivePointScore(raw.vocabulary, 0);
+  const grammar = normalizeFivePointScore(raw.grammar, 0);
+  const contentTaskResponse = normalizeFivePointScore(raw.content_task_response, 0);
+  const score5 = normalizeFivePointScore((fluency + pronunciation + vocabulary + grammar + contentTaskResponse) / 5, 0);
+  const total = normalizeScore(score5 * 4, 20);
+  const calibration = calibrationFromScore(score5);
   return {
     fluency,
     fluency_reason: getChineseReviewText(raw.fluency_reason_zh, raw.fluency_reason),
@@ -3573,7 +4370,10 @@ function normalizeAiSpeakingReviewResult(raw) {
     content_task_response: contentTaskResponse,
     content_task_response_reason: getChineseReviewText(raw.content_task_response_reason_zh, raw.content_task_response_reason),
     total,
-    level: String(raw.level || "").trim(),
+    score_5: score5,
+    aeas_score_range: String(raw.aeas_score_range || calibration.aeas_score_range).trim(),
+    ielts_reference: String(raw.ielts_reference || calibration.ielts_reference).trim(),
+    level: levelFromFivePointScore(score5),
     overall_feedback: getChineseReviewText(raw.overall_feedback_zh, raw.overall_feedback),
     main_issues: normalizeStringArray(raw.main_issues_zh || raw.main_issues).map(sanitizeReviewMessage),
     improvements: normalizeStringArray(raw.improvements_zh || raw.improvements).map(sanitizeReviewMessage),
@@ -3627,27 +4427,27 @@ function renderSpeakingReviewProgressLines(lines) {
 function startSpeakingReviewProgress(progressKey, segmentCount) {
   const total = Math.max(1, Number(segmentCount) || 1);
   const startedAt = Date.now();
-  setSpeakingReviewProgress(progressKey, [`正在准备 ${total} 段录音并提交评分。`]);
+  setSpeakingReviewProgress(progressKey, [`正在送出 ${total} 段录音，请稍等。`]);
 
   const timer = window.setInterval(() => {
     const elapsedSeconds = Math.floor((Date.now() - startedAt) / 1000);
     if (elapsedSeconds < 10) {
-      setSpeakingReviewProgress(progressKey, ["正在上传录音并建立评分任务。"]);
+      setSpeakingReviewProgress(progressKey, ["录音正在路上，很快就开始评分。"]);
       return;
     }
     if (elapsedSeconds < 55) {
-      setSpeakingReviewProgress(progressKey, ["语音分析服务正在处理录音。"]);
+      setSpeakingReviewProgress(progressKey, ["正在认真听你的回答。"]);
       return;
     }
     if (elapsedSeconds < 100) {
-      setSpeakingReviewProgress(progressKey, ["正在整理语音分析结果。"]);
+      setSpeakingReviewProgress(progressKey, ["正在整理你的表现重点。"]);
       return;
     }
     if (elapsedSeconds < 170) {
-      setSpeakingReviewProgress(progressKey, ["正在生成综合评分与中文反馈。"]);
+      setSpeakingReviewProgress(progressKey, ["正在写评分和改进建议。"]);
       return;
     }
-    setSpeakingReviewProgress(progressKey, ["评分仍在处理中，请不要关闭页面；完成后会显示结果。"]);
+    setSpeakingReviewProgress(progressKey, ["还在努力评分中，请先不要关闭页面。"]);
   }, 5000);
   speakingReviewProgressTimers.set(progressKey, timer);
 }
@@ -3656,7 +4456,7 @@ function finishSpeakingReviewProgress(progressKey) {
   const timer = speakingReviewProgressTimers.get(progressKey);
   if (timer) window.clearInterval(timer);
   speakingReviewProgressTimers.delete(progressKey);
-  appendSpeakingReviewProgress(progressKey, "综合评分已完成。");
+  appendSpeakingReviewProgress(progressKey, "评分完成，可以查看结果了。");
 }
 
 async function requestAiSpeakingSection2Review(subject, type, questionIndex, question) {
@@ -3674,7 +4474,7 @@ async function requestAiSpeakingSection2Review(subject, type, questionIndex, que
   });
 
   if (payloadSegments.some((segment) => !segment.blob)) {
-    throw new Error("请先完成所有口说录音，再提交评分。");
+    throw new Error("请先完成所有口语录音，再提交评分。");
   }
 
   const payload = await window.rewardSchoolApi.reviewSpeakingSection2({
@@ -3706,7 +4506,7 @@ async function requestAiSpeakingType3Review(subject, type, questionIndex, questi
   });
 
   if (payloadSegments.some((segment) => !segment.blob)) {
-    throw new Error("请先完成所有图片口说录音，再提交评分。");
+    throw new Error("请先完成所有图片口语录音，再提交评分。");
   }
 
   const payload = await window.rewardSchoolApi.reviewSpeakingType3({
@@ -3725,42 +4525,43 @@ async function requestAiSpeakingType3Review(subject, type, questionIndex, questi
 }
 
 function getSpeakingReviewHeading(question) {
-  return question?.speakingMode === "picture-response" ? "口说第三题型" : "口说第二题型";
+  return question?.speakingMode === "picture-response" ? "口语第三题型" : "口语第二题型";
 }
 
 function getSpeakingReviewSubheading(question, isLoading, hasReview) {
   if (question?.speakingMode === "picture-response") {
     return isLoading
-      ? "正在批量提交图片口说录音并评分，请稍等。"
+      ? "正在批量提交图片口语录音并评分，请稍等。"
       : hasReview
         ? "以下为图片描述题五项评分与中文反馈。"
-        : "提交后会显示图片口说评分结果。";
+        : "提交后会显示图片口语评分结果。";
   }
 
   return isLoading
     ? "正在批量提交录音并评分，请稍等。"
     : hasReview
       ? "以下为 Section 2 五项评分与中文反馈。"
-      : "提交后会显示口说评分结果。";
+      : "提交后会显示口语评分结果。";
 }
 
 function renderAiSpeakingModelResult(review, isLoading) {
   const hasScore = Number.isFinite(Number(review?.total));
   const modelError = sanitizeReviewMessage(review?.error || "");
+  const calibration = buildCalibrationMeta(review);
   const rubricRows = getSpeakingReviewItems()
     .map((item) => {
-      const score = hasScore ? review[item.key] : "--";
+      const score = hasScore ? formatFivePointScore(review[item.key]) : "--";
       const reason = hasScore
         ? review[item.reasonKey]
         : modelError
           ? modelError
           : isLoading
             ? "正在上传全部录音并等待评分结果。"
-            : "提交后会显示口说评分。";
+            : "提交后会显示口语评分。";
       return `
         <div class="mock-ai-score-card">
           <span>${escapeHTML(item.title)}</span>
-          <strong>${escapeHTML(score)}/${item.max}</strong>
+          <strong>${escapeHTML(score)}/5</strong>
           <small>${formatBilingualFeedback(reason)}</small>
         </div>
       `;
@@ -3771,8 +4572,8 @@ function renderAiSpeakingModelResult(review, isLoading) {
     <section class="mock-ai-model-result">
       ${modelError ? `<div class="mock-ai-error">${escapeHTML(modelError)}</div>` : ""}
       <div class="mock-ai-review-total">
-        <span>总分</span>
-        <strong>${hasScore ? escapeHTML(review.total) : "--"}/20</strong>
+        <span>五分制评分</span>
+        <strong>${hasScore ? escapeHTML(formatFivePointScore(calibration.score5)) : "--"}/5</strong>
         <small>${hasScore ? escapeHTML(review.level) : modelError ? "评分失败" : isLoading ? "评分中..." : "尚未评分"}</small>
       </div>
       <div class="mock-ai-score-grid">
@@ -3780,7 +4581,7 @@ function renderAiSpeakingModelResult(review, isLoading) {
       </div>
       <div class="mock-ai-feedback-block">
         <h4>整体反馈</h4>
-        <p>${formatBilingualFeedback(hasScore ? review.overall_feedback : "录音提交后，系统会先做语音分析，再生成 Section 2 总评。")}</p>
+        <p>${formatBilingualFeedback(hasScore ? review.overall_feedback : "提交录音后，会在这里看到评分和建议。")}</p>
       </div>
       <div class="mock-ai-feedback-block">
         <h4>主要问题</h4>
@@ -3814,7 +4615,7 @@ function renderAiSpeakingReview(subject, type, questionIndex, status = "ready", 
         <div class="mock-review-header">
           <div>
             <p class="eyebrow">${escapeHTML(getSpeakingReviewHeading(question))}</p>
-            <h3>口说评分反馈</h3>
+            <h3>口语评分反馈</h3>
             <p>${escapeHTML(getSpeakingReviewSubheading(question, isLoading, hasReview))} ${escapeHTML(question?.speakingTitle || "")}</p>
           </div>
           <button class="mock-review-close" type="button" data-close-ai-review>关闭</button>
@@ -4038,7 +4839,7 @@ async function submitAiWritingReview(subject, type, questionIndex) {
 async function submitSpeakingSection2Review(subject, type, questionIndex) {
   const question = getQuestion(type, questionIndex);
   if (!question || !["monologue", "picture-response"].includes(question.speakingMode)) {
-    window.alert("当前题型暂未开放口说评分。");
+    window.alert("当前题型暂未开放口语评分。");
     return;
   }
 
@@ -4134,14 +4935,14 @@ async function submitSpeakingSection2Review(subject, type, questionIndex) {
     mockProgress.answers[key] = {
       ...(mockProgress.answers[key] || {}),
       speakingReview: {
-        error: sanitizeReviewMessage(error.message || "口说评分失败。"),
+        error: sanitizeReviewMessage(error.message || "口语评分失败。"),
         reviewedAt: new Date().toISOString(),
       },
       speakingReviewStatus: "error",
       updatedAt: new Date().toISOString(),
     };
     saveProgress();
-    const errorMessage = sanitizeReviewMessage(error.message || "口说评分失败，请稍后再试。");
+    const errorMessage = sanitizeReviewMessage(error.message || "口语评分失败，请稍后再试。");
     const meta = { kind: "speaking", subject, type, questionIndex, status: "error", errorMessage };
     if (isCurrentQuestion(subject.id, type.id, questionIndex) && document.querySelector("[data-ai-review-overlay]")) {
       openAiSpeakingReview(subject, type, questionIndex, "error", errorMessage);
@@ -4169,6 +4970,45 @@ function leaveAndReviewSubject() {
   }
 
   mockState = { ...mockState, questionIndex: null };
+  openSubjectReview(subject.id);
+}
+
+async function submitFullMockTestReview(subject) {
+  if (!subject?.isFullMockTest) return;
+  const completion = getFullMockCompletion(subject);
+  if (!completion.complete) {
+    showSystemToast("还不能提交评分", `请先完成所有小节，目前已完成 ${completion.attempted}/${completion.total} 题。`);
+    return;
+  }
+
+  gradeSubjectAnswers(subject);
+  showSystemToast("正在提交整套评分", "客观题已完成批改，正在处理需要评分的回答。");
+
+  const aiTasks = subject.types.flatMap((type) =>
+    getQuestions(type)
+      .filter((question) => question.reviewMode === "ai" || question.speakingMode === "monologue")
+      .map((question) => ({ type, question }))
+  );
+
+  for (const { type, question } of aiTasks) {
+    const record = getQuestionRecord(subject.id, type.id, question.number);
+    if (question.reviewMode === "ai") {
+      if (!record?.aiReviews?.some?.((review) => !review.error)) {
+        await submitAiWritingReview(subject, type, question.number);
+      }
+      continue;
+    }
+
+    if (question.speakingMode === "monologue" && !record?.speakingReview) {
+      await submitSpeakingSection2Review(subject, type, question.number);
+    }
+  }
+
+  if (subject.isStreamingMockTest) {
+    randomMockSession = { active: false, completed: true };
+  }
+  saveExamReport(subject);
+  setMockState({ subjectId: subject.id, typeId: null, questionIndex: null });
   openSubjectReview(subject.id);
 }
 
@@ -4341,20 +5181,66 @@ if (mockApp) {
       return;
     }
 
+    if (target.dataset.openExamReports !== undefined) {
+      openExamReportsList();
+      return;
+    }
+
+    if (target.dataset.openExamReport) {
+      openExamReport(target.dataset.openExamReport);
+      return;
+    }
+
+    if (target.dataset.submitFullMockTest !== undefined) {
+      const subject = findSubject(mockState.subjectId);
+      if (subject?.isFullMockTest) void submitFullMockTestReview(subject);
+      return;
+    }
+
+    if (target.dataset.startRandomMockTest !== undefined) {
+      if (randomMockSession.active && !randomMockSession.completed && !confirmAbandonRandomMockTest()) return;
+      showRandomMockIntro();
+      return;
+    }
+
+    if (target.dataset.confirmStartRandomMockTest !== undefined) {
+      startRandomMockTest();
+      return;
+    }
+
+    if (target.dataset.abandonRandomMockTest !== undefined) {
+      if (!confirmAbandonRandomMockTest()) return;
+      abandonRandomMockTest();
+      return;
+    }
+
+    if (target.dataset.streamNextQuestion !== undefined) {
+      goToNextStreamingMockStep();
+      return;
+    }
+
     const reset = target.dataset.reset;
     if (reset === "grades") {
+      if (isRandomMockInProgress() && !confirmAbandonRandomMockTest()) return;
+      if (isRandomMockInProgress()) abandonRandomMockTest({ goHome: false });
       setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
       return;
     }
     if (reset === "subjects") {
+      if (isRandomMockInProgress() && !confirmAbandonRandomMockTest()) return;
+      if (isRandomMockInProgress()) abandonRandomMockTest({ goHome: false });
       setMockState({ subjectId: null, typeId: null, questionIndex: null });
       return;
     }
     if (reset === "types") {
+      if (isRandomMockInProgress() && !confirmAbandonRandomMockTest()) return;
+      if (isRandomMockInProgress()) abandonRandomMockTest({ goHome: false });
       setMockState({ typeId: null, questionIndex: null });
       return;
     }
     if (reset === "questions") {
+      if (isRandomMockInProgress() && !confirmAbandonRandomMockTest()) return;
+      if (isRandomMockInProgress()) abandonRandomMockTest({ goHome: false });
       setMockState({ questionIndex: null });
       return;
     }
@@ -4374,11 +5260,20 @@ if (mockApp) {
     }
 
     if (target.dataset.subject) {
+      if (isRandomMockInProgress() && !confirmAbandonRandomMockTest()) return;
+      if (isRandomMockInProgress()) abandonRandomMockTest({ goHome: false });
+      if (target.dataset.subject === RANDOM_MOCK_TEST_ID) {
+        showRandomMockIntro();
+        return;
+      }
+      const selectedSubject = findSubject(target.dataset.subject);
+      ensureExamStartedAt(selectedSubject);
       setMockState({ subjectId: target.dataset.subject, typeId: null, questionIndex: null });
       return;
     }
 
     if (target.dataset.type) {
+      if (isRandomMockInProgress() && !confirmAbandonRandomMockTest()) return;
       setMockState({ typeId: target.dataset.type, questionIndex: null });
       return;
     }
@@ -4466,11 +5361,17 @@ if (mockApp) {
 
     if (target.dataset.question) {
       saveCurrentAnswerFromForm();
+      if (isRandomMockInProgress()) {
+        goToNextStreamingMockStep();
+        return;
+      }
       setMockState({ questionIndex: Number(target.dataset.question) });
       return;
     }
   });
 
+  purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
+  saveProgress();
   renderMockApp();
   if (getAuthToken()) {
     void refreshAuthStateFromServer({ hydrateProgress: true });
@@ -4553,6 +5454,18 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  const closeExamReportButton = event.target?.closest?.("[data-close-exam-report]");
+  if (closeExamReportButton || event.target?.matches?.("[data-exam-report-overlay]")) {
+    document.querySelector("[data-exam-report-overlay]")?.remove();
+    return;
+  }
+
+  const closeExamReportsButton = event.target?.closest?.("[data-close-exam-reports]");
+  if (closeExamReportsButton || event.target?.matches?.("[data-exam-reports-overlay]")) {
+    document.querySelector("[data-exam-reports-overlay]")?.remove();
+    return;
+  }
+
   const closeAiButton = event.target?.closest?.("[data-close-ai-review]");
   if (closeAiButton) {
     closeAiWritingReview();
@@ -4598,11 +5511,23 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeSubjectReview();
     closeAiWritingReview();
+    document.querySelector("[data-exam-report-overlay]")?.remove();
+    document.querySelector("[data-exam-reports-overlay]")?.remove();
   }
 });
 
-window.addEventListener("beforeunload", () => {
+window.addEventListener("beforeunload", (event) => {
+  if (isRandomMockInProgress()) {
+    event.preventDefault();
+    event.returnValue = getRandomMockLeaveMessage();
+  }
   cleanupSpeakingStream();
+});
+
+window.addEventListener("pagehide", () => {
+  if (!isRandomMockInProgress()) return;
+  purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
+  localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
 });
 
 void migrateAllLegacySpeakingRecordings();

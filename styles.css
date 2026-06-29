@@ -1693,6 +1693,218 @@ a.service-card:focus-visible {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  margin-bottom: 28px;
+}
+
+.mock-full-test-section {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 22px;
+  background: #f8fbff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.mock-full-test-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.mock-full-test-head h4 {
+  margin: 4px 0 8px;
+  color: var(--navy);
+  font-size: 28px;
+}
+
+.mock-full-test-head p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+
+.mock-full-test-head > span,
+.mock-section-label span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 7px 11px;
+  color: var(--blue);
+  background: var(--sky);
+  border-radius: 999px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.mock-full-test-card {
+  display: grid;
+  gap: 10px;
+  padding: 24px;
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy), #167255);
+  border: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 18px 44px rgba(8, 28, 64, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.mock-full-test-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(8, 28, 64, 0.24);
+}
+
+.mock-full-test-card span {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.mock-full-test-card strong {
+  font-size: 30px;
+  line-height: 1.18;
+}
+
+.mock-full-test-card small {
+  max-width: 620px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.mock-full-test-card em {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 8px 12px;
+  color: var(--navy);
+  background: #fff;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.mock-random-test-section {
+  background: #fffaf0;
+  border-color: rgba(210, 143, 23, 0.24);
+}
+
+.mock-random-test-card {
+  background: linear-gradient(135deg, #0b2559, #b26b17);
+}
+
+.mock-streaming-summary {
+  display: grid;
+  gap: 10px;
+  padding: 24px;
+  color: var(--navy);
+  background: #f8fbff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.mock-streaming-summary strong {
+  font-size: 24px;
+}
+
+.mock-streaming-summary span,
+.mock-streaming-summary p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.mock-exam-brief,
+.mock-report-history {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.mock-exam-brief strong {
+  color: var(--navy);
+  font-size: 24px;
+}
+
+.mock-exam-brief ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.mock-report-entry,
+.mock-report-row {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  text-align: left;
+  color: var(--ink);
+  background: #f8fbff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.mock-report-entry {
+  gap: 8px;
+  padding: 20px;
+}
+
+.mock-report-row:hover {
+  border-color: rgba(7, 61, 143, 0.3);
+}
+
+.mock-report-list {
+  display: grid;
+  gap: 10px;
+}
+
+.mock-report-row span,
+.mock-report-row small,
+.mock-report-entry small {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.mock-report-row strong,
+.mock-report-entry strong {
+  color: var(--navy);
+  font-size: 18px;
+}
+
+.mock-report-entry em {
+  justify-self: start;
+  padding: 7px 11px;
+  color: var(--blue);
+  background: var(--sky);
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.mock-report-empty {
+  padding: 28px;
+  color: var(--muted);
+  background: #f8fbff;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.mock-section-label {
+  margin: 0 0 12px;
 }
 
 .mock-select-card {
@@ -2872,6 +3084,8 @@ a.service-card:focus-visible {
 .mock-ai-review-total small {
   opacity: 0.82;
   font-weight: 800;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .mock-ai-score-grid {
