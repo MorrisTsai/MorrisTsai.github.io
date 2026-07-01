@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人中心 | Reward School 睿澳升学</title>
+    <meta
+      name="description"
+      content="Reward School 睿澳升学学生个人中心，可管理用户名、重设密码，并查看 AEAS 模拟测试与练习记录。"
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260701-01" />
+  </head>
+  <body>
+    <div class="top-strip">
+      <span>Student Profile</span>
+      <strong>个人中心与学习记录</strong>
+      <span>AEAS Mock Test · Practice History</span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Reward School 睿澳升学首页">
+        <span class="brand-mark">
+          <img src="assets/reward-school-logo.png" alt="" decoding="async" />
+        </span>
+        <span>
+          <strong>睿澳升学</strong>
+          <small>Reward School</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="主导航">
+        <a href="index.html#services">服务项目</a>
+        <a href="index.html#study">留学代办</a>
+        <a href="aeas.html">AEAS</a>
+        <a href="aeas-mock.html?v=20260624-04">模拟测试</a>
+        <a href="pte.html">PTE</a>
+        <a href="index.html#camp">小留学</a>
+        <a href="profile.html" aria-current="page">个人中心</a>
+        <a class="nav-cta" href="index.html#contact">预约咨询</a>
+      </nav>
+    </header>
+
+    <main id="top" class="profile-page">
+      <section class="profile-hero">
+        <div>
+          <p class="eyebrow">My Reward School</p>
+          <h1>个人中心</h1>
+          <p>
+            管理你的账号信息，查看历史练习与模拟考试成绩。论坛讨论和错题本的位置先预留，之后功能上线会接到这里。
+          </p>
+        </div>
+        <div class="profile-status-card" data-profile-status>
+          <span>Account</span>
+          <strong>正在检查登录状态...</strong>
+          <small>请稍候</small>
+        </div>
+      </section>
+
+      <section class="profile-grid" data-profile-app>
+        <div class="profile-panel profile-auth-panel" data-auth-panel></div>
+
+        <div class="profile-panel" data-account-panel hidden>
+          <div class="profile-panel-heading">
+            <div>
+              <p class="eyebrow">Account Settings</p>
+              <h2>账号资料</h2>
+            </div>
+          </div>
+          <div class="profile-panel-actions">
+            <button class="profile-secondary-button" type="button" data-open-password-dialog>重设密码</button>
+            <a class="profile-secondary-button danger" href="logout.html">退出登录</a>
+          </div>
+          <form class="profile-form" data-profile-form>
+            <label>
+              <span>邮箱</span>
+              <input name="email" type="email" readonly />
+            </label>
+            <label>
+              <span>用户名</span>
+              <input name="displayName" type="text" minlength="2" maxlength="80" required />
+            </label>
+            <button class="button primary" type="submit">保存用户名</button>
+            <p class="profile-form-note" data-profile-message></p>
+          </form>
+        </div>
+
+        <div class="profile-panel" data-password-panel hidden>
+          <div class="profile-panel-heading">
+            <div>
+              <p class="eyebrow">Security</p>
+              <h2>重设密码</h2>
+            </div>
+          </div>
+          <form class="profile-form" data-password-form>
+            <label>
+              <span>当前密码</span>
+              <input name="currentPassword" type="password" autocomplete="current-password" required />
+            </label>
+            <label>
+              <span>新密码</span>
+              <input name="newPassword" type="password" minlength="8" autocomplete="new-password" required />
+            </label>
+            <label>
+              <span>确认新密码</span>
+              <input name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required />
+            </label>
+            <button class="button primary" type="submit">更新密码</button>
+            <p class="profile-form-note" data-password-message></p>
+          </form>
+        </div>
+
+        <div class="profile-panel profile-history-panel" data-history-panel hidden>
+          <div class="profile-panel-heading">
+            <div>
+              <p class="eyebrow">Practice History</p>
+              <h2>历史考试记录</h2>
+            </div>
+            <button class="profile-icon-button" type="button" data-refresh-history aria-label="刷新记录" title="刷新记录">↻</button>
+          </div>
+          <div class="profile-history-summary" data-history-summary></div>
+          <div class="profile-history-list" data-history-list></div>
+          <div class="profile-history-detail" data-history-detail hidden></div>
+        </div>
+
+        <div class="profile-panel profile-coming-panel" data-coming-panel hidden>
+          <div class="profile-panel-heading">
+            <div>
+              <p class="eyebrow">Coming Soon</p>
+              <h2>后续功能</h2>
+            </div>
+          </div>
+          <div class="profile-coming-grid">
+            <div>
+              <strong>论坛讨论</strong>
+              <span>以后会显示你发起、回复和收藏的讨论。</span>
+            </div>
+            <div>
+              <strong>错题本</strong>
+              <span>以后会自动汇总错题、AI 建议和复习状态。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Reward School 睿澳升学</strong>
+        <p>全澳留学代办 | 私校申请 | AEAS/PTE | 墨尔本小留学</p>
+      </div>
+      <a href="#top">返回顶部</a>
+    </footer>
+
+    <script src="script.js?v=20260628-04"></script>
+    <script src="aeas-ai-config.js?v=20260628-04"></script>
+    <script src="api-client.js?v=20260701-01"></script>
+    <script src="profile.js?v=20260701-01"></script>
+  </body>
+</html>

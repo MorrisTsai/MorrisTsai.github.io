@@ -44,6 +44,29 @@ window.rewardSchoolApi = {
     });
   },
 
+  async updateProfile({ token, displayName }) {
+    return fetchJson(getApiEndpoint("/auth/profile"), {
+      method: "PUT",
+      headers: {
+        ...getAuthHeaders(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ displayName }),
+    });
+  },
+
+  async changePassword({ token, currentPassword, newPassword }) {
+    await fetchJson(getApiEndpoint("/auth/change-password"), {
+      method: "POST",
+      headers: {
+        ...getAuthHeaders(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ currentPassword, newPassword }),
+      expectNoContent: true,
+    });
+  },
+
   async checkAiReviewAccess({ token, kind = "writing" }) {
     const endpoint = `${getApiEndpoint("/aeas/review/access")}?kind=${encodeURIComponent(kind || "writing")}`;
     return fetchJson(endpoint, {
@@ -56,6 +79,13 @@ window.rewardSchoolApi = {
     return fetchJson(endpoint, {
       headers: getAuthHeaders(token),
       allowNotFound: true,
+    });
+  },
+
+  async getPracticeHistory({ token, kind = "aeas-mock", limit = 20 }) {
+    const endpoint = `${getApiEndpoint("/practice/history")}?kind=${encodeURIComponent(kind)}&limit=${encodeURIComponent(limit)}`;
+    return fetchJson(endpoint, {
+      headers: getAuthHeaders(token),
     });
   },
 

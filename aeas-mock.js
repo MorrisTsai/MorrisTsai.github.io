@@ -1127,6 +1127,7 @@ function renderAuthPanel() {
         <span>Cloud Account</span>
         <strong>${escapeHTML(authSession.user.displayName || authSession.user.email)}</strong>
         <small>${escapeHTML(authSession.user.email)} · ${verificationText}</small>
+        <a class="mock-auth-profile-link" href="profile.html">个人中心</a>
         <button type="button" data-auth-logout>退出登录</button>
       </div>
     `;
