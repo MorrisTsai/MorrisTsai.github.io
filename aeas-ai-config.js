@@ -1,10 +1,12 @@
 const rewardSchoolAiParams = new URLSearchParams(window.location.search);
 const rewardSchoolAiHashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
 const rewardSchoolApiMode = rewardSchoolAiParams.get("api") || rewardSchoolAiHashParams.get("api");
-const REWARD_SCHOOL_FRONTEND_VERSION = window.rewardSchoolFrontendVersion || "20260625-17";
+const REWARD_SCHOOL_AI_CONFIG_FRONTEND_VERSION = window.rewardSchoolFrontendVersion || "20260625-17";
 const REWARD_SCHOOL_ONLINE_API_HOST = "www.rewardschool.com.au";
 const REWARD_SCHOOL_ONLINE_IP_HOST = "47.239.62.81";
 const REWARD_SCHOOL_ONLINE_API_BASE_URL = `https://${REWARD_SCHOOL_ONLINE_API_HOST}/api`;
+const REWARD_SCHOOL_ONLINE_IP_API_BASE_URL = `https://${REWARD_SCHOOL_ONLINE_IP_HOST}/api`;
+const REWARD_SCHOOL_LOCAL_API_BASE_URL = "https://localhost:7147/api";
 const REWARD_SCHOOL_ONLINE_FRONTEND_URL = `https://${REWARD_SCHOOL_ONLINE_API_HOST}/aeas-mock.html`;
 
 function isRewardSchoolMarketingHost(hostname) {
@@ -28,26 +30,25 @@ function resolveRewardSchoolApiBaseUrl() {
   // 2. Local page -> local API server.
   // 3. Local page with ?api=online -> online API server.
   if (rewardSchoolApiMode === "local") {
-    return "http://localhost:5132";
+    return REWARD_SCHOOL_LOCAL_API_BASE_URL;
   }
 
   if (rewardSchoolApiMode === "online") {
     return REWARD_SCHOOL_ONLINE_API_BASE_URL;
   }
 
-  const { protocol, hostname, host } = window.location;
+  const { protocol, hostname } = window.location;
 
   if (isRewardSchoolLocalHost(protocol, hostname)) {
-    return "http://localhost:5132";
+    return REWARD_SCHOOL_LOCAL_API_BASE_URL;
   }
 
-  // Frontend served from the API nginx host: use same-origin /api.
-  if (
-    hostname === REWARD_SCHOOL_ONLINE_API_HOST ||
-    hostname === "rewardschool.com.au" ||
-    hostname === REWARD_SCHOOL_ONLINE_IP_HOST
-  ) {
-    return `${protocol}//${host}/api`;
+  if (hostname === REWARD_SCHOOL_ONLINE_API_HOST || hostname === "rewardschool.com.au") {
+    return REWARD_SCHOOL_ONLINE_API_BASE_URL;
+  }
+
+  if (hostname === REWARD_SCHOOL_ONLINE_IP_HOST) {
+    return REWARD_SCHOOL_ONLINE_IP_API_BASE_URL;
   }
 
   return REWARD_SCHOOL_ONLINE_API_BASE_URL;
@@ -66,14 +67,14 @@ const REWARD_SCHOOL_SPEAKING_TYPE3_REVIEW_ENDPOINT = REWARD_SCHOOL_API_BASE_URL
 
 window.rewardSchoolAiConfig = {
   provider: "reward-school-api",
-  frontendVersion: REWARD_SCHOOL_FRONTEND_VERSION,
+  frontendVersion: REWARD_SCHOOL_AI_CONFIG_FRONTEND_VERSION,
   apiMode: rewardSchoolApiMode || "auto",
   apiBaseUrl: REWARD_SCHOOL_API_BASE_URL,
   writingReviewEndpoint: REWARD_SCHOOL_WRITING_REVIEW_ENDPOINT,
   speakingSection2ReviewEndpoint: REWARD_SCHOOL_SPEAKING_SECTION2_REVIEW_ENDPOINT,
   speakingType3ReviewEndpoint: REWARD_SCHOOL_SPEAKING_TYPE3_REVIEW_ENDPOINT,
   onlineFrontendUrl: REWARD_SCHOOL_ONLINE_FRONTEND_URL,
-  requiresSecureApi: window.location.protocol === "https:" && isRewardSchoolMarketingHost(window.location.hostname),
+  requiresSecureApi: false,
   requestTimeoutMs: 65000,
   speakingRequestTimeoutMs: 600000,
   models: [{ id: "deepseek-v4-pro", label: "AI Review" }],

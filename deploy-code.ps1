@@ -12,6 +12,7 @@ $WorkspaceRoot = Split-Path -Parent $FrontendDir
 $TempDir = Join-Path $WorkspaceRoot "tmp"
 $ArchivePath = Join-Path $TempDir "reward-school-code.zip"
 $RemoteArchivePath = "/tmp/reward-school-code.zip"
+$RemoteScriptUploadPath = "/tmp/reward-school-code-remote.sh"
 $FrontendScriptPath = Join-Path $FrontendDir "script.js"
 
 if (-not (Test-Path -LiteralPath $PemFile)) {
@@ -93,14 +94,21 @@ echo "Frontend code files are ready in `$WEB_DIR"
 "@
 
 Write-Host "Deploying code on server..." -ForegroundColor Cyan
-$remoteScript | & ssh -i $PemFile "${RemoteUser}@${RemoteHost}" "sudo bash -s"
+$RemoteScriptPath = Join-Path $TempDir "reward-school-code-remote.sh"
+[System.IO.File]::WriteAllText($RemoteScriptPath, $remoteScript.TrimStart([char]0xFEFF), [System.Text.UTF8Encoding]::new($false))
+& scp -i $PemFile $RemoteScriptPath "${RemoteUser}@${RemoteHost}:$RemoteScriptUploadPath"
+if ($LASTEXITCODE -ne 0) {
+  throw "Remote script upload failed."
+}
+& ssh -i $PemFile "${RemoteUser}@${RemoteHost}" "sudo bash $RemoteScriptUploadPath"
 if ($LASTEXITCODE -ne 0) {
   throw "Remote deploy failed."
 }
 
 Write-Host ""
 Write-Host "Frontend code deployed." -ForegroundColor Green
-Write-Host "Assets were not changed. Run deploy-assets.bat only when images/audio/assets change." -ForegroundColor Yellow
+Write-Host "This was a code-only deploy. Assets were not uploaded by this script." -ForegroundColor Yellow
+Write-Host "Run deploy-assets.bat when images/audio/assets need to be uploaded." -ForegroundColor Yellow
 Write-Host "Open: http://$RemoteHost/aeas-mock.html?debug=1" -ForegroundColor Green
 if ($FrontendVersion) {
   Write-Host "Frontend version: v$FrontendVersion" -ForegroundColor Green

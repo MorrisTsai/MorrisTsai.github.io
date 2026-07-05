@@ -8,6 +8,7 @@ const authPanel = document.querySelector("[data-auth-panel]");
 const accountPanel = document.querySelector("[data-account-panel]");
 const passwordPanel = document.querySelector("[data-password-panel]");
 const historyPanel = document.querySelector("[data-history-panel]");
+const advisorPanel = document.querySelector("[data-advisor-panel]");
 const comingPanel = document.querySelector("[data-coming-panel]");
 const profileForm = document.querySelector("[data-profile-form]");
 const passwordForm = document.querySelector("[data-password-form]");
@@ -140,6 +141,7 @@ function renderSignedIn(user) {
   setPanelsVisible(true);
   authPanel.hidden = true;
   fillAccountForm(user);
+  renderAdvisorPanel(user);
   void loadPracticeHistory();
 }
 
@@ -147,8 +149,14 @@ function setPanelsVisible(isVisible) {
   [accountPanel, historyPanel, comingPanel].forEach((panel) => {
     if (panel) panel.hidden = !isVisible;
   });
+  if (advisorPanel) advisorPanel.hidden = true;
   if (passwordPanel) passwordPanel.hidden = true;
   if (authPanel) authPanel.hidden = isVisible;
+}
+
+function renderAdvisorPanel(user) {
+  if (!advisorPanel) return;
+  advisorPanel.hidden = !user?.advisor;
 }
 
 function renderStatus(label, title, detail) {

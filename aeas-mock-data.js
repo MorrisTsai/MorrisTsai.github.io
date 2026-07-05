@@ -1598,3 +1598,88 @@ window.aeasMockMathQuestionsByType = {
     }
   ]
 };
+
+window.aeasMockMathQuestionsByType.number.push({
+  number: 60,
+  text: "A water tank is 3/5 full. After 18 liters of water are added, the tank is 4/5 full. What is the capacity of the tank?",
+  options: [
+    { value: "A", label: "45 liters" },
+    { value: "B", label: "60 liters" },
+    { value: "C", label: "72 liters" },
+    { value: "D", label: "90 liters" },
+    { value: "E", label: "120 liters" },
+  ],
+  correctAnswer: "D",
+  explanation: "The added 18 liters represents 4/5 - 3/5, or 1/5, of the tank. Therefore the full tank holds 18 x 5 = 90 liters.",
+});
+
+window.aeasMockMathQuestionsByType.algebra.push({
+  number: 60,
+  text: "If 4(x - 3) = 2x + 10, what is the value of x?",
+  options: [
+    { value: "A", label: "5" },
+    { value: "B", label: "8" },
+    { value: "C", label: "11" },
+    { value: "D", label: "14" },
+    { value: "E", label: "22" },
+  ],
+  correctAnswer: "C",
+  explanation: "Expand the left side to get 4x - 12 = 2x + 10. Subtract 2x and add 12 to get 2x = 22, so x = 11.",
+});
+
+window.aeasMockMathQuestionsByType.geometry.push({
+  number: 60,
+  text: "In the diagram below, the trapezium has parallel sides of length 10 cm and 16 cm, and a height of 6 cm. What is its area?",
+  options: [
+    { value: "A", label: "48 cm^2" },
+    { value: "B", label: "60 cm^2" },
+    { value: "C", label: "72 cm^2" },
+    { value: "D", label: "78 cm^2" },
+    { value: "E", label: "96 cm^2" },
+  ],
+  correctAnswer: "D",
+  explanation: "The area of a trapezium is 1/2 x (sum of parallel sides) x height. This gives 1/2 x (10 + 16) x 6 = 78 cm^2.",
+  image: "assets/aeas-mock/math-set1-visuals/math-set1-visual-q60.svg",
+});
+
+window.aeasMockMathQuestionsByType["word-problems"].push({
+  number: 60,
+  text: "A printer can print 72 pages in 6 minutes. At the same rate, how many pages can it print in 25 minutes?",
+  options: [
+    { value: "A", label: "180" },
+    { value: "B", label: "240" },
+    { value: "C", label: "300" },
+    { value: "D", label: "360" },
+    { value: "E", label: "432" },
+  ],
+  correctAnswer: "C",
+  explanation: "The printer prints 72 / 6 = 12 pages per minute. In 25 minutes it can print 12 x 25 = 300 pages.",
+});
+
+window.aeasMockMathQuestionsByType.data.push({
+  number: 60,
+  text: "The table shows the number of students in four clubs.\n\nDrama: 18\nChess: 12\nRobotics: 24\nDebating: 16\n\nWhat percentage of these students are in Robotics?",
+  options: [
+    { value: "A", label: "24%" },
+    { value: "B", label: "30%" },
+    { value: "C", label: "34%" },
+    { value: "D", label: "40%" },
+    { value: "E", label: "48%" },
+  ],
+  correctAnswer: "C",
+  explanation: "There are 18 + 12 + 24 + 16 = 70 students in total. Robotics has 24 students, and 24/70 is about 34%.",
+});
+
+window.aeasMockMathQuestionsByType.logic.push({
+  number: 60,
+  text: "What number should replace the question mark in the sequence below?\n4, 9, 19, 39, ?",
+  options: [
+    { value: "A", label: "59" },
+    { value: "B", label: "69" },
+    { value: "C", label: "79" },
+    { value: "D", label: "81" },
+    { value: "E", label: "89" },
+  ],
+  correctAnswer: "C",
+  explanation: "Each term is double the previous term plus 1: 4 x 2 + 1 = 9, 9 x 2 + 1 = 19, 19 x 2 + 1 = 39, and 39 x 2 + 1 = 79.",
+});

@@ -69,3 +69,43 @@ window.aeasMockGapFillingQuestionsByType = {
     explanation: `Answer: ${Array.isArray(answer) ? answer.join(" / ") : answer}.`,
   })),
 };
+
+aeasGapFillingItems.push(
+  ["Students need to r__________ quickly after receiving feedback on their drafts.", "revise"],
+  ["The school installed brighter lights to e__________ safety near the bus stop.", "enhance"],
+  ["Water is s__________ in some farming areas after months without rain.", "scarce"],
+  ["The coach asked the team to v__________ the final score before leaving the field.", "verify"],
+  ["Tom was r__________ to speak first because he had not prepared enough.", "reluctant"],
+  ["It is p__________ to save part of your allowance instead of spending it all.", "prudent"],
+  ["The scientist formed a h__________ before beginning the experiment.", "hypothesis"],
+  ["New technology can t__________ the way students collect information.", "transform"],
+  ["The company offered to c__________ customers for the delayed delivery.", "compensate"],
+  ["A d__________ classroom can help students learn from different experiences.", "diverse"],
+  ["The nurse had to i__________ the student who had a contagious illness.", "isolate"],
+  ["The new library made a s__________ difference to students' study habits.", "substantial"],
+  ["The glass model was too f__________ to carry without a box.", "fragile"],
+  ["The two groups tried to n__________ a fair solution after the disagreement.", "negotiate"],
+  ["A good essay should have a c__________ argument from beginning to end.", "coherent"],
+  ["The council decided to r__________ traffic around the school during peak hours.", "restrict"],
+  ["Students were asked to o__________ the insects carefully and record their behaviour.", "observe"],
+  ["Everyone was encouraged to p__________ in the charity run.", "participate"],
+  ["The teacher gave an a__________ example to make the difficult idea clearer.", "appropriate"],
+  ["The witness gave a p__________ description of the person she had seen.", "precise"]
+);
+
+window.aeasMockGapFillingQuestionsByType["gap-filling"] = aeasGapFillingItems.map(([text, answer], index) => ({
+  number: index + 1,
+  sourceNumber: index + 1,
+  context: "Write the most natural and appropriate word for each gap. Use one word only. The first letter is given.",
+  text,
+  answerType: "input",
+  inputFields: [
+    {
+      id: "answer",
+      label: "Answer",
+      type: "text",
+    },
+  ],
+  correctAnswer: JSON.stringify({ answer }),
+  explanation: `Answer: ${Array.isArray(answer) ? answer.join(" / ") : answer}.`,
+}));

@@ -44,6 +44,18 @@ window.rewardSchoolApi = {
     });
   },
 
+  async getAdvisorProductFlow({ token }) {
+    return fetchJson(getApiEndpoint("/advisor/product-flow"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getAdvisorSchools({ token }) {
+    return fetchJson(getApiEndpoint("/advisor/schools"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
   async updateProfile({ token, displayName }) {
     return fetchJson(getApiEndpoint("/auth/profile"), {
       method: "PUT",
@@ -176,11 +188,6 @@ window.rewardSchoolApi = {
         throw timeoutError;
       }
       if (error?.message?.startsWith("Writing review API")) throw error;
-      if (config.requiresSecureApi && endpoint.startsWith("http://")) {
-        throw new Error(
-          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"} for AI review.`
-        );
-      }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
     } finally {
       window.clearTimeout(timeoutId);
@@ -254,11 +261,6 @@ window.rewardSchoolApi = {
         throw timeoutError;
       }
       if (error?.message?.startsWith("Speaking review API")) throw error;
-      if (config.requiresSecureApi && endpoint.startsWith("http://")) {
-        throw new Error(
-          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"} for AI review.`
-        );
-      }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
     } finally {
       window.clearTimeout(timeoutId);
@@ -334,11 +336,6 @@ window.rewardSchoolApi = {
         throw timeoutError;
       }
       if (error?.message?.startsWith("Speaking type 3 review API")) throw error;
-      if (config.requiresSecureApi && endpoint.startsWith("http://")) {
-        throw new Error(
-          `Cannot reach API endpoint: ${endpoint}. HTTPS pages cannot call HTTP APIs. Open ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"} for AI review.`
-        );
-      }
       throw new Error(`Cannot reach API endpoint: ${endpoint}. ${error.message}`);
     } finally {
       window.clearTimeout(timeoutId);
@@ -410,10 +407,6 @@ function getApiEndpoint(path) {
     return `${apiBase}${path}`;
   }
 
-  if (config.requiresSecureApi) {
-    throw new Error(`当前 HTTPS 页面不能连接 HTTP API，请打开 ${config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html"}。`);
-  }
-
   throw new Error("API config is missing apiBaseUrl. Open this page with ?api=local or ?api=online.");
 }
 
@@ -424,18 +417,19 @@ function resolveApiBaseUrlFallback() {
   const onlineHost = "www.rewardschool.com.au";
   const onlineIpHost = "47.239.62.81";
   const onlineBase = `https://${onlineHost}/api`;
-  const { protocol, hostname, host } = window.location;
+  const onlineIpBase = `https://${onlineIpHost}/api`;
+  const localBase = "https://localhost:7147/api";
+  const { protocol, hostname } = window.location;
   const isLocal = protocol === "file:" ||
     hostname === "localhost" ||
     hostname === "127.0.0.1" ||
     hostname === "::1";
 
   if (mode === "online") return onlineBase;
-  if (mode === "local") return "http://localhost:5132";
-  if (hostname === onlineHost || hostname === "rewardschool.com.au" || hostname === onlineIpHost) {
-    return `${protocol}//${host}/api`;
-  }
-  if (isLocal) return "http://localhost:5132";
+  if (mode === "local") return localBase;
+  if (hostname === onlineHost || hostname === "rewardschool.com.au") return onlineBase;
+  if (hostname === onlineIpHost) return onlineIpBase;
+  if (isLocal) return localBase;
   return onlineBase;
 }
 

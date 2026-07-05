@@ -69,3 +69,23 @@ window.aeasMockWritingQuestionsByType = {
     text,
   })),
 };
+
+aeasWritingPrompts.push(
+  "Some people think students should spend more time learning outdoors. Do you agree or disagree?",
+  "Should schools give students more opportunities to learn about different cultures?",
+  "Do you think teenagers should be trusted to organise their own study schedules?",
+  "Some people believe that school trips are an important part of education. What is your opinion?",
+  "Should students be required to learn basic first aid at school?",
+  "Is it better for students to have one close friend or a large group of friends?",
+  "Do you think schools should do more to protect the environment?",
+  "Should young people spend less time watching short videos online?",
+  "Some people think mistakes are the best way to learn. Do you agree or disagree?",
+  "Should schools teach students how to speak confidently in public?"
+);
+
+window.aeasMockWritingQuestionsByType.writing = aeasWritingPrompts.map((text, index) => ({
+  ...aeasWritingQuestionBase,
+  number: index + 1,
+  sourceNumber: index + 1,
+  text,
+}));

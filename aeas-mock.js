@@ -5015,17 +5015,29 @@ async function submitFullMockTestReview(subject) {
 
 function showSecureApiNotice() {
   const config = window.rewardSchoolAiConfig || {};
-  if (!config.requiresSecureApi || document.querySelector("[data-secure-api-notice]")) return;
+  if (document.querySelector("[data-secure-api-notice]")) return;
+
+  const endpoint = config.apiBaseUrl || "";
+  if (!shouldShowSecureApiNotice(endpoint)) return;
 
   const notice = document.createElement("div");
   notice.className = "mock-ai-error";
   notice.dataset.secureApiNotice = "true";
   notice.innerHTML = `
-    <strong>AI 批改需要切换到 HTTP 版本页面。</strong>
-    当前是 HTTPS 页面，浏览器会拦截对 HTTP API 的请求。
-    <a href="${escapeHTML(config.onlineFrontendUrl || "http://47.239.62.81/aeas-mock.html")}">打开可用版本</a>
+    <strong>AI 批改接口配置异常。</strong>
+    当前接口仍是 HTTP：${escapeHTML(endpoint)}。请检查 API 配置。
   `;
   mockApp?.insertAdjacentElement("afterbegin", notice);
+}
+
+function shouldShowSecureApiNotice(endpoint) {
+  if (!String(endpoint || "").startsWith("http://")) return false;
+  try {
+    const url = new URL(endpoint);
+    return !["localhost", "127.0.0.1", "::1"].includes(url.hostname);
+  } catch (error) {
+    return true;
+  }
 }
 
 async function handleAuthSubmit(form, action) {

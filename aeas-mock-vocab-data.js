@@ -1352,3 +1352,75 @@ window.aeasMockVocabularyQuestionsByType = {
     }
   ]
 };
+
+window.aeasMockVocabularyQuestionsByType.vocabulary.push(
+  {
+    number: 26,
+    sourceNumber: 101,
+    sourceRange: "101-104",
+    context: "Find the word that matches each definition and write the correct letter.",
+    text: "Questions 101-104",
+    answerType: "input",
+    wordBank: [
+      { value: "A", label: "resilient" },
+      { value: "B", label: "tedious" },
+      { value: "C", label: "scarce" },
+      { value: "D", label: "verify" },
+      { value: "E", label: "reluctant" },
+    ],
+    inputFields: [
+      { id: "q101", label: "101. unwilling or not eager to do something", type: "text" },
+      { id: "q102", label: "102. able to recover quickly after difficulty", type: "text" },
+      { id: "q103", label: "103. to check that something is true or accurate", type: "text" },
+      { id: "q104", label: "104. not available in large enough amounts", type: "text" },
+    ],
+    correctAnswer: "{\"q101\":\"E\",\"q102\":\"A\",\"q103\":\"D\",\"q104\":\"C\"}",
+    explanation: "Answers: 101. E - reluctant; 102. A - resilient; 103. D - verify; 104. C - scarce.",
+  },
+  {
+    number: 27,
+    sourceNumber: 105,
+    sourceRange: "105-108",
+    context: "Find the word that matches each definition and write the correct letter.",
+    text: "Questions 105-108",
+    answerType: "input",
+    wordBank: [
+      { value: "A", label: "prudent" },
+      { value: "B", label: "hypothesis" },
+      { value: "C", label: "transform" },
+      { value: "D", label: "compensate" },
+      { value: "E", label: "diverse" },
+    ],
+    inputFields: [
+      { id: "q105", label: "105. including many different kinds", type: "text" },
+      { id: "q106", label: "106. a possible explanation that can be tested", type: "text" },
+      { id: "q107", label: "107. careful and sensible in making decisions", type: "text" },
+      { id: "q108", label: "108. to make up for damage, loss or effort", type: "text" },
+    ],
+    correctAnswer: "{\"q105\":\"E\",\"q106\":\"B\",\"q107\":\"A\",\"q108\":\"D\"}",
+    explanation: "Answers: 105. E - diverse; 106. B - hypothesis; 107. A - prudent; 108. D - compensate.",
+  },
+  {
+    number: 28,
+    sourceNumber: 109,
+    sourceRange: "109-112",
+    context: "Find the word that matches each definition and write the correct letter.",
+    text: "Questions 109-112",
+    answerType: "input",
+    wordBank: [
+      { value: "A", label: "isolate" },
+      { value: "B", label: "substantial" },
+      { value: "C", label: "fragile" },
+      { value: "D", label: "negotiate" },
+      { value: "E", label: "coherent" },
+    ],
+    inputFields: [
+      { id: "q109", label: "109. easily broken or damaged", type: "text" },
+      { id: "q110", label: "110. to separate one thing from others", type: "text" },
+      { id: "q111", label: "111. large or important in amount or effect", type: "text" },
+      { id: "q112", label: "112. to discuss in order to reach an agreement", type: "text" },
+    ],
+    correctAnswer: "{\"q109\":\"C\",\"q110\":\"A\",\"q111\":\"B\",\"q112\":\"D\"}",
+    explanation: "Answers: 109. C - fragile; 110. A - isolate; 111. B - substantial; 112. D - negotiate.",
+  }
+);
