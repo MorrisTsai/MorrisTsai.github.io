@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" role="img" aria-label="Figure analogy with answer options">
+  <rect width="1000" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="70" y="80" width="100" height="70"/><line x1="120" y1="80" x2="120" y2="150"/>
+    <text x="215" y="130" font-family="Arial, sans-serif" font-size="44" fill="#111827" stroke="none">:</text>
+    <rect x="270" y="80" width="100" height="70"/><line x1="303" y1="80" x2="303" y2="150"/><line x1="337" y1="80" x2="337" y2="150"/>
+    <text x="420" y="130" font-family="Arial, sans-serif" font-size="44" fill="#111827" stroke="none">::</text>
+    <circle cx="535" cy="115" r="48"/><line x1="535" y1="67" x2="535" y2="163"/>
+    <text x="655" y="130" font-family="Arial, sans-serif" font-size="44" fill="#111827" stroke="none">:</text>
+    <text x="735" y="136" font-family="Arial, sans-serif" font-size="64" fill="#111827" stroke="none">?</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="150" cy="275" r="48"/><line x1="150" y1="227" x2="150" y2="323"/>
+    <circle cx="380" cy="275" r="48"/><line x1="350" y1="235" x2="350" y2="315"/><line x1="410" y1="235" x2="410" y2="315"/>
+    <circle cx="610" cy="275" r="48"/><line x1="562" y1="275" x2="658" y2="275"/><line x1="610" y1="227" x2="610" y2="323"/>
+    <rect x="795" y="240" width="90" height="70"/><line x1="825" y1="240" x2="825" y2="310"/><line x1="855" y1="240" x2="855" y2="310"/>
+  </g>
+</svg>

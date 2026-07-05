@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Shape operation with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="130" cy="110" r="54"/><path d="M92 72 L168 148 M168 72 L92 148"/><line x1="80" y1="110" x2="180" y2="110"/>
+    <text x="240" y="127" font-family="Arial, sans-serif" font-size="54" fill="#111827" stroke="none">-</text>
+    <line x1="325" y1="110" x2="425" y2="110"/>
+    <text x="485" y="127" font-family="Arial, sans-serif" font-size="54" fill="#111827" stroke="none">=</text>
+    <text x="590" y="130" font-family="Arial, sans-serif" font-size="64" fill="#111827" stroke="none">?</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="150" cy="280" r="54"/><path d="M112 242 L188 318 M188 242 L112 318"/>
+    <circle cx="380" cy="280" r="54"/><line x1="330" y1="280" x2="430" y2="280"/>
+    <circle cx="610" cy="280" r="54"/><path d="M572 242 L648 318"/>
+    <path d="M802 242 L878 318 M878 242 L802 318"/>
+  </g>
+</svg>

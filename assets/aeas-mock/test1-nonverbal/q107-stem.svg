@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Figure series with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="90,45 140,145 40,145"/><line x1="90" y1="75" x2="90" y2="130"/>
+    <rect x="200" y="50" width="90" height="90"/><line x1="230" y1="65" x2="230" y2="125"/><line x1="260" y1="65" x2="260" y2="125"/>
+    <polygon points="400,43 450,82 430,140 370,140 350,82"/><line x1="370" y1="75" x2="370" y2="128"/><line x1="400" y1="65" x2="400" y2="132"/><line x1="430" y1="75" x2="430" y2="128"/>
+    <polygon points="555,48 600,72 600,122 555,146 510,122 510,72"/><line x1="525" y1="75" x2="525" y2="120"/><line x1="545" y1="68" x2="545" y2="130"/><line x1="565" y1="68" x2="565" y2="130"/><line x1="585" y1="75" x2="585" y2="120"/>
+  </g>
+  <text x="735" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="150,222 193,242 204,287 174,324 126,324 96,287 107,242"/><line x1="120" y1="250" x2="120" y2="310"/><line x1="140" y1="238" x2="140" y2="320"/><line x1="160" y1="238" x2="160" y2="320"/><line x1="180" y1="250" x2="180" y2="310"/>
+    <polygon points="380,222 423,242 434,287 404,324 356,324 326,287 337,242"/><line x1="350" y1="250" x2="350" y2="310"/><line x1="380" y1="238" x2="380" y2="320"/><line x1="410" y1="250" x2="410" y2="310"/>
+    <polygon points="610,225 655,249 655,311 610,335 565,311 565,249"/><line x1="585" y1="255" x2="585" y2="305"/><line x1="610" y1="242" x2="610" y2="318"/><line x1="635" y1="255" x2="635" y2="305"/>
+    <polygon points="840,222 883,242 894,287 864,324 816,324 786,287 797,242"/><line x1="800" y1="260" x2="800" y2="300"/><line x1="820" y1="248" x2="820" y2="312"/><line x1="840" y1="238" x2="840" y2="322"/><line x1="860" y1="248" x2="860" y2="312"/><line x1="880" y1="260" x2="880" y2="300"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" role="img" aria-label="Trapezium with parallel sides 10 and 16 centimetres and height 6 centimetres">
+  <rect width="680" height="360" fill="#ffffff"/>
+  <polygon points="190,90 490,90 560,250 120,250" fill="#f1f5f9" stroke="#111827" stroke-width="6"/>
+  <line x1="190" y1="90" x2="190" y2="250" stroke="#2563eb" stroke-width="4" stroke-dasharray="10 10"/>
+  <line x1="175" y1="90" x2="205" y2="90" stroke="#2563eb" stroke-width="4"/>
+  <line x1="175" y1="250" x2="205" y2="250" stroke="#2563eb" stroke-width="4"/>
+  <text x="340" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#111827">10 cm</text>
+  <text x="340" y="304" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#111827">16 cm</text>
+  <text x="145" y="178" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#1d4ed8">6 cm</text>
+  <text x="340" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#475569">Diagram not drawn to scale</text>
+</svg>

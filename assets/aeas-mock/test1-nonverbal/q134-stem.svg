@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" role="img" aria-label="Figure analogy with answer options">
+  <rect width="1000" height="430" fill="#ffffff"/>
+  <g fill="#ffffff" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="70" y="70" width="90" height="90"/><path d="M115 145 V85 M95 105 L115 85 L135 105"/>
+    <text x="215" y="130" font-family="Arial, sans-serif" font-size="44" fill="#111827" stroke="none">:</text>
+    <rect x="270" y="70" width="90" height="90"/><path d="M285 115 H345 M325 95 L345 115 L325 135"/>
+    <text x="420" y="130" font-family="Arial, sans-serif" font-size="44" fill="#111827" stroke="none">::</text>
+    <polygon points="535,65 590,160 480,160"/><path d="M535 145 V88 M515 108 L535 88 L555 108"/>
+    <text x="655" y="130" font-family="Arial, sans-serif" font-size="44" fill="#111827" stroke="none">:</text>
+    <text x="735" y="136" font-family="Arial, sans-serif" font-size="64" fill="#111827" stroke="none">?</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="#ffffff" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="150,225 205,320 95,320"/><path d="M150 305 V248 M130 268 L150 248 L170 268"/>
+    <polygon points="380,225 435,320 325,320"/><path d="M415 275 H355 M375 255 L355 275 L375 295"/>
+    <polygon points="610,225 665,320 555,320"/><path d="M610 248 V305 M590 285 L610 305 L630 285"/>
+    <polygon points="840,225 895,320 785,320"/><path d="M805 275 H865 M845 255 L865 275 L845 295"/>
+  </g>
+</svg>

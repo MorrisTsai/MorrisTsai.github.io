@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-label="Non-verbal sequence with four answer options">
+  <rect width="1000" height="420" fill="#ffffff"/>
+  <defs>
+    <g id="box"><rect x="-45" y="-45" width="90" height="90" fill="#ffffff" stroke="#111827" stroke-width="5"/></g>
+  </defs>
+  <g transform="translate(95 90)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/>
+    <line x1="0" y1="-35" x2="0" y2="35"/>
+    <circle cx="-28" cy="-28" r="9" fill="#111827"/>
+  </g>
+  <g transform="translate(230 90)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/>
+    <line x1="-35" y1="0" x2="35" y2="0"/>
+    <circle cx="28" cy="-28" r="9" fill="#111827"/>
+  </g>
+  <g transform="translate(365 90)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/>
+    <line x1="0" y1="-35" x2="0" y2="35"/>
+    <circle cx="28" cy="28" r="9" fill="#111827"/>
+  </g>
+  <text x="500" y="102" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="165" y="370">A</text><text x="390" y="370">B</text><text x="615" y="370">C</text><text x="840" y="370">D</text>
+  </g>
+  <g transform="translate(165 270)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/><line x1="-35" y1="0" x2="35" y2="0"/><circle cx="-28" cy="-28" r="9" fill="#111827"/>
+  </g>
+  <g transform="translate(390 270)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/><line x1="0" y1="-35" x2="0" y2="35"/><circle cx="-28" cy="28" r="9" fill="#111827"/>
+  </g>
+  <g transform="translate(615 270)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/><line x1="-35" y1="0" x2="35" y2="0"/><circle cx="-28" cy="28" r="9" fill="#111827"/>
+  </g>
+  <g transform="translate(840 270)" stroke="#111827" stroke-width="5" fill="none">
+    <use href="#box"/><line x1="-35" y1="0" x2="35" y2="0"/><circle cx="28" cy="28" r="9" fill="#111827"/>
+  </g>
+</svg>

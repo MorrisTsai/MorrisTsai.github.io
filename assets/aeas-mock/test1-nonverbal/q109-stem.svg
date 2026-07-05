@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Figure series with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <g transform="translate(35 60)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12" fill="#111827"/><circle cx="55" cy="35" r="12"/><circle cx="85" cy="35" r="12"/></g>
+    <g transform="translate(190 60)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12"/><circle cx="55" cy="35" r="12" fill="#111827"/><circle cx="85" cy="35" r="12"/></g>
+    <g transform="translate(345 60)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12"/><circle cx="55" cy="35" r="12"/><circle cx="85" cy="35" r="12" fill="#111827"/></g>
+    <g transform="translate(500 60)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12" fill="#111827"/><circle cx="55" cy="35" r="12"/><circle cx="85" cy="35" r="12"/></g>
+  </g>
+  <text x="735" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <g transform="translate(95 240)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12" fill="#111827"/><circle cx="55" cy="35" r="12"/><circle cx="85" cy="35" r="12"/></g>
+    <g transform="translate(325 240)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12"/><circle cx="55" cy="35" r="12"/><circle cx="85" cy="35" r="12" fill="#111827"/></g>
+    <g transform="translate(555 240)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12"/><circle cx="55" cy="35" r="12" fill="#111827"/><circle cx="85" cy="35" r="12"/></g>
+    <g transform="translate(785 240)"><rect width="110" height="70"/><circle cx="25" cy="35" r="12"/><circle cx="55" cy="35" r="12"/><circle cx="85" cy="35" r="12"/></g>
+  </g>
+</svg>

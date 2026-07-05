@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Figure series with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="80,40 130,130 30,130"/><circle cx="80" cy="92" r="9" fill="#111827"/>
+    <polygon points="220,35 310,85 220,135"/><circle cx="330" cy="85" r="9" fill="#111827"/>
+    <polygon points="430,135 480,45 530,135"/><circle cx="480" cy="88" r="9" fill="#111827"/>
+    <polygon points="690,35 600,85 690,135"/><circle cx="580" cy="85" r="9" fill="#111827"/>
+  </g>
+  <text x="815" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="150,230 200,320 100,320"/><circle cx="220" cy="276" r="9" fill="#111827"/>
+    <polygon points="380,230 430,320 330,320"/><circle cx="380" cy="282" r="9" fill="#111827"/>
+    <polygon points="610,225 700,275 610,325"/><circle cx="610" cy="275" r="9" fill="#111827"/>
+    <polygon points="840,325 890,235 940,325"/><circle cx="960" cy="280" r="9" fill="#111827"/>
+  </g>
+</svg>

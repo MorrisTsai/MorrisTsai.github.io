@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Figure series with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="90,45 140,145 40,145"/><circle cx="90" cy="105" r="7" fill="#111827"/>
+    <rect x="200" y="50" width="90" height="90"/><circle cx="230" cy="95" r="7" fill="#111827"/><circle cx="260" cy="95" r="7" fill="#111827"/>
+    <polygon points="400,43 450,82 430,140 370,140 350,82"/><circle cx="380" cy="105" r="7" fill="#111827"/><circle cx="400" cy="105" r="7" fill="#111827"/><circle cx="420" cy="105" r="7" fill="#111827"/>
+    <polygon points="555,48 600,72 600,122 555,146 510,122 510,72"/><circle cx="555" cy="100" r="7" fill="#111827"/>
+  </g>
+  <text x="735" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="150,222 193,242 204,287 174,324 126,324 96,287 107,242"/><circle cx="150" cy="275" r="7" fill="#111827"/>
+    <polygon points="380,222 423,242 434,287 404,324 356,324 326,287 337,242"/><circle cx="365" cy="275" r="7" fill="#111827"/><circle cx="395" cy="275" r="7" fill="#111827"/>
+    <polygon points="610,222 653,242 664,287 634,324 586,324 556,287 567,242"/><circle cx="580" cy="275" r="7" fill="#111827"/><circle cx="610" cy="275" r="7" fill="#111827"/><circle cx="640" cy="275" r="7" fill="#111827"/>
+    <polygon points="840,228 885,252 885,302 840,326 795,302 795,252"/><circle cx="825" cy="275" r="7" fill="#111827"/><circle cx="855" cy="275" r="7" fill="#111827"/>
+  </g>
+</svg>

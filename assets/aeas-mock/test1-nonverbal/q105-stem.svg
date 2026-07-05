@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Figure series with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="#ffffff" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <path d="M45 95 H115 V70 L155 110 L115 150 V125 H45 Z"/><circle cx="100" cy="55" r="9" fill="#111827" stroke="none"/>
+    <path d="M245 45 V115 H270 L230 155 L190 115 H215 V45 Z"/><circle cx="300" cy="100" r="9" fill="#111827" stroke="none"/>
+    <path d="M445 95 H375 V70 L335 110 L375 150 V125 H445 Z"/><circle cx="390" cy="165" r="9" fill="#111827" stroke="none"/>
+    <path d="M555 155 V85 H530 L570 45 L610 85 H585 V155 Z"/><circle cx="500" cy="100" r="9" fill="#111827" stroke="none"/>
+  </g>
+  <text x="735" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="#ffffff" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <path d="M150 225 V295 H175 L135 335 L95 295 H120 V225 Z"/><circle cx="205" cy="280" r="9" fill="#111827" stroke="none"/>
+    <path d="M335 275 H405 V250 L445 290 L405 330 V305 H335 Z"/><circle cx="390" cy="235" r="9" fill="#111827" stroke="none"/>
+    <path d="M675 275 H605 V250 L565 290 L605 330 V305 H675 Z"/><circle cx="620" cy="345" r="9" fill="#111827" stroke="none"/>
+    <path d="M825 335 V265 H800 L840 225 L880 265 H855 V335 Z"/><circle cx="770" cy="280" r="9" fill="#111827" stroke="none"/>
+  </g>
+</svg>

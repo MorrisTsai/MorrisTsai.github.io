@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 430" role="img" aria-label="Figure series with answer options">
+  <rect width="1020" height="430" fill="#ffffff"/>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="90,45 135,135 45,135"/>
+    <rect x="200" y="50" width="90" height="90"/>
+    <polygon points="400,43 450,82 430,140 370,140 350,82"/>
+    <polygon points="555,48 600,72 600,122 555,146 510,122 510,72"/>
+  </g>
+  <text x="735" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#111827">?</text>
+  <g font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="150" y="380">A</text><text x="380" y="380">B</text><text x="610" y="380">C</text><text x="840" y="380">D</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="150,223 200,262 180,320 120,320 100,262"/>
+    <polygon points="380,228 425,252 425,302 380,326 335,302 335,252"/>
+    <polygon points="610,222 648,238 668,276 652,314 610,330 568,314 552,276 572,238"/>
+    <polygon points="840,222 883,242 894,287 864,324 816,324 786,287 797,242"/>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-label="Five figures for odd one out">
+  <rect width="900" height="260" fill="#ffffff"/>
+  <g font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle" fill="#111827">
+    <text x="90" y="230">A</text><text x="270" y="230">B</text><text x="450" y="230">C</text><text x="630" y="230">D</text><text x="810" y="230">E</text>
+  </g>
+  <g fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round">
+    <polygon points="90,45 145,140 35,140"/>
+    <circle cx="90" cy="104" r="9" fill="#111827"/>
+    <rect x="225" y="55" width="90" height="90"/>
+    <circle cx="270" cy="100" r="9" fill="#111827"/>
+    <circle cx="450" cy="100" r="52"/>
+    <circle cx="450" cy="100" r="9" fill="#111827"/>
+    <polygon points="630,45 685,140 575,140"/>
+    <rect x="765" y="55" width="90" height="90"/>
+    <circle cx="810" cy="100" r="9" fill="#111827"/>
+  </g>
+</svg>

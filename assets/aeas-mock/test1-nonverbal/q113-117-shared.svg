@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 360" role="img" aria-label="Multiplication table with five blanks">
+  <rect width="880" height="360" fill="#ffffff"/>
+  <g transform="translate(80 70)" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" fill="#111827">
+    <rect x="0" y="0" width="720" height="210" fill="#ffffff" stroke="#111827" stroke-width="4"/>
+    <g stroke="#111827" stroke-width="3">
+      <line x1="120" y1="0" x2="120" y2="210"/><line x1="240" y1="0" x2="240" y2="210"/><line x1="360" y1="0" x2="360" y2="210"/><line x1="480" y1="0" x2="480" y2="210"/><line x1="600" y1="0" x2="600" y2="210"/>
+      <line x1="0" y1="70" x2="720" y2="70"/><line x1="0" y1="140" x2="720" y2="140"/>
+    </g>
+    <text x="60" y="45" font-weight="700">x</text><text x="180" y="45" font-weight="700">3</text><text x="300" y="45" font-weight="700">5</text><text x="420" y="45" font-weight="700">8</text><text x="540" y="45" font-weight="700">9</text><text x="660" y="45" font-weight="700">12</text>
+    <text x="60" y="115" font-weight="700">4</text><text x="180" y="115">12</text><text x="300" y="115">113</text><text x="420" y="115">32</text><text x="540" y="115">36</text><text x="660" y="115">48</text>
+    <text x="60" y="185" font-weight="700">6</text><text x="180" y="185">114</text><text x="300" y="185">30</text><text x="420" y="185">115</text><text x="540" y="185">116</text><text x="660" y="185">117</text>
+  </g>
+</svg>
