@@ -195,6 +195,7 @@ function renderAuthPanel(mode = "login", message = "") {
         <input name="password" type="password" minlength="8" autocomplete="${isRegister ? "new-password" : "current-password"}" required />
       </label>
       <button class="button primary" type="submit">${isRegister ? "注册并登录" : "登录"}</button>
+      ${isRegister ? `<p class="form-privacy">注册即表示你已阅读并同意<a href="privacy.html">隐私政策</a>与<a href="terms.html">使用条款</a>。未满 15 岁的学生请由家长或监护人协助注册。</p>` : ""}
       <div class="profile-auth-links">
         <button type="button" data-auth-mode="${isRegister ? "login" : "register"}">${isRegister ? "已有账号，去登录" : "没有账号，去注册"}</button>
         ${isRegister ? "" : `<button type="button" data-request-reset>忘记密码？发送重设邮件</button>`}

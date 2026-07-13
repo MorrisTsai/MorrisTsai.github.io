@@ -20,6 +20,8 @@ const SCHOOL_FIELDS = {
   interview: "面试/笔试",
   recommendation: "推荐信/个人陈述",
   results: "VCE/ATAR公开结果",
+  academicRank: "ATAR排名",
+  academicRankBasis: "ATAR排名依据",
   resultSource: "依据/备注",
   difficulty: "申请难度",
   weakEnglish: "英文弱学生",
@@ -32,6 +34,7 @@ const TUITION_FILTER_OPTIONS = ["高", "中", "低"];
 const TUITION_HIGH_MIN = 60000;
 const TUITION_MEDIUM_MIN = 50000;
 const TUITION_AMOUNT_MIN = 10000;
+const BOARDING_FILTER_OPTIONS = ["寄宿/boarding", "Homestay", "Guardian/亲属"];
 
 const SCHOOL_MARKETING_PROFILES = {
   "scotch-college": {
@@ -319,8 +322,9 @@ function renderAdvisorSchoolGate(app, title, message, isError = false) {
 
 function renderSchoolListPage(app, payload, schools) {
   const levels = getLevelFilterOptions(schools);
-  const genders = getUnique(schools.map((school) => school.gender));
-  const boardingTypes = getUnique(schools.map((school) => school.boardingType));
+  const academicRanks = getAcademicRankFilterOptions(schools);
+  const genders = getSchoolTypeFilterOptions(schools);
+  const boardingTypes = getBoardingFilterOptions(schools);
   const englishPaths = getUnique(schools.map((school) => school.englishPath));
   const tuitionLevels = getTuitionFilterOptions(schools);
 
@@ -344,6 +348,7 @@ function renderSchoolListPage(app, payload, schools) {
         <input type="search" data-school-search placeholder="例如 Wesley、boarding、ELICOS" />
       </label>
       ${renderSelect("Level", "level", levels)}
+      ${renderSelect("ATAR排名", "academicRank", academicRanks)}
       ${renderSelect("学费", "tuition", tuitionLevels)}
       ${renderSelect("学校类型", "gender", genders)}
       ${renderSelect("住宿路径", "boarding", boardingTypes)}
@@ -366,6 +371,7 @@ function renderSchoolListPage(app, payload, schools) {
   const state = {
     query: "",
     level: "",
+    academicRank: "",
     tuition: "",
     gender: "",
     boarding: "",
@@ -430,10 +436,11 @@ function renderSelect(label, key, values) {
 function filterSchools(schools, state) {
   const query = normalizeSearch(state.query);
   return schools.filter((school) => {
-    if (state.level && !getSchoolLevelFilters(school).includes(state.level)) return false;
+    if (state.level && getSchoolLevelFilter(school) !== state.level) return false;
+    if (state.academicRank && getSchoolAcademicRankFilter(school) !== state.academicRank) return false;
     if (state.tuition && getTuitionLevel(school) !== state.tuition) return false;
-    if (state.gender && school.gender !== state.gender) return false;
-    if (state.boarding && school.boardingType !== state.boarding) return false;
+    if (state.gender && getSchoolTypeFilter(school) !== state.gender) return false;
+    if (state.boarding && !getSchoolBoardingFilters(school).includes(state.boarding)) return false;
     if (state.english && school.englishPath !== state.english) return false;
     if (!query) return true;
     return normalizeSearch([
@@ -461,19 +468,25 @@ function renderSchoolCard(school) {
             <span>${escapeHTML(school.gender)} · ${escapeHTML(school.boardingType)}</span>
             <h2><a href="${escapeHTML(getSchoolDetailUrl(school.slug))}">${escapeHTML(school.name)}</a></h2>
           </div>
-          <a class="profile-secondary-button" href="${escapeHTML(getSchoolDetailUrl(school.slug))}">详情</a>
+          <div class="advisor-school-card-actions">
+            ${renderOfficialLink("学费页", school.links?.fees)}
+            ${renderOfficialLink("国际招生页", school.links?.international)}
+            <a class="profile-secondary-button" href="${escapeHTML(getSchoolDetailUrl(school.slug))}">详情</a>
+          </div>
         </div>
         <p>${escapeHTML(school.summary || school.fields?.[SCHOOL_FIELDS.type] || "")}</p>
         <div class="advisor-school-chip-row">
-          <span>${escapeHTML(school.level)}</span>
-          <span>${escapeHTML(school.englishPath)}</span>
-          <span>${escapeHTML(school.fields?.[SCHOOL_FIELDS.difficulty] || "难度需确认")}</span>
+          ${renderChip(school.level)}
+          ${renderChip(school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
+          ${renderChip(school.englishPath)}
+          ${renderChip(school.fields?.[SCHOOL_FIELDS.difficulty])}
         </div>
         <div class="advisor-school-mini-grid">
           ${renderMiniFact("费用", school.fields?.[SCHOOL_FIELDS.fees])}
           ${renderMiniFact("住宿/福利", school.fields?.[SCHOOL_FIELDS.accommodation])}
           ${renderMiniFact("英文支持", school.fields?.[SCHOOL_FIELDS.englishSupport])}
           ${renderMiniFact("ATAR/VCE", school.fields?.[SCHOOL_FIELDS.results])}
+          ${renderMiniFact("ATAR排名依据", school.fields?.[SCHOOL_FIELDS.academicRankBasis])}
         </div>
         <details class="advisor-school-full-fields">
           <summary>展开原表完整字段</summary>
@@ -485,12 +498,22 @@ function renderSchoolCard(school) {
 }
 
 function renderMiniFact(label, value) {
+  if (!hasMeaningfulValue(value)) return "";
   return `
     <div>
       <span>${escapeHTML(label)}</span>
-      <p>${escapeHTML(truncateText(value || "未列明", 92))}</p>
+      <p>${escapeHTML(truncateText(value, 92))}</p>
     </div>
   `;
+}
+
+function renderChip(value) {
+  return hasMeaningfulValue(value) ? `<span>${escapeHTML(value)}</span>` : "";
+}
+
+function renderDefinitionFact(label, value) {
+  if (!hasMeaningfulValue(value)) return "";
+  return `<div><dt>${escapeHTML(label)}</dt><dd>${escapeHTML(value)}</dd></div>`;
 }
 
 function renderSchoolDetailPage(app, payload, schools) {
@@ -524,10 +547,11 @@ function renderSchoolDetailPage(app, payload, schools) {
         <h1>${escapeHTML(school.name)}</h1>
         <p>${escapeHTML(school.summary || school.fields?.[SCHOOL_FIELDS.type] || "")}</p>
         <div class="advisor-school-chip-row">
-          <span>${escapeHTML(school.level)}</span>
-          <span>${escapeHTML(school.gender)}</span>
-          <span>${escapeHTML(school.boardingType)}</span>
-          <span>${escapeHTML(school.englishPath)}</span>
+          ${renderChip(school.level)}
+          ${renderChip(school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
+          ${renderChip(school.gender)}
+          ${renderChip(school.boardingType)}
+          ${renderChip(school.englishPath)}
         </div>
       </div>
       <div class="advisor-school-detail-image">
@@ -547,10 +571,12 @@ function renderSchoolDetailPage(app, payload, schools) {
         <p class="eyebrow">Application Data</p>
         <h2>申请与衔接信息</h2>
         <dl>
-          <div><dt>申请难度</dt><dd>${escapeHTML(school.fields?.[SCHOOL_FIELDS.difficulty] || "需确认")}</dd></div>
-          <div><dt>英文弱</dt><dd>${escapeHTML(school.fields?.[SCHOOL_FIELDS.weakEnglish] || "需确认")}</dd></div>
-          <div><dt>成绩弱</dt><dd>${escapeHTML(school.fields?.[SCHOOL_FIELDS.weakGrades] || "需确认")}</dd></div>
-          <div><dt>三项都弱</dt><dd>${escapeHTML(school.fields?.[SCHOOL_FIELDS.weakAll] || "需确认")}</dd></div>
+          ${renderDefinitionFact("ATAR排名", school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
+          ${renderDefinitionFact("排名依据", school.fields?.[SCHOOL_FIELDS.academicRankBasis])}
+          ${renderDefinitionFact("申请难度", school.fields?.[SCHOOL_FIELDS.difficulty])}
+          ${renderDefinitionFact("英文弱", school.fields?.[SCHOOL_FIELDS.weakEnglish])}
+          ${renderDefinitionFact("成绩弱", school.fields?.[SCHOOL_FIELDS.weakGrades])}
+          ${renderDefinitionFact("三项都弱", school.fields?.[SCHOOL_FIELDS.weakAll])}
         </dl>
       </aside>
     </section>
@@ -702,7 +728,12 @@ function renderOfficialLink(label, href) {
 
 function renderFieldGrid(school) {
   const fields = school.fields || {};
-  const entries = Object.entries(fields).filter(([key]) => !["学校", "学费链接", "国际招生链接"].includes(key));
+  const entries = Object.entries(fields)
+    .map(([key, value]) => [key, normalizeFieldGridValue(school, key, value)])
+    .filter(([key, value]) =>
+      !["学校", "学费链接", "国际招生链接"].includes(key) &&
+      hasMeaningfulValue(value)
+    );
   return `
     <div class="advisor-school-field-grid">
       ${entries.map(([key, value]) => `
@@ -713,6 +744,20 @@ function renderFieldGrid(school) {
       `).join("")}
     </div>
   `;
+}
+
+function normalizeFieldGridValue(school, key, value) {
+  if (key === "Level") return school.level;
+  if (key === SCHOOL_FIELDS.academicRank) {
+    return school.academicRankLabel || value;
+  }
+  return value;
+}
+
+function hasMeaningfulValue(value) {
+  const text = String(value || "").trim();
+  if (!text) return false;
+  return !/^(未列明|需确认|待确认|N\/A|NA|-|—)$/i.test(text);
 }
 
 function renderFullSchoolTable(schools) {
@@ -760,6 +805,8 @@ function getOriginalTableColumns(schools) {
     SCHOOL_FIELDS.interview,
     SCHOOL_FIELDS.recommendation,
     SCHOOL_FIELDS.results,
+    SCHOOL_FIELDS.academicRank,
+    SCHOOL_FIELDS.academicRankBasis,
     SCHOOL_FIELDS.resultSource,
     SCHOOL_FIELDS.difficulty,
     SCHOOL_FIELDS.weakEnglish,
@@ -1052,18 +1099,82 @@ function getUnique(values) {
 }
 
 function getLevelFilterOptions(schools) {
-  return getUnique(schools.flatMap(getSchoolLevelFilters)).sort(compareSchoolLevels);
+  return getUnique(schools.map(getSchoolLevelFilter)).sort(compareSchoolLevels);
 }
 
-function getSchoolLevelFilters(school) {
-  return String(school?.levelShort || "")
-    .match(/L\d+/g) || [];
+function getSchoolLevelFilter(school) {
+  const match = String(school?.levelShort || "").match(/^L\d+/);
+  return match ? match[0] : "";
 }
 
 function compareSchoolLevels(a, b) {
   const numberA = Number(a.replace(/\D/g, ""));
   const numberB = Number(b.replace(/\D/g, ""));
   return numberA - numberB || a.localeCompare(b);
+}
+
+function getAcademicRankFilterOptions(schools) {
+  return getUnique(schools.map(getSchoolAcademicRankFilter)).sort(compareAcademicRanks);
+}
+
+function getSchoolAcademicRankFilter(school) {
+  const match = String(school?.academicRank || school?.fields?.[SCHOOL_FIELDS.academicRank] || "").match(/^R\d+/);
+  return match ? match[0] : "";
+}
+
+function compareAcademicRanks(a, b) {
+  const numberA = Number(a.replace(/\D/g, ""));
+  const numberB = Number(b.replace(/\D/g, ""));
+  return numberA - numberB || a.localeCompare(b);
+}
+
+function getSchoolTypeFilterOptions(schools) {
+  return ["男校", "女校", "混校"].filter((type) =>
+    schools.some((school) => getSchoolTypeFilter(school) === type)
+  );
+}
+
+function getSchoolTypeFilter(school) {
+  const text = [
+    school?.gender,
+    school?.fields?.[SCHOOL_FIELDS.type],
+    school?.summary,
+  ].join(" ");
+
+  if (/男校|boys'? school|boys only|all boys/i.test(text)) return "男校";
+  if (/女校|girls'? school|girls only|all girls/i.test(text)) return "女校";
+  if (/混校|co-?ed|coeducational|co-educational/i.test(text)) return "混校";
+  return "";
+}
+
+function getBoardingFilterOptions(schools) {
+  const available = new Set(schools.flatMap(getSchoolBoardingFilters));
+  return BOARDING_FILTER_OPTIONS.filter((option) => available.has(option));
+}
+
+function getSchoolBoardingFilters(school) {
+  const filters = new Set();
+  const primary = String(school?.boardingType || "");
+  const accommodation = String(school?.fields?.[SCHOOL_FIELDS.accommodation] || "");
+  const summary = String(school?.summary || "");
+  const text = `${primary} ${accommodation} ${summary}`;
+
+  if (primary.includes("寄宿") || primary.toLowerCase().includes("boarding")) {
+    filters.add("寄宿/boarding");
+  }
+
+  const excludesHomestay = /不是普通homestay|不走.*homestay|不提供.*homestay/i.test(text);
+  if (!excludesHomestay && /homestay|host family|ahn|寄宿家庭/i.test(text)) {
+    filters.add("Homestay");
+  }
+
+  if (
+    /父母|亲属|親屬|获批亲属|獲批親屬|合格家庭成员|家庭成員|家长|家長|陪读|陪讀|parent|guardian|relative|dha|home affairs approved person/i.test(text)
+  ) {
+    filters.add("Guardian/亲属");
+  }
+
+  return [...filters];
 }
 
 function getTuitionFilterOptions(schools) {
@@ -1082,6 +1193,7 @@ function getTuitionLevel(school) {
 
 function getTuitionAmounts(school) {
   const text = school?.fields?.[SCHOOL_FIELDS.fees] || "";
+  if (/未见国际学生费用|未见国际费|local students/i.test(text)) return [];
   return [...String(text).matchAll(/AUD\s*([0-9,]+)/gi)]
     .map((match) => Number(match[1].replace(/,/g, "")))
     .filter((amount) => Number.isFinite(amount) && amount >= TUITION_AMOUNT_MIN);

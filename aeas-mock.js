@@ -1169,6 +1169,7 @@ function renderAuthModal(mode = "login") {
           </button>
           ${isRegister ? "" : `<button type="button" class="mock-auth-switch" data-request-password-reset>忘记密码？发送重设邮件</button>`}
           <small>${isRegister ? "注册后请到邮箱点击验证链接；验证后才能使用 AI 批改。" : "AI 批改需要先完成邮箱验证。"}</small>
+          ${isRegister ? `<small class="mock-privacy-note">注册即表示你已阅读并同意<a href="privacy.html">隐私政策</a>与<a href="terms.html">使用条款</a>。未满 15 岁的学生请由家长或监护人协助注册。</small>` : ""}
           <small data-auth-message></small>
         </div>
       </form>
