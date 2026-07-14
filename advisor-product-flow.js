@@ -224,7 +224,7 @@ const SERVICE_DETAIL_MAP = {
     },
     {
       title: "住宿与监护",
-      items: ["可选住宿形式", "学校寄宿或认可住宿", "homestay或其他住宿安排", "未满18岁福利与监护要求", "入住时间沟通", "住宿合同、费用、规则和安全事项", "接机、入住和报到安排"]
+      items: ["可选住宿形式", "学校寄宿或认可住宿", "homestay或其他住宿安排", "未满18岁住宿与监护要求", "入住时间沟通", "住宿合同、费用、规则和安全事项", "接机、入住和报到安排"]
     }
   ],
   "到澳落地": [
@@ -339,7 +339,7 @@ const PUBLIC_PRODUCT_FLOW = {
       title: "签证与住宿",
       kicker: "确保入学前关键事项衔接",
       text: "协助家庭梳理学生签证、住宿、监护和相关生活安排，并根据需要对接合规服务资源。",
-      items: ["签证材料清单", "签证申请时间节点", "体检、保险和学校文件提醒", "住宿形式与学校认可安排", "寄宿、homestay或其他住宿沟通", "未满18岁welfare与监护安排"]
+      items: ["签证材料清单", "签证申请时间节点", "体检、保险和学校文件提醒", "住宿形式与学校认可安排", "寄宿、homestay或其他住宿沟通", "未满18岁住宿与监护安排"]
     },
     {
       number: "10",
@@ -512,7 +512,7 @@ function renderTimelineGraphic() {
         <span class="direct">学校结果A：直录/主课条件已满足</span>
         <span class="bridge">学校结果B：Conditional Offer，需要HSP/ELICOS或补英文</span>
         <span class="risk">学校结果C：路径需调整，改Year 10/延期/重选校</span>
-        <span class="welfare">Offer后动作：welfare/guardian → CoE/CAAW → 签证</span>
+        <span class="welfare">Offer后动作：住宿/监护 → CoE/CAAW → 签证</span>
       </div>
       <div class="advisor-route-scroll">
         <div class="advisor-route-map">
@@ -523,7 +523,7 @@ function renderTimelineGraphic() {
             <span>5-6月<br />入学前8-7个月</span>
             <span>6-8月<br />学校结果</span>
             <span>7-12月<br />按结果执行</span>
-            <span>8-10月<br />福利/监护</span>
+            <span>8-10月<br />住宿/监护</span>
             <span>10-12月<br />签证/行前</span>
             <span>1月<br />正式入学</span>
           </div>
@@ -582,8 +582,8 @@ function renderTimelineGraphic() {
 
           <article class="advisor-route-card welfare" style="grid-column: 7; grid-row: 2 / span 2;">
             <span>Offer后动作</span>
-            <h3>Welfare / Guardian路径</h3>
-            <ul><li>boarding / homestay: 学校welfare与CAAW</li><li>parent guardian / DHA亲属: 不走学校homestay</li><li>guardian资格与签证材料可能更久</li></ul>
+            <h3>住宿 / 监护路径</h3>
+            <ul><li>boarding / homestay: 学校认可住宿与CAAW</li><li>parent guardian / DHA亲属: 不走学校homestay</li><li>guardian资格与签证材料可能更久</li></ul>
           </article>
 
           <article class="advisor-route-card common" style="grid-column: 8; grid-row: 2 / span 2;">

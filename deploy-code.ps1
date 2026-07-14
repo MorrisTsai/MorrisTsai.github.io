@@ -44,7 +44,7 @@ if (Test-Path -LiteralPath $ArchivePath) {
 }
 
 $codeItems = Get-ChildItem -LiteralPath $FrontendDir -File -Force | Where-Object {
-  $_.Extension -in @(".html", ".js", ".css") -or $_.Name -eq "CNAME"
+  $_.Extension -in @(".html", ".js", ".css", ".xml", ".txt") -or $_.Name -eq "CNAME"
 }
 
 if (-not $codeItems) {
@@ -77,7 +77,7 @@ if ! command -v unzip >/dev/null 2>&1; then
 fi
 
 echo "[2/3] Cleaning old root code files..."
-find "`$WEB_DIR" -maxdepth 1 -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "CNAME" \) -delete
+find "`$WEB_DIR" -maxdepth 1 -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.xml" -o -name "*.txt" -o -name "CNAME" \) -delete
 
 echo "[3/3] Unzipping frontend code archive..."
 set +e
@@ -90,6 +90,8 @@ if [ "`$UNZIP_CODE" -gt 1 ]; then
 fi
 
 test -f "`$WEB_DIR/aeas-mock.html"
+test -f "`$WEB_DIR/sitemap.xml"
+test -f "`$WEB_DIR/robots.txt"
 echo "Frontend code files are ready in `$WEB_DIR"
 "@
 

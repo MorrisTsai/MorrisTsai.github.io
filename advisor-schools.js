@@ -41,7 +41,7 @@ const SCHOOL_MARKETING_PROFILES = {
     position: "Scotch 通常会把自己放在墨尔本传统男校、强校友网络、强寄宿文化和高学术期待的组合里介绍。它吸引家庭的核心不是“容易进”，而是历史声望、男生成长环境、体育/音乐/领导力机会，以及寄宿体系带来的全天候管理。",
     pillars: ["1851 年创校的传统男校品牌", "Hawthorn 区位与成熟 boarding community", "学术高期待、活动资源深、校友网络强", "适合成熟、自律、能承受强竞争的男生"],
     local: "对本地家庭，重点会放在传统、男校文化、共同课程、运动音乐与校友圈。",
-    international: "对国际家庭，重点会放在寄宿照顾、稳定福利安排和强学术环境，但英文与成熟度要先够。"
+    international: "对国际家庭，重点会放在寄宿照顾、稳定的住宿与监护安排和强学术环境，但英文与成熟度要先够。"
   },
   "melbourne-grammar-school": {
     position: "Melbourne Grammar School 是位于 South Yarra 的独立男校。Senior School 覆盖 Year 9-12，约 800 名男生，其中 100+ 为 boarding students。学校高年级提供 40+ subject areas，并以 VCE 成绩、APS 体育、co-curricular activities、boarding 体系、Old Melburnians 校友网络和学校价值观作为主要特色。",
@@ -224,11 +224,11 @@ const SCHOOL_MARKETING_PROFILES = {
     position: "Peninsula Grammar 会以 Mount Eliza 校园、Mornington Peninsula 路线、混校、wellbeing 和学术目标来吸引家庭。它不是内城顶私逻辑，而是环境、社区和相对温和申请的组合。",
     pillars: ["Mount Eliza 混校", "半岛校园环境", "重视 wellbeing 与 achievement", "适合考虑非市中心、预算和适配度的家庭"],
     local: "对本地家庭，它强调校园环境、社区和学生成长。",
-    international: "对国际家庭，它强调国际学生路径和费用入口，但住宿福利需逐案确认。"
+    international: "对国际家庭，它强调国际学生路径和费用入口，但住宿与监护需逐案确认。"
   },
   "yarra-valley-grammar": {
     position: "Yarra Valley Grammar 会以 Ringwood 混校、清楚的国际生流程、homestay、英语评估和强社区感来招生。它适合普通偏上的学生先做预评估，而不是硬冲顶私。",
-    pillars: ["Ringwood 混校", "homestay 与 welfare 信息清楚", "English Language Assessment", "适合需要更清楚英文衔接判断的家庭"],
+    pillars: ["Ringwood 混校", "homestay 与住宿监护信息清楚", "English Language Assessment", "适合需要更清楚英文衔接判断的家庭"],
     local: "对本地家庭，它强调混校、社区、活动和学术发展。",
     international: "对国际家庭，它强调 English Language Assessment、可能的 intensive English course 和 provisional offer。"
   },
@@ -242,7 +242,7 @@ const SCHOOL_MARKETING_PROFILES = {
     position: "Oakleigh Grammar 会以 Oakleigh 区位、Greek Orthodox 背景、国际学生路径、homestay 合作和相对清楚的英文/成绩参考线来介绍自己。它是较适合做现实选项的学校。",
     pillars: ["Oakleigh 混校", "Greek Orthodox 社区特色", "Australian Homestay Network 合作", "适合预算和录取现实性都要看的家庭"],
     local: "对本地家庭，它强调社区、价值观和包容环境。",
-    international: "对国际家庭，它强调 homestay、welfare、AEAS/IELTS 参考线和 intensive English 条件。"
+    international: "对国际家庭，它强调 homestay、住宿监护、AEAS/IELTS 参考线和 intensive English 条件。"
   },
   "westbourne-grammar-school": {
     position: "Westbourne Grammar 会以西区混校、Truganina/Williams Landing、费用相对低、CRICOS 和较现实的入学询问空间来吸引家庭。它适合预算敏感和地理位置可接受的家庭。",
@@ -255,6 +255,36 @@ const SCHOOL_MARKETING_PROFILES = {
     pillars: ["Geelong 混校与 IB World School", "学校管理 Homestay Program", "EAL 与过渡支持", "适合考虑非墨尔本市内、桥接型选择的家庭"],
     local: "对本地家庭，它强调 IB、国际视野和校园社区。",
     international: "对国际家庭，它强调 homestay 管理、EAL 支持和 overseas student experience。"
+  },
+  "melbourne-girls-grammar": {
+    position: "Melbourne Girls Grammar 位于 South Yarra，是墨尔本市区的独立女校，提供 Prep 至 Year 12 课程。国际学生可选择与父母或获批亲属同住；年满 13 岁的学生也可申请校内寄宿。学校重视女生教育、城市学习资源、学术发展与国际学生支持。",
+    pillars: ["South Yarra 城市女校", "Prep 至 Year 12 与 VCE 路径", "Year 7-12 寄宿选择", "AEAS、面试与国际学生协调支持"],
+    local: "城市区位、女生教育、课程选择与共同课程资源。",
+    international: "国际学生可住校或与父母、获批亲属同住，并由 International Student Coordinator 跟进住宿监护与学习支持。"
+  },
+  "genazzano-fcj-college": {
+    position: "Genazzano FCJ College 是位于 Kew 的独立女校，提供 Prep 至 Year 12 课程并设有寄宿。学校公开资料强调关怀社区、个性化学习、广泛的教育与体育选择，以及对国际学生学业、英文、住宿与监护支持。",
+    pillars: ["Kew 独立女校", "Prep 至 Year 12", "校内寄宿与国际学生支持", "AEAS、学术报告与英文能力评估"],
+    local: "女生教育、关怀社区、校园设施与多元课程选择。",
+    international: "国际生申请需提交英文能力测试与近期学术报告，住宿、监护和入学支持由学校国际学生体系衔接。"
+  },
+  "heathdale-christian-college": {
+    position: "Heathdale Christian College 提供基督教教育，并接受数量有限的 Year 7-12 海外学生。学校建议计划修读 VCE 的学生最迟于 Year 10 Semester 2 开始衔接，以预留英文、课程与学习方式适应时间。",
+    pillars: ["基督教混校环境", "海外学生名额有限", "Year 7-12 国际生路径", "VCE 前英文与课程衔接要求"],
+    local: "基督教价值观、家庭与学校合作、学术及学生发展。",
+    international: "申请由家长或监护人直接完成；VCE 前需满足英文测试、学术报告、品格与住宿监护要求。"
+  },
+  "waverley-christian-college": {
+    position: "Waverley Christian College 是基督教混校，国际学生申请同时考虑学术适配、家庭信仰与住宿条件。学校不提供 homestay，学生须全程与父母或符合规定的血亲同住。",
+    pillars: ["基督教 Prep 至 Year 12 混校", "Wantirna South 与 Narre Warren South 校区", "家长教会参与及牧者推荐要求", "国际学生须与父母或合资格亲属同住"],
+    local: "基督教教育、学术发展、服务与社区参与。",
+    international: "申请需符合信仰政策、完成面试并确认家庭住宿安排；学校不提供 homestay。"
+  },
+  "fintona-girls-school": {
+    position: "Fintona Girls’ School 位于 Balwyn，是 Prep 至 Year 12 的独立女校。学校只提供非常有限的海外学生名额，强调小型关怀社区、学术发展、女生独立成长与个别支持。",
+    pillars: ["Balwyn 独立女校", "Prep 至 Year 12", "海外学生名额非常有限", "AEAS 评估且不提供 boarding 或 homestay"],
+    local: "小型女校社区、学术表现、个别关注与学生 wellbeing。",
+    international: "学生须达到合适英文水平，并与父母或获批亲属同住；学校不接受需要 homestay 的申请。"
   }
 };
 
@@ -265,37 +295,16 @@ async function initAdvisorSchools() {
   if (!app) return;
 
   const token = loadAdvisorSchoolToken();
-  if (!token) {
-    renderAdvisorSchoolGate(app, "请先登录", "这个页面只开放给 Advisor 账号。请回到个人中心登录后再进入。", true);
-    return;
-  }
-
   try {
-    const [user, payload] = await Promise.all([
-      window.rewardSchoolApi.getCurrentUser({ token }),
-      window.rewardSchoolApi.getAdvisorSchools({ token }),
-    ]);
-
-    if (!user?.advisor) {
-      renderAdvisorSchoolGate(app, "没有 Advisor 权限", "当前账号还没有 Advisor 标记，因此不能查看学校资料。", true);
-      return;
-    }
-
+    const payload = await window.rewardSchoolApi.getAdvisorSchools({ token });
     const schools = Array.isArray(payload?.schools) ? payload.schools : [];
+    const isAdvisor = payload?.access?.advisor === true;
     if (schoolDetailApp) {
-      renderSchoolDetailPage(schoolDetailApp, payload, schools);
+      renderSchoolDetailPage(schoolDetailApp, payload, schools, isAdvisor);
     } else {
-      renderSchoolListPage(schoolListApp, payload, schools);
+      renderSchoolListPage(schoolListApp, payload, schools, isAdvisor);
     }
   } catch (error) {
-    if (error.status === 401) {
-      renderAdvisorSchoolGate(app, "登录已过期", "请回到个人中心重新登录。", true);
-      return;
-    }
-    if (error.status === 403) {
-      renderAdvisorSchoolGate(app, "没有 Advisor 权限", "当前账号还没有 Advisor 标记，因此不能查看学校资料。", true);
-      return;
-    }
     renderAdvisorSchoolGate(app, "读取失败", error.message || "暂时无法读取学校资料，请稍后再试。", true);
   }
 }
@@ -312,33 +321,34 @@ function loadAdvisorSchoolToken() {
 function renderAdvisorSchoolGate(app, title, message, isError = false) {
   app.innerHTML = `
     <section class="advisor-flow-lock ${isError ? "is-error" : ""}">
-      <p class="eyebrow">Advisor Only</p>
+      <p class="eyebrow">School Directory</p>
       <h1>${escapeHTML(title)}</h1>
       <p>${escapeHTML(message)}</p>
-      <a class="button primary" href="profile.html">返回个人中心</a>
+      <a class="button primary" href="${schoolDetailApp ? "advisor-schools.html" : "index.html"}">返回</a>
     </section>
   `;
 }
 
-function renderSchoolListPage(app, payload, schools) {
-  const levels = getLevelFilterOptions(schools);
-  const academicRanks = getAcademicRankFilterOptions(schools);
-  const genders = getSchoolTypeFilterOptions(schools);
-  const boardingTypes = getBoardingFilterOptions(schools);
-  const englishPaths = getUnique(schools.map((school) => school.englishPath));
-  const tuitionLevels = getTuitionFilterOptions(schools);
+function renderSchoolListPage(app, payload, schools, isAdvisor) {
+  const levels = isAdvisor ? getLevelFilterOptions(schools) : [];
+  const academicRanks = isAdvisor ? getAcademicRankFilterOptions(schools) : [];
+  const genders = isAdvisor ? getSchoolTypeFilterOptions(schools) : [];
+  const boardingTypes = isAdvisor ? getBoardingFilterOptions(schools) : [];
+  const englishPaths = isAdvisor ? getUnique(schools.map((school) => school.englishPath)) : [];
+  const tuitionLevels = isAdvisor ? getTuitionFilterOptions(schools) : [];
 
   app.innerHTML = `
     <section class="advisor-school-hero">
       <div>
-        <p class="eyebrow">Advisor School Guide</p>
+        <p class="eyebrow">School Directory</p>
         <h1>维州私校资料库</h1>
         <p>${escapeHTML(payload?.intro || "长表已重新整理为可筛选卡片和单校详情页。")}</p>
       </div>
       <div class="advisor-school-stats">
         <div><span>学校数量</span><strong>${schools.length}</strong></div>
-        <div><span>分层</span><strong>${levels.length}</strong></div>
-        <div><span>图片</span><strong>${schools.filter((school) => school.imageStatus === "downloaded").length}</strong></div>
+        ${isAdvisor
+          ? `<div><span>顾问分层</span><strong>${levels.length}</strong></div><div><span>查看模式</span><strong>Advisor</strong></div>`
+          : `<div><span>公开内容</span><strong>简介与特色</strong></div>`}
       </div>
     </section>
 
@@ -347,21 +357,23 @@ function renderSchoolListPage(app, payload, schools) {
         <span>搜索学校/关键词</span>
         <input type="search" data-school-search placeholder="例如 Wesley、boarding、ELICOS" />
       </label>
-      ${renderSelect("Level", "level", levels)}
-      ${renderSelect("ATAR排名", "academicRank", academicRanks)}
-      ${renderSelect("学费", "tuition", tuitionLevels)}
-      ${renderSelect("学校类型", "gender", genders)}
-      ${renderSelect("住宿路径", "boarding", boardingTypes)}
-      ${renderSelect("英文路径", "english", englishPaths)}
+      ${isAdvisor ? `
+        ${renderSelect("Level", "level", levels)}
+        ${renderSelect("ATAR排名", "academicRank", academicRanks)}
+        ${renderSelect("学费", "tuition", tuitionLevels)}
+        ${renderSelect("学校类型", "gender", genders)}
+        ${renderSelect("住宿路径", "boarding", boardingTypes)}
+        ${renderSelect("英文路径", "english", englishPaths)}
+      ` : ""}
     </section>
 
     <section class="advisor-school-results">
       <div class="advisor-school-results-bar">
         <div class="advisor-school-result-count" data-school-count></div>
-        <div class="advisor-school-view-toggle" aria-label="切换学校资料视图">
+        ${isAdvisor ? `<div class="advisor-school-view-toggle" aria-label="切换学校资料视图">
           <button type="button" class="is-active" data-school-view="cards">卡片整理</button>
           <button type="button" data-school-view="table">原表整表</button>
-        </div>
+        </div>` : ""}
       </div>
       <div class="advisor-school-grid" data-school-grid></div>
       <div class="advisor-school-table-wrap" data-school-table hidden></div>
@@ -383,9 +395,9 @@ function renderSchoolListPage(app, payload, schools) {
   const table = app.querySelector("[data-school-table]");
   const count = app.querySelector("[data-school-count]");
   const render = () => {
-    const filtered = filterSchools(schools, state);
+    const filtered = filterSchools(schools, state, payload, isAdvisor);
     count.textContent = `显示 ${filtered.length}/${schools.length} 间学校`;
-    const isTable = state.view === "table";
+    const isTable = isAdvisor && state.view === "table";
     grid.hidden = isTable;
     table.hidden = !isTable;
     if (isTable) {
@@ -394,7 +406,7 @@ function renderSchoolListPage(app, payload, schools) {
         : `<div class="advisor-school-empty">没有符合条件的学校。</div>`;
     } else {
       grid.innerHTML = filtered.length
-        ? filtered.map(renderSchoolCard).join("")
+        ? filtered.map((school) => renderSchoolCard(school, payload?.researchProfiles?.[school.slug], isAdvisor)).join("")
         : `<div class="advisor-school-empty">没有符合条件的学校。</div>`;
     }
   };
@@ -433,49 +445,54 @@ function renderSelect(label, key, values) {
   `;
 }
 
-function filterSchools(schools, state) {
+function filterSchools(schools, state, payload, isAdvisor) {
   const query = normalizeSearch(state.query);
   return schools.filter((school) => {
-    if (state.level && getSchoolLevelFilter(school) !== state.level) return false;
-    if (state.academicRank && getSchoolAcademicRankFilter(school) !== state.academicRank) return false;
-    if (state.tuition && getTuitionLevel(school) !== state.tuition) return false;
-    if (state.gender && getSchoolTypeFilter(school) !== state.gender) return false;
-    if (state.boarding && !getSchoolBoardingFilters(school).includes(state.boarding)) return false;
-    if (state.english && school.englishPath !== state.english) return false;
+    if (isAdvisor && state.level && getSchoolLevelFilter(school) !== state.level) return false;
+    if (isAdvisor && state.academicRank && getSchoolAcademicRankFilter(school) !== state.academicRank) return false;
+    if (isAdvisor && state.tuition && getTuitionLevel(school) !== state.tuition) return false;
+    if (isAdvisor && state.gender && getSchoolTypeFilter(school) !== state.gender) return false;
+    if (isAdvisor && state.boarding && !getSchoolBoardingFilters(school).includes(state.boarding)) return false;
+    if (isAdvisor && state.english && school.englishPath !== state.english) return false;
     if (!query) return true;
-    return normalizeSearch([
+    const publicProfile = payload?.researchProfiles?.[school.slug] || {};
+    const publicSearchText = [
       school.name,
-      school.level,
-      school.summary,
-      school.boardingType,
-      school.englishPath,
-      ...Object.values(school.fields || {}),
+      school.chineseName,
+      publicProfile.introduction,
+      ...Object.values(publicProfile.overview || {}),
+      ...(publicProfile.advantages || []).flatMap((item) => [item?.title, item?.detail]),
+    ];
+    return normalizeSearch([
+      ...publicSearchText,
+      ...(isAdvisor ? [school.level, school.summary, school.boardingType, school.englishPath, ...Object.values(school.fields || {})] : []),
     ].join(" ")).includes(query);
   });
 }
 
-function renderSchoolCard(school) {
+function renderSchoolCard(school, researchProfile = null, isAdvisor = false) {
   const image = getSchoolImage(school);
+  const officialLinks = researchProfile?.officialLinks || school.links || {};
   return `
     <article class="advisor-school-card">
       <a class="advisor-school-card-media" href="${escapeHTML(getSchoolDetailUrl(school.slug))}" aria-label="查看 ${escapeHTML(school.name)}">
         <img src="${escapeHTML(image)}" alt="${escapeHTML(school.name)}" loading="lazy" decoding="async" />
-        <span>${escapeHTML(school.levelShort)}</span>
+        ${isAdvisor ? `<span>${escapeHTML(school.levelShort)}</span>` : ""}
       </a>
       <div class="advisor-school-card-body">
         <div class="advisor-school-title-row">
           <div>
-            <span>${escapeHTML(school.gender)} · ${escapeHTML(school.boardingType)}</span>
+            ${isAdvisor ? `<span>${escapeHTML(school.gender)} · ${escapeHTML(school.boardingType)}</span>` : ""}
             <h2><a href="${escapeHTML(getSchoolDetailUrl(school.slug))}">${escapeHTML(school.name)}</a></h2>
           </div>
           <div class="advisor-school-card-actions">
-            ${renderOfficialLink("学费页", school.links?.fees)}
-            ${renderOfficialLink("国际招生页", school.links?.international)}
+            ${isAdvisor ? renderOfficialLink("学费页", officialLinks.fees) : ""}
+            ${isAdvisor ? renderOfficialLink("国际招生页", officialLinks.international) : ""}
             <a class="profile-secondary-button" href="${escapeHTML(getSchoolDetailUrl(school.slug))}">详情</a>
           </div>
         </div>
-        <p>${escapeHTML(school.summary || school.fields?.[SCHOOL_FIELDS.type] || "")}</p>
-        <div class="advisor-school-chip-row">
+        <p>${escapeHTML(researchProfile?.introduction || school.summary || school.fields?.[SCHOOL_FIELDS.type] || "")}</p>
+        ${isAdvisor ? `<div class="advisor-school-chip-row">
           ${renderChip(school.level)}
           ${renderChip(school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
           ${renderChip(school.englishPath)}
@@ -483,7 +500,7 @@ function renderSchoolCard(school) {
         </div>
         <div class="advisor-school-mini-grid">
           ${renderMiniFact("费用", school.fields?.[SCHOOL_FIELDS.fees])}
-          ${renderMiniFact("住宿/福利", school.fields?.[SCHOOL_FIELDS.accommodation])}
+          ${renderMiniFact("住宿/监护", school.fields?.[SCHOOL_FIELDS.accommodation])}
           ${renderMiniFact("英文支持", school.fields?.[SCHOOL_FIELDS.englishSupport])}
           ${renderMiniFact("ATAR/VCE", school.fields?.[SCHOOL_FIELDS.results])}
           ${renderMiniFact("ATAR排名依据", school.fields?.[SCHOOL_FIELDS.academicRankBasis])}
@@ -491,7 +508,7 @@ function renderSchoolCard(school) {
         <details class="advisor-school-full-fields">
           <summary>展开原表完整字段</summary>
           ${renderFieldGrid(school)}
-        </details>
+        </details>` : ""}
       </div>
     </article>
   `;
@@ -516,7 +533,30 @@ function renderDefinitionFact(label, value) {
   return `<div><dt>${escapeHTML(label)}</dt><dd>${escapeHTML(value)}</dd></div>`;
 }
 
-function renderSchoolDetailPage(app, payload, schools) {
+function getSchoolResearchProfile(payload, school) {
+  const profile = payload?.researchProfiles?.[school.slug];
+  if (profile?.introduction && Array.isArray(profile.advantages)) return profile;
+  const legacyProfile = payload?.publicProfiles?.[school.slug] || {};
+  return {
+    introduction: school.name,
+    overview: legacyProfile.overview || {
+      location: "资料整理中",
+      schoolType: "资料整理中",
+      yearLevels: "资料整理中",
+      studentCount: "学校官网未公开具体人数",
+      internationalStudentCount: "学校官网未公开具体人数",
+      seniorPathways: "资料整理中",
+    },
+    advantages: legacyProfile.advantages || [],
+    localAdvantages: legacyProfile.advantages || [],
+    internationalAdvantages: [],
+    relatedLinks: [],
+    advisorScale: {},
+    officialLinks: school.links || {},
+  };
+}
+
+function renderSchoolDetailPage(app, payload, schools, isAdvisor) {
   const slug = new URLSearchParams(window.location.search).get("school") || "";
   const school = schools.find((item) => item.slug === slug);
   if (!school) {
@@ -524,20 +564,10 @@ function renderSchoolDetailPage(app, payload, schools) {
     return;
   }
 
-  document.title = `${school.name} | Reward School Advisor`;
+  document.title = `${school.name} | Reward School 睿澳升学`;
   const image = getSchoolImage(school);
-  const officialIntro = school.officialIntro || buildFallbackIntro(school);
-  const marketingProfile = getMarketingProfile(school);
-  const schoolCourseInfo = buildSchoolInfoLine(school, [
-    SCHOOL_FIELDS.type,
-    SCHOOL_FIELDS.results,
-    SCHOOL_FIELDS.resultSource,
-  ]);
-  const internationalStudentInfo = buildSchoolInfoLine(school, [
-    SCHOOL_FIELDS.accommodation,
-    SCHOOL_FIELDS.englishSupport,
-    SCHOOL_FIELDS.bridging,
-  ]);
+  const researchProfile = getSchoolResearchProfile(payload, school);
+  const advisorInsights = isAdvisor ? buildAdvisorInsights(school) : [];
 
   app.innerHTML = `
     <section class="advisor-school-detail-hero">
@@ -545,141 +575,210 @@ function renderSchoolDetailPage(app, payload, schools) {
         <a class="profile-secondary-button" href="${escapeHTML(getSchoolListUrl())}">返回学校列表</a>
         <p class="eyebrow">School Profile</p>
         <h1>${escapeHTML(school.name)}</h1>
-        <p>${escapeHTML(school.summary || school.fields?.[SCHOOL_FIELDS.type] || "")}</p>
-        <div class="advisor-school-chip-row">
-          ${renderChip(school.level)}
-          ${renderChip(school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
-          ${renderChip(school.gender)}
-          ${renderChip(school.boardingType)}
-          ${renderChip(school.englishPath)}
-        </div>
+        <p>${escapeHTML(researchProfile.introduction)}</p>
       </div>
       <div class="advisor-school-detail-image">
         <img src="${escapeHTML(image)}" alt="${escapeHTML(school.name)}" decoding="async" />
       </div>
     </section>
 
-    <section class="advisor-school-detail-layout">
-      <article class="advisor-school-section advisor-school-positioning">
-        <p class="eyebrow">Official Overview</p>
-        <h2>学校官方简介</h2>
-        <p>${escapeHTML(officialIntro)}</p>
-        ${school.officialTitle ? `<small>官网页面：${escapeHTML(school.officialTitle)}</small>` : ""}
-      </article>
-
-      <aside class="advisor-school-section advisor-school-quick">
-        <p class="eyebrow">Application Data</p>
-        <h2>申请与衔接信息</h2>
-        <dl>
-          ${renderDefinitionFact("ATAR排名", school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
-          ${renderDefinitionFact("排名依据", school.fields?.[SCHOOL_FIELDS.academicRankBasis])}
-          ${renderDefinitionFact("申请难度", school.fields?.[SCHOOL_FIELDS.difficulty])}
-          ${renderDefinitionFact("英文弱", school.fields?.[SCHOOL_FIELDS.weakEnglish])}
-          ${renderDefinitionFact("成绩弱", school.fields?.[SCHOOL_FIELDS.weakGrades])}
-          ${renderDefinitionFact("三项都弱", school.fields?.[SCHOOL_FIELDS.weakAll])}
-        </dl>
-      </aside>
-    </section>
-
-    <section class="advisor-school-section advisor-school-marketing">
+    <section class="advisor-school-section advisor-school-top-snapshot">
       <div class="advisor-school-section-heading">
         <div>
-          <p class="eyebrow">School Features</p>
-          <h2>学校概况与特色</h2>
+          <p class="eyebrow">School Overview</p>
+          <h2>学校简介</h2>
         </div>
       </div>
-      <p class="advisor-school-marketing-lede">${escapeHTML(formatSchoolInfoText(marketingProfile.position))}</p>
-      ${renderVerifiedHighlights(marketingProfile)}
-      ${renderWhyChoose(marketingProfile)}
-      <div class="advisor-school-audience-grid">
-        <article>
-          <span>学校与课程信息</span>
-          <p>${escapeHTML(schoolCourseInfo || school.summary || marketingProfile.local)}</p>
-        </article>
-        <article>
-          <span>住宿与国际学生信息</span>
-          <p>${escapeHTML(internationalStudentInfo || marketingProfile.international)}</p>
-        </article>
-      </div>
-      <div class="advisor-school-pillars">
-        ${marketingProfile.pillars.map((point) => `<span>${escapeHTML(formatSchoolInfoText(point))}</span>`).join("")}
-      </div>
+      ${renderPublicSchoolOverview(researchProfile.overview)}
     </section>
 
-    <section class="advisor-school-section advisor-school-selling">
-      <div class="section-heading center">
-        <p class="eyebrow">Table Highlights</p>
-        <h2>原表重点信息</h2>
-      </div>
-      <div class="advisor-selling-grid">
-        ${(school.sellingPoints || []).map((point) => `<article><span></span><p>${escapeHTML(point)}</p></article>`).join("")}
-      </div>
-    </section>
-
-    <section class="advisor-school-section advisor-school-original">
+    <section class="advisor-school-section advisor-school-advantages">
       <div class="advisor-school-section-heading">
-        <div>
-          <p class="eyebrow">Original Columns Preserved</p>
-          <h2>原表完整内容</h2>
-        </div>
-        <div class="advisor-school-link-row">
-          ${renderOfficialLink("学费页", school.links?.fees)}
-          ${renderOfficialLink("国际招生页", school.links?.international)}
-          ${renderOfficialLink("ATAR/VCE来源", school.links?.resultSource)}
-        </div>
-      </div>
-      ${renderFieldGrid(school)}
-      ${school.imageSourceUrl ? `<p class="advisor-image-source">图片来源：<a href="${escapeHTML(school.imageSourceUrl)}" target="_blank" rel="noopener">学校网页图片</a></p>` : ""}
-    </section>
-  `;
-}
-
-function renderVerifiedHighlights(profile) {
-  const highlights = Array.isArray(profile.verifiedHighlights) ? profile.verifiedHighlights : [];
-  if (!highlights.length) return "";
-  return `
-    <div class="advisor-school-verified">
-      <div class="advisor-school-section-heading compact">
-        <div>
-          <p class="eyebrow">Verified School Information</p>
-          <h3>官方资料重点</h3>
-        </div>
-      </div>
-      <div class="advisor-school-verified-grid">
-        ${highlights.map((item) => `
-          <article>
-            <h4>${escapeHTML(item.title)}</h4>
-            <p>${escapeHTML(item.detail)}</p>
-            ${item.sourceUrl ? `<a href="${escapeHTML(item.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(item.sourceLabel || "学校官网来源")}</a>` : ""}
-          </article>
-        `).join("")}
-      </div>
-    </div>
-  `;
-}
-
-function renderWhyChoose(profile) {
-  const items = Array.isArray(profile.whyChoose) ? profile.whyChoose : [];
-  if (!items.length) return "";
-  return `
-    <div class="advisor-school-why">
-      <div class="advisor-school-section-heading compact">
         <div>
           <p class="eyebrow">Why Choose</p>
-          <h3>官方定位与选择理由</h3>
+          <h2>学校特色</h2>
         </div>
       </div>
-      <div class="advisor-school-why-grid">
-        ${items.map((item) => `
-          <article>
-            <h4>${escapeHTML(item.title)}</h4>
-            <p>${escapeHTML(item.detail)}</p>
-            ${item.sourceUrl ? `<a href="${escapeHTML(item.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(item.sourceLabel || "学校官网来源")}</a>` : ""}
-          </article>
-        `).join("")}
+      ${renderPublicFeatureItems(
+        researchProfile.advantages
+          || [...(researchProfile.localAdvantages || []), ...(researchProfile.internationalAdvantages || [])]
+      )}
+      ${renderRelatedSchoolLinks(researchProfile.relatedLinks)}
+    </section>
+
+    ${isAdvisor ? `<section class="advisor-school-section advisor-school-advisor-insights">
+      <div class="advisor-school-section-heading">
+        <div>
+          <p class="eyebrow">Advisor Planning Notes</p>
+          <h2>申请判断与顾问要点</h2>
+        </div>
       </div>
+      <div class="advisor-school-advisor-block">
+        <div class="advisor-school-feature-heading">
+          <span>Advisor Snapshot</span>
+          <h3>顾问速览</h3>
+        </div>
+        ${renderAdvisorSnapshot(school)}
+      </div>
+      <div class="advisor-school-advisor-block">
+        <div class="advisor-school-feature-heading">
+          <span>Scale Assessment</span>
+          <h3>学校与国际生规模判断</h3>
+        </div>
+        ${renderAdvisorScale(researchProfile.advisorScale)}
+      </div>
+      ${renderAdvisorOfficialLinks(researchProfile.officialLinks)}
+      <p class="advisor-school-marketing-lede">以下集中整理国际生入口、英文衔接、住宿与监护、申请材料与学生适配判断；相同信息只保留一次。</p>
+      ${renderProfileItems(advisorInsights, "advisor-school-why-grid")}
+      <details class="advisor-school-full-fields advisor-school-source-details">
+        <summary>查看完整数据字段与来源</summary>
+        ${renderFieldGrid(school)}
+        ${school.imageSourceUrl ? `<p class="advisor-image-source">图片来源：<a href="${escapeHTML(school.imageSourceUrl)}" target="_blank" rel="noopener">学校网页图片</a></p>` : ""}
+      </details>
+    </section>` : ""}
+  `;
+}
+
+function renderPublicFeatureItems(items) {
+  const safeItems = Array.isArray(items) ? items.filter((item) => item?.detail) : [];
+  if (!safeItems.length) return `<p>资料整理中，请以学校最新官方页面为准。</p>`;
+  return `
+    <div class="advisor-school-advantages-grid">
+      ${safeItems.map((item) => `
+        <article>
+          <h4>${escapeHTML(item.title)}</h4>
+          <p>${escapeHTML(item.detail)}</p>
+          ${/^https?:\/\//i.test(item.sourceUrl || "") ? `<a href="${escapeHTML(item.sourceUrl)}" target="_blank" rel="noopener">学校官网来源</a>` : ""}
+        </article>
+      `).join("")}
     </div>
   `;
+}
+
+function renderRelatedSchoolLinks(items) {
+  const safeItems = Array.isArray(items)
+    ? items.filter((item) => item?.label && /^https?:\/\//i.test(item?.url || ""))
+    : [];
+  if (!safeItems.length) return "";
+  return `
+    <div class="advisor-school-related-links">
+      <strong>进一步了解学校</strong>
+      <div>${safeItems.map((item) => renderOfficialLink(item.label, item.url)).join("")}</div>
+    </div>
+  `;
+}
+
+function renderPublicSchoolOverview(overview = {}) {
+  return `
+    <dl class="advisor-school-public-facts advisor-school-snapshot-grid">
+      ${renderDefinitionFact("地点", overview.location)}
+      ${renderDefinitionFact("学校类型", overview.schoolType)}
+      ${renderDefinitionFact("年级", overview.yearLevels)}
+      ${renderDefinitionFact("学生人数", overview.studentCount)}
+      ${renderDefinitionFact("国际学生人数", overview.internationalStudentCount)}
+      ${renderDefinitionFact("高中课程", overview.seniorPathways)}
+    </dl>
+  `;
+}
+
+function renderAdvisorSnapshot(school) {
+  return `
+    <dl class="advisor-school-public-facts advisor-school-snapshot-grid">
+      ${renderDefinitionFact("顾问分层", school.level)}
+      ${renderDefinitionFact("学术参考", school.academicRankLabel || school.fields?.[SCHOOL_FIELDS.academicRank])}
+      ${renderDefinitionFact("住宿路径", school.boardingType)}
+      ${renderDefinitionFact("英文衔接", school.englishPath)}
+    </dl>
+  `;
+}
+
+function renderAdvisorScale(scale = {}) {
+  const items = [
+    ["学校总体规模", scale.schoolSize],
+    ["年级 / 班级结构", scale.cohortStructure],
+    ["国际学生规模", scale.internationalScale],
+    ["证据与可信度", scale.evidenceNote],
+  ].filter(([, value]) => hasMeaningfulValue(value));
+  if (!items.length) return `<p>规模资料整理中。</p>`;
+  return `
+    <div class="advisor-school-scale-grid">
+      ${items.map(([label, value]) => `
+        <article>
+          <span>${escapeHTML(label)}</span>
+          <p>${escapeHTML(value)}</p>
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderAdvisorOfficialLinks(links = {}) {
+  const candidates = [
+    ["国际学生招生页", links.international],
+    ["国际学生学费页", links.fees],
+    ["学校官方成绩 / 报告", links.results],
+  ];
+  const safeLinks = candidates.filter(([, url]) => /^https?:\/\//i.test(url || ""));
+  if (!safeLinks.length) return "";
+  return `
+    <div class="advisor-school-official-links">
+      <div>
+        <span>Official Application Sources</span>
+        <h3>官方申请资料</h3>
+      </div>
+      <div>${safeLinks.map(([label, url]) => renderOfficialLink(label, url)).join("")}</div>
+    </div>
+  `;
+}
+
+function renderProfileItems(items, className) {
+  const safeItems = Array.isArray(items) ? items.filter((item) => item?.detail) : [];
+  if (!safeItems.length) return `<p>资料整理中，请以学校最新官方页面为准。</p>`;
+  return `
+    <div class="${escapeHTML(className)}">
+      ${safeItems.map((item) => `
+        <article>
+          <h4>${escapeHTML(item.title)}</h4>
+          <p>${escapeHTML(item.detail)}</p>
+          ${item.sourceUrl ? `<a href="${escapeHTML(item.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(item.sourceLabel || "学校官网来源")}</a>` : ""}
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
+function buildAdvisorInsights(school) {
+  const fields = school.fields || {};
+  return [
+    makeProfileItem("国际生路径与入学点", [
+      fieldLine("学生签证路径", fields[SCHOOL_FIELDS.visaPath]),
+      fieldLine("Year 10/11 入学点", fields[SCHOOL_FIELDS.entryPoint]),
+    ]),
+    makeProfileItem("英文门槛与课程衔接", [
+      fieldLine("AEAS / 英文门槛", fields[SCHOOL_FIELDS.aeas]),
+      fieldLine("主课前英文路径", fields[SCHOOL_FIELDS.bridging]),
+      fieldLine("主课内英文支持", fields[SCHOOL_FIELDS.englishSupport]),
+    ]),
+    makeProfileItem("申请材料与学校评估", [
+      fieldLine("在校成绩", fields[SCHOOL_FIELDS.grades]),
+      fieldLine("面试 / 笔试", fields[SCHOOL_FIELDS.interview]),
+      fieldLine("推荐信 / 个人陈述", fields[SCHOOL_FIELDS.recommendation]),
+    ]),
+    makeProfileItem("住宿、监护与费用", [
+      fieldLine("住宿 / CAAW / 监护", fields[SCHOOL_FIELDS.accommodation]),
+      fieldLine("国际学生费用", fields[SCHOOL_FIELDS.fees]),
+    ]),
+    makeProfileItem("学术表现与申请难度", [
+      fieldLine("VCE / ATAR", fields[SCHOOL_FIELDS.results]),
+      fieldLine("ATAR 排名依据", fields[SCHOOL_FIELDS.academicRankBasis]),
+      fieldLine("申请难度", fields[SCHOOL_FIELDS.difficulty]),
+    ]),
+    makeProfileItem("学生适配判断", [
+      fieldLine("英文基础较弱", fields[SCHOOL_FIELDS.weakEnglish]),
+      fieldLine("学术成绩较弱", fields[SCHOOL_FIELDS.weakGrades]),
+      fieldLine("英文、成绩与学习态度均需加强", fields[SCHOOL_FIELDS.weakAll]),
+    ]),
+  ].filter((item) => item.detail);
 }
 
 function buildSchoolInfoLine(school, fieldNames) {
@@ -701,6 +800,25 @@ function formatSchoolInfoText(value) {
     .replace(/招生叙事/g, "资料重点")
     .replace(/招生语言/g, "资料重点")
     .replace(/招生特色/g, "特色")
+    .replace(/很擅长把自己包装成/g, "公开资料呈现为")
+    .replace(/把自己包装成/g, "定位为")
+    .replace(/核心卖点是/g, "主要特色包括")
+    .replace(/卖点更偏/g, "特色侧重")
+    .replace(/卖点是/g, "特色包括")
+    .replace(/不是低门槛/g, "入学仍有明确门槛")
+    .replace(/硬冲顶私/g, "直接申请高门槛学校")
+    .replace(/普通偏上/g, "具备稳定学术基础")
+    .replace(/较现实的/g, "相对明确的")
+    .replace(/现实选项/g, "适配选项")
+    .replace(/不联系主课/g, "不建议直接申请主课")
+    .replace(/不包装主课/g, "不建议直接申请主课")
+    .replace(/不适合直接主课/g, "不建议直接进入主课")
+    .replace(/不适合/g, "不建议")
+    .replace(/英文弱/g, "英文基础较弱")
+    .replace(/成绩弱/g, "学术成绩较弱")
+    .replace(/成绩差/g, "学术成绩明显不足")
+    .replace(/态度差/g, "学习态度不稳定")
+    .replace(/硬上/g, "直接进入")
     .replace(/通常会把自己放在/g, "定位包含")
     .replace(/会把自己放在/g, "定位包含")
     .replace(/会把自己介绍成/g, "定位为")
@@ -731,14 +849,14 @@ function renderFieldGrid(school) {
   const entries = Object.entries(fields)
     .map(([key, value]) => [key, normalizeFieldGridValue(school, key, value)])
     .filter(([key, value]) =>
-      !["学校", "学费链接", "国际招生链接"].includes(key) &&
+      !["学校", "学费链接", "国际招生链接", SCHOOL_FIELDS.feeCalibration].includes(key) &&
       hasMeaningfulValue(value)
     );
   return `
     <div class="advisor-school-field-grid">
       ${entries.map(([key, value]) => `
         <div>
-          <span>${escapeHTML(key)}</span>
+          <span>${escapeHTML(getFieldDisplayLabel(key))}</span>
           <p>${escapeHTML(value)}</p>
         </div>
       `).join("")}
@@ -751,7 +869,7 @@ function normalizeFieldGridValue(school, key, value) {
   if (key === SCHOOL_FIELDS.academicRank) {
     return school.academicRankLabel || value;
   }
-  return value;
+  return formatSchoolInfoText(value);
 }
 
 function hasMeaningfulValue(value) {
@@ -769,7 +887,7 @@ function renderFullSchoolTable(schools) {
         <thead>
           <tr>
             <th>学校</th>
-            ${columns.map((column) => `<th>${escapeHTML(column)}</th>`).join("")}
+            ${columns.map((column) => `<th>${escapeHTML(getFieldDisplayLabel(column))}</th>`).join("")}
             <th>操作</th>
           </tr>
         </thead>
@@ -777,7 +895,7 @@ function renderFullSchoolTable(schools) {
           ${schools.map((school) => `
             <tr>
               <th><a href="${escapeHTML(getSchoolDetailUrl(school.slug))}">${escapeHTML(school.name)}</a></th>
-              ${columns.map((column) => `<td>${escapeHTML(school.fields?.[column] || "")}</td>`).join("")}
+              ${columns.map((column) => `<td>${escapeHTML(formatSchoolInfoText(school.fields?.[column] || ""))}</td>`).join("")}
               <td><a class="profile-secondary-button" href="${escapeHTML(getSchoolDetailUrl(school.slug))}">详情</a></td>
             </tr>
           `).join("")}
@@ -812,20 +930,39 @@ function getOriginalTableColumns(schools) {
     SCHOOL_FIELDS.weakEnglish,
     SCHOOL_FIELDS.weakGrades,
     SCHOOL_FIELDS.weakAll,
-    SCHOOL_FIELDS.feeCalibration,
     "学费链接",
     "国际招生链接",
   ];
   const all = new Set();
   schools.forEach((school) => {
     Object.keys(school.fields || {}).forEach((key) => {
-      if (key !== "学校") all.add(key);
+      if (key !== "学校" && key !== SCHOOL_FIELDS.feeCalibration) all.add(key);
     });
   });
   return [
     ...preferred.filter((key) => all.has(key)),
     ...[...all].filter((key) => !preferred.includes(key)),
   ];
+}
+
+function getFieldDisplayLabel(key) {
+  const labels = {
+    [SCHOOL_FIELDS.visaPath]: "学生签证国际生路径",
+    [SCHOOL_FIELDS.entryPoint]: "Year 10/11 入学点",
+    [SCHOOL_FIELDS.fees]: "Year 10-12 国际学生费用",
+    [SCHOOL_FIELDS.accommodation]: "住宿 / CAAW / 监护",
+    [SCHOOL_FIELDS.englishSupport]: "主课内英文支持",
+    [SCHOOL_FIELDS.bridging]: "主课前英文 / HSP / ELICOS / Bridge",
+    [SCHOOL_FIELDS.aeas]: "AEAS / 英文门槛",
+    [SCHOOL_FIELDS.grades]: "在校成绩 / 过往成绩",
+    [SCHOOL_FIELDS.interview]: "面试 / 笔试",
+    [SCHOOL_FIELDS.recommendation]: "推荐信 / 个人陈述",
+    [SCHOOL_FIELDS.resultSource]: "官方来源与备注",
+    [SCHOOL_FIELDS.weakEnglish]: "英文基础较弱",
+    [SCHOOL_FIELDS.weakGrades]: "学术成绩较弱",
+    [SCHOOL_FIELDS.weakAll]: "英文、成绩与学习态度均需加强",
+  };
+  return labels[key] || key;
 }
 
 function getMarketingProfile(school) {
@@ -846,19 +983,38 @@ function getMarketingProfile(school) {
 
 function completeMarketingProfile(school, profile) {
   const generated = buildGeneratedMarketingProfile(school);
-  return {
+  const completed = {
     ...generated,
     ...profile,
     pillars: Array.isArray(profile.pillars) && profile.pillars.length
       ? profile.pillars
       : generated.pillars,
-    verifiedHighlights: Array.isArray(profile.verifiedHighlights) && profile.verifiedHighlights.length
-      ? profile.verifiedHighlights
-      : generated.verifiedHighlights,
     whyChoose: Array.isArray(profile.whyChoose) && profile.whyChoose.length
       ? profile.whyChoose
       : generated.whyChoose,
   };
+  completed.verifiedHighlights = Array.isArray(profile.verifiedHighlights) && profile.verifiedHighlights.length
+    ? profile.verifiedHighlights
+    : buildPublicHighlights(school, completed);
+  return completed;
+}
+
+function buildPublicHighlights(school, profile) {
+  const fields = school.fields || {};
+  const sourceUrl = getOfficialSourceUrl(school, "international");
+  const sourceLabel = `${school.name} 学校官网资料`;
+  return [
+    makeProfileItem("学校与校区", [
+      fieldLine("学校类型", fields[SCHOOL_FIELDS.type]),
+      fieldLine("区域", fields[SCHOOL_FIELDS.region]),
+      fieldLine("年级设置", fields[SCHOOL_FIELDS.yearLevels]),
+    ], sourceLabel, sourceUrl),
+    makeProfileItem("课程与学习特色", [profile.local], sourceLabel, sourceUrl),
+    makeProfileItem("学生发展与校园体验", [
+      ...(Array.isArray(profile.pillars) ? profile.pillars.slice(0, 3) : []),
+    ], sourceLabel, sourceUrl),
+    makeProfileItem("国际学生支持概览", [profile.international], sourceLabel, sourceUrl),
+  ].filter((item) => item.detail);
 }
 
 function buildGeneratedMarketingProfile(school) {
@@ -890,7 +1046,6 @@ function buildGeneratedMarketingProfile(school) {
         "学校定位与年级设置",
         [
           fieldLine("学校", schoolLabel),
-          fieldLine("Level", fields.Level || school.level),
           fieldLine("区域", fields[SCHOOL_FIELDS.region]),
           fieldLine("性别/类型", fields[SCHOOL_FIELDS.type]),
           fieldLine("年级设置", fields[SCHOOL_FIELDS.yearLevels]),
@@ -910,8 +1065,7 @@ function buildGeneratedMarketingProfile(school) {
       makeProfileItem(
         "住宿 / CAAW / 监护",
         [
-          fieldLine("住宿与福利", fields[SCHOOL_FIELDS.accommodation]),
-          fieldLine("学费口径", fields[SCHOOL_FIELDS.feeCalibration]),
+          fieldLine("住宿与监护", fields[SCHOOL_FIELDS.accommodation]),
         ],
         feeSourceLabel,
         feesUrl
@@ -936,15 +1090,6 @@ function buildGeneratedMarketingProfile(school) {
         sourceLabel,
         internationalUrl
       ),
-      makeProfileItem(
-        "VCE / ATAR公开结果",
-        [
-          fieldLine("公开结果", fields[SCHOOL_FIELDS.results]),
-          fieldLine("依据/备注", fields[SCHOOL_FIELDS.resultSource]),
-        ],
-        feeSourceLabel,
-        feesUrl
-      ),
     ].filter((item) => item.detail),
     whyChoose: [
       makeProfileItem(
@@ -968,7 +1113,7 @@ function buildGeneratedMarketingProfile(school) {
         internationalUrl
       ),
       makeProfileItem(
-        "住宿与福利安排",
+        "住宿与监护安排",
         [
           fieldLine("住宿/CAAW/监护", fields[SCHOOL_FIELDS.accommodation]),
         ],

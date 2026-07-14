@@ -1,7 +1,7 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
 const contactForm = document.querySelector(".contact-form");
-const REWARD_SCHOOL_FRONTEND_VERSION = "20260628-04";
+const REWARD_SCHOOL_FRONTEND_VERSION = "20260714-01";
 
 window.rewardSchoolFrontendVersion = REWARD_SCHOOL_FRONTEND_VERSION;
 
@@ -103,6 +103,36 @@ if (menuToggle && siteNav) {
     }
   });
 }
+
+function setupDropdownNavigation() {
+  const dropdowns = Array.from(document.querySelectorAll(".site-nav > details.nav-dropdown"));
+  if (!dropdowns.length) return;
+
+  dropdowns.forEach((dropdown) => {
+    dropdown.addEventListener("toggle", () => {
+      if (!dropdown.open) return;
+      dropdowns.forEach((otherDropdown) => {
+        if (otherDropdown !== dropdown) otherDropdown.open = false;
+      });
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (event.target instanceof Element && event.target.closest(".nav-dropdown")) return;
+    dropdowns.forEach((dropdown) => {
+      dropdown.open = false;
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    dropdowns.forEach((dropdown) => {
+      dropdown.open = false;
+    });
+  });
+}
+
+setupDropdownNavigation();
 
 if (contactForm) {
   contactForm.addEventListener("submit", async (event) => {

@@ -305,6 +305,10 @@ let mockState = {
 
 let mockProgress = loadProgress();
 let authSession = loadAuthSession();
+if (!authSession?.token) {
+  mockProgress = createEmptyProgress(null);
+  localStorage.removeItem(MOCK_STORAGE_KEY);
+}
 if (authSession?.user?.id && mockProgress?.ownerUserId !== authSession.user.id) {
   mockProgress = createEmptyProgress(authSession.user.id);
 }
@@ -1048,8 +1052,9 @@ function renderProgressPanel() {
 
   const subject = findSubject(mockState.subjectId);
   const type = findType(subject, mockState.typeId);
-  const overall = getOverallStats();
-  const currentTypeStats = subject && type ? getTypeStats(subject, type) : null;
+  const showPracticeStats = isAuthenticated();
+  const overall = showPracticeStats ? getOverallStats() : null;
+  const currentTypeStats = showPracticeStats && subject && type ? getTypeStats(subject, type) : null;
   const accountName = authSession?.user
     ? escapeHTML(authSession.user.displayName || authSession.user.email)
     : authSession?.token && authSession.status === "loading"
@@ -1071,11 +1076,13 @@ function renderProgressPanel() {
       <strong>${accountName}</strong>
       <small>${accountNote}</small>
     </div>
-    <div class="mock-progress-card">
-      <span>整体做题情况</span>
-      <strong>${overall.attempted}/${overall.total}</strong>
-      <small>已批改 ${overall.graded} 题 · 正确 ${overall.correct} 题</small>
-    </div>
+    ${showPracticeStats ? `
+      <div class="mock-progress-card">
+        <span>整体做题情况</span>
+        <strong>${overall.attempted}/${overall.total}</strong>
+        <small>已批改 ${overall.graded} 题 · 正确 ${overall.correct} 题</small>
+      </div>
+    ` : ""}
     ${
       currentTypeStats
         ? `
@@ -1088,7 +1095,7 @@ function renderProgressPanel() {
         : ""
     }
     ${renderAuthPanel()}
-    <button class="mock-reset-button" type="button" data-reset-practice>开始新一轮练习</button>
+    ${showPracticeStats ? `<button class="mock-reset-button" type="button" data-reset-practice>开始新一轮练习</button>` : ""}
   `;
 }
 
@@ -1352,6 +1359,7 @@ async function refreshAuthStateFromServer(options = {}) {
   } catch (error) {
     if (error?.status === 401) {
       saveAuthSession(null);
+      resetLocalPracticeForSignedOutUser();
       setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
       return null;
     }
