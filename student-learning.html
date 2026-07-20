@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的 AEAS 练习 | Reward School</title>
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="learning-system.css?v=20260720-01" />
+  </head>
+  <body class="learning-body">
+    <header class="ls-header">
+      <a class="ls-brand" href="index.html"><span>REWARD SCHOOL</span><strong>我的 AEAS 练习</strong></a>
+      <nav><a href="student-learning.html" aria-current="page">老师布置</a><a href="aeas-mock.html">自主练习</a><a href="classroom-sync.html">1v1课堂</a><a href="profile.html">个人中心</a></nav>
+    </header>
+    <main class="ls-shell">
+      <section class="ls-gate" data-gate><p class="ls-eyebrow">Student Access</p><h1>正在读取你的学习任务…</h1><p>答案会自动保存，网络恢复后可以继续。</p></section>
+      <div data-app hidden>
+        <section class="ls-hero">
+          <div><p class="ls-eyebrow">My Learning Path</p><h1 data-welcome>今天先完成老师安排的练习。</h1><p>客观题提交后可立即查看结果；写作和口语会进入老师的批改队列。老师要求修改的内容可以生成一份专门的复练作业。</p></div>
+          <div class="ls-actions"><a class="ls-button is-secondary" href="aeas-mock.html">自主练习</a><a class="ls-button" href="classroom-sync.html">进入课堂同步</a></div>
+        </section>
+        <div class="ls-assignment-layout">
+          <aside class="ls-card ls-assignment-list">
+            <div class="ls-card-head"><div><p class="ls-eyebrow">Assignments</p><h2>我的任务</h2><p data-assignment-count></p></div></div>
+            <div class="ls-card-body"><div class="ls-list" data-assignment-list></div></div>
+          </aside>
+          <section data-assignment-workspace><div class="ls-card"><div class="ls-card-body"><div class="ls-empty">选择一份作业开始练习。</div></div></div></section>
+        </div>
+      </div>
+    </main>
+    <div class="ls-toast" data-toast hidden></div>
+    <script src="aeas-ai-config.js?v=20260720-01"></script>
+    <script src="api-client.js?v=20260720-01"></script>
+    <script src="learning-api.js?v=20260720-01"></script>
+    <script src="student-learning.js?v=20260720-01"></script>
+  </body>
+</html>

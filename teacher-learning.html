@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AEAS 教学工作台 | Reward School</title>
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="learning-system.css?v=20260720-01" />
+  </head>
+  <body class="learning-body">
+    <header class="ls-header">
+      <a class="ls-brand" href="index.html"><span>REWARD SCHOOL</span><strong>AEAS 教学工作台</strong></a>
+      <nav>
+        <a href="teacher-learning.html" aria-current="page">布题与批改</a>
+        <a href="teacher-grading.html">旧练习记录</a>
+        <a href="classroom-sync.html">课堂同步</a>
+        <a href="profile.html">个人中心</a>
+      </nav>
+    </header>
+    <main class="ls-shell">
+      <section class="ls-gate" data-gate>
+        <p class="ls-eyebrow">Teacher Access</p>
+        <h1>正在验证教师权限…</h1>
+        <p>只有已授权的教师或管理员可以组题、发作业与查看学生反馈。</p>
+      </section>
+
+      <div data-app hidden>
+        <section class="ls-hero">
+          <div>
+            <p class="ls-eyebrow">1-to-1 Learning Operations</p>
+            <h1>下一步教什么，一眼看清。</h1>
+            <p>从 AEAS 英语题库选出“哪个题型的哪几题”，保存成题目组并发给指定学生。客观题自动回流，写作与口语进入教师批改队列。</p>
+          </div>
+          <div class="ls-actions"><button class="ls-button" type="button" data-jump="library">开始组题</button><a class="ls-button is-secondary" href="student-learning.html">查看学生端</a></div>
+        </section>
+
+        <div class="ls-tabs" role="tablist">
+          <button class="ls-tab is-active" type="button" data-tab="overview">总览</button>
+          <button class="ls-tab" type="button" data-tab="library">题库与组题</button>
+          <button class="ls-tab" type="button" data-tab="packs">题目组与发布</button>
+          <button class="ls-tab" type="button" data-tab="assignments">作业记录</button>
+          <button class="ls-tab" type="button" data-tab="review">批改队列 <span data-review-count></span></button>
+        </div>
+
+        <section class="ls-view" data-view="overview">
+          <div class="ls-stat-grid" data-summary></div>
+          <div class="ls-grid" style="margin-top:18px">
+            <section class="ls-card ls-sidebar">
+              <div class="ls-card-head"><div><p class="ls-eyebrow">Students</p><h2>我的学生</h2></div></div>
+              <div class="ls-card-body"><div class="ls-list" data-student-cards></div></div>
+            </section>
+            <section class="ls-card ls-main">
+              <div class="ls-card-head"><div><p class="ls-eyebrow">Learning Profile</p><h2 data-insight-title>选择一位学生</h2><p>这里显示已提交作业的正确率和教师反复标记的问题。</p></div></div>
+              <div class="ls-card-body" data-insights><div class="ls-empty">从左侧选择学生查看学习档案。</div></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="ls-view" data-view="library" hidden>
+          <form class="ls-filter" data-filter-form>
+            <select name="yearBand" aria-label="年级段"><option value="">全部年级</option><option value="4-6">Years 4–6</option><option value="7-9">Years 7–9</option><option value="10-12">Years 10–12</option></select>
+            <select name="skill" aria-label="能力"><option value="">全部能力</option><option value="reading">阅读</option><option value="vocabulary">词汇</option><option value="listening">听力</option><option value="writing">写作</option><option value="speaking">口语</option></select>
+            <select name="questionType" aria-label="题型"><option value="">全部题型</option><option value="vocabulary-meaning">单词释义</option><option value="collocation-meaning">固定搭配</option><option value="phrasal-meaning">短语动词</option><option value="preposition-meaning">介词搭配</option><option value="wordform-meaning">词形变化</option><option value="writing-meaning">写作表达</option><option value="grammar-meaning">语法知识</option><option value="irregular-meaning">不规则动词</option><option value="confusable-meaning">易混词</option></select>
+            <select name="difficulty" aria-label="难度"><option value="">全部难度</option><option value="foundation">基础</option><option value="standard">标准</option><option value="stretch">强化</option></select>
+            <input name="search" type="search" placeholder="题号、标题或标签" aria-label="搜索题目" />
+            <button class="ls-button" type="submit">筛选题库</button>
+          </form>
+          <div class="ls-question-layout">
+            <div><div class="ls-question-list" data-question-list><div class="ls-empty">正在读取英语题库…</div></div></div>
+            <aside class="ls-card ls-builder">
+              <div class="ls-card-head"><div><p class="ls-eyebrow">Question Pack</p><h2>当前题目组</h2><p><span data-selected-count>0</span> 题 · 预计 <span data-selected-minutes>0</span> 分钟</p></div></div>
+              <div class="ls-card-body">
+                <div class="ls-selected" data-selected-list><div>还没有选择题目。</div></div>
+                <form class="ls-form" data-pack-form>
+                  <label class="ls-field"><span>题目组名称</span><input name="title" maxlength="140" placeholder="例如：Leo 第6周阅读推断强化" required /></label>
+                  <label class="ls-field"><span>给老师自己的说明</span><textarea name="description" placeholder="训练目标、适用学生、课堂使用方式"></textarea></label>
+                  <button class="ls-button" type="submit">保存题目组</button>
+                  <p class="ls-message" data-pack-message></p>
+                </form>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="ls-view" data-view="packs" hidden>
+          <div class="ls-grid">
+            <section class="ls-card ls-main">
+              <div class="ls-card-head"><div><p class="ls-eyebrow">Reusable Packs</p><h2>已保存题目组</h2><p>同一个题目组可以分别发给多个学生，每份作业保持独立。</p></div><button class="ls-button is-secondary" type="button" data-jump="library">新建题目组</button></div>
+              <div class="ls-card-body"><div class="ls-list" data-pack-list></div></div>
+            </section>
+            <aside class="ls-card ls-sidebar">
+              <div class="ls-card-head"><div><p class="ls-eyebrow">Assign</p><h2>发给学生</h2><p data-assign-pack-name>先选择一个题目组</p></div></div>
+              <div class="ls-card-body">
+                <form class="ls-form" data-assign-form>
+                  <input name="packId" type="hidden" />
+                  <label class="ls-field"><span>学生</span><select name="studentId" required><option value="">选择学生</option></select></label>
+                  <label class="ls-field"><span>作业名称（可选）</span><input name="title" maxlength="160" placeholder="默认使用题目组名称" /></label>
+                  <label class="ls-field"><span>学生说明</span><textarea name="instructions" placeholder="完成要求、重点提醒"></textarea></label>
+                  <label class="ls-field"><span>截止时间</span><input name="dueAt" type="datetime-local" /></label>
+                  <label><input name="allowRetry" type="checkbox" checked /> 允许学生生成错题复练</label>
+                  <label><input name="releaseObjectiveResults" type="checkbox" checked /> 提交后显示客观题结果</label>
+                  <button class="ls-button" type="submit" disabled>发布作业</button>
+                  <p class="ls-message" data-assign-message></p>
+                </form>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="ls-view" data-view="assignments" hidden>
+          <section class="ls-card">
+            <div class="ls-card-head"><div><p class="ls-eyebrow">Assignment History</p><h2>作业记录</h2><p>查看已发布、进行中、待批改和已完成的1v1作业。</p></div><select data-assignment-student-filter aria-label="按学生筛选"><option value="">全部学生</option></select></div>
+            <div class="ls-card-body"><div class="ls-list" data-assignment-list></div></div>
+          </section>
+        </section>
+
+        <section class="ls-view" data-view="review" hidden>
+          <section class="ls-card">
+            <div class="ls-card-head"><div><p class="ls-eyebrow">Review Queue</p><h2>写作与口语批改</h2><p>AI结果与教师反馈分开保存；这里的教师决定才会进入学生学习档案。</p></div></div>
+            <div class="ls-card-body"><div class="ls-list" data-review-list></div></div>
+          </section>
+        </section>
+      </div>
+    </main>
+    <div class="ls-toast" data-toast hidden></div>
+    <script src="aeas-ai-config.js?v=20260720-01"></script>
+    <script src="api-client.js?v=20260720-01"></script>
+    <script src="learning-api.js?v=20260720-01"></script>
+    <script src="teacher-learning.js?v=20260720-01"></script>
+  </body>
+</html>

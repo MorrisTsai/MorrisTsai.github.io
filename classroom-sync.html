@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1v1 课堂同步 | Reward School</title>
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="learning-system.css?v=20260720-01" />
+  </head>
+  <body class="learning-body">
+    <header class="ls-header"><a class="ls-brand" href="index.html"><span>REWARD SCHOOL</span><strong>1v1 课堂同步</strong></a><nav><a href="teacher-learning.html" data-teacher-link hidden>教师工作台</a><a href="student-learning.html" data-student-link>我的练习</a><a href="profile.html">个人中心</a></nav></header>
+    <main class="ls-shell">
+      <section class="ls-gate" data-gate><p class="ls-eyebrow">Companion Classroom</p><h1>正在连接课堂同步…</h1><p>腾讯会议负责声音和视频；这个页面只同步题目、计时、锁题、答案和课堂提示。</p></section>
+      <div data-app hidden>
+        <section class="ls-hero"><div><p class="ls-eyebrow">Tencent Meeting Companion</p><h1>会议照常开，教学操作在这里同步。</h1><p>不传输音视频。老师点击“发送到课堂”后，学生页面自动出现同一道题；断线重连会恢复服务器保存的最新课堂状态。</p></div><span class="ls-badge" data-connection>等待选择课堂</span></section>
+        <div class="ls-grid">
+          <aside class="ls-card ls-sidebar">
+            <div class="ls-card-head"><div><p class="ls-eyebrow">Sessions</p><h2>课堂列表</h2></div></div>
+            <div class="ls-card-body">
+              <form class="ls-form" data-create-classroom hidden><label class="ls-field"><span>学生</span><select name="studentId" required></select></label><label class="ls-field"><span>课堂名称</span><input name="title" placeholder="例如：Leo 周三1v1" /></label><button class="ls-button" type="submit">建立课堂</button><p class="ls-message"></p></form>
+              <div class="ls-list" data-classroom-list style="margin-top:14px"></div>
+            </div>
+          </aside>
+          <section class="ls-main" data-classroom-workspace><div class="ls-card"><div class="ls-card-body"><div class="ls-empty">选择一节课堂开始同步。</div></div></div></section>
+        </div>
+      </div>
+    </main>
+    <div class="ls-toast" data-toast hidden></div>
+    <script src="aeas-ai-config.js?v=20260720-01"></script><script src="api-client.js?v=20260720-01"></script><script src="learning-api.js?v=20260720-01"></script><script src="classroom-sync.js?v=20260720-01"></script>
+  </body>
+</html>
