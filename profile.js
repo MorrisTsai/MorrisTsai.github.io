@@ -9,6 +9,7 @@ const accountPanel = document.querySelector("[data-account-panel]");
 const passwordPanel = document.querySelector("[data-password-panel]");
 const historyPanel = document.querySelector("[data-history-panel]");
 const advisorPanel = document.querySelector("[data-advisor-panel]");
+const assessmentPanel = document.querySelector("[data-assessment-panel]");
 const comingPanel = document.querySelector("[data-coming-panel]");
 const profileForm = document.querySelector("[data-profile-form]");
 const passwordForm = document.querySelector("[data-password-form]");
@@ -146,7 +147,7 @@ function renderSignedIn(user) {
 }
 
 function setPanelsVisible(isVisible) {
-  [accountPanel, historyPanel, comingPanel].forEach((panel) => {
+  [accountPanel, historyPanel, assessmentPanel, comingPanel].forEach((panel) => {
     if (panel) panel.hidden = !isVisible;
   });
   if (advisorPanel) advisorPanel.hidden = true;
@@ -156,7 +157,17 @@ function setPanelsVisible(isVisible) {
 
 function renderAdvisorPanel(user) {
   if (!advisorPanel) return;
-  advisorPanel.hidden = !user?.advisor;
+  const canViewSchoolInformation = (user?.permissions || []).some((permission) =>
+    String(permission || "").replace(/[_-]/g, "").toLowerCase() === "schoolinformation"
+  );
+  advisorPanel.hidden = !canViewSchoolInformation && !user?.admin;
+  const adminLink = document.querySelector("[data-admin-link]");
+  if (adminLink) adminLink.hidden = !user?.admin;
+  const teacherLink = document.querySelector("[data-teacher-link]");
+  const canReviewPractice = (user?.permissions || []).some((permission) =>
+    String(permission || "").replace(/[_-]/g, "").toLowerCase() === "practicereview"
+  );
+  if (teacherLink) teacherLink.hidden = !canReviewPractice && !user?.admin;
 }
 
 function renderStatus(label, title, detail) {
@@ -240,6 +251,7 @@ async function handleAuthSubmit(form) {
       : await window.rewardSchoolApi.login({ email, password });
 
     saveProfileSession({ token: session.token, user: session.user, status: "ready" });
+    void window.rewardSchoolAnalytics?.track(action === "register" ? "auth_register" : "auth_login", { source: "profile" });
     renderSignedIn(session.user);
   } catch (error) {
     setMessage(message, error.message || "操作失败，请稍后再试。", true);
@@ -418,7 +430,7 @@ function renderExamReportCard(report) {
     <article class="profile-history-card">
       <div>
         <span>${escapeHTML(report.kind === "random" ? "模拟考" : "课前测试")}</span>
-        <strong>${escapeHTML(report.title || "AEAS 模拟考试")}</strong>
+        <strong>${escapeHTML(report.title || "入学模拟练习")}</strong>
         <small>提交：${escapeHTML(formatDate(report.submittedAt || report.progressUpdatedAt))}</small>
       </div>
       <div class="profile-score-pill">
@@ -548,7 +560,7 @@ function renderExamReportCard(report, index) {
     <button class="profile-history-card" type="button" data-history-detail="report:${index}">
       <div>
         <span>${escapeHTML(report.kind === "random" ? "模拟考" : "课前测试")}</span>
-        <strong>${escapeHTML(report.title || "AEAS 模拟考试")}</strong>
+        <strong>${escapeHTML(report.title || "入学模拟练习")}</strong>
         <small>提交：${escapeHTML(formatDate(report.submittedAt || report.progressUpdatedAt))} · 完成 ${Number(stats.attempted || 0)}/${Number(stats.total || 0)}</small>
       </div>
       <div class="profile-score-pill">
@@ -624,7 +636,7 @@ function renderReportDetail(report) {
       <button class="profile-secondary-button" type="button" data-history-back>← 返回记录</button>
       <div>
         <p class="eyebrow">Exam Report</p>
-        <h3>${escapeHTML(report.title || "AEAS 模拟考试")}</h3>
+        <h3>${escapeHTML(report.title || "入学模拟练习")}</h3>
         <p>提交：${escapeHTML(formatDate(report.submittedAt || report.progressUpdatedAt))}</p>
       </div>
     </div>

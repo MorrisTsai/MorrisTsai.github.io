@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin 管理后台 | Reward School 睿澳升学</title>
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260717-01" />
+  </head>
+  <body class="admin-body">
+    <header class="admin-header">
+      <a class="admin-brand" href="index.html"><span>REWARD SCHOOL</span><strong>管理后台</strong></a>
+      <nav><a href="advisor-assessments.html">学生评估</a><a href="profile.html">个人中心</a><a href="index.html">返回网站</a></nav>
+    </header>
+
+    <main class="admin-shell">
+      <section class="admin-gate" data-admin-gate>
+        <p class="eyebrow">Admin Access</p>
+        <h1>正在验证管理权限...</h1>
+        <p>管理数据与账号权限只会在 Admin 登录后载入。</p>
+      </section>
+
+      <div class="admin-console" data-admin-console hidden>
+        <section class="admin-hero">
+          <div><p class="eyebrow">Admin Console</p><h1>Reward School 管理后台</h1><p data-admin-identity></p></div>
+          <button type="button" class="admin-secondary-button" data-admin-refresh>刷新全部</button>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-heading"><div><p class="eyebrow">Accounts</p><h2>账号与角色</h2><p>新账号默认为“游客”；邮箱验证后自动成为“已认证游客”。Admin 自动包含 Advisor。</p></div><label class="admin-search"><span>筛选账号</span><input type="search" data-user-filter placeholder="姓名或邮箱" /></label></div>
+          <div class="admin-user-list" data-admin-users><span>正在读取账号...</span></div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-heading"><div><p class="eyebrow">Access Matrix</p><h2>角色权限</h2><p>老师默认继承 Advisor 权限，并增加学生练习批改；Admin 权限固定全部开启。</p></div></div>
+          <div class="admin-permission-table-wrap"><table class="admin-permission-table" data-permission-matrix><tbody><tr><td>正在读取权限...</td></tr></tbody></table></div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-heading"><div><p class="eyebrow">First-party Analytics</p><h2>网站数据中心</h2><p>数据直接记录在 Reward School 服务器，可查看来源、设备、落地页、转化漏斗、回访与访问路径。</p></div></div>
+          <form class="admin-analytics-filter" data-analytics-filter>
+            <label><span>快速范围</span><select name="preset"><option value="7">最近 7 天</option><option value="30" selected>最近 30 天</option><option value="90">最近 90 天</option><option value="custom">自定义</option></select></label>
+            <label><span>开始日期</span><input type="date" name="start" required /></label>
+            <label><span>结束日期</span><input type="date" name="end" required /></label>
+            <label><span>事件</span><select name="event"><option value="">全部事件</option><option value="page_view">页面浏览</option><option value="consultation_click">咨询点击</option><option value="consultation_submit">咨询提交</option><option value="wechat_click">微信点击</option><option value="mock_entry_click">模考入口点击</option><option value="mock_start">进入模考</option><option value="mock_subject_open">打开科目</option><option value="mock_exam_start">开始完整模考</option><option value="auth_login">成功登录</option><option value="auth_register">成功注册</option><option value="school_profile_view">学校页浏览</option></select></label>
+            <label><span>流量来源</span><select name="source"><option value="">全部来源</option><option value="direct">直接访问</option><option value="baidu">百度</option><option value="google">Google</option><option value="bing">Bing</option><option value="wechat">微信</option><option value="xiaohongshu">小红书</option><option value="zhihu">知乎</option></select></label>
+            <label><span>设备</span><select name="device"><option value="">全部设备</option><option value="mobile">手机</option><option value="desktop">电脑</option><option value="tablet">平板</option></select></label>
+            <label><span>页面包含</span><input type="search" name="page" maxlength="120" placeholder="例如：aeas 或 schools/" /></label>
+            <button type="submit">套用筛选</button>
+          </form>
+          <div class="admin-analytics" data-admin-analytics><span>正在读取事件数据...</span></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="aeas-ai-config.js?v=20260705-02"></script>
+    <script src="api-client.js?v=20260720-01"></script>
+    <script src="admin.js?v=20260720-01"></script>
+  </body>
+</html>

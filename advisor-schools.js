@@ -28,6 +28,8 @@ const SCHOOL_FIELDS = {
   weakGrades: "成绩弱学生",
   weakAll: "英文+成绩+态度都弱",
   feeCalibration: "学费口径校验",
+  agentPolicy: "Education Agent政策",
+  agentEvidence: "Education Agent证据链接",
 };
 
 const TUITION_FILTER_OPTIONS = ["高", "中", "低"];
@@ -166,12 +168,6 @@ const SCHOOL_MARKETING_PROFILES = {
     local: "对本地家庭，它强调多校区、课程选择、共同课程和全人发展。",
     international: "对国际家庭，它强调 English preparation / ELICOS 后评估和较清楚的衔接规则。"
   },
-  "carey-baptist-grammar-school": {
-    position: "Carey 会以 Kew 混校、Senior School、VCE/IB、包容社区和学生自主成长来吸引家庭。它常见的卖点是不是传统单性别强校，而是现代、混校、选择多、支持感较强。",
-    pillars: ["Kew 混校与 Senior School", "VCE/IB 双路径", "homestay / local support person 路径", "适合成绩普通偏上、想要混校环境的学生"],
-    local: "对本地家庭，它强调混校、包容、课程选择和学生 wellbeing。",
-    international: "对国际家庭，它强调来自多国家的学生群体和清晰文件流程。"
-  },
   "st-leonards-college": {
     position: "St Leonard’s 会主打 Bayside 混校、VCE/IB、PLACE 语言与文化过渡、学术表现和现代校园体验。它对非英语背景家庭的吸引点，是过渡支持比很多强校说得更具体。",
     pillars: ["Brighton East 混校", "VCE/IB 和公开学术结果", "PLACE 语言文化过渡支持", "适合想要走读、混校和语言支持的家庭"],
@@ -189,12 +185,6 @@ const SCHOOL_MARKETING_PROFILES = {
     pillars: ["Kew 男校与 Anglican 传统", "HSP 可作为条件路径", "学术结果强", "适合男校目标明确但需要桥接判断的家庭"],
     local: "对本地家庭，它强调男校文化、社区和学术/活动并重。",
     international: "对国际家庭，它强调 AEAS 后 HSP 可能性、homestay 和 Local Support Person。"
-  },
-  "ivanhoe-grammar-school": {
-    position: "Ivanhoe Grammar 的核心卖点是混校、多校区、VCE/IB 和 International Academy。对国际家庭来说，它比较突出的不是一句欢迎词，而是有相对完整的英语+学科衔接机制。",
-    pillars: ["混校与 VCE/IB", "Ivanhoe International Academy", "approved homestay 与 designated carer", "适合英文需要衔接但学习态度好的学生"],
-    local: "对本地家庭，它强调混校、多课程选择和社区。",
-    international: "对国际家庭，它强调 Intensive English 与学科过渡，是较好解释的桥接型选择。"
   },
   "toorak-college": {
     position: "Toorak College 会以 Mornington Peninsula 女校、boarding、海边校园感、关怀社区和学术结果吸引家庭。它适合想要女生寄宿，但不一定只看内城顶私的家庭。",
@@ -268,23 +258,41 @@ const SCHOOL_MARKETING_PROFILES = {
     local: "女生教育、关怀社区、校园设施与多元课程选择。",
     international: "国际生申请需提交英文能力测试与近期学术报告，住宿、监护和入学支持由学校国际学生体系衔接。"
   },
-  "heathdale-christian-college": {
-    position: "Heathdale Christian College 提供基督教教育，并接受数量有限的 Year 7-12 海外学生。学校建议计划修读 VCE 的学生最迟于 Year 10 Semester 2 开始衔接，以预留英文、课程与学习方式适应时间。",
-    pillars: ["基督教混校环境", "海外学生名额有限", "Year 7-12 国际生路径", "VCE 前英文与课程衔接要求"],
-    local: "基督教价值观、家庭与学校合作、学术及学生发展。",
-    international: "申请由家长或监护人直接完成；VCE 前需满足英文测试、学术报告、品格与住宿监护要求。"
+  "the-geelong-college": {
+    position: "The Geelong College 以吉朗区域传统混校、boarding 与必须经认证代理申请的国际路径见长；多数国际生先读本地 ELICOS，再经两轮面试进入主课。",
+    pillars: ["Geelong 混校 day+boarding", "国际申请必须经认证代理", "AEAS + Avalon College ELICOS", "两轮虚拟面试与寄宿名额"],
+    local: "强调区域传统、寄宿社区与学术活动并重。",
+    international: "必须经 preferred agent 递交；AEAS 后多数先读 8–30 周 ELICOS，再过两轮面试。"
   },
-  "waverley-christian-college": {
-    position: "Waverley Christian College 是基督教混校，国际学生申请同时考虑学术适配、家庭信仰与住宿条件。学校不提供 homestay，学生须全程与父母或符合规定的血亲同住。",
-    pillars: ["基督教 Prep 至 Year 12 混校", "Wantirna South 与 Narre Warren South 校区", "家长教会参与及牧者推荐要求", "国际学生须与父母或合资格亲属同住"],
-    local: "基督教教育、学术发展、服务与社区参与。",
-    international: "申请需符合信仰政策、完成面试并确认家庭住宿安排；学校不提供 homestay。"
+  "st-margarets-berwick-grammar": {
+    position: "St Margaret's Berwick Grammar 以 Berwick/Officer 平行男女校区、公开 AEAS/IDAT 年级门槛和限量 homestay 吸引国际家庭，并公开招募教育代理。",
+    pillars: ["Berwick 女校区 + Officer 男校区", "Year 7–11 国际入口", "公开 AEAS/IDAT 建议分", "限量 homestay + 代理名单/招募"],
+    local: "强调分校区学习、学术结果与社区。",
+    international: "Year 10/11 可申请；英文门槛公开；无 boarding，以 homestay/590 亲属为主。"
   },
-  "fintona-girls-school": {
-    position: "Fintona Girls’ School 位于 Balwyn，是 Prep 至 Year 12 的独立女校。学校只提供非常有限的海外学生名额，强调小型关怀社区、学术发展、女生独立成长与个别支持。",
-    pillars: ["Balwyn 独立女校", "Prep 至 Year 12", "海外学生名额非常有限", "AEAS 评估且不提供 boarding 或 homestay"],
-    local: "小型女校社区、学术表现、个别关注与学生 wellbeing。",
-    international: "学生须达到合适英文水平，并与父母或获批亲属同住；学校不接受需要 homestay 的申请。"
+  "alphington-grammar-school": {
+    position: "Alphington Grammar 是 open-entry 混校，海外生仅收 Prep–Year 10，门槛相对较低，并设授权代理名单与 HSPP 英文预备。",
+    pillars: ["Alphington open-entry 混校", "海外生仅到 Year 10", "HSPP/英文预备", "授权代理名单 + AHN homestay"],
+    local: "强调多元、非宗教开放入学与社区。",
+    international: "Year 11 不收新国际生；14 岁以上 homestay；可经授权代理或 Registrar 申请。"
+  },
+  "carey-baptist-grammar-school": {
+    position: "Carey 是一线混校，但学生签证国际生仅收 Kew 校区 Senior School Years 10–12；VCE/IB 双路径，并与多家教育代理合作。",
+    pillars: ["Kew Senior School Years 10–12 国际入口", "VCE + IB", "15 岁及以上 homestay", "与多家 International Education Agents 合作"],
+    local: "强调混校、双课程路径与学术表现。",
+    international: "须 AEAS；国际生仅 Years 10–12 Kew；家庭可直申或经代理。"
+  },
+  "mentone-girls-grammar-school": {
+    position: "Mentone Girls' Grammar 以 Bayside 女校、Years 7–12 国际路径、公开 AEAS 建议分与 Approved Agent 名单吸引国际女生家庭。",
+    pillars: ["Mentone Bayside 女校", "Years 7–12 overseas", "AEAS 建议分 + ELICOS 缓冲", "公开 Approved Agent 名单"],
+    local: "强调女生教育、沿海社区与学术结果。",
+    international: "Year 9 起可 homestay；Year 11–12 可走 EAL；有代理名单也可直联招生。"
+  },
+  "camberwell-girls-grammar-school": {
+    position: "Camberwell Girls Grammar 是 Canterbury 精英女校，仅 Senior School 收少量国际生，成绩顶尖，并设 approved agent 名单。",
+    pillars: ["Canterbury 精英女校", "少量 Senior School 国际名额", "2025 median ATAR 93.2", "approved agents + ELICOS 条件路径"],
+    local: "强调学术卓越、女校传统与社区。",
+    international: "Year 10 可入、Year 11 仅 Sem 1；AEAS 须达标；经 approved agent 或直申。"
   }
 };
 
@@ -557,17 +565,22 @@ function getSchoolResearchProfile(payload, school) {
 }
 
 function renderSchoolDetailPage(app, payload, schools, isAdvisor) {
-  const slug = new URLSearchParams(window.location.search).get("school") || "";
+  const slug = app.dataset.schoolSlug
+    || new URLSearchParams(window.location.search).get("school")
+    || getSchoolSlugFromPath();
   const school = schools.find((item) => item.slug === slug);
   if (!school) {
     renderAdvisorSchoolGate(app, "找不到学校", "请从学校介绍列表重新进入。", true);
     return;
   }
 
-  document.title = `${school.name} | Reward School 睿澳升学`;
+  if (!app.dataset.schoolSlug) {
+    document.title = `${school.name} | Reward School 睿澳升学`;
+  }
   const image = getSchoolImage(school);
   const researchProfile = getSchoolResearchProfile(payload, school);
   const advisorInsights = isAdvisor ? buildAdvisorInsights(school) : [];
+  const matchProfile = isAdvisor ? payload?.matchProfiles?.[school.slug] : null;
 
   app.innerHTML = `
     <section class="advisor-school-detail-hero">
@@ -620,6 +633,7 @@ function renderSchoolDetailPage(app, payload, schools, isAdvisor) {
         </div>
         ${renderAdvisorSnapshot(school)}
       </div>
+      ${renderAdvisorMatchProfile(matchProfile)}
       <div class="advisor-school-advisor-block">
         <div class="advisor-school-feature-heading">
           <span>Scale Assessment</span>
@@ -692,6 +706,230 @@ function renderAdvisorSnapshot(school) {
   `;
 }
 
+function renderAdvisorMatchProfile(profile) {
+  if (!profile) {
+    return `<div class="advisor-match-profile advisor-match-profile-missing"><strong>内部匹配画像尚未载入</strong><p>请检查顾问权限或画像数据文件。</p></div>`;
+  }
+
+  const academicFocus = profile.academicReview?.focus || {};
+  const aeasSensitivity = profile.aeasSensitivity || {};
+  const selection = profile.selectionPriorities || {};
+  const patterns = profile.studentPatternFit || {};
+  const pathways = profile.englishPathways || {};
+  const internalRange = profile.aeasPlanning?.internalExperienceRange || {};
+  const officialAeas = profile.aeasPlanning?.officialRequirement || {};
+  const sources = Array.isArray(profile.sourceRegister) ? profile.sourceRegister : [];
+  const soft = profile.softMatch || {};
+  const softSourceLabel = soft.source === "researched-character-profile"
+    ? "官网证据 + 社群公开分享研究"
+    : "关键字推导（未录入研究画像）";
+  const communityInsights = Array.isArray(soft.communityInsights) ? soft.communityInsights : [];
+  const agent = profile.agentPolicy || {};
+  const agentStanceLabel = ({
+    welcome: "欢迎教育代理",
+    "not-welcome": "明文不欢迎代理",
+    "not-mentioned": "官网未明确提及",
+  })[agent.stance] || "待核实";
+
+  return `
+    <div class="advisor-school-advisor-block advisor-match-profile">
+      <div class="advisor-school-feature-heading">
+        <span>Private Fit Profile</span>
+        <h3>内部匹配画像（仅顾问可见）</h3>
+      </div>
+      <p class="advisor-match-warning">内部区间与判断不是学校官方录取线，也不表示录取概率；需结合当期位置、完整成绩单、AEAS 单项、面试和学校书面回复复核。</p>
+
+      <div class="advisor-match-grid">
+        <article class="advisor-match-card">
+          <h4>学术竞争与在校成绩</h4>
+          ${renderAdvisorMatchFact("学术竞争强度", profile.academicCompetition?.level, profile.academicCompetition?.confidence)}
+          ${renderAdvisorMatchFact("判断依据", profile.academicCompetition?.basis)}
+          ${renderInternalChips(profile.academicReview?.priorities, "关注项目")}
+          <dl class="advisor-match-metric-grid">
+            ${renderAdvisorMatchFact("平均分", matchWeightLabel(academicFocus.average))}
+            ${renderAdvisorMatchFact("核心科目", matchWeightLabel(academicFocus.coreSubjects))}
+            ${renderAdvisorMatchFact("成绩趋势", matchWeightLabel(academicFocus.trend))}
+            ${renderAdvisorMatchFact("挂科", matchWeightLabel(academicFocus.failedSubjects))}
+            ${renderAdvisorMatchFact("出勤", matchWeightLabel(academicFocus.attendance))}
+            ${renderAdvisorMatchFact("教师评语", matchWeightLabel(academicFocus.teacherComments))}
+          </dl>
+          ${renderAdvisorMatchFact("官方证据", profile.academicReview?.officialEvidence)}
+        </article>
+
+        <article class="advisor-match-card advisor-match-aeas-card">
+          <h4>AEAS：官方要求与内部经验分开</h4>
+          <div class="advisor-match-evidence advisor-match-evidence-official">
+            <strong>学校公开要求</strong>
+            <p>${escapeHTML(officialAeas.text || "官网未公开固定分数线。")}</p>
+            ${Array.isArray(officialAeas.scoreValues) && officialAeas.scoreValues.length
+              ? `<small>公开分数：${escapeHTML(officialAeas.scoreValues.join(" / "))}</small>`
+              : `<small>公开固定分数：未找到</small>`}
+          </div>
+          <div class="advisor-match-evidence advisor-match-evidence-internal">
+            <strong>顾问内部经验区间</strong>
+            <p>Year 10：${escapeHTML(formatAdvisorRange(internalRange.year10))}</p>
+            <p>Year 11：${escapeHTML(formatAdvisorRange(internalRange.year11))}</p>
+            <small>${escapeHTML(internalRange.note || "仅供规划使用。")}</small>
+          </div>
+          <dl class="advisor-match-metric-grid">
+            ${renderAdvisorMatchFact("阅读", matchWeightLabel(aeasSensitivity.reading))}
+            ${renderAdvisorMatchFact("写作", matchWeightLabel(aeasSensitivity.writing))}
+            ${renderAdvisorMatchFact("听力", matchWeightLabel(aeasSensitivity.listening))}
+            ${renderAdvisorMatchFact("口语", matchWeightLabel(aeasSensitivity.speaking))}
+            ${renderAdvisorMatchFact("词汇", matchWeightLabel(aeasSensitivity.vocabulary))}
+          </dl>
+          <p class="advisor-match-note">${escapeHTML(aeasSensitivity.note || "单项敏感度为内部规划判断。")}</p>
+        </article>
+
+        <article class="advisor-match-card">
+          <h4>面试、材料与学习态度</h4>
+          <dl class="advisor-match-metric-grid">
+            ${renderAdvisorMatchFact("面试权重", matchWeightLabel(profile.interviewAssessment?.weight))}
+            ${renderAdvisorMatchFact("推荐信", matchWeightLabel(selection.references?.weight))}
+            ${renderAdvisorMatchFact("行为", matchWeightLabel(selection.behaviour?.weight))}
+            ${renderAdvisorMatchFact("出勤", matchWeightLabel(selection.attendance?.weight))}
+            ${renderAdvisorMatchFact("学习态度", matchWeightLabel(selection.learningAttitude?.weight))}
+          </dl>
+          ${renderAdvisorMatchFact("面试证据", profile.interviewAssessment?.evidence)}
+          ${renderAdvisorMatchFact("推荐信证据", selection.references?.evidence)}
+          ${renderAdvisorMatchFact("行为与态度证据", selection.learningAttitude?.evidence || selection.behaviour?.evidence)}
+        </article>
+
+        <article class="advisor-match-card">
+          <h4>学生模式适配</h4>
+          <div class="advisor-match-pattern">
+            <strong>成绩一般但进步明显</strong>
+            <span>${escapeHTML(patterns.improvingAcademics?.advisorJudgement || "未知")}</span>
+            <p>${escapeHTML(patterns.improvingAcademics?.evidence || patterns.improvingAcademics?.officialPosition || "暂无证据")}</p>
+          </div>
+          <div class="advisor-match-pattern">
+            <strong>英文较弱但学术扎实</strong>
+            <span>${escapeHTML(patterns.weakEnglishStrongAcademics?.advisorJudgement || "未知")}</span>
+            <p>${escapeHTML(patterns.weakEnglishStrongAcademics?.evidence || patterns.weakEnglishStrongAcademics?.officialPosition || "暂无证据")}</p>
+          </div>
+        </article>
+
+        <article class="advisor-match-card">
+          <h4>英文衔接与条件路径</h4>
+          <dl class="advisor-match-metric-grid">
+            ${renderAdvisorMatchFact("HSP", pathwayStatusLabel(pathways.hsp?.status))}
+            ${renderAdvisorMatchFact("ELICOS", pathwayStatusLabel(pathways.elicos?.status))}
+            ${renderAdvisorMatchFact("条件 Offer", pathwayStatusLabel(pathways.conditionalOffer?.status))}
+            ${renderAdvisorMatchFact("其他英语准备", pathwayStatusLabel(pathways.generalPreparation?.status))}
+          </dl>
+          ${renderAdvisorMatchFact("HSP 证据", pathways.hsp?.evidence)}
+          ${renderAdvisorMatchFact("ELICOS 证据", pathways.elicos?.evidence)}
+          ${renderAdvisorMatchFact("条件 Offer 证据", pathways.conditionalOffer?.evidence)}
+          <p class="advisor-match-note">${escapeHTML(pathways.warning || "必须向学校确认最新路径与退出条件。")}</p>
+        </article>
+
+        <article class="advisor-match-card">
+          <h4>环境、理想学生与不适配风险</h4>
+          ${renderInternalChips(profile.advisorEnvironmentTags || profile.environmentTags, "学校环境")}
+          ${renderInternalChips(profile.idealStudentTraits || profile.preferredTraits, "理想学生特征")}
+          ${renderInternalChips(profile.misfitRisks, "不适配风险", "is-risk")}
+          ${(profile.misfitRisks || []).map((risk) => {
+            const note = profile.misfitRiskNotes?.[risk];
+            return note ? `<p class="advisor-match-risk-note"><strong>${escapeHTML(risk)}：</strong>${escapeHTML(note)}</p>` : "";
+          }).join("")}
+        </article>
+
+        <article class="advisor-match-card">
+          <h4>Education Agent 政策</h4>
+          <dl class="advisor-match-metric-grid">
+            ${renderAdvisorMatchFact("官方立场", agentStanceLabel)}
+            ${renderAdvisorMatchFact("公开授权名单", agent.hasPublishedAgentList ? "有" : "未见/未录入")}
+            ${renderAdvisorMatchFact("可直申", agent.acceptsDirectApplications === false ? "否" : "是/通常可直申")}
+            ${renderAdvisorMatchFact("公开招募新代理", agent.recruitsNewAgents ? "是" : "否/未写明")}
+          </dl>
+          ${renderAdvisorMatchFact("政策摘要", agent.summaryZh)}
+          ${agent.quote ? renderAdvisorMatchFact("官网原文", agent.quote) : ""}
+          ${renderAdvisorMatchFact("顾问备注", agent.notesZh)}
+          ${/^https?:\/\//i.test(agent.evidenceUrl || "") ? `<p class="advisor-match-note"><a href="${escapeHTML(agent.evidenceUrl)}" target="_blank" rel="noopener noreferrer">查验证据页</a> · ${escapeHTML(agent.evidenceStatus || "")}${agent.lastResearchedAt ? ` · 研究日 ${escapeHTML(agent.lastResearchedAt)}` : ""}</p>` : `<p class="advisor-match-note">${escapeHTML(agent.evidenceStatus || "证据待补")}</p>`}
+        </article>
+
+        <article class="advisor-match-card advisor-match-soft-card">
+          <h4>学校性格与软性匹配</h4>
+          ${soft.bestFitSummary ? `<p class="advisor-match-bestfit">${escapeHTML(soft.bestFitSummary)}</p>` : ""}
+          <dl class="advisor-match-metric-grid">
+            ${renderAdvisorMatchFact("学习风格", soft.learningStyle)}
+            ${renderAdvisorMatchFact("关怀风格", soft.pastoralStyle)}
+            ${renderAdvisorMatchFact("社交环境", soft.socialEnvironment)}
+          </dl>
+          ${renderInternalChips(soft.schoolCulture, "学校文化")}
+          ${renderInternalChips(soft.cocurricularStrengths, "活动强项")}
+          ${communityInsights.length
+            ? `<div class="advisor-match-community">
+                 <strong>社群真实分享（匿名、低置信度参考）</strong>
+                 ${communityInsights.map((item) => `
+                   <p class="advisor-match-community-item">
+                     ${item.theme ? `<span class="advisor-match-community-theme">${escapeHTML(item.theme)}</span>` : ""}
+                     ${escapeHTML(item.summary || "")}
+                     ${item.url ? ` <a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.platform || "来源")}</a>` : (item.platform ? ` <span class="advisor-match-community-platform">（${escapeHTML(item.platform)}）</span>` : "")}
+                   </p>`).join("")}
+               </div>`
+            : ""}
+          <p class="advisor-match-note">软性画像来源：${escapeHTML(softSourceLabel)}；置信度低，非学校官方结论，需结合当期招生回复复核。</p>
+        </article>
+      </div>
+
+      <div class="advisor-match-provenance">
+        <div>
+          <strong>顾问经验与置信度：${escapeHTML(profile.advisorExperience?.confidenceLabel || matchConfidenceLabel(profile.advisorExperience?.confidence))}</strong>
+          <p>${escapeHTML(profile.advisorExperience?.note || "暂无说明。")}</p>
+        </div>
+        <div class="advisor-match-source-list">
+          ${sources.map((source) => `
+            <article>
+              <strong>${escapeHTML(source.type || "来源")}</strong>
+              <span>${escapeHTML(source.status || "未知")}</span>
+              <p>${escapeHTML(source.detail || "")}</p>
+              ${/^https?:\/\//i.test(source.url || "") ? `<a href="${escapeHTML(source.url)}" target="_blank" rel="noopener">查看来源</a>` : ""}
+            </article>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAdvisorMatchFact(label, value, confidence = "") {
+  if (!hasMeaningfulValue(value)) return "";
+  return `<div><dt>${escapeHTML(label)}</dt><dd>${escapeHTML(value)}${confidence ? ` <small>（置信度：${escapeHTML(matchConfidenceLabel(confidence))}）</small>` : ""}</dd></div>`;
+}
+
+function renderInternalChips(values, label, className = "") {
+  const safeValues = Array.isArray(values) ? values.filter(hasMeaningfulValue) : [];
+  if (!safeValues.length) return "";
+  return `<div class="advisor-match-chip-group ${escapeHTML(className)}"><strong>${escapeHTML(label)}</strong><div>${safeValues.map((value) => `<span>${escapeHTML(value)}</span>`).join("")}</div></div>`;
+}
+
+function formatAdvisorRange(range = {}) {
+  const minimum = Number.isFinite(Number(range.minimum)) ? Number(range.minimum) : null;
+  const preferred = Number.isFinite(Number(range.preferred)) ? Number(range.preferred) : null;
+  const upper = Number.isFinite(Number(range.upper)) ? Number(range.upper) : null;
+  if (minimum === null && preferred === null && upper === null) return "尚未校准";
+  return `${minimum ?? "?"}–${upper ?? "?"}（规划中心 ${preferred ?? "?"}）`;
+}
+
+function matchWeightLabel(value) {
+  return ({ high: "高", medium: "中", low: "低", unknown: "未知 / 未公开" })[value] || value || "未知 / 未公开";
+}
+
+function matchConfidenceLabel(value) {
+  return ({ high: "高", medium: "中", low: "低" })[value] || value || "未知";
+}
+
+function pathwayStatusLabel(value) {
+  return ({
+    available: "已找到公开路径",
+    "school-linked": "学校关联路径",
+    "conditional-path": "有条件路径证据",
+    "not-evidenced": "公开资料未见明确证据",
+    unknown: "未知 / 需向学校确认",
+  })[value] || value || "未知 / 需向学校确认";
+}
+
 function renderAdvisorScale(scale = {}) {
   const items = [
     ["学校总体规模", scale.schoolSize],
@@ -753,6 +991,7 @@ function buildAdvisorInsights(school) {
     makeProfileItem("国际生路径与入学点", [
       fieldLine("学生签证路径", fields[SCHOOL_FIELDS.visaPath]),
       fieldLine("Year 10/11 入学点", fields[SCHOOL_FIELDS.entryPoint]),
+      fieldLine("Education Agent", fields[SCHOOL_FIELDS.agentPolicy]),
     ]),
     makeProfileItem("英文门槛与课程衔接", [
       fieldLine("AEAS / 英文门槛", fields[SCHOOL_FIELDS.aeas]),
@@ -914,6 +1153,7 @@ function getOriginalTableColumns(schools) {
     SCHOOL_FIELDS.yearLevels,
     SCHOOL_FIELDS.visaPath,
     SCHOOL_FIELDS.entryPoint,
+    SCHOOL_FIELDS.agentPolicy,
     SCHOOL_FIELDS.fees,
     SCHOOL_FIELDS.accommodation,
     SCHOOL_FIELDS.englishSupport,
@@ -949,6 +1189,8 @@ function getFieldDisplayLabel(key) {
   const labels = {
     [SCHOOL_FIELDS.visaPath]: "学生签证国际生路径",
     [SCHOOL_FIELDS.entryPoint]: "Year 10/11 入学点",
+    [SCHOOL_FIELDS.agentPolicy]: "Education Agent 政策",
+    [SCHOOL_FIELDS.agentEvidence]: "Education Agent 证据链接",
     [SCHOOL_FIELDS.fees]: "Year 10-12 国际学生费用",
     [SCHOOL_FIELDS.accommodation]: "住宿 / CAAW / 监护",
     [SCHOOL_FIELDS.englishSupport]: "主课内英文支持",
@@ -1058,6 +1300,7 @@ function buildGeneratedMarketingProfile(school) {
         [
           fieldLine("学生签证国际生路径", fields[SCHOOL_FIELDS.visaPath]),
           fieldLine("Year 10/11入学点", fields[SCHOOL_FIELDS.entryPoint]),
+          fieldLine("Education Agent政策", fields[SCHOOL_FIELDS.agentPolicy]),
         ],
         sourceLabel,
         internationalUrl
@@ -1218,16 +1461,21 @@ function getSchoolImage(school) {
 
 function getSchoolDetailUrl(slug) {
   const params = new URLSearchParams();
-  params.set("school", slug);
   copyRuntimeParams(params);
-  return `advisor-school-detail.html?${params.toString()}`;
+  const query = params.toString();
+  return `/schools/${encodeURIComponent(slug)}.html${query ? `?${query}` : ""}`;
 }
 
 function getSchoolListUrl() {
   const params = new URLSearchParams();
   copyRuntimeParams(params);
   const query = params.toString();
-  return `advisor-schools.html${query ? `?${query}` : ""}`;
+  return `/advisor-schools.html${query ? `?${query}` : ""}`;
+}
+
+function getSchoolSlugFromPath() {
+  const match = window.location.pathname.match(/\/schools\/([^/]+)\.html$/i);
+  return match ? decodeURIComponent(match[1]) : "";
 }
 
 function copyRuntimeParams(targetParams) {

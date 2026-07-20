@@ -2,50 +2,182 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.rewardschool.com.au/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/advisor-product-flow.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/aeas.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/aeas-study-resources.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/aeas-vocabulary.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/aeas-english-bank.html</loc>
+    <lastmod>2026-07-20</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/aeas-mock.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-20</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/pte.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/camp.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/guides.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/aeas-exam-guide.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/aeas-score-report.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/year-11-application-timeline.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/under-18-welfare-guide.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
   </url>
   <url>
     <loc>https://www.rewardschool.com.au/advisor-schools.html</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-16</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/scotch-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/melbourne-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/geelong-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/haileybury.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/methodist-ladies-college-mlc.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/presbyterian-ladies-college-plc.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/st-catherines-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/lauriston-girls-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/caulfield-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/wesley-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/brighton-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/trinity-grammar-school-kew.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/yarra-valley-grammar.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/oakleigh-grammar.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/kilvington-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/korowa-anglican-girls-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/st-leonards-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/melbourne-girls-grammar.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/genazzano-fcj-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/firbank-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/toorak-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/strathcona-girls-grammar.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/peninsula-grammar.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/kardinia-international-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/alphington-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/camberwell-girls-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/carey-baptist-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/mentone-girls-grammar-school.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/st-margarets-berwick-grammar.html</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.rewardschool.com.au/schools/the-geelong-college.html</loc>
+    <lastmod>2026-07-18</lastmod>
   </url>
 </urlset>

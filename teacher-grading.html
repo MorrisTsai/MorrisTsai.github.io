@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>老师批改中心 | Reward School</title>
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260720-01" />
+    <link rel="stylesheet" href="teacher-grading.css?v=20260720-01" />
+  </head>
+  <body class="teacher-body">
+    <header class="teacher-header">
+      <a class="teacher-brand" href="index.html"><span>REWARD SCHOOL</span><strong>老师批改中心</strong></a>
+      <nav><a href="aeas-mock.html">进入题目页</a><a href="advisor-schools.html">学校资料</a><a href="profile.html">个人中心</a></nav>
+    </header>
+    <main class="teacher-shell">
+      <section class="teacher-gate" data-teacher-gate>
+        <p class="eyebrow">Teacher Access</p><h1>正在验证老师权限…</h1><p>练习资料只对已绑定该学生的老师开放。</p>
+      </section>
+      <div data-teacher-console hidden>
+        <section class="teacher-hero">
+          <div><p class="eyebrow">Review Workspace</p><h1>学生练习，一眼看懂</h1><p>先选学生，再按“全部合计”或第几刷查看。作文、口语追问和录音会跟着当时的作答一起出现。</p></div>
+          <div class="teacher-hero-stat"><span>我的学生</span><strong data-student-count>0</strong><small>账号绑定后才可读取</small></div>
+        </section>
+        <section class="teacher-layout">
+          <aside class="teacher-students-panel">
+            <div class="teacher-section-heading"><div><p class="eyebrow">My Students</p><h2>学生名单</h2></div></div>
+            <form class="teacher-add-form" data-add-student-form>
+              <label><span>学生注册邮箱</span><input name="email" type="email" autocomplete="off" placeholder="student@example.com" required /></label>
+              <button type="submit">加入我的学生</button>
+              <p data-add-message></p>
+            </form>
+            <div class="teacher-student-list" data-student-list></div>
+          </aside>
+          <section class="teacher-review-panel">
+            <div class="teacher-review-empty" data-review-empty><span>01</span><h2>先从左侧选择一位学生</h2><p>你会看到每一刷的完成时间、题目数、作文与口语录音。</p></div>
+            <div data-review-content hidden>
+              <div class="teacher-review-head"><div><p class="eyebrow">Practice Record</p><h2 data-review-student></h2><p data-review-meta></p></div><a class="teacher-open-mock" data-open-mock href="aeas-mock.html">在题目页查看</a></div>
+              <div class="teacher-session-tabs" data-session-tabs role="tablist"></div>
+              <div class="teacher-summary" data-review-summary></div>
+              <div class="teacher-attempt-list" data-attempt-list></div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+    <script src="aeas-ai-config.js?v=20260705-02"></script>
+    <script src="api-client.js?v=20260720-01"></script>
+    <script src="teacher-grading.js?v=20260720-01"></script>
+  </body>
+</html>

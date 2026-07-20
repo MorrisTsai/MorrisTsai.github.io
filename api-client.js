@@ -44,6 +44,18 @@ window.rewardSchoolApi = {
     });
   },
 
+  async getVocabularyDataset({ list = "core" } = {}) {
+    return fetchJson(`${getApiEndpoint("/study/vocabulary")}?list=${encodeURIComponent(list)}`, {
+      timeoutMs: 60000,
+    });
+  },
+
+  async getEnglishKnowledgeDataset() {
+    return fetchJson(getApiEndpoint("/study/english-knowledge"), {
+      timeoutMs: 60000,
+    });
+  },
+
   async getAdvisorProductFlow({ token }) {
     return fetchJson(getApiEndpoint("/advisor/product-flow"), {
       headers: getAuthHeaders(token),
@@ -53,6 +65,141 @@ window.rewardSchoolApi = {
   async getAdvisorSchools({ token }) {
     return fetchJson(getApiEndpoint("/advisor/schools"), {
       headers: getAuthHeaders(token),
+    });
+  },
+
+  async getAssessmentDemos() {
+    return fetchJson(getApiEndpoint("/advisor/assessment-demos"));
+  },
+
+  async getTranscriptLarkStatus({ token }) {
+    return fetchJson(getApiEndpoint("/advisor/transcripts/lark/status"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getLarkAuthorizationUrl({ token }) {
+    return fetchJson(getApiEndpoint("/advisor/transcripts/lark/oauth/start"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async listLarkTranscriptFiles({ token, folder = "" }) {
+    const query = folder ? `?folder=${encodeURIComponent(folder)}` : "";
+    return fetchJson(`${getApiEndpoint("/advisor/transcripts/lark/files")}${query}`, {
+      headers: getAuthHeaders(token),
+      timeoutMs: 30000,
+    });
+  },
+
+  async analyzeTranscriptUpload({ token, files }) {
+    const body = new FormData();
+    Array.from(files || []).forEach((file) => body.append("files", file, file.name));
+    return fetchJson(getApiEndpoint("/advisor/transcripts/analyze-upload"), {
+      method: "POST",
+      headers: getAuthHeaders(token),
+      body,
+      timeoutMs: 300000,
+    });
+  },
+
+  async analyzeLarkTranscript({ token, fileUrlOrToken }) {
+    return fetchJson(getApiEndpoint("/advisor/transcripts/analyze-lark"), {
+      method: "POST",
+      headers: { ...getAuthHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify({ fileUrlOrToken }),
+      timeoutMs: 300000,
+    });
+  },
+
+  async createStudentAssessment({ token, assessment }) {
+    return fetchJson(getApiEndpoint("/advisor/assessments"), {
+      method: "POST",
+      headers: { ...getAuthHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify(assessment),
+    });
+  },
+
+  async getMyStudentAssessments({ token }) {
+    return fetchJson(getApiEndpoint("/advisor/assessments/mine"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getAdvisorAssessments({ token }) {
+    return fetchJson(getApiEndpoint("/advisor/assessments"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getStudentAssessment({ token, assessmentId }) {
+    return fetchJson(`${getApiEndpoint("/advisor/assessments")}/${encodeURIComponent(assessmentId)}`, {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async reviewStudentAssessment({ token, assessmentId, advisorStatus, advisorNotes }) {
+    return fetchJson(`${getApiEndpoint("/advisor/assessments")}/${encodeURIComponent(assessmentId)}/review`, {
+      method: "PUT",
+      headers: { ...getAuthHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify({ advisorStatus, advisorNotes }),
+    });
+  },
+
+  async getAdminAnalytics({ token, start, end, event = "", source = "", device = "", page = "" }) {
+    const query = new URLSearchParams({ start, end });
+    if (event) query.set("event", event);
+    if (source) query.set("source", source);
+    if (device) query.set("device", device);
+    if (page) query.set("page", page);
+    return fetchJson(`${getApiEndpoint("/admin/analytics")}?${query}`, {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getAdminAnalyticsReport({ token, start, end, event = "", source = "", device = "", page = "", type = "sessions", search = "", pageNumber = 1, pageSize = 10 }) {
+    const query = new URLSearchParams({ start, end, type, pageNumber: String(pageNumber), pageSize: String(pageSize) });
+    if (event) query.set("event", event);
+    if (source) query.set("source", source);
+    if (device) query.set("device", device);
+    if (page) query.set("page", page);
+    if (search) query.set("search", search);
+    return fetchJson(`${getApiEndpoint("/admin/analytics/report")}?${query}`, {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async getAdminUsers({ token }) {
+    return fetchJson(getApiEndpoint("/admin/users"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async setUserRole({ token, userId, role }) {
+    return fetchJson(`${getApiEndpoint("/admin/users")}/${encodeURIComponent(userId)}/role`, {
+      method: "PUT",
+      headers: {
+        ...getAuthHeaders(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ role }),
+    });
+  },
+
+  async getAccessConfiguration({ token }) {
+    return fetchJson(getApiEndpoint("/admin/access-configuration"), {
+      headers: getAuthHeaders(token),
+    });
+  },
+
+  async setRolePermission({ token, role, permission, enabled }) {
+    return fetchJson(getApiEndpoint("/admin/access-configuration"), {
+      method: "PUT",
+      headers: {
+        ...getAuthHeaders(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ role, permission, enabled: Boolean(enabled) }),
     });
   },
 
@@ -99,6 +246,43 @@ window.rewardSchoolApi = {
     return fetchJson(endpoint, {
       headers: getAuthHeaders(token),
     });
+  },
+
+  async getTeacherStudents({ token }) {
+    return fetchJson(getApiEndpoint("/teacher/students"), { headers: getAuthHeaders(token) });
+  },
+
+  async addTeacherStudent({ token, email }) {
+    return fetchJson(getApiEndpoint("/teacher/students"), {
+      method: "POST",
+      headers: { ...getAuthHeaders(token), "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+  },
+
+  async removeTeacherStudent({ token, studentId }) {
+    return fetchJson(getApiEndpoint(`/teacher/students/${encodeURIComponent(studentId)}`), {
+      method: "DELETE",
+      headers: getAuthHeaders(token),
+      expectNoContent: true,
+    });
+  },
+
+  async getTeacherStudentPractice({ token, studentId, kind = "aeas-mock", sessionId = "" }) {
+    const query = new URLSearchParams({ kind });
+    if (sessionId) query.set("sessionId", sessionId);
+    return fetchJson(`${getApiEndpoint(`/teacher/students/${encodeURIComponent(studentId)}/practice`)}?${query}`, {
+      headers: getAuthHeaders(token),
+      timeoutMs: 30000,
+    });
+  },
+
+  async getTeacherAudioBlob({ token, studentId, audioId }) {
+    const response = await fetch(getApiEndpoint(`/teacher/students/${encodeURIComponent(studentId)}/audio/${encodeURIComponent(audioId)}`), {
+      headers: getAuthHeaders(token),
+    });
+    if (!response.ok) throw new Error(response.status === 404 ? "录音文件不存在。" : "录音读取失败。");
+    return response.blob();
   },
 
   async savePracticeProgress({ token, kind = "aeas-mock", sessionId, progress }) {
@@ -418,7 +602,7 @@ function resolveApiBaseUrlFallback() {
   const onlineIpHost = "47.239.62.81";
   const onlineBase = `https://${onlineHost}/api`;
   const onlineIpBase = `https://${onlineIpHost}/api`;
-  const localBase = "https://localhost:7147/api";
+  const localBase = "http://localhost:7147/api";
   const { protocol, hostname } = window.location;
   const isLocal = protocol === "file:" ||
     hostname === "localhost" ||

@@ -6,7 +6,7 @@ const REWARD_SCHOOL_ONLINE_API_HOST = "www.rewardschool.com.au";
 const REWARD_SCHOOL_ONLINE_IP_HOST = "47.239.62.81";
 const REWARD_SCHOOL_ONLINE_API_BASE_URL = `https://${REWARD_SCHOOL_ONLINE_API_HOST}/api`;
 const REWARD_SCHOOL_ONLINE_IP_API_BASE_URL = `https://${REWARD_SCHOOL_ONLINE_IP_HOST}/api`;
-const REWARD_SCHOOL_LOCAL_API_BASE_URL = "https://localhost:7147/api";
+const REWARD_SCHOOL_LOCAL_API_BASE_URL = "http://localhost:7147/api";
 const REWARD_SCHOOL_ONLINE_FRONTEND_URL = `https://${REWARD_SCHOOL_ONLINE_API_HOST}/aeas-mock.html`;
 
 function isRewardSchoolMarketingHost(hostname) {
@@ -29,6 +29,10 @@ function resolveRewardSchoolApiBaseUrl() {
   // 1. Online page on rewardschool.com.au/www/47.239.62.81 -> same server /api.
   // 2. Local page -> local API server.
   // 3. Local page with ?api=online -> online API server.
+  if (/^https?:\/\//i.test(rewardSchoolApiMode || "") && isRewardSchoolLocalHost(window.location.protocol, window.location.hostname)) {
+    return rewardSchoolApiMode.replace(/\/$/, "");
+  }
+
   if (rewardSchoolApiMode === "local") {
     return REWARD_SCHOOL_LOCAL_API_BASE_URL;
   }

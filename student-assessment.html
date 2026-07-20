@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 学生评估与择校报告 | Reward School 睿澳升学</title>
+    <meta name="description" content="Reward School 顾问录入在校成绩、AEAS和学生背景，生成可解释的维州私校匹配报告。" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260717-06" />
+  </head>
+  <body class="assessment-body">
+    <header class="admin-header assessment-header">
+      <a class="admin-brand" href="index.html"><span>REWARD SCHOOL</span><strong>AI 择校评估</strong></a>
+      <nav><a href="advisor-assessments.html">评估工作台</a><a href="advisor-schools.html">学校资料库</a><a href="profile.html">个人中心</a><a href="index.html">返回网站</a></nav>
+    </header>
+
+    <main class="assessment-shell">
+      <section class="assessment-hero">
+        <div><p class="eyebrow">Student Fit Assessment</p><h1>学生画像与学校匹配</h1><p>仅 Advisor / Admin 可代学生录入真实资料、生成、审核与导出报告。系统按成绩、AEAS单项和背景匹配学校内部画像；结果不是录取概率。</p></div>
+        <div class="assessment-hero-actions"><button type="button" data-demo="0">查看模拟学生 A</button><button type="button" data-demo="1">查看模拟学生 B</button></div>
+      </section>
+
+      <section class="assessment-auth-note" data-assessment-auth>正在检查登录状态...</section>
+
+      <div class="assessment-layout">
+        <form class="assessment-form" data-assessment-form hidden>
+          <section class="assessment-form-section">
+            <div class="assessment-section-heading"><span>01</span><div><h2>学生与目标</h2><p>由 Advisor / Admin 代为录入；开始前须确认已取得家长或监护人授权。</p></div></div>
+            <div class="assessment-grid assessment-grid-three">
+              <label><span>学生姓名 *</span><input name="studentName" maxlength="80" required /></label>
+              <label><span>常用名</span><input name="preferredName" maxlength="80" /></label>
+              <label><span>出生日期</span><input name="dateOfBirth" type="date" /></label>
+              <label><span>性别</span><select name="gender"><option value="unspecified">暂不填写</option><option value="female">女生</option><option value="male">男生</option></select></label>
+              <label><span>当前城市</span><input name="currentCity" maxlength="80" /></label>
+              <label><span>当前学校</span><input name="currentSchool" maxlength="160" /></label>
+              <label><span>当前课程体系</span><input name="currentCurriculum" value="中国课程" maxlength="120" /></label>
+              <label><span>当前年级</span><input name="currentYearLevel" type="number" min="6" max="11" value="8" required /></label>
+              <label><span>目标年级 *</span><select name="targetYearLevel"><option value="10">Year 10</option><option value="11">Year 11</option></select></label>
+              <label><span>目标入学年份 *</span><input name="targetStartYear" type="number" min="2026" max="2031" value="2028" required /></label>
+              <label><span>目标学期</span><select name="targetTerm"><option value="1">Term 1</option><option value="2">Term 2</option><option value="3">Term 3</option><option value="4">Term 4</option></select></label>
+              <label><span>住宿需求</span><select name="accommodationNeed"><option value="school-arranged">需要学校安排住宿</option><option value="boarding">必须boarding</option><option value="homestay">需要homestay</option><option value="parent-relative">与父母或合资格亲属同住</option><option value="none">暂不限制</option></select></label>
+              <label><span>年度总预算 AUD</span><input name="annualBudgetAud" type="number" min="30000" max="250000" step="1000" placeholder="例如 100000" /></label>
+            </div>
+          </section>
+
+          <section class="assessment-form-section">
+            <div class="assessment-section-heading"><span>02</span><div><h2>成绩单科目</h2><p>按成绩单原样保留科目、分数和满分。系统会换算为百分制并归入英文、数学、科学、人文等匹配类别，但不会删除原始科目。</p></div></div>
+            <div class="assessment-document-import" data-document-import>
+              <div class="assessment-document-import-heading">
+                <div><strong>上传学生资料包并自动预填</strong><span>可同时上传学校成绩单、AEAS 成绩报告、学生简介、推荐信和活动证明；系统会先分类再提取，仅限 Advisor / Admin。</span></div>
+                <div class="assessment-lark-connection"><span class="assessment-lark-status" data-lark-status>正在检查 Lark Drive…</span><button type="button" data-connect-lark>连接 / 重新授权</button></div>
+              </div>
+              <div class="assessment-document-import-grid">
+                <div>
+                  <label><span>从电脑上传</span><input type="file" data-transcript-upload multiple accept=".pdf,.docx,.png,.jpg,.jpeg,.webp,.txt,.md,.rtf" /></label>
+                  <button type="button" data-upload-transcripts>上传到 Lark 并分析</button>
+                  <small>每次 1–8 个文件；单个不超过 20 MB。支持 PDF、DOCX、图片和文本。原件归档到 Lark，API 服务器分析完成后删除临时副本。</small>
+                </div>
+                <div>
+                  <label><span>Lark 文件链接或 token</span><input type="text" data-lark-file-input maxlength="500" placeholder="粘贴 Lark Drive 文件链接，或从下方列表选择" /></label>
+                  <div class="assessment-lark-actions"><button type="button" data-load-lark-files>刷新归档文件列表</button><button type="button" data-analyze-lark>从 Lark 读取并分析</button></div>
+                  <label><span>已归档文件</span><select data-lark-file-list><option value="">选择一个 Lark 文件</option></select></label>
+                </div>
+              </div>
+              <p class="assessment-transcript-message" data-transcript-message></p>
+              <details class="assessment-transcript-review" data-transcript-review hidden><summary>查看自动识别说明</summary><div data-transcript-review-content></div></details>
+            </div>
+            <div class="assessment-subject-toolbar"><div><strong>原始科目明细</strong><span>例如语文 108/120、数学 135/150、物理 86/100</span></div><button type="button" data-add-subject>添加科目</button></div>
+            <div class="assessment-subject-list" data-subject-list>
+              <div class="assessment-subject-row" data-subject-row>
+                <label><span>科目</span><input data-subject-name value="语文" maxlength="80" required /></label>
+                <label><span>成绩</span><input data-subject-score type="number" min="0" max="1000" step="0.1" required /></label>
+                <label><span>满分</span><input data-subject-maximum type="number" min="1" max="1000" step="0.1" value="100" required /></label>
+                <label><span>学期／考试</span><input data-subject-period maxlength="120" placeholder="例如 初二下学期期末" /></label>
+                <button type="button" data-remove-subject aria-label="删除科目">删除</button>
+              </div>
+              <div class="assessment-subject-row" data-subject-row>
+                <label><span>科目</span><input data-subject-name value="数学" maxlength="80" required /></label>
+                <label><span>成绩</span><input data-subject-score type="number" min="0" max="1000" step="0.1" required /></label>
+                <label><span>满分</span><input data-subject-maximum type="number" min="1" max="1000" step="0.1" value="100" required /></label>
+                <label><span>学期／考试</span><input data-subject-period maxlength="120" placeholder="例如 初二下学期期末" /></label>
+                <button type="button" data-remove-subject aria-label="删除科目">删除</button>
+              </div>
+              <div class="assessment-subject-row" data-subject-row>
+                <label><span>科目</span><input data-subject-name value="英语" maxlength="80" required /></label>
+                <label><span>成绩</span><input data-subject-score type="number" min="0" max="1000" step="0.1" required /></label>
+                <label><span>满分</span><input data-subject-maximum type="number" min="1" max="1000" step="0.1" value="100" required /></label>
+                <label><span>学期／考试</span><input data-subject-period maxlength="120" placeholder="例如 初二下学期期末" /></label>
+                <button type="button" data-remove-subject aria-label="删除科目">删除</button>
+              </div>
+            </div>
+            <div class="assessment-grid assessment-grid-three">
+              <label><span>成绩单总平均分（如有）</span><input name="overallAverage" type="number" min="0" max="100" step="0.1" placeholder="没有可留空，由系统按各科换算" /></label>
+              <label><span>出勤率 %</span><input name="attendancePercent" type="number" min="0" max="100" step="0.1" /></label>
+              <label><span>成绩趋势</span><select name="academicTrend"><option value="stable">稳定</option><option value="improving">持续上升</option><option value="declining">近期下降</option><option value="mixed">波动</option></select></label>
+              <label><span>排名/位置</span><input name="ranking" maxlength="120" placeholder="例如 年级前20%" /></label>
+            </div>
+            <label class="assessment-wide"><span>弱科或挂科（逗号分隔）</span><input name="failedOrWeakSubjects" maxlength="400" /></label>
+            <label class="assessment-wide"><span>教师评语与学习表现</span><textarea name="teacherComments" rows="4" maxlength="3000" placeholder="包括课堂参与、作业、出勤、进步情况和需要支持的地方"></textarea></label>
+          </section>
+
+          <section class="assessment-form-section">
+            <div class="assessment-section-heading"><span>03</span><div><h2>AEAS</h2><p>单项比一个总分更有判断价值；没有正式结果也可以先提交。</p></div></div>
+            <label class="assessment-checkbox"><input name="hasAeas" type="checkbox" /><span>已经有AEAS结果</span></label>
+            <div class="assessment-grid assessment-grid-three" data-aeas-fields>
+              <label><span>考试日期</span><input name="aeasTestDate" type="date" /></label>
+              <label><span>综合参考</span><input name="aeasOverall" type="number" min="0" max="100" step="0.1" /></label>
+              <label><span>Reading（满分20）</span><input name="aeasReading" type="number" min="0" max="20" step="0.1" /></label>
+              <label><span>Vocabulary（满分20）</span><input name="aeasVocabulary" type="number" min="0" max="20" step="0.1" /></label>
+              <label><span>Writing（满分20）</span><input name="aeasWriting" type="number" min="0" max="20" step="0.1" /></label>
+              <label><span>Listening（满分20）</span><input name="aeasListening" type="number" min="0" max="20" step="0.1" /></label>
+              <label><span>Speaking（满分20）</span><input name="aeasSpeaking" type="number" min="0" max="20" step="0.1" /></label>
+              <label><span>Mathematical Reasoning</span><input name="aeasMathematicalReasoning" type="number" min="0" max="100" step="0.1" /></label>
+              <label><span>Non-Verbal Reasoning</span><input name="aeasNonVerbalReasoning" type="number" min="0" max="100" step="0.1" /></label>
+              <label><span>AEAS评估年级</span><input name="aeasAssessedYearLevel" maxlength="60" placeholder="例如 Year 10" /></label>
+            </div>
+          </section>
+
+          <section class="assessment-form-section">
+            <div class="assessment-section-heading"><span>04</span><div><h2>学生背景介绍</h2><p>这部分帮助系统理解学校特性与学生的真实匹配，不只是看分数。</p></div></div>
+            <label class="assessment-wide"><span>学生背景故事 *</span><textarea name="backgroundStory" rows="6" maxlength="6000" required placeholder="学习经历、转学或成绩变化、兴趣特长、活动、困难与改善、为什么想到澳洲读书"></textarea></label>
+            <div class="assessment-grid assessment-grid-two">
+              <label><span>学习方式</span><textarea name="learningStyle" rows="3" maxlength="1000"></textarea></label>
+              <label><span>性格与沟通</span><textarea name="personality" rows="3" maxlength="1000"></textarea></label>
+              <label><span>寄宿与独立生活准备</span><textarea name="boardingReadiness" rows="3" maxlength="1000"></textarea></label>
+              <label><span>未来方向</span><textarea name="futureGoals" rows="3" maxlength="1000"></textarea></label>
+              <label><span>家长期待</span><textarea name="parentExpectations" rows="3" maxlength="1000"></textarea></label>
+              <label><span>特殊情况说明</span><textarea name="specialCircumstances" rows="3" maxlength="1000"></textarea></label>
+              <label><span>兴趣（逗号分隔）</span><input name="interests" maxlength="600" /></label>
+              <label><span>优势（逗号分隔）</span><input name="strengths" maxlength="600" /></label>
+              <label><span>目前担忧（逗号分隔）</span><input name="concerns" maxlength="600" /></label>
+            </div>
+            <label class="assessment-checkbox assessment-consent"><input name="parentOrGuardianConsent" type="checkbox" required /><span>顾问确认已取得家长或监护人授权，可按<a href="privacy.html" target="_blank" rel="noreferrer">隐私政策</a>使用以上学习资料生成择校评估。真实评估记录仅对授权 Advisor / Admin 开放。</span></label>
+          </section>
+
+          <div class="assessment-submit-bar"><button type="submit">顾问确认并生成评估报告</button><p data-assessment-message></p></div>
+        </form>
+
+        <aside class="assessment-history" data-assessment-history hidden>
+          <h2>历史评估</h2><p>Advisor / Admin 登录后显示全部评估记录。</p>
+        </aside>
+      </div>
+
+      <section class="assessment-report" data-assessment-report hidden></section>
+    </main>
+
+    <script src="aeas-ai-config.js?v=20260705-02"></script>
+    <script src="api-client.js?v=20260717-02"></script>
+    <script src="vendor/html2canvas.min.js?v=1.4.1"></script>
+    <script src="vendor/jspdf.umd.min.js?v=2.5.2"></script>
+    <script src="pdf-download.js?v=20260720-01"></script>
+    <script src="student-assessment.js?v=20260720-01"></script>
+  </body>
+</html>

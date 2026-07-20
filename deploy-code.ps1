@@ -14,6 +14,10 @@ $ArchivePath = Join-Path $TempDir "reward-school-code.zip"
 $RemoteArchivePath = "/tmp/reward-school-code.zip"
 $RemoteScriptUploadPath = "/tmp/reward-school-code-remote.sh"
 $FrontendScriptPath = Join-Path $FrontendDir "script.js"
+$SchoolPagesDir = Join-Path $FrontendDir "schools"
+$DataDir = Join-Path $FrontendDir "data"
+$VendorDir = Join-Path $FrontendDir "vendor"
+$SeoValidationPath = Join-Path $FrontendDir "validate-seo.ps1"
 
 if (-not (Test-Path -LiteralPath $PemFile)) {
   throw "Cannot find SSH key: $PemFile"
@@ -22,6 +26,9 @@ if (-not (Test-Path -LiteralPath $PemFile)) {
 if (-not (Test-Path -LiteralPath $TempDir)) {
   New-Item -ItemType Directory -Path $TempDir | Out-Null
 }
+
+Write-Host "Validating search metadata and crawl files..." -ForegroundColor Cyan
+& $SeoValidationPath
 
 $FrontendVersion = $null
 if (Test-Path -LiteralPath $FrontendScriptPath) {
@@ -46,13 +53,23 @@ if (Test-Path -LiteralPath $ArchivePath) {
 $codeItems = Get-ChildItem -LiteralPath $FrontendDir -File -Force | Where-Object {
   $_.Extension -in @(".html", ".js", ".css", ".xml", ".txt") -or $_.Name -eq "CNAME"
 }
+$codePaths = @($codeItems.FullName)
+if (Test-Path -LiteralPath $SchoolPagesDir) {
+  $codePaths += $SchoolPagesDir
+}
+if (Test-Path -LiteralPath $VendorDir) {
+  $codePaths += $VendorDir
+}
+if (Test-Path -LiteralPath $DataDir) {
+  $codePaths += $DataDir
+}
 
 if (-not $codeItems) {
   throw "No frontend code files found to deploy."
 }
 
 Write-Host "Packing frontend code files..." -ForegroundColor Cyan
-Compress-Archive -LiteralPath $codeItems.FullName -DestinationPath $ArchivePath -Force
+Compress-Archive -LiteralPath $codePaths -DestinationPath $ArchivePath -Force
 
 Write-Host "Uploading code archive..." -ForegroundColor Cyan
 & scp -i $PemFile $ArchivePath "${RemoteUser}@${RemoteHost}:$RemoteArchivePath"
@@ -78,6 +95,7 @@ fi
 
 echo "[2/3] Cleaning old root code files..."
 find "`$WEB_DIR" -maxdepth 1 -type f \( -name "*.html" -o -name "*.js" -o -name "*.css" -o -name "*.xml" -o -name "*.txt" -o -name "CNAME" \) -delete
+rm -rf "`$WEB_DIR/schools" "`$WEB_DIR/vendor"
 
 echo "[3/3] Unzipping frontend code archive..."
 set +e
@@ -89,9 +107,16 @@ if [ "`$UNZIP_CODE" -gt 1 ]; then
   exit "`$UNZIP_CODE"
 fi
 
+# AEAS learning content is served from the database API, not public JSON files.
+rm -f "`$WEB_DIR/data/aeas-vocabulary-core-2000.json" \
+      "`$WEB_DIR/data/aeas-vocabulary-full-8000.json" \
+      "`$WEB_DIR/data/aeas-english-knowledge-bank.json"
+
 test -f "`$WEB_DIR/aeas-mock.html"
+test -f "`$WEB_DIR/admin.html"
 test -f "`$WEB_DIR/sitemap.xml"
 test -f "`$WEB_DIR/robots.txt"
+test -f "`$WEB_DIR/schools/scotch-college.html"
 echo "Frontend code files are ready in `$WEB_DIR"
 "@
 
@@ -114,4 +139,14 @@ Write-Host "Run deploy-assets.bat when images/audio/assets need to be uploaded."
 Write-Host "Open: http://$RemoteHost/aeas-mock.html?debug=1" -ForegroundColor Green
 if ($FrontendVersion) {
   Write-Host "Frontend version: v$FrontendVersion" -ForegroundColor Green
+}
+
+Write-Host "Notifying Bing and IndexNow participants..." -ForegroundColor Cyan
+& (Join-Path $FrontendDir "submit-indexnow.ps1")
+
+if ($env:BAIDU_SUBMIT_ENDPOINT) {
+  Write-Host "Notifying Baidu..." -ForegroundColor Cyan
+  & (Join-Path $FrontendDir "submit-baidu.ps1") -Endpoint $env:BAIDU_SUBMIT_ENDPOINT
+} else {
+  Write-Host "Baidu submission skipped: BAIDU_SUBMIT_ENDPOINT is not configured." -ForegroundColor Yellow
 }

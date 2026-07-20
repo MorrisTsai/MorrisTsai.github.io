@@ -6,12 +6,12 @@
     <title>个人中心 | Reward School 睿澳升学</title>
     <meta
       name="description"
-      content="Reward School 睿澳升学学生个人中心，可管理用户名、重设密码，并查看 AEAS 模拟测试与练习记录。"
+      content="Reward School 睿澳升学学生个人中心，可管理用户名、重设密码，并查看适合 AEAS 考试准备的入学模拟练习记录。"
     />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260714-10" />
+    <link rel="stylesheet" href="styles.css?v=20260717-01" />
   </head>
   <body>
     <div class="top-strip">
@@ -38,8 +38,8 @@
       </button>
 
       <nav id="site-nav" class="site-nav" aria-label="主导航">
-        <a class="nav-mock-cta" href="aeas-mock.html"><span>AEAS 模拟考</span><small>免费在线练习</small></a>
-        <details class="nav-dropdown"><summary>中学留学</summary><div><a href="advisor-product-flow.html">私校申请与升学规划</a><a href="aeas.html">AEAS 相关辅导</a><a class="nav-mock-link" href="aeas-mock.html?v=20260624-04"><span>AEAS 模拟测试 / Mock Test</span><small>在线练习</small></a><a href="under-18-welfare-guide.html">住宿监护与入学落地</a><a class="nav-advisor-link" href="advisor-schools.html"><span>学校资料库</span></a></div></details>
+        <a class="nav-mock-cta" href="aeas-mock.html"><span>模拟练习</span><small>适合 AEAS 考生</small></a>
+        <details class="nav-dropdown"><summary>中学留学</summary><div><a href="advisor-product-flow.html">私校申请与升学规划</a><a href="aeas.html">升学衔接课程</a><a class="nav-mock-link" href="aeas-mock.html?v=20260624-04"><span>入学模拟练习</span><small>适合 AEAS 考生</small></a><a href="under-18-welfare-guide.html">住宿监护与入学落地</a><a class="nav-advisor-link" href="advisor-schools.html"><span>学校资料库</span></a></div></details>
         <a href="pte.html">PTE 培训</a>
         <a href="camp.html">小留学</a>
         <details class="nav-dropdown nav-guides-dropdown"><summary>升学指南</summary><div><a href="guides.html">全部升学指南</a><a href="aeas-exam-guide.html">AEAS 考试流程</a><a href="aeas-score-report.html">AEAS 成绩报告</a><a href="year-11-application-timeline.html">Year 11 申请时间线</a><a href="under-18-welfare-guide.html">未满 18 岁住宿与监护安排</a></div></details>
@@ -129,6 +129,12 @@
           <div class="profile-history-detail" data-history-detail hidden></div>
         </div>
 
+        <div class="profile-panel" data-assessment-panel hidden>
+          <div class="profile-panel-heading"><div><p class="eyebrow">School Fit</p><h2>AI 学生评估与择校报告</h2></div></div>
+          <p>提交最近两年成绩、AEAS单项和学生背景，生成可解释的冲刺、匹配与稳妥学校建议。</p>
+          <a class="button primary" href="student-assessment.html">开始学生评估</a>
+        </div>
+
         <div class="profile-panel profile-advisor-panel" data-advisor-panel hidden>
           <div class="profile-panel-heading">
             <div>
@@ -140,12 +146,27 @@
             <a class="profile-advisor-card" href="advisor-product-flow.html">
               <span>Application Plan</span>
               <strong>私校申请方案</strong>
-              <small>澳洲私校申请与 AEAS 备考规划项目完整服务流程</small>
+              <small>澳洲私校升学衔接与 AEAS 考试规划项目完整服务流程</small>
             </a>
             <a class="profile-advisor-card school" href="advisor-schools.html">
               <span>School Guide</span>
               <strong>学校介绍</strong>
               <small>Year 10-12 维州私校比较、适配判断与单校顾问页</small>
+            </a>
+            <a class="profile-advisor-card" href="advisor-assessments.html">
+              <span>Assessment Desk</span>
+              <strong>学生评估工作台</strong>
+              <small>查看学生画像、匹配结果、资料缺口并完成顾问审核</small>
+            </a>
+            <a class="profile-advisor-card teacher" href="teacher-grading.html" data-teacher-link hidden>
+              <span>Teacher Review</span>
+              <strong>学生练习与批改</strong>
+              <small>绑定学生、按刷次查看答案、作文、口语追问与录音</small>
+            </a>
+            <a class="profile-advisor-card admin" href="admin.html" data-admin-link hidden>
+              <span>Admin Console</span>
+              <strong>管理后台</strong>
+              <small>账号角色、权限配置与网站事件数据</small>
             </a>
           </div>
         </div>
@@ -174,14 +195,14 @@
     <footer class="site-footer">
       <div>
         <strong>Reward School 睿澳升学</strong>
-        <p>全澳留学代办 | 私校申请 | AEAS/PTE | 墨尔本小留学</p>
+        <p>全澳留学代办 | 私校申请 | AEAS 考试准备 / PTE | 墨尔本小留学</p>
       </div>
       <nav class="footer-links" aria-label="页尾导航"><a href="privacy.html">隐私政策</a><a href="terms.html">使用条款</a><a href="#top">返回顶部</a></nav>
     </footer>
 
-    <script src="script.js?v=20260714-01"></script>
+    <script src="script.js?v=20260720-02"></script>
     <script src="aeas-ai-config.js?v=20260705-02"></script>
-    <script src="api-client.js?v=20260705-02"></script>
-    <script src="profile.js?v=20260713-01"></script>
+    <script src="api-client.js?v=20260720-01"></script>
+    <script src="profile.js?v=20260720-01"></script>
   </body>
 </html>

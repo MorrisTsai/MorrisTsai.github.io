@@ -13,7 +13,7 @@ const APPLICATION_TIMELINE = [
     time: "12个月前",
     title: "第一次英文判断",
     detail: "完成AEAS或内部模考，判断是否需要ELICOS/HSP，开始建立学校梯度。",
-    services: ["AEAS备考", "学校清单", "英文方案"]
+    services: ["AEAS考试准备", "学校清单", "英文方案"]
   },
   {
     time: "9-10个月前",
@@ -149,7 +149,7 @@ const SERVICE_DETAIL_MAP = {
       items: ["是否需要寄宿或住宿安排", "学费与家庭预算", "学生性格与适应能力", "家庭未来升学规划", "冲刺校/匹配校/保底校梯度", "学校当年招生政策与空位"]
     }
   ],
-  "AEAS 备考": [
+  "AEAS 考试准备": [
     {
       title: "备考服务",
       items: ["备考规划", "考试技巧讲解", "模拟考试", "答疑与反馈", "正式考试安排提醒"]
@@ -258,7 +258,7 @@ const SERVICE_DETAIL_MAP = {
 };
 
 const PUBLIC_PRODUCT_FLOW = {
-  title: "Year 10-12 澳洲私校申请与 AEAS 备考规划项目",
+  title: "Year 10-12 澳洲私校升学衔接与 AEAS 考试规划项目",
   subtitle: "从学生评估、AEAS、选校申请、面试到签证住宿与落地陪跑，把高年级私校申请放在同一条路线中管理。",
   positioning: "公开页展示私校申请方案与服务路径；具体报价仅 Advisor 登录后可见。",
   audience: [
@@ -294,7 +294,7 @@ const PUBLIC_PRODUCT_FLOW = {
     },
     {
       number: "03",
-      title: "AEAS 备考",
+      title: "AEAS 考试准备",
       kicker: "把考试变成申请材料的一部分",
       text: "帮助学生熟悉 AEAS 考试形式，提高英文表达、答题效率和考试稳定性，为后续申请提供更有力的评估材料。",
       items: ["备考规划", "考试技巧讲解", "模拟考试", "答疑与反馈", "正式考试安排提醒"]

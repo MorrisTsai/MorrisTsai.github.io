@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学生评估工作台 | Reward School</title>
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260717-01" />
+  </head>
+  <body class="admin-body">
+    <header class="admin-header"><a class="admin-brand" href="index.html"><span>REWARD SCHOOL</span><strong>学生评估工作台</strong></a><nav><a href="student-assessment.html">新建评估</a><a href="advisor-schools.html">学校资料库</a><a href="profile.html">个人中心</a></nav></header>
+    <main class="admin-shell">
+      <section class="admin-gate" data-assessment-gate><p class="eyebrow">Advisor Access</p><h1>正在验证顾问权限...</h1></section>
+      <div class="admin-console" data-assessment-console hidden>
+        <section class="admin-hero"><div><p class="eyebrow">Assessment Pipeline</p><h1>学生评估与报告</h1><p>查看学生提交、资料完整度、匹配结果和顾问审核状态。</p></div><button type="button" class="admin-secondary-button" data-refresh-assessments>刷新</button></section>
+        <section class="admin-section"><div class="admin-section-heading"><div><h2>评估列表</h2><p>点击记录进入完整报告并填写顾问意见。</p></div><label class="admin-search"><span>筛选</span><input type="search" data-assessment-filter placeholder="学生姓名、年份或状态" /></label></div><div class="assessment-pipeline" data-assessment-list><span>正在读取...</span></div></section>
+      </div>
+    </main>
+    <script src="aeas-ai-config.js?v=20260705-02"></script><script src="api-client.js?v=20260717-01"></script><script src="advisor-assessments.js?v=20260717-01"></script>
+  </body>
+</html>

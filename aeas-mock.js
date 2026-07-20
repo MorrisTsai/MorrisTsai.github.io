@@ -302,6 +302,7 @@ let mockState = {
   typeId: null,
   questionIndex: null,
 };
+window.rewardSchoolGetMockContext = () => ({ ...mockState });
 
 let mockProgress = loadProgress();
 let authSession = loadAuthSession();
@@ -388,8 +389,15 @@ function isAuthenticated() {
   return Boolean(getAuthToken() && authSession?.status === "ready" && authSession?.user?.id);
 }
 
+function hasUserPermission(permission) {
+  const expected = String(permission || "").replace(/[_-]/g, "").toLowerCase();
+  return (authSession?.user?.permissions || []).some((item) =>
+    String(item || "").replace(/[_-]/g, "").toLowerCase() === expected
+  );
+}
+
 function getPracticeScopeId() {
-  return authSession?.user?.id || mockProgress.sessionId;
+  return mockProgress.sessionId;
 }
 
 function createEmptyProgress(ownerUserId = authSession?.user?.id || null) {
@@ -495,6 +503,7 @@ async function hydrateProgressAfterLogin() {
       : createEmptyProgress(userId);
     purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
+    applyMockDeepLink();
     renderMockApp();
     if (!remoteProgress?.sessionId) queueProgressSync(100);
   } catch (error) {
@@ -566,6 +575,7 @@ function replaceRandomMockSubject() {
 
 function startRandomMockTest() {
   cleanupSpeakingStream();
+  void window.rewardSchoolAnalytics?.track("mock_exam_start", { exam: RANDOM_MOCK_TEST_ID });
   purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
   const randomSubject = replaceRandomMockSubject();
   if (randomSubject) randomSubject.examStartedAt = new Date().toISOString();
@@ -588,6 +598,7 @@ function showRandomMockIntro() {
 
 function ensureExamStartedAt(subject) {
   if (!subject?.isFullMockTest || subject.examStartedAt) return;
+  void window.rewardSchoolAnalytics?.track("mock_exam_start", { exam: subject.id });
   subject.examStartedAt = new Date().toISOString();
 }
 
@@ -771,6 +782,42 @@ function getQuestions(type) {
 
 function getQuestion(type, questionIndex) {
   return getQuestions(type).find((question) => question.number === questionIndex);
+}
+
+function readMockDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const subjectId = params.get("subject");
+  if (!subjectId) return null;
+
+  const gradeBand = params.get("grade") || "10-12";
+  if (!["7-9", "10-12"].includes(gradeBand)) return null;
+
+  const subject = findSubject(subjectId);
+  if (!subject) return null;
+
+  const typeId = params.get("type");
+  if (!typeId) {
+    return { gradeBand, subjectId, typeId: null, questionIndex: null };
+  }
+
+  const type = findType(subject, typeId);
+  if (!type) return null;
+  const questionIndex = Number(params.get("question"));
+  if (!Number.isFinite(questionIndex) || !getQuestion(type, questionIndex)) {
+    return { gradeBand, subjectId, typeId, questionIndex: null };
+  }
+
+  return { gradeBand, subjectId, typeId, questionIndex };
+}
+
+function applyMockDeepLink() {
+  const deepLinkState = readMockDeepLink();
+  if (!deepLinkState) return false;
+  mockState = { ...mockState, ...deepLinkState };
+  if (deepLinkState.subjectId === RANDOM_MOCK_TEST_ID && !deepLinkState.typeId) {
+    randomMockSession = { active: false, completed: false, awaitingStart: true };
+  }
+  return true;
 }
 
 function getQuestionAnswerType(question) {
@@ -1442,7 +1489,7 @@ function renderGradeBandList() {
     <div class="mock-stage-heading">
       <p class="eyebrow">Step 01</p>
       <h3>选择模拟测试年级</h3>
-      <p>请选择要练习的 AEAS 模拟测试年级段。目前 10-12 年级题库已开放部分科目，7-9 年级题库正在整理中。</p>
+      <p>请选择入学模拟练习的年级段。相关内容适合计划参加 AEAS 考试的学生；目前 10-12 年级题库已开放部分科目，7-9 年级题库正在整理中。</p>
     </div>
     <div class="mock-card-grid">
       <button class="mock-select-card is-disabled" type="button" data-grade-band="7-9">
@@ -4710,6 +4757,10 @@ async function canUseAiReview(kind = "writing") {
     showSystemToast("会员状态取得失败", "无法从服务器确认账号状态，请检查 API 连接或重新登录。");
     return false;
   }
+  if (!hasUserPermission("MockAiReview")) {
+    showSystemToast("当前账号没有 AI 批改权限", "请联系管理员调整账号角色或角色权限。");
+    return false;
+  }
 
   if (!user?.emailVerified && !user?.superUser) {
     showSystemToast("需要先验证邮箱", "请先到邮箱点击验证链接，验证后才能使用 AI 批改。");
@@ -5066,6 +5117,7 @@ async function handleAuthSubmit(form, action) {
       ? await window.rewardSchoolApi.register({ email, password, displayName })
       : await window.rewardSchoolApi.login({ email, password });
     saveAuthSession({ token: session?.token || "", user: null, status: "loading" });
+    void window.rewardSchoolAnalytics?.track(mode === "register" ? "auth_register" : "auth_login", { source: "aeas_mock" });
     mockProgress = createEmptyProgress(null);
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(compactMockProgressForStorage(mockProgress)));
     setMockState({ gradeBand: null, subjectId: null, typeId: null, questionIndex: null });
@@ -5277,6 +5329,11 @@ if (mockApp) {
         }
         return;
       }
+      if (!hasUserPermission("MockTest")) {
+        showSystemToast("当前账号没有模拟考权限", "请联系管理员调整账号角色或角色权限。");
+        return;
+      }
+      void window.rewardSchoolAnalytics?.track("mock_start", { gradeBand: target.dataset.gradeBand });
       setMockState({ gradeBand: target.dataset.gradeBand, subjectId: null, typeId: null, questionIndex: null });
       return;
     }
@@ -5289,6 +5346,7 @@ if (mockApp) {
         return;
       }
       const selectedSubject = findSubject(target.dataset.subject);
+      void window.rewardSchoolAnalytics?.track("mock_subject_open", { subject: target.dataset.subject });
       ensureExamStartedAt(selectedSubject);
       setMockState({ subjectId: target.dataset.subject, typeId: null, questionIndex: null });
       return;
@@ -5394,6 +5452,7 @@ if (mockApp) {
 
   purgeSubjectProgress(RANDOM_MOCK_TEST_ID);
   saveProgress();
+  applyMockDeepLink();
   renderMockApp();
   if (getAuthToken()) {
     void refreshAuthStateFromServer({ hydrateProgress: true });
