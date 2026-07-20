@@ -150,7 +150,7 @@ function renderLearningQuestions() {
   container.innerHTML = learningState.questions.length ? learningState.questions.map((question) => {
     const checked = learningState.selected.has(question.id) ? "checked" : "";
     const preview = question.content?.prompt || question.content?.stimulus || "";
-    return `<label class="ls-question-card"><input type="checkbox" value="${question.id}" ${checked}/><div><h3>${escapeLearning(formatLearningQuestionTitle(question))}</h3><p>${escapeLearning(preview)}</p><div class="ls-meta"><span class="ls-badge">${question.estimatedMinutes}分钟</span></div></div></label>`;
+    return `<label class="ls-question-card"><input type="checkbox" value="${question.id}" ${checked}/><div><h3>${escapeLearning(formatLearningQuestionTitle(question))}</h3><p>${escapeLearning(preview)}</p></div></label>`;
   }).join("") : `<div class="ls-empty">当前筛选条件下没有题目。</div>`;
 }
 
