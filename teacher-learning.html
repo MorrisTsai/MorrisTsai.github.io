@@ -30,7 +30,7 @@
           <div>
             <p class="ls-eyebrow">1-to-1 Learning Operations</p>
             <h1>下一步教什么，一眼看清。</h1>
-            <p>从 AEAS 英语题库选出“哪个题型的哪几题”，保存成题目组并发给指定学生。客观题自动回流，写作与口语进入教师批改队列。</p>
+            <p>从 AEAS 模拟考题库按英语能力、数学推理、非语言推理选出“哪个题型的哪几题”，保存成题目组并发给指定学生。</p>
           </div>
           <div class="ls-actions"><button class="ls-button" type="button" data-jump="library">开始组题</button><a class="ls-button is-secondary" href="student-learning.html">查看学生端</a></div>
         </section>
@@ -59,15 +59,14 @@
 
         <section class="ls-view" data-view="library" hidden>
           <form class="ls-filter" data-filter-form>
-            <select name="yearBand" aria-label="年级段"><option value="">全部年级</option><option value="4-6">Years 4–6</option><option value="7-9">Years 7–9</option><option value="10-12">Years 10–12</option></select>
-            <select name="skill" aria-label="模拟考科目"><option value="">全部模拟考科目</option><option value="reading">阅读</option><option value="vocabulary">词汇题</option><option value="gap-filling">完形填空</option><option value="listening">听力</option><option value="writing">写作</option><option value="speaking">口语</option><option value="mathematics">数学推理</option><option value="nonverbal">非语言推理</option></select>
-            <select name="questionType" aria-label="题型"><option value="">全部题型</option><optgroup label="English"><option value="mock-reading">阅读模拟题</option><option value="mock-vocabulary">词汇模拟题</option><option value="mock-gap-filling">完形填空模拟题</option><option value="mock-listening">听力模拟题</option><option value="mock-writing">写作模拟题</option><option value="mock-speaking">口语模拟题</option></optgroup><optgroup label="Mathematics"><option value="mock-number">数字与运算</option><option value="mock-algebra">代数</option><option value="mock-geometry">几何与测量</option><option value="mock-word-problems">英文文字题</option><option value="mock-data">图表理解</option><option value="mock-logic">数学逻辑</option></optgroup><optgroup label="Non-Verbal"><option value="mock-same-pairs">相同图形</option><option value="mock-fractions">图形分割</option><option value="mock-reasoning">图形推理</option><option value="mock-odd-one-out">找不同</option><option value="mock-sequence-input">序列填空</option><option value="mock-series">图形序列</option><option value="mock-analogies">图形类比</option><option value="mock-shape-ops">图形运算</option><option value="mock-table-fill">表格填空</option><option value="mock-subtraction-fill">减法填空</option></optgroup></select>
-            <select name="difficulty" aria-label="难度"><option value="">全部难度</option><option value="foundation">基础</option><option value="standard">标准</option><option value="stretch">强化</option></select>
+            <select name="yearBand" aria-label="年级"><option value="10-12">Years 10–12</option></select>
+            <select name="majorType" aria-label="大题型" data-major-type><option value="english">英语能力</option><option value="mathematics">数学推理</option><option value="nonverbal">非语言推理</option></select>
+            <select name="questionType" aria-label="子题型" data-subtype></select>
             <input name="search" type="search" placeholder="题号、标题或标签" aria-label="搜索题目" />
             <button class="ls-button" type="submit">筛选题库</button>
           </form>
           <div class="ls-question-layout">
-            <div><div class="ls-question-list" data-question-list><div class="ls-empty">正在读取英语题库…</div></div></div>
+            <div><div class="ls-question-list" data-question-list><div class="ls-empty">正在读取模拟考题库…</div></div></div>
             <aside class="ls-card ls-builder">
               <div class="ls-card-head"><div><p class="ls-eyebrow">Question Pack</p><h2>当前题目组</h2><p><span data-selected-count>0</span> 题 · 预计 <span data-selected-minutes>0</span> 分钟</p></div></div>
               <div class="ls-card-body">
@@ -127,6 +126,6 @@
     <script src="aeas-ai-config.js?v=20260720-01"></script>
     <script src="api-client.js?v=20260720-01"></script>
     <script src="learning-api.js?v=20260720-01"></script>
-    <script src="teacher-learning.js?v=20260720-02"></script>
+    <script src="teacher-learning.js?v=20260721-01"></script>
   </body>
 </html>

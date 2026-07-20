@@ -8,6 +8,23 @@ const learningState = {
   reviewQueue: [],
 };
 
+const learningQuestionTypes = {
+  english: [
+    ["", "全部英语题型"], ["mock-reading", "阅读理解"], ["mock-vocabulary", "词汇运用"],
+    ["mock-gap-filling", "词汇填空"], ["mock-listening", "听力理解"], ["mock-writing", "写作任务"], ["mock-speaking", "口语面试"],
+  ],
+  mathematics: [
+    ["", "全部数学题型"], ["mock-number", "数字与运算"], ["mock-algebra", "代数推理"],
+    ["mock-geometry", "几何与测量"], ["mock-word-problems", "英文文字题"], ["mock-data", "图表理解"], ["mock-logic", "数学逻辑"],
+  ],
+  nonverbal: [
+    ["", "全部非语言题型"], ["mock-same-pairs", "相同图形"], ["mock-fractions", "图形分割"],
+    ["mock-reasoning", "图形推理"], ["mock-odd-one-out", "找不同"], ["mock-sequence-input", "序列填空"],
+    ["mock-series", "图形序列"], ["mock-analogies", "图形类比"], ["mock-shape-ops", "图形运算"],
+    ["mock-table-fill", "表格填空"], ["mock-subtraction-fill", "减法填空"],
+  ],
+};
+
 function learningSession() { try { return JSON.parse(localStorage.getItem(LEARNING_AUTH_KEY) || "null"); } catch { return null; } }
 function learningToken() { return learningSession()?.token || ""; }
 function canReviewLearning(user) { return user?.admin || (user?.permissions || []).some((p) => String(p).replace(/[_-]/g, "").toLowerCase() === "practicereview"); }
@@ -37,6 +54,7 @@ function bindTeacherLearningEvents() {
   document.querySelectorAll("[data-tab]").forEach((button) => button.addEventListener("click", () => showLearningView(button.dataset.tab)));
   document.querySelectorAll("[data-jump]").forEach((button) => button.addEventListener("click", () => showLearningView(button.dataset.jump)));
   document.querySelector("[data-filter-form]").addEventListener("submit", (event) => { event.preventDefault(); loadLearningQuestions(new FormData(event.currentTarget)); });
+  document.querySelector("[data-major-type]").addEventListener("change", updateLearningSubtypeOptions);
   document.querySelector("[data-question-list]").addEventListener("change", toggleLearningQuestion);
   document.querySelector("[data-selected-list]").addEventListener("click", removeSelectedLearningQuestion);
   document.querySelector("[data-pack-form]").addEventListener("submit", createLearningPack);
@@ -46,6 +64,12 @@ function bindTeacherLearningEvents() {
   document.querySelector("[data-student-cards]").addEventListener("click", selectInsightStudent);
   document.querySelector("[data-review-list]").addEventListener("submit", submitLearningFeedback);
   document.querySelector("[data-review-list]").addEventListener("click", playLearningAudio);
+  updateLearningSubtypeOptions();
+}
+
+function updateLearningSubtypeOptions() {
+  const majorType = document.querySelector("[data-major-type]").value;
+  document.querySelector("[data-subtype]").innerHTML = (learningQuestionTypes[majorType] || []).map(([value, label]) => `<option value="${value}">${label}</option>`).join("");
 }
 
 function showLearningView(name) {
@@ -104,12 +128,19 @@ async function selectInsightStudent(event) {
 }
 
 async function loadLearningQuestions(formData) {
-  const filters = formData ? Object.fromEntries(formData.entries()) : {};
+  const source = formData || new FormData(document.querySelector("[data-filter-form]"));
+  const filters = Object.fromEntries(source.entries());
+  const majorType = filters.majorType || "english";
+  delete filters.majorType;
+  if (majorType === "mathematics" || majorType === "nonverbal") filters.skill = majorType;
   const container = document.querySelector("[data-question-list]");
-  container.innerHTML = `<div class="ls-empty">正在读取英语题库…</div>`;
+  container.innerHTML = `<div class="ls-empty">正在读取模拟考题库…</div>`;
   try {
     const payload = await rewardSchoolLearningApi.getQuestions({ token: learningToken(), filters });
-    learningState.questions = payload.questions || [];
+    const questions = payload.questions || [];
+    learningState.questions = majorType === "english"
+      ? questions.filter((question) => !["mathematics", "nonverbal"].includes(question.skill))
+      : questions;
     renderLearningQuestions();
   } catch (error) { container.innerHTML = `<div class="ls-empty">${escapeLearning(error.message)}</div>`; }
 }
@@ -119,7 +150,7 @@ function renderLearningQuestions() {
   container.innerHTML = learningState.questions.length ? learningState.questions.map((question) => {
     const checked = learningState.selected.has(question.id) ? "checked" : "";
     const preview = question.content?.prompt || question.content?.stimulus || "";
-    return `<label class="ls-question-card"><input type="checkbox" value="${question.id}" ${checked}/><div><h3>${escapeLearning(question.title)}</h3><p>${escapeLearning(preview)}</p><div class="ls-meta"><span class="ls-badge">${labelLearningSkill(question.skill)}</span><span class="ls-badge">${escapeLearning(question.questionType)}</span><span class="ls-badge">${labelLearningDifficulty(question.difficulty)}</span><span class="ls-badge">${question.estimatedMinutes}分钟</span></div></div><code>${escapeLearning(question.stableId)}@v${question.version}</code></label>`;
+    return `<label class="ls-question-card"><input type="checkbox" value="${question.id}" ${checked}/><div><h3>${escapeLearning(formatLearningQuestionTitle(question))}</h3><p>${escapeLearning(preview)}</p><div class="ls-meta"><span class="ls-badge">${question.estimatedMinutes}分钟</span></div></div></label>`;
   }).join("") : `<div class="ls-empty">当前筛选条件下没有题目。</div>`;
 }
 
@@ -144,7 +175,7 @@ function renderSelectedLearningQuestions() {
   const selected = [...learningState.selected.values()];
   document.querySelector("[data-selected-count]").textContent = String(selected.length);
   document.querySelector("[data-selected-minutes]").textContent = String(selected.reduce((sum, item) => sum + Number(item.estimatedMinutes || 0), 0));
-  document.querySelector("[data-selected-list]").innerHTML = selected.length ? selected.map((question, index) => `<div>${index + 1}. ${escapeLearning(question.title)}<button type="button" data-remove-question="${question.id}" aria-label="移除">×</button></div>`).join("") : `<div>还没有选择题目。</div>`;
+  document.querySelector("[data-selected-list]").innerHTML = selected.length ? selected.map((question, index) => `<div>${index + 1}. ${escapeLearning(formatLearningQuestionTitle(question))}<button type="button" data-remove-question="${question.id}" aria-label="移除">×</button></div>`).join("") : `<div>还没有选择题目。</div>`;
 }
 
 async function createLearningPack(event) {
@@ -245,3 +276,17 @@ function formatLearningDate(value) { if (!value) return ""; const date = new Dat
 function escapeLearning(value) { return String(value ?? "").replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]); }
 
 initTeacherLearning();
+
+function labelLearningQuestionType(value) {
+  for (const types of Object.values(learningQuestionTypes)) {
+    const match = types.find(([key]) => key === value);
+    if (match) return match[1];
+  }
+  return value || "题目";
+}
+
+function formatLearningQuestionTitle(question) {
+  const mock = question.content?.mock || {};
+  const number = mock.sourceRange || mock.sourceNumber || mock.number;
+  return `${labelLearningQuestionType(question.questionType)}${number ? ` · 第 ${number} 题` : ""}`;
+}
