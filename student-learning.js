@@ -58,7 +58,7 @@ function renderStudentWorkspace() {
   document.querySelector("[data-assignment-workspace]").innerHTML = `<section class="ls-card"><div class="ls-card-head"><div><p class="ls-eyebrow">${escapeStudent(assignment.teacherName)} · ${labelStudentStatus(assignment.status)}</p><h2>${escapeStudent(assignment.title)}</h2><p>${escapeStudent(assignment.instructions || "按顺序完成，答案会自动保存。")}</p></div><span class="ls-badge">${assignment.items.length}题</span></div><div class="ls-card-body"><div class="ls-student-summary"><div><span>已保存</span><strong>${answered}/${assignment.items.length}</strong></div><div><span>客观题正确</span><strong>${graded ? `${correct}/${graded}` : "—"}</strong></div><div><span>截止时间</span><strong>${assignment.dueAt ? formatStudentDate(assignment.dueAt) : "不限"}</strong></div></div>${assignment.items.map((item) => renderStudentQuestion(item, editable, assignment.status)).join("")}<div class="ls-footer-actions"><span class="ls-save-state" data-global-save-state>${editable ? "修改后自动保存" : "作业已提交，只读查看"}</span><div class="ls-actions">${!editable && assignment.allowRetry ? `<button class="ls-button is-secondary" type="button" data-repractice>生成错题复练</button>` : ""}${editable ? `<button class="ls-button" type="button" data-submit-assignment>提交整份作业</button>` : ""}</div></div></div></section>`;
 }
 
-function renderStudentQuestion(item, editable, assignmentStatus) {
+function renderLegacyStudentQuestion(item, editable, assignmentStatus) {
   const question = item.question || {}; const content = question.content || {}; const answer = item.response?.answer || {}; const result = item.response?.result || {}; const feedback = item.response?.teacherFeedback || {};
   const controls = question.responseKind === "single_choice"
     ? `<div class="ls-options">${(content.options || []).map((option) => `<label class="ls-option"><input type="radio" name="answer-${item.id}" value="${escapeStudent(option.value)}" data-response-item="${item.id}" ${String(answer.value) === String(option.value) ? "checked" : ""} ${editable ? "" : "disabled"}/><span><strong>${escapeStudent(option.value)}.</strong> ${escapeStudent(option.label)}</span></label>`).join("")}</div>`
@@ -81,7 +81,7 @@ function scheduleStudentSave(event) {
   const state = document.querySelector(`[data-save-state="${CSS.escape(itemId)}"]`); if (state) state.textContent = "等待保存…";
 }
 
-function getStudentAnswer(itemId) {
+function getLegacyStudentAnswer(itemId) {
   const card = document.querySelector(`[data-item-card="${CSS.escape(itemId)}"]`); if (!card) return { value: "" };
   const selected = card.querySelector(`input[type=radio][data-response-item="${CSS.escape(itemId)}"]:checked`); if (selected) return { value: selected.value };
   const field = card.querySelector(`textarea[data-response-item="${CSS.escape(itemId)}"],input:not([type=radio])[data-response-item="${CSS.escape(itemId)}"]`); return { value: field?.value || "" };
@@ -146,8 +146,55 @@ async function createStudentRepractice() {
 
 function showStudentToast(message) { const toast = document.querySelector("[data-toast]"); toast.textContent = message; toast.hidden = false; clearTimeout(showStudentToast.timer); showStudentToast.timer = setTimeout(() => { toast.hidden = true; }, 3000); }
 function labelStudentStatus(value) { return ({ assigned: "待开始", in_progress: "进行中", submitted: "等待老师", in_review: "批改中", reviewed: "已完成", cancelled: "已取消" })[value] || value; }
-function labelStudentSkill(value) { return ({ reading: "阅读", vocabulary: "词汇", listening: "听力", writing: "写作", speaking: "口语" })[value] || value; }
+function labelStudentSkill(value) { return ({ reading: "阅读", vocabulary: "词汇题", "gap-filling": "完形填空", listening: "听力", writing: "写作", speaking: "口语", mathematics: "数学推理", nonverbal: "非语言推理" })[value] || value; }
 function formatStudentDate(value) { const date = new Date(value); return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat("zh-CN", { timeZone: "Australia/Sydney", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(date); }
 function escapeStudent(value) { return String(value ?? "").replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]); }
 
 initStudentLearning();
+
+function renderStudentQuestion(item, editable, assignmentStatus) {
+  const question = item.question || {};
+  const content = question.content || {};
+  const answer = item.response?.answer || {};
+  const result = item.response?.result || {};
+  const feedback = item.response?.teacherFeedback || {};
+  const disabled = editable ? "" : "disabled";
+  let controls = "";
+  if (question.responseKind === "single_choice") {
+    controls = `<div class="ls-options">${(content.options || []).map((option) => `<label class="ls-option"><input type="radio" name="answer-${item.id}" value="${escapeStudent(option.value)}" data-response-item="${item.id}" ${String(answer.value) === String(option.value) ? "checked" : ""} ${disabled}/><span><strong>${escapeStudent(option.value)}.</strong> ${escapeStudent(option.label)}</span></label>`).join("")}</div>`;
+  } else if (question.responseKind === "multi_choice") {
+    controls = `<div class="ls-options">${(content.options || []).map((option) => `<label class="ls-option"><input type="checkbox" value="${escapeStudent(option.value)}" data-response-item="${item.id}" ${(answer.values || []).map(String).includes(String(option.value)) ? "checked" : ""} ${disabled}/><span><strong>${escapeStudent(option.value)}.</strong> ${escapeStudent(option.label)}</span></label>`).join("")}</div>`;
+  } else if (question.responseKind === "structured_text") {
+    controls = `<div class="ls-feedback-grid">${(content.inputFields || []).map((field) => `<label class="ls-field"><span>${escapeStudent(field.label || field.id)}</span><input data-response-item="${item.id}" data-response-field="${escapeStudent(field.id)}" type="${field.type === "number" ? "number" : "text"}" value="${escapeStudent(answer.fields?.[field.id] || "")}" placeholder="${escapeStudent(field.placeholder || "填写答案")}" ${disabled}/></label>`).join("")}</div><small class="ls-save-state" data-save-state="${item.id}">${answer.fields && Object.keys(answer.fields).length ? "已保存" : "尚未作答"}</small>`;
+  } else if (question.responseKind === "long_text") {
+    controls = `<textarea class="ls-writing" data-response-item="${item.id}" placeholder="在这里完成模拟考写作…" ${disabled}>${escapeStudent(answer.value || "")}</textarea><small class="ls-save-state" data-save-state="${item.id}">${answer.value ? "已保存" : "尚未作答"}</small>`;
+  } else if (question.responseKind === "audio") {
+    controls = `<div class="ls-audio-controls"><button class="ls-button is-secondary" type="button" data-record="${item.id}" ${disabled}>开始录音</button><button class="ls-button is-quiet" type="button" data-stop-record="${item.id}" disabled>停止</button></div><p class="ls-audio-status" data-audio-status="${item.id}">${answer.audioUploadId ? "录音已上传" : "尚未录音"}</p>`;
+  } else {
+    controls = `<input data-response-item="${item.id}" value="${escapeStudent(answer.value || "")}" ${disabled}/>`;
+  }
+  const listening = content.audioSrc
+    ? `<audio controls preload="metadata" src="${escapeStudent(content.audioSrc)}" style="width:100%;margin:12px 0"></audio>`
+    : content.audioText ? `<button class="ls-button is-secondary" type="button" data-play-listening="${item.id}" data-audio-text="${escapeStudent(content.audioText)}">播放听力</button>` : "";
+  const visuals = `${content.sharedStemImage ? `<img src="${escapeStudent(content.sharedStemImage)}" alt="题组示意图" style="display:block;max-width:100%;margin:14px auto"/>` : ""}${content.image ? `<img src="${escapeStudent(content.image)}" alt="模拟考题目图片" style="display:block;max-width:100%;margin:14px auto"/>` : ""}`;
+  const wordBank = content.wordBank?.length ? `<div class="ls-actions" style="margin:12px 0">${content.wordBank.map((word) => `<span class="ls-badge"><strong>${escapeStudent(word.value)}</strong> · ${escapeStudent(word.label)}</span>`).join("")}</div>` : "";
+  const speakingPrompts = [...(content.prompts || []), ...(content.pictureQuestions || []), ...(content.followUps || [])];
+  const extraPrompts = speakingPrompts.length ? `<ol>${speakingPrompts.map((prompt) => `<li>${escapeStudent(typeof prompt === "string" ? prompt : prompt.text || prompt.question || JSON.stringify(prompt))}</li>`).join("")}</ol>` : "";
+  const resultBlock = result.graded === true ? `<div class="ls-result ${result.correct ? "is-correct" : "is-wrong"}">${result.correct ? "回答正确" : "回答不正确"}${result.total ? ` · ${result.correctCount}/${result.total}` : ""}${question.explanation ? ` · ${escapeStudent(question.explanation)}` : ""}</div>` : "";
+  const feedbackBlock = feedback.comment || feedback.score != null ? `<div class="ls-result"><strong>老师反馈${feedback.score != null ? ` · ${feedback.score}分` : ""}</strong><br/>${escapeStudent(feedback.comment || "")}${feedback.decision === "revise" ? "<br/><strong>请修改后复练。</strong>" : ""}</div>` : "";
+  return `<article class="ls-item-card" data-item-card="${item.id}"><span class="ls-stable">${escapeStudent(question.stableId)}@v${question.version}</span><h3>${item.position}. ${escapeStudent(question.title)}</h3><div class="ls-actions"><span class="ls-badge">${labelStudentSkill(question.skill)}</span><span class="ls-badge">${escapeStudent(question.questionType)}</span><span class="ls-badge">约${question.estimatedMinutes}分钟</span></div>${content.stimulus ? `<div class="ls-stimulus" style="white-space:pre-wrap">${escapeStudent(content.stimulus)}</div>` : ""}<p class="ls-prompt">${escapeStudent(content.prompt || "")}</p>${wordBank}${visuals}${listening}${extraPrompts}${controls}${assignmentStatus !== "assigned" && assignmentStatus !== "in_progress" ? resultBlock : ""}${feedbackBlock}</article>`;
+}
+
+function getStudentAnswer(itemId) {
+  const card = document.querySelector(`[data-item-card="${CSS.escape(itemId)}"]`);
+  if (!card) return { value: "" };
+  const selected = card.querySelector(`input[type=radio][data-response-item="${CSS.escape(itemId)}"]:checked`);
+  if (selected) return { value: selected.value };
+  const checkboxSelector = `input[type=checkbox][data-response-item="${CSS.escape(itemId)}"]`;
+  const checkboxInputs = [...card.querySelectorAll(checkboxSelector)];
+  if (checkboxInputs.length) return { values: checkboxInputs.filter((field) => field.checked).map((field) => field.value) };
+  const structured = [...card.querySelectorAll(`[data-response-field][data-response-item="${CSS.escape(itemId)}"]`)];
+  if (structured.length) return { fields: Object.fromEntries(structured.map((field) => [field.dataset.responseField, field.value])) };
+  const field = card.querySelector(`textarea[data-response-item="${CSS.escape(itemId)}"],input:not([type=radio]):not([type=checkbox])[data-response-item="${CSS.escape(itemId)}"]`);
+  return { value: field?.value || "" };
+}

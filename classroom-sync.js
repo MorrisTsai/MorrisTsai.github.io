@@ -23,3 +23,28 @@ function startClassroomTimer(){clearInterval(classroom.timerTimer);classroom.tim
 function formatClassroomTimer(state){if(!state.timerStartedAt||state.timerSeconds==null)return"未开始";const elapsed=state.timerRunning?Math.floor((Date.now()-new Date(state.timerStartedAt).getTime())/1000):0;const left=Math.max(0,Number(state.timerSeconds)-elapsed);return `${String(Math.floor(left/60)).padStart(2,"0")}:${String(left%60).padStart(2,"0")}`}
 function showClassroomToast(m){const t=document.querySelector("[data-toast]");t.textContent=m;t.hidden=false;clearTimeout(showClassroomToast.timer);showClassroomToast.timer=setTimeout(()=>t.hidden=true,2800)}function labelClassroomSkill(v){return({reading:"阅读",vocabulary:"词汇",listening:"听力",writing:"写作",speaking:"口语"})[v]||v}function formatClassroomDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?"":new Intl.DateTimeFormat("zh-CN",{timeZone:"Australia/Sydney",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}).format(d)}function escClassroom(v){return String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[c])}
 initClassroom();
+
+function renderClassroomQuestion(q,state){
+  const content=q.content||{},answer=state.studentResponse||{},disabled=classroom.teacher||state.locked?"disabled":"";
+  let control="";
+  if(q.responseKind==="single_choice")control=`<div class="ls-options">${(content.options||[]).map(o=>`<label class="ls-option"><input type="radio" name="classroom-answer" value="${escClassroom(o.value)}" ${String(answer.value)===String(o.value)?"checked":""} ${disabled}/><span><strong>${escClassroom(o.value)}.</strong> ${escClassroom(o.label)}</span></label>`).join("")}</div>`;
+  else if(q.responseKind==="multi_choice")control=`<div class="ls-options">${(content.options||[]).map(o=>`<label class="ls-option"><input type="checkbox" data-classroom-option value="${escClassroom(o.value)}" ${(answer.values||[]).map(String).includes(String(o.value))?"checked":""} ${disabled}/><span><strong>${escClassroom(o.value)}.</strong> ${escClassroom(o.label)}</span></label>`).join("")}</div>`;
+  else if(q.responseKind==="structured_text")control=`<div class="ls-feedback-grid">${(content.inputFields||[]).map(field=>`<label class="ls-field"><span>${escClassroom(field.label||field.id)}</span><input data-classroom-field="${escClassroom(field.id)}" value="${escClassroom(answer.fields?.[field.id]||"")}" ${disabled}/></label>`).join("")}</div>`;
+  else control=`<textarea class="ls-writing" data-classroom-answer ${disabled} placeholder="在这里作答…">${escClassroom(answer.value||"")}</textarea>`;
+  const media=`${content.sharedStemImage?`<img src="${escClassroom(content.sharedStemImage)}" alt="题组示意图" style="display:block;max-width:100%;margin:14px auto"/>`:""}${content.image?`<img src="${escClassroom(content.image)}" alt="模拟考题目图片" style="display:block;max-width:100%;margin:14px auto"/>`:""}${content.audioSrc?`<audio controls preload="metadata" src="${escClassroom(content.audioSrc)}" style="width:100%;margin:12px 0"></audio>`:""}`;
+  const wordBank=content.wordBank?.length?`<div class="ls-actions">${content.wordBank.map(word=>`<span class="ls-badge"><strong>${escClassroom(word.value)}</strong> · ${escClassroom(word.label)}</span>`).join("")}</div>`:"";
+  return `<article class="ls-item-card"><span class="ls-stable">${escClassroom(q.stableId)}@v${q.version}</span><h3>${escClassroom(q.title)}</h3>${content.stimulus?`<div class="ls-stimulus" style="white-space:pre-wrap">${escClassroom(content.stimulus)}</div>`:""}<p class="ls-prompt">${escClassroom(content.prompt||"")}</p>${wordBank}${media}${control}${state.answerRevealed&&q.answerKey?`<div class="ls-result is-correct"><strong>参考答案：${escClassroom(q.answerKey.value||JSON.stringify(q.answerKey))}</strong><br/>${escClassroom(q.explanation||"")}</div>`:""}</article>`;
+}
+
+async function sendStudentClassroomAnswer(event){
+  if(classroom.teacher||!classroom.current)return;
+  if(!event.target.closest('[name="classroom-answer"],[data-classroom-option],[data-classroom-field],[data-classroom-answer]'))return;
+  const radio=document.querySelector('input[name="classroom-answer"]:checked');
+  const options=[...document.querySelectorAll('[data-classroom-option]:checked')];
+  const fields=[...document.querySelectorAll('[data-classroom-field]')];
+  const text=document.querySelector('[data-classroom-answer]');
+  const answer=fields.length?{fields:Object.fromEntries(fields.map(field=>[field.dataset.classroomField,field.value]))}:options.length||document.querySelector('[data-classroom-option]')?{values:options.map(option=>option.value)}:{value:text?.value??radio?.value??""};
+  try{await rewardSchoolLearningApi.sendStudentClassroomResponse({token:classroomToken(),sessionId:classroom.current.id,answer})}catch(error){showClassroomToast(error.message)}
+}
+
+function labelClassroomSkill(value){return({reading:"阅读",vocabulary:"词汇题","gap-filling":"完形填空",listening:"听力",writing:"写作",speaking:"口语",mathematics:"数学推理",nonverbal:"非语言推理"})[value]||value}

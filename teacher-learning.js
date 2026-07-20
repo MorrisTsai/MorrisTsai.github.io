@@ -238,7 +238,7 @@ async function playLearningAudio(event) {
 
 function setLearningMessage(node, message, error = false, success = false) { node.textContent = message || ""; node.classList.toggle("is-error", error); node.classList.toggle("is-success", success); }
 function showLearningToast(message) { const toast = document.querySelector("[data-toast]"); toast.textContent = message; toast.hidden = false; clearTimeout(showLearningToast.timer); showLearningToast.timer = setTimeout(() => { toast.hidden = true; }, 2600); }
-function labelLearningSkill(value) { return ({ reading: "阅读", vocabulary: "词汇", listening: "听力", writing: "写作", speaking: "口语" })[value] || value || ""; }
+function labelLearningSkill(value) { return ({ reading: "阅读", vocabulary: "词汇题", "gap-filling": "完形填空", listening: "听力", writing: "写作", speaking: "口语", mathematics: "数学推理", nonverbal: "非语言推理" })[value] || value || ""; }
 function labelLearningDifficulty(value) { return ({ foundation: "基础", standard: "标准", stretch: "强化" })[value] || value || ""; }
 function labelAssignmentStatus(value) { return ({ assigned: "待开始", in_progress: "进行中", submitted: "待批改", in_review: "批改中", reviewed: "已完成", cancelled: "已取消" })[value] || value || ""; }
 function formatLearningDate(value) { if (!value) return ""; const date = new Date(value); return Number.isNaN(date) ? "" : new Intl.DateTimeFormat("zh-CN", { timeZone: "Australia/Sydney", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(date); }
