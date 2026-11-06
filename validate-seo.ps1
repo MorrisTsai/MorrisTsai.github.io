@@ -6,6 +6,7 @@ $PublicPages = [ordered]@{
   "advisor-product-flow.html" = "https://www.rewardschool.com.au/advisor-product-flow.html"
   "aeas.html" = "https://www.rewardschool.com.au/aeas.html"
   "pte.html" = "https://www.rewardschool.com.au/pte.html"
+  "pte-guide.html" = "https://www.rewardschool.com.au/pte-guide.html"
   "camp.html" = "https://www.rewardschool.com.au/camp.html"
   "guides.html" = "https://www.rewardschool.com.au/guides.html"
   "aeas-exam-guide.html" = "https://www.rewardschool.com.au/aeas-exam-guide.html"
