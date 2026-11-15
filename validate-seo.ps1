@@ -99,7 +99,15 @@ Assert-SEOCondition (-not (($AllHtml -join "`n") -match 'images\.unsplash\.com')
 
 [xml]$Sitemap = Get-Content -LiteralPath (Join-Path $Root "sitemap.xml") -Raw -Encoding UTF8
 $SitemapUrls = @($Sitemap.urlset.url | ForEach-Object { [string]$_.loc })
-$ExpectedUrls = @($PublicPages.Values)
+$ReaderPath = Join-Path $Root "migration/index.html"
+Assert-SEOCondition (Test-Path -LiteralPath $ReaderPath) "Migration reading room is missing"
+$ReaderHtml = Get-Content -LiteralPath $ReaderPath -Raw -Encoding UTF8
+Assert-SEOCondition ($ReaderHtml -match '<link rel="canonical" href="https://www\.rewardschool\.com\.au/migration/">') "Migration reading room canonical URL is incorrect"
+Assert-SEOCondition ($ReaderHtml -match 'href="/"[^>]*>') "Migration reading room is missing its Reward School return link"
+foreach ($Asset in @("app.js", "styles.css", "cases.js", "data/cases.json")) {
+  Assert-SEOCondition (Test-Path -LiteralPath (Join-Path $Root "migration/$Asset")) "Migration reading room asset is missing: $Asset"
+}
+$ExpectedUrls = @($PublicPages.Values) + @("https://www.rewardschool.com.au/migration/")
 Assert-SEOCondition ($SitemapUrls.Count -eq $ExpectedUrls.Count) "Sitemap URL count does not match public page count"
 foreach ($Url in $ExpectedUrls) {
   Assert-SEOCondition ($SitemapUrls -contains $Url) "Sitemap is missing $Url"
@@ -111,4 +119,4 @@ Assert-SEOCondition ($Robots -match 'Sitemap:\s+https://www\.rewardschool\.com\.
 $BlockedMainlandDependencies = 'fonts\.googleapis\.com|fonts\.gstatic\.com|youtube\.com|youtu\.be|maps\.google\.|google\.com/recaptcha'
 Assert-SEOCondition (-not (($PublicHtml -join "`n") -match $BlockedMainlandDependencies)) "Public pages contain a dependency commonly blocked in mainland China"
 
-Write-Host "SEO validation passed for $($PublicPages.Count) public pages." -ForegroundColor Green
+Write-Host "SEO validation passed for $($PublicPages.Count) public pages and the migration reading room." -ForegroundColor Green

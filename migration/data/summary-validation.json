@@ -1,0 +1,1746 @@
+{
+  "generatedAt": "2026-11-15T12:02:14.451Z",
+  "documents": [
+    {
+      "id": "migration-act",
+      "groups": 144,
+      "capsules": 968,
+      "longPages": 303,
+      "coveredPages": 303,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "migration-regulations",
+      "groups": 694,
+      "capsules": 3187,
+      "longPages": 1619,
+      "coveredPages": 1619,
+      "headingGuideSections": 412
+    },
+    {
+      "id": "agent-code",
+      "groups": 85,
+      "capsules": 89,
+      "longPages": 32,
+      "coveredPages": 32,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "agents-regulations",
+      "groups": 33,
+      "capsules": 79,
+      "longPages": 13,
+      "coveredPages": 13,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "competency-standards",
+      "groups": 31,
+      "capsules": 15,
+      "longPages": 15,
+      "coveredPages": 15,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "citizenship-act",
+      "groups": 75,
+      "capsules": 112,
+      "longPages": 36,
+      "coveredPages": 36,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "citizenship-regulations",
+      "groups": 36,
+      "capsules": 48,
+      "longPages": 13,
+      "coveredPages": 13,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "art-act",
+      "groups": 313,
+      "capsules": 427,
+      "longPages": 140,
+      "coveredPages": 140,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "art-rules",
+      "groups": 66,
+      "capsules": 57,
+      "longPages": 24,
+      "coveredPages": 24,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "direction-123",
+      "groups": 112,
+      "capsules": 50,
+      "longPages": 52,
+      "coveredPages": 52,
+      "headingGuideSections": 0
+    },
+    {
+      "id": "regulations-endnotes",
+      "groups": 15,
+      "capsules": 5,
+      "longPages": 5,
+      "coveredPages": 5,
+      "headingGuideSections": 0
+    }
+  ],
+  "errors": [],
+  "missingPages": [],
+  "headingGuideSections": [
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-01"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-division-1-2-interpretation"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-04"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-04a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-04b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-05"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-06"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-07"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-08"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-09"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-11"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-11a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-11b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-11c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-12aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-13"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-13a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-13b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-14a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15ea"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15faa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15fa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15fb"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15g"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15i"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15j"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15k"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15l"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15m"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15n"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15p"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15q"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-15r"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-16"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-16aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-17"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-18"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-20k"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-20ka"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-20kc"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-20kd"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-20l"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-20laa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-21"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-22"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-25"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-27"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1-30"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-02"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-03a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-03aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-03b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-04"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-05a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-05b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-06"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-06aaa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-06aab"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-06aac"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-06a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07ab"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07ac"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07af"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07ah"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07ai"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07al"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07am"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07ap"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07aq"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07ar"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-07as"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08aaa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08e"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08f"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08g"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-08h"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-09"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-10aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-10a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-10b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-10c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-11"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-11a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-11b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12g"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12h"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12ja"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12k"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12l"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12m"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12n"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-12p"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-13"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-14"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-16"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-20a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-20b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-21a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-22"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-23"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-24"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-24a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25ab"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25ac"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25ad"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25ae"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-25af"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-27c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-27d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-28"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-40"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-40a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-subdivision-2-9-1-cancellation-under-subdivision-c-of-division-3-of-part-2-of-the-act"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-43b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-46"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-48"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-49a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-50"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-50aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-53"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-53a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-54"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-55"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-21b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-56"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-57"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-57a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-division-2-13-criteria-for-approval-of-work-sponsor"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60s"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60t"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60u"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60v"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60w"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60x"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60y"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-60z"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-61"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-61a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-62"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-63"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-63a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-64"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-64a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-64b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-65"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-66"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-67"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-68a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-68j"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-68k"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-69"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-70"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-72aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-72b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-73aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-73a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-73b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-73c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-74"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-75a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-75b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-75c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-76"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-76a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-77"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-79a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-80"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-80a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-81"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-85"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-86a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87ca"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87cb"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87cc"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87cd"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87ce"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87cf"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-87d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-88"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-95"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-90"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-91"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-92"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-93"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-94"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-94a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-94b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-96"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-97"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-98"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-99"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-100"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-101"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-102"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-102a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-102c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-102d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-103"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-105"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-75"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-2-86"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-02"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-03aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-03ab"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-04"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-05"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-06a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-07"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-08"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-09"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-10"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-10a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-11"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-12"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-13"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-13b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-13c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-14"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-15"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-16"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-17"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-19"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-21"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-30"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-31"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-3-13d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-01"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-01a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-12"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-13a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-13b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-14"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-15"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-16"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-17"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-28"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-31a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-31b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-33"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-34"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-39"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-4-42"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-01"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-02"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-division-5-2-procedure-of-commissioners-and-prescribed-authorities"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-04"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-05"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-06"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-07"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-08"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-09"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-10"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-11"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-12"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-13"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-14"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-15"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-15c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-16"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-17"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-18"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19e"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19h"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19j"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19k"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19l"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19m"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-19p"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-20"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-20a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-21"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-22"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-23"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-24"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-25"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-26"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-27"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-28"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-29"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-30"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-31"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-32"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-32a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-34"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-34d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-34e"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-34f"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35ab"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35d"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35e"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-35f"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-37"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-38"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-40"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-41"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-41c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-42"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-43"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-44"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-5-44a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1108a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1113"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1114b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1114c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1118a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1123a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1123b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1124"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1124a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1124b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1128"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1129"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1130"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1130a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1131"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1133"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1136"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1137"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1138"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1139"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1140"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1202b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1211"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1201"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1206"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1208a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1212b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1214a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1214ba"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1217"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1214c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1215"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1218aa"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1219"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1220a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1221"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1221a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1222"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1224a"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1225"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1223b"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1223c"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1224"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1227"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1228"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1229"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1230"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1234"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1237"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1238"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1240"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1241"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1242"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1231"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1236"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1239"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1301"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1302"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1303"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1304"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1305"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1306"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1307"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1401"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1402"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1403"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v1-1404"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-schedule-3-additional-criteria-applicable-to-unlawful-non-citizens-and-certain-bridging-visa-holders"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-schedule-4-public-interest-criteria-and-related-provisions"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-2-conditions-applicable-to-certain-subclasses-of-visas-for-the-purposes-of-subclause-4013-2"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-3-1"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-4-1"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-schedule-5-special-return-criteria"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-3-overseas-employment-experience-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-4-australian-employment-experience-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-5-aggregating-points-for-employment-experience-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-6-australian-professional-year-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-7-educational-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-7a-specialist-educational-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-8-australian-study-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-9-credentialled-community-language-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-10-study-in-designated-regional-area-qualification"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-11-partner-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-12-state-or-territory-nomination-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-6d-13-designated-regional-area-nomination-or-sponsorship-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-3-english-language-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-4-educational-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-5-business-experience-qualifications-business-innovation-stream-only"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-6-investor-experience-qualifications-investor-stream-only"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-7-financial-asset-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-8-business-turnover-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-part-7a-9-business-innovation-qualifications"
+    },
+    {
+      "doc": "migration-regulations",
+      "id": "v3-schedule-8-visa-conditions"
+    }
+  ],
+  "passed": true
+}

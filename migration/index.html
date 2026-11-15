@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#17191c">
+  <meta name="description" content="澳洲移民法中英逐段對照閱讀。按法條、章節及簽證分類，附引用預覽、跳轉和瀏覽器書籤。">
+  <link rel="canonical" href="https://www.rewardschool.com.au/migration/">
+  <title>移民法研讀室 · Migration Reading Room</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23214c42'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='42' fill='%23fff' font-family='serif'%3E法%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="summary-styles.css">
+  <link rel="stylesheet" href="reading-palette.css">
+  <link rel="stylesheet" href="case-styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳至閱讀內容</a>
+  <header class="topbar">
+    <a class="brand" href="#/library" aria-label="移民法研讀室首頁"><span class="seal">法</span><span><strong>移民法研讀室</strong><small>MIGRATION READING ROOM</small></span></a>
+    <nav class="topnav" aria-label="主選單"><a href="#/library" id="nav-library">書庫</a><a href="#/cases" id="nav-cases">案例</a><a href="#/bookmarks" id="nav-bookmarks">我的書籤 <span id="bookmark-count">0</span></a><a href="#/about" id="nav-about">閱讀說明</a></nav>
+    <button class="search-trigger" id="search-open"><span class="search-icon" aria-hidden="true"></span><span>搜尋法條、簽證或關鍵字</span><kbd>Ctrl K</kbd></button>
+    <button class="icon-button mobile-menu" id="mobile-menu" aria-label="開啟目錄">☰</button>
+  </header>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="文件分類"><div id="library-nav"></div><div class="sidebar-foot"><a class="aside-link" href="/">← Reward School</a><span class="local-dot"></span>書籤僅保存在此瀏覽器<br><small>公開書庫 · 個人閱讀紀錄</small></div></aside>
+    <main id="main" tabindex="-1"><div class="loading"><span class="spinner"></span>正在開啟書庫…</div></main>
+    <aside class="companion" id="companion" aria-label="本頁導覽"></aside>
+  </div>
+  <div class="hover-card" id="ref-preview" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="dialog-top"><h2 id="search-title">搜尋書庫</h2><button data-close="search-dialog" class="icon-button" aria-label="關閉搜尋">×</button></div><label class="search-field"><span class="search-icon" aria-hidden="true"></span><input id="global-search" placeholder="例如：155.212、8503、section 46、家庭暴力" autocomplete="off"></label><div id="search-status" class="muted">輸入法條編號、簽證號碼或中英文關鍵字</div><div id="search-results"></div><footer class="dialog-footer">搜尋包含已匯入的原文及中文譯文。<kbd>Esc</kbd> 關閉</footer></dialog>
+  <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title"><div class="dialog-top"><h2 id="settings-title">閱讀設定</h2><button data-close="settings-dialog" class="icon-button" aria-label="關閉設定">×</button></div><label>文字大小 <input id="font-size" type="range" min="16" max="26" step="1"><output id="font-size-value"></output></label><label>行距 <input id="line-height" type="range" min="1.5" max="2.5" step="0.1"><output id="line-height-value"></output></label><fieldset><legend>閱讀底色</legend><div class="theme-options"><button data-theme="paper">暖白</button><button data-theme="warm">柔米</button><button data-theme="dark">石墨</button></div></fieldset><p class="muted">偏好設定會保存在此瀏覽器。</p></dialog>
+  <input type="file" id="import-file" accept="application/json,.json" hidden>
+</body>
+</html>

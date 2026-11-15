@@ -1,0 +1,35 @@
+/* Neutral reading surfaces. Colors are design choices; contrast follows WCAG. */
+:root{--bg:#f4f3ef;--paper:#fcfcfa;--side:#f0f0ec;--ink:#25282b;--muted:#5d6369;--line:#d7dbde;--green:#315d83;--green-light:#e6edf4;--gold:#425f7b;--shadow:0 12px 38px #17212b21}
+.theme-warm{--bg:#eeeae2;--paper:#f8f4ec;--side:#e8e3d9;--ink:#302e2b;--muted:#625d55;--line:#cfc9be;--green:#315c7c;--green-light:#e3eaf0;--gold:#4a6176}
+.theme-dark{--bg:#17191c;--paper:#202327;--side:#1b1e22;--ink:#e5e7eb;--muted:#a8afb8;--line:#3a414a;--green:#9fc7f0;--green-light:#293b4e;--gold:#c0cad5}
+body{background:var(--bg);color:var(--ink)}
+.paragraph-text.en,.theme-dark .paragraph-text.en{color:var(--muted)}
+.lang-en .paragraph-text.en{color:var(--ink)}
+.ref-link,.theme-dark .ref-link{color:var(--green);text-decoration-color:var(--green)}
+.theme-dark .primary,.theme-dark .toast,.theme-dark .seal{background:var(--green);color:var(--paper);border-color:var(--green)}
+.resume-card,.theme-dark .resume-card,.hover-card{border-color:var(--line)}
+.doc-glyph{border-color:var(--line)}
+.book-card .book-number,.path-step:before{color:var(--muted)}
+.line-pair:hover{background:var(--paper)}
+.line-pair.target,.theme-dark .line-pair.target{background:var(--green-light)}
+.line-pair.is-bookmarked{background:var(--green-light)}
+.search-result mark{background:var(--green-light);color:var(--ink)}
+.theme-options button[aria-pressed="true"]{border-color:var(--green);background:var(--green-light);color:var(--ink)}
+.toc-scroll:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.companion{overflow-anchor:none}
+.toc-folder.active{background:var(--green-light);color:var(--ink);box-shadow:inset 3px 0 var(--green)}
+.document-tree.catalog-selected>summary{background:var(--green-light);box-shadow:inset 3px 0 var(--green)}
+.chapter-menu{position:absolute;right:0;top:calc(100% + 6px);width:min(520px,calc(100vw - 44px));background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:7px;z-index:55;padding:17px 18px}
+.chapter-menu[hidden]{display:none}
+.chapter-menu header{display:flex;justify-content:space-between;align-items:start;gap:15px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:10px}
+.chapter-menu header strong{font-size:14px;font-weight:600}.chapter-menu header small{display:block;font-size:10px;margin-top:5px}
+.chapter-menu-scroll{max-height:min(58vh,540px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.chapter-menu-link{display:flex;gap:11px;text-decoration:none;padding:10px 8px;border-radius:3px;color:var(--ink);font-size:12px;line-height:1.8}
+.chapter-menu-link:hover,.chapter-menu-link:focus-visible{background:var(--green-light)}
+.chapter-menu-link strong{font-family:Georgia,serif;color:var(--green);font-size:12px;font-weight:500;min-width:55px}
+.chapter-menu-link span{min-width:0;overflow-wrap:anywhere}
+.chapter-menu-group{border-bottom:1px solid var(--line);margin:5px 0;padding-bottom:5px}
+.chapter-menu-group>summary{padding:9px 6px;cursor:pointer;font-size:12px;line-height:1.8;color:var(--muted)}
+.chapter-menu-group>div{padding-left:12px}
+#chapter-menu-open[aria-expanded="true"]{background:var(--green-light);border-color:var(--green)}
+@media(max-width:700px){.chapter-menu{width:calc(100vw - 44px);padding:14px}.chapter-menu-scroll{max-height:55vh}.chapter-menu-link{font-size:12px}.chapter-menu-link strong{min-width:48px}}

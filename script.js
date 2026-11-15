@@ -10,6 +10,7 @@ function renderSharedSiteNavigation() {
   const prefix = inSchoolDirectory ? "../" : "";
   const href = (path) => `${prefix}${path}`;
   siteNav.innerHTML = `
+    <a class="nav-migration-link" href="${href("migration/")}">移民法研读室</a>
     <a href="${href("pte.html")}">PTE 培训</a>
     <details class="nav-dropdown"><summary>中学留学</summary><div>
       <a href="${href("advisor-product-flow.html")}">私校申请与升学规划</a>

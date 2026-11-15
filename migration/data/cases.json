@@ -1,0 +1,2996 @@
+{
+  "version": 1,
+  "checkedAt": "2026-11-15",
+  "method": "公開來源選編；原案事實與研讀分析分列，沒有補寫未公開情節。",
+  "cases": [
+    {
+      "id": "partner-djk-client-upload-2024",
+      "title": "DJK：家人生病需要出境，補件漏接後由申請人親自補上而獲批",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "DJK 的伴侶簽證正在處理，家人身體不適使他需要出境，代理人因此要求優先處理。公開決定沒有列出其確切簽證子類別，不可自行寫成 820 或 801。",
+      "background": [
+        {
+          "text": "DJK 的伴侶簽證正在處理，家人身體不適使他需要出境，代理人因此要求優先處理。公開決定沒有列出其確切簽證子類別，不可自行寫成 820 或 801。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p12 Mr [DJK] 段",
+            "page": 12
+          }
+        },
+        {
+          "text": "初始申請日期、原始證據及 s 56 要求的逐項文件名稱未公開。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF pp12–13",
+            "page": 12
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2023-11-29",
+          "title": "聯絡與處理進展",
+          "text": "代理人電郵移民局，因 DJK 的家人身體不適、他需要出境而要求優先處理伴侶簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p12",
+            "page": 12
+          }
+        },
+        {
+          "date": "2023-12-06",
+          "title": "要求、回覆與材料",
+          "text": "移民局向同一代理人電郵地址發出 s 56 補件要求。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p12",
+            "page": 12
+          }
+        },
+        {
+          "date": "2024-01-30",
+          "title": "聯絡與處理進展",
+          "text": "移民局提醒代理人尚未於規定時間內收到任何所需資料，並致電，但電話無人接聽。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p12",
+            "page": 12
+          }
+        },
+        {
+          "date": "2024-02-09",
+          "title": "要求、回覆與材料",
+          "text": "第二封提醒電郵抄送 DJK。代理人稱漏看電郵；DJK 表示此前完全不知道移民局要求補件，要求之後直接寄給他並抄送代理人，且附上所需文件。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p12",
+            "page": 12
+          }
+        },
+        {
+          "date": "2024-02（上旬至21日）",
+          "title": "要求、回覆與材料",
+          "text": "代理人分享申請檔案後，DJK 透過自己的 ImmiAccount 在數日內上傳文件；2 月 21 日按下已附上全部文件的確認按鈕。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "date": "2024-04-18",
+          "title": "批准／後續處理",
+          "text": "移民局批准簽證，通知寄給代理人。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "date": "2024-06-29",
+          "title": "要求、回覆與材料",
+          "text": "ImmiAccount 紀錄顯示代理人的帳戶此時才再次存取該申請；主管機關據此未接受是代理人於二月上傳資料而促成結案的說法。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "移民局要求與補件事實",
+          "request": "2023-11-29：代理人電郵移民局，因 DJK 的家人身體不適、他需要出境而要求優先處理伴侶簽證。；2023-12-06：移民局向同一代理人電郵地址發出 s 56 補件要求。；2024-01-30：移民局提醒代理人尚未於規定時間內收到任何所需資料，並致電，但電話無人接聽。；2024-02-09：第二封提醒電郵抄送 DJK。代理人稱漏看電郵；DJK 表示此前完全不知道移民局要求補件，要求之後直接寄給他並抄送代理人，且附上所需文件。",
+          "response": "有正式 s 56 要求、兩次提醒及一次未接電話；DJK 被抄送後才得知缺件。；實際補件由 DJK 上傳，文件清單未公開；可教導通訊與提交確認，不能杜撰銀行流水、醫療證明或 Form 888 已被提交。",
+          "limit": "不可把本案獲批速度當成一般處理時間或加急保證。",
+          "ref": {
+            "source": 1,
+            "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp12–13（Mr [DJK]）。",
+            "page": 12
+          }
+        }
+      ],
+      "departmentResult": "2024-04-18 批准伴侶簽證；子類別未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "伴侶簽證獲批，確切子類別未公開。",
+        "later": "公開紀錄未提及這宗申請進入 AAT／ART 覆核。",
+        "ref": {
+          "source": 1,
+          "locator": "PDF p13",
+          "page": 13
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp12–13（Mr [DJK]）。",
+          "page": 12
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "要求加急並不會免除回覆補件的工作；需同時追蹤補件期限與客戶的出境需求。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "把授權收件、代理電郵監控及備援安排做好，並讓客戶知道目前待補事項。"
+        },
+        {
+          "title": "後續：通知與風險檢查",
+          "text": "區分『文件存在』、『已上傳』及『已完成確認』，保留系統遞交憑證。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "56",
+          "label": "Act s56"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "2.15",
+          "label": "Reg 2.15"
+        }
+      ],
+      "gaps": [
+        "不可把本案獲批速度當成一般處理時間或加急保證。",
+        "沒有公開出境日期、所持旅行簽證或旅遊安排，不能延伸為 ETA／RRV 方案案例。",
+        "紀律決定的兩年停牌涉及多名客戶，不能說處分全部源自 DJK 一案。"
+      ],
+      "category": "partner",
+      "period": "2023–2024 年",
+      "visas": [],
+      "topicVisas": [
+        "820",
+        "801",
+        "309",
+        "100"
+      ],
+      "result": "2024-04-18 批准伴侶簽證；子類別未公開。",
+      "documents": [
+        "agent-code"
+      ],
+      "sources": [
+        {
+          "url": "https://portal.mara.gov.au/_entity/annotation/d9d0a908-cea1-f2d6-a378-658c86349f01/7b138792-1090-45b6-9241-8f8d96d8c372?t=1751155200312#page=12",
+          "title": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp12–13（Mr [DJK]）。",
+          "publisher": "Office of the Migration Agents Registration Authority",
+          "date": "2024-12-10",
+          "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp12–13（Mr [DJK]）。"
+        }
+      ],
+      "visaLabel": "伴侶簽證（子類別未公開）"
+    },
+    {
+      "id": "partner-jj-missing-health-police-2024",
+      "title": "JJ：多年重複補件，缺警察證明與體檢，COVID 說明未獲證據支持而拒簽",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "JJ 的 309/100 伴侶申請由代理人在2020年2月遞交。移民局多次要求資料，每次均給28天；最終欠缺的警察證明及體檢導致拒簽。",
+      "background": [
+        {
+          "text": "JJ 的 309/100 伴侶申請由代理人在2020年2月遞交。移民局多次要求資料，每次均給28天；最終欠缺的警察證明及體檢導致拒簽。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF pp10–11",
+            "page": 10
+          }
+        },
+        {
+          "text": "初始附件清單未公開；不能把後續要求清單誤作最初已交清單。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p10 表格",
+            "page": 10
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2020-02",
+          "title": "提出申請／處理進展",
+          "text": "代理人為 JJ 遞交 309/100 申請。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p10",
+            "page": 10
+          }
+        },
+        {
+          "date": "2021-03-04",
+          "title": "聯絡與處理進展",
+          "text": "要求 AFP 檢查、警察證明、Form 888、夫妻關係證據、結婚證、體檢、護照；並另郵擔保人索取警察檢查。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p10 表格及註3",
+            "page": 10
+          }
+        },
+        {
+          "date": "2021-04-21；2021-08-11",
+          "title": "聯絡與處理進展",
+          "text": "重複要求警察／AFP、關係、結婚、體檢、護照及出生資料；4月要求也包括擔保人的澳洲身分證明。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p10 表格",
+            "page": 10
+          }
+        },
+        {
+          "date": "2021-10-11；2021-11-09",
+          "title": "要求、回覆與材料",
+          "text": "10月仍要求警察證明、關係、婚姻、體檢及身分文件；11月9日代理人回覆要求延至2022年2月。公開表格未說該延展獲准。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p10 表格",
+            "page": 10
+          }
+        },
+        {
+          "date": "2022-08-08；2022-11-15",
+          "title": "聯絡與處理進展",
+          "text": "再次要求擔保人身分／AFP／警察及關係證據；11月還包括出生證及國民身分證。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p10 表格",
+            "page": 10
+          }
+        },
+        {
+          "date": "2024-01-12",
+          "title": "聯絡與處理進展",
+          "text": "再次要求 AFP、警察證明、結婚證、擔保人身分、體檢及子女出生證。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p11 表格",
+            "page": 11
+          }
+        },
+        {
+          "date": "2024-02-15",
+          "title": "聯絡與處理進展",
+          "text": "代理人電郵稱 JJ 因 COVID 無法體檢，但沒有附支持證據，也未跟進可能的延展。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p11",
+            "page": 11
+          }
+        },
+        {
+          "date": "2024-05-21",
+          "title": "決定／申請效力",
+          "text": "移民局拒簽：仍缺指定警察證明，且未完成 PIC 4007 所需檢查，也未提供已預約的證據。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p11 拒簽理由",
+            "page": 11
+          }
+        },
+        {
+          "date": "2024-05-21及其後",
+          "title": "決定／申請效力",
+          "text": "代理人要求撤銷拒簽，稱客戶兩週後可體檢。伴侶移民項目主管回覆沒有足以重看決定的錯誤；2月接觸後三個月均無安排體檢或警察證明的進一步證據。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF pp11–12",
+            "page": 11
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "移民局要求與補件事實",
+          "request": "2021-03-04：要求 AFP 檢查、警察證明、Form 888、夫妻關係證據、結婚證、體檢、護照；並另郵擔保人索取警察檢查。；2021-04-21；2021-08-11：重複要求警察／AFP、關係、結婚、體檢、護照及出生資料；4月要求也包括擔保人的澳洲身分證明。；2021-10-11；2021-11-09：10月仍要求警察證明、關係、婚姻、體檢及身分文件；11月9日代理人回覆要求延至2022年2月。公開表格未說該延展獲准。；2022-08-08；2022-11-15：再次要求擔保人身分／AFP／警察及關係證據；11月還包括出生證及國民身分證。；2024-01-12：再次要求 AFP、警察證明、結婚證、擔保人身分、體檢及子女出生證。；2024-05-21及其後：代理人要求撤銷拒簽，稱客戶兩週後可體檢。伴侶移民項目主管回覆沒有足以重看決定的錯誤；2月接觸後三個月均無安排體檢或警察證明的進一步證據。",
+          "response": "提出延展／疾病說明，不等於獲准延展或已證明不能履行要求。原案區分了請求、缺乏支持文件及沒有後續追蹤。；最終拒簽理由列出欠缺特定警察證明及未完成／未證明預約體檢；不能把結果縮寫成『關係不真實』或『COVID 不能申請簽證』。",
+          "limit": "表格提到 partial fulfilment，但沒有逐項完整的上傳清單，不能聲稱所有資料都從未提交。",
+          "ref": {
+            "source": 1,
+            "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp10–12（Ms [JJ]）。",
+            "page": 10
+          }
+        }
+      ],
+      "departmentResult": "2024-05-21 拒簽；項目主管其後不接受撤銷請求。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "拒簽；主管其後不接受撤銷決定的請求。",
+        "later": "本紀律決定後段統述部分案件經 AAT 發回，但未逐案明確交代本案的覆核結果；不能據此當作本案已獲批。",
+        "ref": {
+          "source": 1,
+          "locator": "PDF pp11–12",
+          "page": 11
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp10–12（Ms [JJ]）。",
+          "page": 10
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "追蹤每項補件的狀態，健康與品格第三方證明另設取得流程與跟進紀錄。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "若無法及時體檢，要把支持資料、預約紀錄、更新日期及明確延展請求交給審理人員，不能假定沉默等於同意。"
+        },
+        {
+          "title": "後續：通知與風險檢查",
+          "text": "不要等拒簽後才用未來預約取代決定前本可提交的證據。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "56",
+          "label": "Act s56"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "2.15",
+          "label": "Reg 2.15"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "4007",
+          "label": "Reg 4007"
+        }
+      ],
+      "gaps": [
+        "表格提到 partial fulfilment，但沒有逐項完整的上傳清單，不能聲稱所有資料都從未提交。",
+        "原案對這組個案給28天；不得轉寫為所有 s56／第三方健康品格查核一律28天。",
+        "本案屬紀律調查揭露的申請紀錄，不是公開完整簽證檔案。"
+      ],
+      "category": "partner",
+      "period": "2020–2024 年",
+      "visas": [
+        "309",
+        "100"
+      ],
+      "result": "2024-05-21 拒簽；項目主管其後不接受撤銷請求。",
+      "documents": [
+        "agent-code"
+      ],
+      "sources": [
+        {
+          "url": "https://portal.mara.gov.au/_entity/annotation/d9d0a908-cea1-f2d6-a378-658c86349f01/7b138792-1090-45b6-9241-8f8d96d8c372?t=1751155200312#page=10",
+          "title": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp10–12（Ms [JJ]）。",
+          "publisher": "Office of the Migration Agents Registration Authority",
+          "date": "2024-12-10",
+          "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp10–12（Ms [JJ]）。"
+        }
+      ],
+      "visaLabel": "309 / 100"
+    },
+    {
+      "id": "ombudsman-2025-mr-d-bva-system-error",
+      "title": "Mr D：已獲發回重審，系統卻把過橋 A 記成終止",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "Mr D 在澳洲與妻及兩名子女生活；保護簽證遭拒後申請 AAT 覆核。本人案件轉 General Division，妻兒案件留 Migration and Refugee Division，合併審理申請遭拒。來源：原報告第3–4頁。",
+      "background": [
+        {
+          "text": "Mr D 在澳洲與妻及兩名子女生活；保護簽證遭拒後申請 AAT 覆核。本人案件轉 General Division，妻兒案件留 Migration and Refugee Division，合併審理申請遭拒。來源：原報告第3–4頁。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8"
+          }
+        },
+        {
+          "text": "原始保護申請證據未公開；本案可核對的關鍵材料是兩份 AAT 決定。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "日期未公開",
+          "title": "決定／申請效力",
+          "text": "General Division 撤銷對 Mr D 的拒簽決定並發回移民局重審。",
+          "ref": {
+            "source": 1,
+            "locator": "第3頁 Background"
+          }
+        },
+        {
+          "date": "上述決定後三個月",
+          "title": "提出申請／處理進展",
+          "text": "另一分部發回妻的申請，並就 Mr D 記載無管轄權，理由為其案已由 General Division 處理；兩名子女的管轄情況另有原因。",
+          "ref": {
+            "source": 1,
+            "locator": "第3–4頁 Background"
+          }
+        },
+        {
+          "date": "2023年10月",
+          "title": "聯絡與處理進展",
+          "text": "移民局只輸入第二份決定的『無管轄權』，未輸入 Mr D 已獲發回重審的原因；系統自動使其 BVA 終止。",
+          "ref": {
+            "source": 1,
+            "locator": "第4頁 Investigation outcomes"
+          }
+        },
+        {
+          "date": "收到終止通知後；日期未公開",
+          "title": "決定／申請效力",
+          "text": "律師提交 AAT 決定並要求核發新過橋簽證；移民局要求另作新申請。第一次新申請被當作無效，理由是沒有尚未最終決定的有效實質簽證申請。",
+          "ref": {
+            "source": 1,
+            "locator": "第5頁 Multiple visa applications"
+          }
+        },
+        {
+          "date": "第二次新申請；日期未公開",
+          "title": "決定／申請效力",
+          "text": "移民局再以原終止決定未被撤銷或推翻為由，將申請當作無效。Mr D 多次投訴，夫妻告知停工及家庭無收入。",
+          "ref": {
+            "source": 1,
+            "locator": "第5頁"
+          }
+        },
+        {
+          "date": "第三次新申請；確切日期未公開",
+          "title": "批准／後續處理",
+          "text": "移民局認定申請有效，核發新的 BVA；報告記載家庭因錯誤失去收入超過兩個月。",
+          "ref": {
+            "source": 1,
+            "locator": "第5–6頁"
+          }
+        },
+        {
+          "date": "2025年9月報告",
+          "title": "提出申請／處理進展",
+          "text": "移民局接受道歉、說明 CDDA 申請方法及檢討系統等建議。",
+          "ref": {
+            "source": 1,
+            "locator": "第7–9頁 Recommendations"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "公開紀錄中的往來與材料",
+          "request": "律師 → 移民局：附 AAT 決定，要求發新過橋簽證。；Mr D／妻 → 移民局：多次說明已發回重審，並告知停工與經濟困難。；Global Feedback Unit → Mr D：發出新 BVA 後表示過橋簽證狀態已更正；未提供更完整解釋。",
+          "response": "AAT 發回重審決定（律師實際提交）；第5頁；家庭停工及收入困難的陳述；第5頁（未公開附件種類）",
+          "limit": "沒有完整保護申請檔案、每次 BVA 申請及回覆的確切日期。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8"
+          }
+        }
+      ],
+      "departmentResult": "第三次 BVA 申請獲批；保護簽證最終結果未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "前兩次新 BVA 申請被認定無效；第三次認定有效並核發 BVA。移民局接受 Ombudsman 建議。原報告將自動事件稱為 cancellation，部門回覆使用 ceasing；研讀時應保留此用語差異，勿直接推成另一種取消權力。",
+        "later": "AAT 已先撤銷保護拒簽並發回重審；保護簽證最終核發與否未在此報告公開。Ombudsman 不是取代 AAT 作出保護簽證決定。",
+        "ref": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "逐一比對家庭成員、分部與兩份決定，不只依系統標籤判斷。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "保存發回重審決定與每次 BVA 無效通知，催辦時附可核對的錯誤對照；同步記錄工作權與損失。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-regulations",
+          "number": "010.511",
+          "label": "010.511：BVA 期間"
+        }
+      ],
+      "gaps": [
+        "沒有完整保護申請檔案、每次 BVA 申請及回覆的確切日期。",
+        "報告刊登時未公開保護簽證最終決定，亦未公布 CDDA 最終賠償。",
+        "不能把三次新申請當作通用解法；本案是部門承認的系統及處理錯誤。"
+      ],
+      "category": "status",
+      "period": "2023 年事件；2025 年報告",
+      "visas": [
+        "010"
+      ],
+      "result": "第三次 BVA 申請獲批；保護簽證最終結果未公開。",
+      "sources": [
+        {
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0026/321695/What-if-the-computer-is-wrong.pdf#page=3",
+          "title": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2025",
+          "locator": "Commonwealth Ombudsman, What if the computer is wrong? (September 2025), pp 3–8"
+        }
+      ],
+      "visaLabel": "010"
+    },
+    {
+      "id": "reported-student-relationship-declaration-2026",
+      "title": "舊申請寫「未婚」、新申請列事實伴侶：s57 後如何同時處理 4020 與學習目的",
+      "category": "student",
+      "sourceType": "practitioner",
+      "period": "2026 年公開個案",
+      "visas": [
+        "417",
+        "500"
+      ],
+      "summary": "Wan & Co 的承辦個案記載：關係身分的前後申報差異引發 PIC 4020 與 Genuine Student 疑點，回覆後學生簽證獲批。",
+      "departmentResult": "機構記載：回覆後學生簽證獲批；批准日期未公開。",
+      "outcomeNote": "2026-06-16 是文章發布日期，不是可據此推定的批准日。",
+      "sources": [
+        {
+          "title": "PIC 4020: APPROVED! Student Visa Granted After Section 57 Response",
+          "publisher": "Wan & Co Lawyers",
+          "date": "2026-06-16",
+          "url": "https://wanlawyers.com.au/blog/pic-4020-successfully-approved-materiality-falsity/",
+          "locator": "Background；Key Issues；Genuine Student；What happened in the end?"
+        }
+      ],
+      "background": [
+        {
+          "text": "機構稱申請人過去自行辦理打工度假簽證時申報 Never Married；後辦學生申請時，經說明事實伴侶概念而申報長期伴侶為副申請人。部門因此發出 s57。",
+          "ref": {
+            "source": 1,
+            "locator": "Background"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "早前申請；未公開日期",
+          "title": "先前身分申報",
+          "text": "打工度假申請填 Never Married；來源稱當時沒有專業協助。",
+          "ref": {
+            "source": 1,
+            "locator": "Background"
+          }
+        },
+        {
+          "date": "學生申請及審理；未公開日期",
+          "title": "差異引發兩組疑點",
+          "text": "新申請列事實伴侶；部門要求說明申報差異，並對 Genuine Student 提出疑慮。",
+          "ref": {
+            "source": 1,
+            "locator": "Background；Key Issues"
+          }
+        },
+        {
+          "date": "回覆期間；未公開日期",
+          "title": "分開提出論述與證據",
+          "text": "承辦人爭論資料重要性及是否有蓄意虛假，另提交學習路徑、CoE、預付學費與本國連結的資料。",
+          "ref": {
+            "source": 1,
+            "locator": "Materiality；Purposeful falsity；Genuine Student"
+          }
+        },
+        {
+          "date": "截至 2026-06-16 公開報導",
+          "title": "記載獲批",
+          "text": "文章稱詳細回覆後學生簽證獲批，沒有列批准日。",
+          "ref": {
+            "source": 1,
+            "locator": "What happened in the end?"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "申報差異與 Genuine Student 分開回應",
+          "request": "s57 的 PIC 4020 疑點；另有學習目的疑慮。",
+          "response": "就舊申報提出重要性與誠實誤解的論述；學習部分則以職涯方向、CoE、預付學費和本國連結回覆。",
+          "limit": "原 s57 信、回覆期限、附件全文及移民局逐項接受哪個論點均未公開。",
+          "ref": {
+            "source": 1,
+            "locator": "Key Issues；Genuine Student"
+          }
+        }
+      ],
+      "decision": {
+        "department": "機構記載學生簽證獲批。",
+        "later": "未記載 Tribunal／法院程序。",
+        "ref": {
+          "source": 1,
+          "locator": "What happened in the end?"
+        },
+        "caution": "獲批不能反推部門必然接受了每項法律主張。Never Married 與事實伴侶的關係、PIC 4020 的適用，仍須核對表格問題、當時法規及完整事實。"
+      },
+      "actions": [
+        {
+          "title": "先把歷次申請的答案並排核對",
+          "text": "訪談時檢查客戶對婚姻與事實伴侶的理解，保留差異的原始解釋；不要為了前後一致而延續錯誤申報。"
+        },
+        {
+          "title": "每個疑點各有回覆與附件",
+          "text": "身分解釋不能取代 Genuine Student 的證據；用逐項回覆表檢查是否遺漏不同的批准條件。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "57",
+          "label": "Act s57"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "4020",
+          "label": "PIC 4020"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "500.212",
+          "label": "500.212：Genuine Student"
+        }
+      ],
+      "gaps": [
+        "沒有公開個別申請、s57 與批准日期。",
+        "未附完整移民局決定書，不能確定批准的具體理由。",
+        "來源法律論述屬承辦人自述，非本案形成拘束性判例。"
+      ],
+      "checkedAt": "2026-11-15",
+      "visaLabel": "417 / 500"
+    },
+    {
+      "id": "reported-partner-309-100-s57-2026",
+      "title": "兩地分居遭質疑，補充關係說明後電話面談並獲批 100",
+      "category": "partner",
+      "sourceType": "practitioner",
+      "period": "2026 年",
+      "visas": [
+        "309",
+        "100"
+      ],
+      "summary": "Newstars 公開的承辦個案：自助遞交的伴侶申請，在永久階段收到 s57 質疑後委任團隊；機構記載補充說明、文件及面談後獲批。",
+      "departmentResult": "機構記載：2026-03-25 核發 100 永久伴侶簽證。",
+      "outcomeNote": "承辦機構自述，頁面附去識別化紀錄圖片；未取得完整移民局卷宗作獨立核實。",
+      "sources": [
+        {
+          "title": "Offshore Partner Migration: Subclass 309 to 100 PR — S57 response case",
+          "publisher": "Newstars Education & Migration",
+          "date": "個案時點 2026-03-25；文章日期未明示",
+          "url": "https://www.newstarsec.com/en/success-cases/case-309-100-s57-overturn/",
+          "locator": "Timeline；The Case；Our Approach；Outcome"
+        }
+      ],
+      "background": [
+        {
+          "text": "據機構記載，申請人在中國、擔保人因工作多在澳洲，屬重組家庭且沒有共同子女；已持 309，永久階段受到關係真實性的質疑。",
+          "ref": {
+            "source": 1,
+            "locator": "The Case／Sudden Turn"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2026 年 2 月初",
+          "title": "收到 s57 信",
+          "text": "移民局質疑雙方是否為真實伴侶；其後才委任承辦團隊。",
+          "ref": {
+            "source": 1,
+            "locator": "Timeline 01；Our Approach"
+          }
+        },
+        {
+          "date": "2026 年 2 月中",
+          "title": "提交說明及支持資料",
+          "text": "團隊記載提交長篇說明與數十份文件，解釋關係持續及跨國分居原因。",
+          "ref": {
+            "source": 1,
+            "locator": "Timeline 02"
+          }
+        },
+        {
+          "date": "2026-03-25",
+          "title": "電話面談後獲批",
+          "text": "機構記載移民局電話詢問雙方對彼此的了解，同日收到 100 批准通知。",
+          "ref": {
+            "source": 1,
+            "locator": "Timeline 03；Outcome"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "關係質疑與分居理由",
+          "request": "s57 信質疑關係真實性。",
+          "response": "提交關係持續及分居原因的陳述和支持文件；後接受電話面談。原文沒有逐項列出所交文件，不能補寫共同帳戶、租約或家具發票。",
+          "limit": "s57 原信、回覆期限、全部附件與逐字面談紀錄未公開。",
+          "ref": {
+            "source": 1,
+            "locator": "Our Approach；Timeline"
+          }
+        }
+      ],
+      "decision": {
+        "department": "機構記載 2026-03-25 批准 100。",
+        "later": "未記載 Tribunal 或法院程序；這不是已拒簽後由法院推翻的案例。",
+        "ref": {
+          "source": 1,
+          "locator": "Outcome"
+        },
+        "caution": "來源文章對 s57 的一般宣傳說法不在此當成法律結論；本案不能證明每封 s57 只容許一次回覆，或關係疑點必然導致 PIC 4020 禁限。"
+      },
+      "actions": [
+        {
+          "title": "把分居原因對應到具體證據",
+          "text": "研讀重點是區分『關係主張』與『可核對支持』；逐項回應信中的疑點。此為編輯分析，不表示原案提交了任何未列明的附件。"
+        },
+        {
+          "title": "面談準備保留事實邊界",
+          "text": "協助客戶熟悉已遞交內容、釐清真實記憶及日期差異；不能把面談準備變成編造一致答案。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "57",
+          "label": "Act s57：不利資料與回應"
+        }
+      ],
+      "gaps": [
+        "未公開移民局案件編號、完整決定書、s57 原信及全部附件。",
+        "只能確認公開網頁如此記載，不能獨立確認電話結束後到收信的精確分鐘數。",
+        "原文未披露 s57 的答覆期限，不據此補出 28 天。"
+      ],
+      "checkedAt": "2026-11-15",
+      "visaLabel": "309 / 100"
+    },
+    {
+      "id": "reported-student-transcript-s57-2025",
+      "title": "學歷查核遭疑、回覆後仍拒簽，投訴後部門承認錯誤並獲批",
+      "category": "student",
+      "sourceType": "practitioner",
+      "period": "2024–2025 年",
+      "visas": [
+        "500"
+      ],
+      "summary": "Newstars 記載的一宗境外學生申請：學校查核電話未接，引發 s57；補上學習經歷及學校核實後仍遭拒，後循部門投訴處理。",
+      "departmentResult": "機構記載：2025 年 4 月初承認拒簽錯誤，次日核發 500。",
+      "outcomeNote": "未取得完整拒簽／更正決定；投訴不是每宗拒簽都能使用的替代覆核或獲批保證。",
+      "sources": [
+        {
+          "title": "Rare outcome: DHA admits error — student visa overturned from refusal to grant",
+          "publisher": "Newstars Education & Migration",
+          "date": "個案 2024–2025；文章日期未明示",
+          "url": "https://www.newstarsec.com/en/success-cases/case-500-overturn/",
+          "locator": "Timeline；First Response Ignored；Outcome"
+        }
+      ],
+      "background": [
+        {
+          "text": "機構記載申請人計畫到 UNSW 就讀，移民局對第三國學歷真實性產生疑問。本文只保留該機構的個案敘述，不認定未公開原信的內容已被獨立查證。",
+          "ref": {
+            "source": 1,
+            "locator": "The Case／The Real Trigger"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2024 年 7 月下旬",
+          "title": "提出 500 申請",
+          "text": "遞交學生簽證申請。",
+          "ref": {
+            "source": 1,
+            "locator": "Timeline 01"
+          }
+        },
+        {
+          "date": "2024-11-05",
+          "title": "學歷疑點通知",
+          "text": "收到 s57；機構稱查核學校的電話無人接聽而引發疑點。",
+          "ref": {
+            "source": 1,
+            "locator": "Timeline 02"
+          }
+        },
+        {
+          "date": "其後；未公開日期",
+          "title": "回覆後仍拒簽",
+          "text": "提供學習經歷說明與 PIC 4020 論述；機構稱學校另向部門核實學歷，但仍收到拒簽。",
+          "ref": {
+            "source": 1,
+            "locator": "First Response Ignored"
+          }
+        },
+        {
+          "date": "拒簽後立即；未公開日期",
+          "title": "向部門提出投訴",
+          "text": "提出投訴並保留學歷證據鏈；不到一個月收到受理回覆。",
+          "ref": {
+            "source": 1,
+            "locator": "Complaint Steps 01–02"
+          }
+        },
+        {
+          "date": "2025 年 4 月初及次日",
+          "title": "部門更正與獲批",
+          "text": "機構記載部門書面承認錯誤並道歉，次日批准 500；確切日未公開。",
+          "ref": {
+            "source": 1,
+            "locator": "Timeline 05／Outcome"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "學歷真實性回覆與投訴",
+          "request": "s57 質疑學歷文件。",
+          "response": "記載的回覆包括跨國學習經歷、PIC 4020 分析及學校的補充核實；拒簽後以整條證據鏈向部門投訴。",
+          "limit": "未公開學校核實信、s57／拒簽信全文及更正的法律依據；不能自行補出材料名稱或重開審理權。",
+          "ref": {
+            "source": 1,
+            "locator": "First Response Ignored；Complaint Steps"
+          }
+        }
+      ],
+      "decision": {
+        "department": "機構記載先拒簽，後部門承認錯誤並在 2025 年 4 月初核發 500。",
+        "later": "原文未記載 Tribunal／法院程序。",
+        "ref": {
+          "source": 1,
+          "locator": "Outcome"
+        },
+        "caution": "這是來源報告的個別更正結果。投訴不會一般性延長覆核期限，也不能假定部門對每個已作成的拒簽決定都有重新決定權。"
+      },
+      "actions": [
+        {
+          "title": "把學校核實變成可追蹤紀錄",
+          "text": "建立第三方聯絡、核實回函與提交憑證的對照；如需爭議處理，先確認實際拒簽理由及適用救濟，而非只重複表示文件是真的。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "57",
+          "label": "Act s57"
+        },
+        {
+          "doc": "migration-act",
+          "number": "66",
+          "label": "Act s66：決定通知"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "4020",
+          "label": "PIC 4020"
+        }
+      ],
+      "gaps": [
+        "文章沒有公開拒簽日、正式投訴日、確切批准日。",
+        "機構對審理人員動機的評論不是此網站認定的事實。",
+        "無法由本案推論所有境外學生申請均無任何覆核權；須按個案法律判斷。"
+      ],
+      "checkedAt": "2026-11-15",
+      "visaLabel": "500"
+    },
+    {
+      "id": "katherine-nurse-employer-bullying-186-family-route",
+      "title": "受雇主威脅的護理師，改由配偶的雇主提名 186",
+      "sourceType": "community",
+      "checkedAt": "2026-11-15",
+      "summary": "護理師 Katherine 與丈夫、兩名幼兒由其雇主擔保來澳，後遭威脅。",
+      "background": [
+        {
+          "text": "護理師 Katherine 與丈夫、兩名幼兒由其雇主擔保來澳，後遭威脅。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 20；PDF 頁 22；CASE STUDY: NURSE – WORKPLACE BULLYING AND HARASSMENT / KATHERINE",
+            "page": 22
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "最初幾個月後；無公開日期",
+          "title": "聯絡與處理進展",
+          "text": "雇主威脅人身安全及簽證取消；工會轉介 Visa Assist。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Katherine 案例",
+            "page": 22
+          }
+        },
+        {
+          "date": "轉介後；無公開日期",
+          "title": "提出申請／處理進展",
+          "text": "IARC 查出丈夫可能有永久路徑，促其與雇主討論；雇主同意 186 提名，IARC 協助家庭申請。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Katherine 案例",
+            "page": 22
+          }
+        },
+        {
+          "date": "186 審理期間；無公開日期",
+          "title": "批准／後續處理",
+          "text": "Katherine 在工會協助下協議停工，直至 186 獲批，以處理原工作與取消風險。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Katherine 案例末段",
+            "page": 22
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "要求與實際提交",
+          "request": "雇主威脅安全與簽證；工會轉介Visa Assist。沒有公開移民局補件要求。",
+          "response": "IARC查出丈夫可能的永久路徑，丈夫雇主同意186提名；協助家庭申請，並由工會協調原工作停工至獲批。",
+          "limit": "未公開確切日期、186 stream、提名職業、申請附件與移民局往來信。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 20；PDF 頁 22；CASE STUDY: NURSE – WORKPLACE BULLYING AND HARASSMENT / KATHERINE",
+            "page": 22
+          }
+        }
+      ],
+      "departmentResult": "IARC 記載家庭 186 獲批；批准日未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "IARC 年報報告 186 已獲批；未附批准通知或精確日期。",
+        "later": "未記載 Tribunal／法院程序。",
+        "ref": {
+          "source": 1,
+          "locator": "印刷頁 20；PDF 頁 22；CASE STUDY: NURSE – WORKPLACE BULLYING AND HARASSMENT / KATHERINE",
+          "page": 22
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "印刷頁 20；PDF 頁 22；CASE STUDY: NURSE – WORKPLACE BULLYING AND HARASSMENT / KATHERINE",
+          "page": 22
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "訪談時同時盤點配偶及家庭可用路徑；離職、停工與新申請要配合檢查原簽證條件，不能僅說已遞交新簽證便無取消風險。"
+        }
+      ],
+      "laws": [],
+      "gaps": [
+        "全部個別日期、提名職業、186 stream、材料清單及移民局補件過程未公開。",
+        "原年報只說 TSS，不在案情內補寫 482 編號；可以在標籤說明該簽證名稱的歷史背景，但須另核對。"
+      ],
+      "category": "work",
+      "period": "2021–2022 年報個案",
+      "visas": [
+        "186"
+      ],
+      "topicVisas": [
+        "482"
+      ],
+      "result": "IARC 記載家庭 186 獲批；批准日未公開。",
+      "sources": [
+        {
+          "id": "iarc-2021-22",
+          "title": "IARC Annual Report 2021/2022",
+          "publisher": "Immigration Advice and Rights Centre",
+          "date": "2022",
+          "url": "https://iarc.org.au/wp-content/uploads/2022/12/IARC_2021-22_Annual_Report.pdf#page=22",
+          "locator": "印刷頁 20；PDF 頁 22；CASE STUDY: NURSE – WORKPLACE BULLYING AND HARASSMENT / KATHERINE"
+        }
+      ],
+      "visaLabel": "186"
+    },
+    {
+      "id": "186-accountant-employer-external-administration",
+      "title": "186 DE 審理途中雇主清盤：如何回應移民局對持續僱用的疑慮",
+      "category": "work",
+      "sourceType": "practitioner",
+      "period": "個案年份及日期未公開",
+      "visas": [
+        "186"
+      ],
+      "summary": "Newstars 記載的 186 DE 個案：雇主清盤後移民局發 s57 質疑，承辦團隊回覆工作事實及法律問題，並報告簽證獲批。",
+      "departmentResult": "承辦機構稱解釋被接受，186 PR 簽證獲批；未公布完整批准記錄供逐項核對。",
+      "outcomeNote": "承辦機構自述；未公開完整原始決定書",
+      "sources": [
+        {
+          "title": "Newstars Education & Migration, Sponsoring employer went bankrupt mid-application — PR still granted",
+          "publisher": "Newstars Education & Migration",
+          "date": "文章及個案日期未明示",
+          "url": "https://www.newstarsec.com/en/success-cases/case-186-employer-bankrupt/",
+          "locator": "Case Background；The Disruption；Reasoned advocacy；Outcome"
+        }
+      ],
+      "background": [
+        {
+          "text": "會計師已有三年工作經驗及技能評估；機構稱提名已批，簽證審理時雇主因敗訴陷入清盤。",
+          "ref": {
+            "source": 1,
+            "locator": "Case Background；The Disruption；Reasoned advocacy；Outcome。已閱讀頁面正文，未只靠搜尋摘要。"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "遞交與提名階段；日期未公開",
+          "title": "遞交並等待簽證",
+          "text": "機構稱已提交 186 DE，提名獲批，等待簽證決定。",
+          "ref": {
+            "source": 1,
+            "locator": "Case Background"
+          }
+        },
+        {
+          "date": "簽證審理中；日期未公開",
+          "title": "雇主進入外部管理",
+          "text": "雇主進入外部管理；申請人立即聯絡承辦團隊。",
+          "ref": {
+            "source": 1,
+            "locator": "The Disruption"
+          }
+        },
+        {
+          "date": "其後；日期未公開",
+          "title": "收到移民局質疑",
+          "text": "移民局發 s57 信，質疑公司是否仍有能力及需要僱用會計師。",
+          "ref": {
+            "source": 1,
+            "locator": "The Disruption／S57 Natural Justice Letter"
+          }
+        },
+        {
+          "date": "回覆階段；個別信件期限未公開",
+          "title": "回覆工作與法律問題",
+          "text": "團隊比對實際工作職責、技能評估與提名要求，提出事實證據及涉及清盤的法律說明。",
+          "ref": {
+            "source": 1,
+            "locator": "Reasoned advocacy"
+          }
+        },
+        {
+          "date": "最終；批准日期未公開",
+          "title": "機構報告獲批",
+          "text": "機構報告 186 獲批。",
+          "ref": {
+            "source": 1,
+            "locator": "Outcome"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "對公司持續僱用能力的疑慮",
+          "request": "據機構記載，s57 信關注雇主處於外部管理後是否仍有能力及需要僱用會計師。",
+          "response": "團隊比對實際職責、技能評估與提名要求，提交事實證據與清盤相關法律說明；原頁沒有逐份列出附件。",
+          "limit": "未公開原信、個案截止日、清盤處置及完整提交書；不自行補出會計報表或清盤人保證。",
+          "ref": {
+            "source": 1,
+            "locator": "The Disruption；Reasoned advocacy"
+          }
+        }
+      ],
+      "decision": {
+        "department": "承辦機構稱解釋被接受，186 PR 簽證獲批；未公布完整批准記錄供逐項核對。",
+        "later": "沒有記載 Tribunal 或法院程序。",
+        "ref": {
+          "source": 1,
+          "locator": "Outcome"
+        },
+        "caution": "原頁對 s57 及 186 SBS 的一般說法不在此當成法律結論；本案只採機構自述的經過，不能推論所有清盤企業仍符合提名或簽證要求。"
+      },
+      "actions": [
+        {
+          "title": "分開追蹤提名與簽證",
+          "text": "【編輯研讀】提名已批與簽證待決要分開追蹤；企業狀況改變時應先確認移民局實際關注點與適用條件。"
+        },
+        {
+          "title": "用證據回應真正疑點",
+          "text": "【編輯研讀】回覆不應只說員工無過失，而要把持續工作安排與所提交的職責、資格證據一一對上。"
+        },
+        {
+          "title": "保留結果的個案界線",
+          "text": "【編輯研讀】本案只能顯示有機構報告此結果，不能推論清盤雇主一般都能維持提名或批准簽證。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "57",
+          "label": "Act s57：不利資料與回應"
+        }
+      ],
+      "gaps": [
+        "所有遞交、清盤、補件、回覆及批准的個別日期未公開。",
+        "原頁通稱 28 天，但沒有公開本案信件的實際截止日；不得將通稱當成本案已核對時限。",
+        "原始 s57 信、提交書、清盤安排及完整批准通知未公開。"
+      ],
+      "checkedAt": "2026-11-16",
+      "visaLabel": "186"
+    },
+    {
+      "id": "maria-skilled-permanent-health-waiver-autism",
+      "title": "護士家庭永久簽證遇健康要求：六歲兒子的健康豁免",
+      "category": "health",
+      "sourceType": "community",
+      "period": "2019–2022/23 年報期間",
+      "visas": [],
+      "summary": "IARC 年報記載：護士一家申請永久居留，六歲兒子不符合健康要求；經工會轉介及健康豁免申請後，一家獲永久居留。具體簽證子類未公開。",
+      "departmentResult": "IARC 年報報告健康豁免成功，Maria 與家人均獲永久居留；未附個別批准通知。",
+      "outcomeNote": "法律援助承辦機構第一手年報自述；未公開個別決定書",
+      "sources": [
+        {
+          "title": "IARC Annual Report 2022/2023, Case Study 2: Permanent Skilled Visa – Health Waiver Application – Permanent Residency Granted",
+          "publisher": "Immigration Advice and Rights Centre",
+          "date": "2022/2023 reporting year",
+          "url": "https://iarc.org.au/wp-content/uploads/2024/01/IARC-Annual-Report-22-23-FINAL.pdf#page=31",
+          "locator": "印刷頁 29；PDF 第 31 頁，Case Study 2"
+        }
+      ],
+      "background": [
+        {
+          "text": "Maria 一家 2019 年來澳；她在雪梨當護士，丈夫從事身障支援工作。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 29；PDF 第 31 頁，Case Study 2；已閱讀整個案例。"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2019",
+          "title": "一家來澳",
+          "text": "一家來澳。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 第 31 頁，第一段"
+          }
+        },
+        {
+          "date": "2022",
+          "title": "提交永久簽證申請",
+          "text": "一家申請永久居留。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 第 31 頁，第二欄"
+          }
+        },
+        {
+          "date": "審理中；日期未公開",
+          "title": "收到健康要求通知",
+          "text": "移民局通知六歲自閉症兒子 Rodrigo 不符合健康要求；估算成本約 60 萬澳元，報告列當時門檻為 51,000 澳元。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 第 31 頁，第二欄"
+          }
+        },
+        {
+          "date": "收到通知後；日期未公開",
+          "title": "工會轉介專業協助",
+          "text": "Maria 聯絡 NSW Nurses and Midwives’ Association，經工會轉介 IARC／Visa Assist。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 第 31 頁，第二欄"
+          }
+        },
+        {
+          "date": "其後；日期未公開",
+          "title": "健康豁免與永久簽證結果",
+          "text": "Visa Assist 協助提出健康豁免，說明值得考慮的同情與迫切情況；年報稱一家最終獲永久居留。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 第 31 頁，第二至三欄"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "家庭成員未通過健康要求",
+          "request": "年報記載移民局來信告知兒子因自閉症不符合健康要求，估算成本約60萬澳元。",
+          "response": "經護理工會轉介後，Visa Assist 協助提出健康豁免，說明同情與迫切情況。",
+          "limit": "通知日期、截止日、PIC編號、成本計算與附件清單未公開；不能補寫醫療或財務文件。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁29／PDF第31頁，Case Study 2"
+          }
+        }
+      ],
+      "decision": {
+        "department": "IARC 年報報告健康豁免成功，Maria 與家人均獲永久居留；未附個別批准通知。",
+        "later": "沒有記載 Tribunal 或法院程序。",
+        "ref": {
+          "source": 1,
+          "locator": "印刷頁29／PDF第31頁，Case Study 2 末段"
+        },
+        "caution": "51,000澳元是原案報告中的當時數字；今日規則與具體簽證是否可豁免須另核對。"
+      },
+      "actions": [
+        {
+          "title": "盤點全體家庭成員",
+          "text": "【編輯研讀】主申請人有工作及專業貢獻，並不免除家庭成員的健康檢查；訪談與風險盤點應包括全體申請人。"
+        },
+        {
+          "title": "先核對豁免適用路徑",
+          "text": "【編輯研讀】先確認申請路徑是否容許健康豁免，再針對該個案的法定測試及通知提交材料。"
+        },
+        {
+          "title": "記錄公開材料的空白",
+          "text": "【編輯研讀】可以學習工會轉介與及早處理健康風險的工作流程；不能從這篇短年報重建不存在的醫療成本回覆文件。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-regulations",
+          "number": "4007",
+          "label": "PIC4007：健康豁免（延伸研讀，年報未列PIC編號）"
+        }
+      ],
+      "gaps": [
+        "具體永久簽證子類、MOC 原文、成本計算年期、醫療與其他補件文件、截止日、批准日期未公開。",
+        "51,000 澳元為案例報告的當時數字，不是今日適用門檻。",
+        "不能推論申請人自行承諾負擔費用便必然能獲健康豁免。",
+        "年報只稱Permanent Skilled Visa；沒有補上186、189等子類。"
+      ],
+      "checkedAt": "2026-11-16",
+      "visaLabel": "永久居留（子類別未公開）"
+    },
+    {
+      "id": "reported-rrv155-limited-ties-2023",
+      "title": "居住不足、可用連結材料少：整理離境理由與返澳證據後獲批一年 RRV",
+      "category": "status",
+      "sourceType": "practitioner",
+      "period": "2023 年",
+      "visas": [
+        "155"
+      ],
+      "summary": "HECT 的承辦個案稱，Ms L 在取得 PR 後第二年回中國，其後只有兩次各一至兩週的短暫訪澳。團隊整理澳洲連結、離境理由及返澳計畫；公開的去識別化批准通知顯示 2023-01-13 核發 155。",
+      "departmentResult": "公開批准通知影像顯示：2023-01-13 核發 155；Must not arrive after 為 2024-01-13，旅行權利約一年，並非五年。",
+      "outcomeNote": "承辦機構第一手自述，附可閱讀的去識別化部門批准通知；完整申請卷宗與部門評估理由未公開，不能獨立認定所有主張均已獲接受。",
+      "sources": [
+        {
+          "title": "155 RRV Grant: Successful Application with Expired PR and Minimal Australian Ties",
+          "publisher": "HECT Migration & Appeal Experts",
+          "date": "載明決定日 2023-01-13；文章發布日未另核實",
+          "url": "https://hect.com.au/case/155-rrv-granted-expired-pr-minimal-australian-ties/",
+          "locator": "Case Summary / Background / Taking Over the Case / Successful Outcome / Visa Grant Notice"
+        },
+        {
+          "title": "來源頁附的去識別化 155 批准通知（影像）",
+          "publisher": "HECT Migration & Appeal Experts（公開部門通知影像）",
+          "date": "2023-01-13",
+          "url": "https://cdn-ileilph.nitrocdn.com/YYxBEANnaIMJxxbLrtJaVdTjkzVRftST/assets/images/optimized/rev-318d92b/hect.com.au/wp-content/uploads/2023/01/155-rrv-grant-expired-pr-weak-ties-724x1024.png",
+          "locator": "Application status；Visa duration and travel；Visa summary"
+        }
+      ],
+      "background": [
+        {
+          "text": "機構稱 Ms L 不滿足前五年住滿兩年的條件；沒有澳洲房產或工作、子女不是澳洲公民，可用連結證據不多。這是機構對客戶背景的敘述，未附完整出入境紀錄。",
+          "ref": {
+            "source": 1,
+            "locator": "Background"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "取得 PR 後第二年；確切年月未公開",
+          "title": "返中國後只作短暫訪澳",
+          "text": "機構記載其後只有兩次各一至兩週的訪澳紀錄。",
+          "ref": {
+            "source": 1,
+            "locator": "Background"
+          }
+        },
+        {
+          "date": "準備申請期間；日期及耗時未公開",
+          "title": "整理連結與離境說明",
+          "text": "記載的材料方向包括先前短期居留、社交連結、長期離境的說明信、返澳長居意向的具體支持。未列附件逐件名稱。",
+          "ref": {
+            "source": 1,
+            "locator": "Taking Over the Case 1–4"
+          }
+        },
+        {
+          "date": "遞交日未公開",
+          "title": "提出 155 申請",
+          "text": "機構記載協助遞交；沒有公開部門是否另發補件信。",
+          "ref": {
+            "source": 1,
+            "locator": "Successful Outcome"
+          }
+        },
+        {
+          "date": "2023-01-13",
+          "title": "155 獲批",
+          "text": "通知列為 Granted，旅行截止日為 2024-01-13；Length of stay 為每次入境後 indefinite。",
+          "ref": {
+            "source": 2,
+            "locator": "Application status；Visa duration and travel"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "說明與支持材料隨申請提出",
+          "request": "公開來源沒有 s56／s57 補件信或其他部門詢問，不能補寫其曾收到補件。",
+          "response": "機構稱以離境說明、澳洲連結與返澳計畫的證據提出申請。",
+          "limit": "未公開部門逐項提問、來回通信、回覆期限、原說明信及附件全文。",
+          "ref": {
+            "source": 1,
+            "locator": "Taking Over the Case；Successful Outcome"
+          }
+        }
+      ],
+      "decision": {
+        "department": "去識別化通知列 2023-01-13 核發 155，旅行權利至 2024-01-13。",
+        "later": "原文沒有 Tribunal／法院程序或後續續簽資料。",
+        "ref": {
+          "source": 2,
+          "locator": "Visa duration and travel"
+        },
+        "caution": "一年期 RRV 獲批，不等於只要返澳意願強便符合 155。來源把旅行權利到期稱作 PR expired；研讀時須分開永久居留／停留與旅行權利，不照抄成 PR 身分自動到期。"
+      },
+      "actions": [
+        {
+          "title": "先分開居住日數、實質連結與離境理由",
+          "text": "編輯分析：建立各自可驗證的材料清單；返澳計畫不能直接取代法規要求的實質連結。個案未公開完整證據，不能自行加上房產、聘書或親屬聲明。"
+        },
+        {
+          "title": "讀批准通知，而非只讀成功標題",
+          "text": "編輯分析：核對核發日、旅行截止日及永久停留欄位，讓客戶了解本案實際取得的是一年旅行權利。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-regulations",
+          "number": "155.212",
+          "label": "155.212：居住及其他資格路徑（相關研讀入口）"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "155.511",
+          "label": "155.511：旅行及入境期間"
+        }
+      ],
+      "gaps": [
+        "取得 PR 日期、所有出入境日期、申請日及審理天數未公開。",
+        "原頁未列採用 155.212 的哪一分款，不能由結果自行斷定。",
+        "影像只能核對顯示的批准內容，不能驗證被遮蔽的身分或機構是否公開全部資料。",
+        "不知道部門是否提出補件、當事人是否之後實際返澳。"
+      ],
+      "checkedAt": "2026-11-16",
+      "visaLabel": "155"
+    },
+    {
+      "id": "reported-parent600-fourth-application-2025",
+      "title": "母親探親三度拒簽：逐次檢視舊申請，第四次以完整說明獲批 600",
+      "category": "visitor",
+      "sourceType": "practitioner",
+      "period": "2019–2025 年",
+      "visas": [
+        "600"
+      ],
+      "summary": "Newstars 公開的母親探親個案：2019、2022、2025 三次申請被拒；團隊記載第四次整理本國連結並回應既往拒簽，2025-05-16 獲批。公開拼圖可核對三份拒簽通知及第四次批准通知。",
+      "departmentResult": "公開通知拼圖顯示：2025-05-16 核發 600 Sponsored Family stream，單次入境，每次入境後可停留三個月，Must not arrive after 為 2025-11-16。",
+      "outcomeNote": "承辦機構自述及其公開的去識別化通知影像；未取得部門完整 decision record 或所有申請附件。這是四次申請，不是法院把原拒簽改成批准。",
+      "sources": [
+        {
+          "title": "公民父母的旅遊簽被拒3次，第4次遞交獲批",
+          "publisher": "Newstars Education & Migration",
+          "date": "個案 2019–2025；文章日期未明示",
+          "url": "https://www.newstarsec.com/success-cases/case-parent-tourist-4th-attempt/",
+          "locator": "完整時間軸；案件最大的難點；The Approach；最終結果"
+        },
+        {
+          "title": "三份拒簽通知與第四次批准通知拼圖（去識別化影像）",
+          "publisher": "Newstars Education & Migration（公開部門通知影像）",
+          "date": "2019-10-22；2022-07-28；2025-03-03；2025-05-16",
+          "url": "https://www.newstarsec.com/wp-content/uploads/2026/05/case-parent-tourist-4th-attempt-01.jpg",
+          "locator": "由左至右三份拒簽與一份批准通知；最右 Visa summary／Visa conditions／Visa duration and travel"
+        },
+        {
+          "title": "材料資料夾與 submission 縮圖（不能辨讀完整附件）",
+          "publisher": "Newstars Education & Migration",
+          "date": "日期未明示",
+          "url": "https://www.newstarsec.com/wp-content/uploads/2026/05/case-parent-tourist-4th-attempt-02.jpg",
+          "locator": "submitted docs／submission 標示"
+        }
+      ],
+      "background": [
+        {
+          "text": "機構記載申請人是澳洲 PR／公民的母親，先前未曾訪澳，目的是探親。原文對子女 PR 與公民稱呼並不完全一致，因此不自行斷定其轉公民時間。",
+          "ref": {
+            "source": 1,
+            "locator": "案例背景；導言"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2019-10-22",
+          "title": "第一次 Tourist stream 拒簽",
+          "text": "機構稱首次由家庭自行辦理且材料簡單；通知可讀出拒簽日及 Tourist stream。",
+          "ref": {
+            "source": 2,
+            "locator": "最左通知：Refused Applicant"
+          }
+        },
+        {
+          "date": "2022-07-28",
+          "title": "第二次改 Sponsored Family stream，仍拒",
+          "text": "通知顯示 Sponsored Family stream；原文說明改 stream 後材料仍不充分。",
+          "ref": {
+            "source": 2,
+            "locator": "左二通知：標題與拒簽日期"
+          }
+        },
+        {
+          "date": "2025-03-03",
+          "title": "第三次由機構協助仍拒",
+          "text": "機構稱已增加資金支持及說明本國連結，仍遭拒；通知列 Sponsored Family stream。",
+          "ref": {
+            "source": 2,
+            "locator": "左三通知：Refused Applicant"
+          }
+        },
+        {
+          "date": "第四次準備期間；日期未公開",
+          "title": "逐次對照並補強說明",
+          "text": "承辦團隊記載再整理本國連結、過往拒簽經過及探親目的，附簽字 submission 與支持資料；未公開文件逐件名稱。",
+          "ref": {
+            "source": 1,
+            "locator": "The Approach；導言"
+          }
+        },
+        {
+          "date": "2025-05-16",
+          "title": "第四次獲批",
+          "text": "最右批准通知列 Granted；Sponsored Family stream、單次入境、停留三個月。",
+          "ref": {
+            "source": 2,
+            "locator": "最右通知：Visa summary／Visa duration and travel"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "舊拒簽理由與新申請說明",
+          "request": "三份公開拒簽通知顯示部門已作決定；機構稱主要疑點是真實短期停留意圖。這些不是可自行當成 s56／s57 的補件信。",
+          "response": "第四次為新申請，附本國連結支持資料及簽字 submission，說明前案與本次探親安排。",
+          "limit": "拒簽理由附件、具體詢問／補件信、提交日期、response deadline 及完整 submission 未公開。縮圖不能證明每種文件的實際內容。",
+          "ref": {
+            "source": 1,
+            "locator": "案件最大的難點；The Approach"
+          }
+        }
+      ],
+      "decision": {
+        "department": "前三次拒簽；第四次 2025-05-16 獲批 600 Sponsored Family stream。批准通知列 8101、8201、8503、8531 條件。",
+        "later": "本公開個案沒有 Tribunal／法院程序，也未交代之後實際入境及離境。",
+        "ref": {
+          "source": 2,
+          "locator": "最右批准通知"
+        },
+        "caution": "機構對審理人員『慣性思維』的描述是其評論，不是部門承認的事實。頁面泛稱旅遊簽，但影像顯示最終 stream 是 Sponsored Family；應以可讀通知欄位描述。"
+      },
+      "actions": [
+        {
+          "title": "先重建歷次申請與決定的差異",
+          "text": "編輯分析：把每次申請、stream、證據與拒簽理由逐項比對；再次遞交應說明哪些事實或支持改變，不是只更換封面信。"
+        },
+        {
+          "title": "不能用子女身分代替短期停留證據",
+          "text": "編輯分析：探親需求與按時離境的支持須分開說清楚；並閱讀最終獲批條件，不能把『父母探親』當成可在境內自由續簽。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-regulations",
+          "number": "600.211",
+          "label": "600.211：真實短期停留意圖（相關研讀入口）"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "600.212",
+          "label": "600.212：停留期間的支持能力（相關研讀入口）"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "8503",
+          "label": "8503：本通知明列的 No further stay 條件"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "8531",
+          "label": "8531：本通知明列的離境條件"
+        }
+      ],
+      "gaps": [
+        "不是同站另一篇 case-600-parent-visitor-4th-attempt 的143排隊家庭，不能把其 Queue Letter、近30份文件等資料混入本案。",
+        "未公開四次的確切遞交日及完整拒簽 decision records，不能計算各次處理天數。",
+        "無法獨立核實機構關於部門動機、所有個人情況或全部材料的描述。",
+        "不從本案推定相同國籍、家庭背景或三次拒簽者都會取得相同結果。"
+      ],
+      "checkedAt": "2026-11-16",
+      "visaLabel": "600"
+    },
+    {
+      "id": "partner-eos-form40sp-2021",
+      "title": "EOS：移民局三次要求補件並電話提醒，40SP 仍未及時交到而拒簽",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "EOS 委任代理人辦理伴侶簽證。關鍵補件之一是擔保人 Form 40SP；擔保人事後表示自己不知道這份表格沒有交到申請中。",
+      "background": [
+        {
+          "text": "EOS 委任代理人辦理伴侶簽證。關鍵補件之一是擔保人 Form 40SP；擔保人事後表示自己不知道這份表格沒有交到申請中。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "text": "原始遞件日期及完整附件清單沒有公開。不能據此推定其關係本身不真實。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF pp13–14",
+            "page": 13
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2021-02-15",
+          "title": "要求、回覆與材料",
+          "text": "移民局依 s 56 要求補充資料。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "date": "2021-03-15",
+          "title": "聯絡與處理進展",
+          "text": "移民局再次依 s 56 要求資料。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "date": "2021-05-13",
+          "title": "聯絡與處理進展",
+          "text": "第三次 s 56 要求；審理人員並致電登記在案的代理人，說明缺少的資料，其中包括 Form 40SP。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "date": "2021-09（日期未公開）",
+          "title": "決定／申請效力",
+          "text": "因在規定期限及作成決定前均未收到所需資料，移民局拒絕伴侶簽證申請。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF p13",
+            "page": 13
+          }
+        },
+        {
+          "date": "拒簽後（日期未公開）",
+          "title": "決定／申請效力",
+          "text": "EOS 申請 AAT 覆核。擔保人直接把 Form 40SP 寄給 AAT，說自己剛得知表格是拒簽原因之一，沒有被要求填交。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF pp13–14",
+            "page": 13
+          }
+        },
+        {
+          "date": "2023 年 6 月",
+          "title": "覆核階段才開始擔保表格",
+          "text": "主管機關核對部門紀錄後，記載 Form 40SP 至此時才開始；亦不接受以已交 Form 956 推論 40SP 已交的說法。",
+          "ref": {
+            "source": 1,
+            "page": 14,
+            "locator": "PDF p14，Form 40SP／Form 956 認定"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "移民局要求與補件事實",
+          "request": "2021-02-15：移民局依 s 56 要求補充資料。；2021-03-15：移民局再次依 s 56 要求資料。；2021-05-13：第三次 s 56 要求；審理人員並致電登記在案的代理人，說明缺少的資料，其中包括 Form 40SP。；拒簽後（日期未公開）：EOS 申請 AAT 覆核。擔保人直接把 Form 40SP 寄給 AAT，說自己剛得知表格是拒簽原因之一，沒有被要求填交。",
+          "response": "主管機關記載這組受查個案每次獲 28 天回覆機會；本案三次要求均沒有及時完成。這是原案紀錄，不是斷言所有 s 56 要求一律 28 天。；已知具體缺件為 Form 40SP；其他所需資料未逐項公開。表格最後提交至 AAT，不可寫成已在移民局拒簽前提交。 主管機關並指出 Form 956 是委任代理人，不可用來替代擔保表格。",
+          "limit": "本案沒有逐案公開最終 AAT 結果，不能稱為覆核成功案例。",
+          "ref": {
+            "source": 1,
+            "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp13–14（Ms [EOS]）。",
+            "page": 13
+          }
+        }
+      ],
+      "departmentResult": "2021 年 9 月拒簽；公開紀錄未交代 AAT 最終結果。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "拒簽：要求的資料沒有在期限內或決定前提供。",
+        "later": "本紀律決定後段統述部分案件經 AAT 發回，但未逐案明確交代本案的覆核結果；不能據此當作本案已獲批。",
+        "ref": {
+          "source": 1,
+          "locator": "PDF p13",
+          "page": 13
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "PDF pp13–14",
+          "page": 13
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "把申請人與擔保人的文件分開做核對表；申請人的證據齊全不等於擔保表格已遞交。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "收到提醒及電話後應即向客戶列明缺件與期限，而非只在代理人案卷保留通知。"
+        },
+        {
+          "title": "後續：通知與風險檢查",
+          "text": "應檢查附件是否真的在申請系統中，不以『曾填過表格』取代上傳確認。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "56",
+          "label": "Act s56"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "2.15",
+          "label": "Reg 2.15"
+        }
+      ],
+      "gaps": [
+        "本案沒有逐案公開最終 AAT 結果，不能稱為覆核成功案例。",
+        "表格名稱及處理流程反映當年案情；現行程序需另外核對。"
+      ],
+      "category": "partner",
+      "period": "2021 年拒簽；2024 年紀錄",
+      "visas": [
+        "820"
+      ],
+      "result": "2021 年 9 月拒簽；公開紀錄未交代 AAT 最終結果。",
+      "documents": [
+        "agent-code"
+      ],
+      "sources": [
+        {
+          "url": "https://portal.mara.gov.au/_entity/annotation/d9d0a908-cea1-f2d6-a378-658c86349f01/7b138792-1090-45b6-9241-8f8d96d8c372?t=1751155200312#page=13",
+          "title": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp13–14（Ms [EOS]）。",
+          "publisher": "Office of the Migration Agents Registration Authority",
+          "date": "2024-12-10",
+          "locator": "OMARA, Barry Pike, CAS-20677-K8D3，10 December 2024，PDF pp13–14（Ms [EOS]）。"
+        }
+      ],
+      "visaLabel": "820"
+    },
+    {
+      "id": "partner-bds-unanswered-invitation-2019",
+      "title": "BDS：關係中止後有 28 天說明機會，代理人卻未遞交回覆",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "BDS 以與 SSOL 的關係取得 820 暫時伴侶簽證。其後擔保人撤回擔保，BDS 也向移民局確認關係已中止。移民局請他說明是否仍有可獲永久伴侶簽證的分支，包括家庭暴力。",
+      "background": [
+        {
+          "text": "BDS 以與 SSOL 的關係取得 820 暫時伴侶簽證。其後擔保人撤回擔保，BDS 也向移民局確認關係已中止。移民局請他說明是否仍有可獲永久伴侶簽證的分支，包括家庭暴力。",
+          "ref": {
+            "source": 1,
+            "locator": "[14]、[67]，PDF pp6、26",
+            "page": 6
+          }
+        },
+        {
+          "text": "公開決定沒有逐項列出原始 820 申請的關係證據。不能把未公開的共同帳戶、照片或租約補成案情。",
+          "ref": {
+            "source": 1,
+            "locator": "[14]、[67]–[71]"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2017-05-23",
+          "title": "提出申請／處理進展",
+          "text": "BDS 遞交 820/801 伴侶簽證申請。",
+          "ref": {
+            "source": 1,
+            "locator": "[14]，PDF p6",
+            "page": 6
+          }
+        },
+        {
+          "date": "2018-07-19",
+          "title": "批准／後續處理",
+          "text": "移民局批准 820 暫時伴侶簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[14]、[67]，PDF pp6、26",
+            "page": 6
+          }
+        },
+        {
+          "date": "2018-11-23",
+          "title": "聯絡與處理進展",
+          "text": "擔保人向移民局撤回 801 階段的擔保。",
+          "ref": {
+            "source": 1,
+            "locator": "[14]，PDF p6",
+            "page": 6
+          }
+        },
+        {
+          "date": "2018-11-27",
+          "title": "聯絡與處理進展",
+          "text": "BDS 確認關係中止。同日移民局發出邀請，要求 28 天內評論關係中止，以及是否存在可繼續考慮永久簽證的情況（包括家庭暴力）。",
+          "ref": {
+            "source": 1,
+            "locator": "[67]，PDF p26",
+            "page": 26
+          }
+        },
+        {
+          "date": "2018-12-06",
+          "title": "聯絡與處理進展",
+          "text": "BDS 與代理人會面討論邀請。雙方時間線和代理人案卷記錄均顯示討論過家庭暴力分支；代理人記錄需要有力證據。",
+          "ref": {
+            "source": 1,
+            "locator": "[68]，PDF p26",
+            "page": 26
+          }
+        },
+        {
+          "date": "2018-12-17",
+          "title": "聯絡與處理進展",
+          "text": "通訊顯示 BDS 在代理人建議下準備向警方報告；主管機關指出當時沒有後續步驟支持家庭暴力主張。",
+          "ref": {
+            "source": 1,
+            "locator": "[70]，PDF p27",
+            "page": 27
+          }
+        },
+        {
+          "date": "2018-12-18",
+          "title": "要求、回覆與材料",
+          "text": "BDS 問代理人將如何回覆移民局，並要求遞交前先看陳述。",
+          "ref": {
+            "source": 1,
+            "locator": "[71]，PDF p27",
+            "page": 27
+          }
+        },
+        {
+          "date": "2018-12-24",
+          "title": "要求、回覆與材料",
+          "text": "代理人回覆會保持聯繫，卻未回答如何處理申請，也沒有說明已遞交什麼。主管機關認定 BDS 以為回覆正在準備中，沒有證據顯示他同意不回覆。",
+          "ref": {
+            "source": 1,
+            "locator": "[71]、[75]–[76]，PDF pp27、29",
+            "page": 27
+          }
+        },
+        {
+          "date": "2019-05-06",
+          "title": "決定／申請效力",
+          "text": "移民局因未收到邀請的回覆而拒絕 801 申請，直接通知 BDS；代理人未按義務通知移民局她正在提供協助。",
+          "ref": {
+            "source": 1,
+            "locator": "[67]、[73]，PDF pp26、28",
+            "page": 26
+          }
+        },
+        {
+          "date": "2019-05-27",
+          "title": "提出申請／處理進展",
+          "text": "BDS 向 AAT 申請行政覆核。",
+          "ref": {
+            "source": 1,
+            "locator": "[77]，PDF p29",
+            "page": 29
+          }
+        },
+        {
+          "date": "2019-09-23 → 2019-10-07",
+          "title": "要求、回覆與材料",
+          "text": "AAT 發出另一份邀請，要求 10 月 7 日前回覆；已正確寄給授權收件人（代理人），但仍無回覆。",
+          "ref": {
+            "source": 1,
+            "locator": "[77]–[79]，PDF p29",
+            "page": 29
+          }
+        },
+        {
+          "date": "2020-03-05",
+          "title": "決定／申請效力",
+          "text": "AAT 維持移民局拒簽。這是覆核結果，不是移民局批准永久簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[77]，PDF p29",
+            "page": 29
+          }
+        },
+        {
+          "date": "2020-03-20",
+          "title": "聯絡與處理進展",
+          "text": "臨床心理師報告到這時才完成，已在 AAT 決定之後。",
+          "ref": {
+            "source": 1,
+            "locator": "[83]，PDF p31",
+            "page": 31
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "移民局要求與補件事實",
+          "request": "2018-11-27：BDS 確認關係中止。同日移民局發出邀請，要求 28 天內評論關係中止，以及是否存在可繼續考慮永久簽證的情況（包括家庭暴力）。；2018-12-06：BDS 與代理人會面討論邀請。雙方時間線和代理人案卷記錄均顯示討論過家庭暴力分支；代理人記錄需要有力證據。；2018-12-18：BDS 問代理人將如何回覆移民局，並要求遞交前先看陳述。；2019-05-06：移民局因未收到邀請的回覆而拒絕 801 申請，直接通知 BDS；代理人未按義務通知移民局她正在提供協助。；2019-09-23 → 2019-10-07：AAT 發出另一份邀請，要求 10 月 7 日前回覆；已正確寄給授權收件人（代理人），但仍無回覆。",
+          "response": "移民局曾提供 28 天的說明機會；公開紀錄顯示代理人未遞交回覆，也沒有代為聯絡。；不能把『討論心理師報告』寫成『已及時把報告交給移民局』。主管機關查核心理師聯絡及完成時間後，認定進展非常遲。",
+          "limit": "本案適用歷史版本的法律及前行為守則，不能直接當成 2026 年期限／法律結論。",
+          "ref": {
+            "source": 1,
+            "locator": "OMARA, Monica Christine Gruszka, CMP-53399（併 CMP-50080、CAS-05268-J4S5），9 June 2022，尤其 [67]–[83]、[98]–[99]。"
+          }
+        }
+      ],
+      "departmentResult": "2019-05-06 拒絕 801；2020-03-05 AAT 維持拒簽。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "801 拒簽：對關係中止的邀請沒有回覆。",
+        "later": "AAT 維持拒簽；亦未收到其邀請的回覆。 另有代理人紀律結果：代理人被停牌三年；該結果涵蓋多宗投訴，不能說全部處分只因 BDS 一案。",
+        "ref": {
+          "source": 1,
+          "locator": "[67]、[73]"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[77]–[79]"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "把每份邀請的發出日、到期日、所需證據、負責人及遞交確認記進期限表，不能用『日後再覆核』取代目前可做的回覆。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "心理師報告若有必要，應把預約、預計完成日與是否需請求延展寫清楚；案情並未證明獲得延展必然成功。"
+        },
+        {
+          "title": "後續：通知與風險檢查",
+          "text": "讓客戶確認提交內容並保留遞交憑證；另行正確處理代理人通知及授權收件人。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-regulations",
+          "number": "1.21",
+          "label": "Reg 1.21"
+        },
+        {
+          "doc": "migration-act",
+          "number": "312A",
+          "label": "Act s312A"
+        }
+      ],
+      "gaps": [
+        "本案適用歷史版本的法律及前行為守則，不能直接當成 2026 年期限／法律結論。",
+        "[14] 的列表把 November 2018 誤寫為 November 2019；較詳細的 [67] 明確記載 27 November 2018，本文使用 [67]。",
+        "[14] 把 AAT 日期列為 12 March 2020；詳細 [77] 區分 5 March 決定、12 March 通知，本文沿用此區分。",
+        "原始警方紀錄及完整心理報告沒有公開，不能判斷若及時遞交會否成功。"
+      ],
+      "category": "partner",
+      "period": "2017–2020 年事件",
+      "visas": [
+        "820",
+        "801"
+      ],
+      "result": "2019-05-06 拒絕 801；2020-03-05 AAT 維持拒簽。",
+      "documents": [
+        "agent-code"
+      ],
+      "sources": [
+        {
+          "url": "https://portal.mara.gov.au/_entity/annotation/9be3427c-224a-b643-bfa7-b6f93b8ddbd0/7b138792-1090-45b6-9241-8f8d96d8c372?t=1743572564817#page=26",
+          "title": "OMARA, Monica Christine Gruszka, CMP-53399（併 CMP-50080、CAS-05268-J4S5），9 June 2022，尤其 [67]–[83]、[98]–[99]。",
+          "publisher": "Office of the Migration Agents Registration Authority",
+          "date": "2022-06-09",
+          "locator": "OMARA, Monica Christine Gruszka, CMP-53399（併 CMP-50080、CAS-05268-J4S5），9 June 2022，尤其 [67]–[83]、[98]–[99]。"
+        }
+      ],
+      "visaLabel": "820 / 801"
+    },
+    {
+      "id": "partner-marina-repeated-refusals-2017",
+      "title": "Marina 與 Ehsan：行政覆核後仍需更新關係證據，兩次違法拒簽被撤銷",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "Marina 在境外申請伴侶簽證，Ehsan 是其伴侶。案件經 AAT 發回後，移民局批准暫時伴侶簽證，但隔日又拒絕永久階段。後續調查聚焦關係證據、作成決定前的機會與旅行期限。",
+      "background": [
+        {
+          "text": "Marina 在境外申請伴侶簽證，Ehsan 是其伴侶。案件經 AAT 發回後，移民局批准暫時伴侶簽證，但隔日又拒絕永久階段。後續調查聚焦關係證據、作成決定前的機會與旅行期限。",
+          "ref": {
+            "source": 1,
+            "locator": "p40"
+          }
+        },
+        {
+          "text": "原始關係證據及精確簽證子類別未公開；不能自行加上財務資料、同住證明或 Form 888。",
+          "ref": {
+            "source": 1,
+            "locator": "p40"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2015（日期未公開）",
+          "title": "決定／申請效力",
+          "text": "移民局因不信納關係真實且持續，拒絕境外伴侶簽證。Ehsan 申請 AAT 覆核，AAT 發回並指示關係符合真實持續的要求。",
+          "ref": {
+            "source": 1,
+            "locator": "p40 左欄開頭"
+          }
+        },
+        {
+          "date": "AAT 決定約10個月後（2016年）",
+          "title": "決定／申請效力",
+          "text": "移民局批准暫時伴侶簽證；隔日因關係問題拒絕永久階段。Marina 未能在這24小時內入境，無法在當時適用的境內條件下向 AAT 申請覆核。",
+          "ref": {
+            "source": 1,
+            "locator": "p40"
+          }
+        },
+        {
+          "date": "2016-11",
+          "title": "決定／申請效力",
+          "text": "Ombudsman 調查期間移民局承認該拒簽不合法並撤銷，告知暫時簽證恢復效力直到重新決定，卻在次日再拒絕永久簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "p40"
+          }
+        },
+        {
+          "date": "2016年重新拒簽時",
+          "title": "要求、回覆與材料",
+          "text": "移民局重視 AAT 2015 年決定後沒有進一步關係證據，以及沒有已確定的抵澳安排。Ombudsman 認為資料過時或不相關，而且沒有給當事人提供關係更新證據的機會。",
+          "ref": {
+            "source": 1,
+            "locator": "p40 右欄"
+          }
+        },
+        {
+          "date": "2017年末",
+          "title": "決定／申請效力",
+          "text": "移民局再次承認拒簽不合法，將撤銷決定並恢復暫時簽證。該簽證的首次入境期限當時只剩一天，Marina 在有效期內抵澳，等待永久申請繼續審理。",
+          "ref": {
+            "source": 1,
+            "locator": "p40 右欄結尾"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "移民局要求與補件事實",
+          "request": "2015（日期未公開）：移民局因不信納關係真實且持續，拒絕境外伴侶簽證。Ehsan 申請 AAT 覆核，AAT 發回並指示關係符合真實持續的要求。",
+          "response": "公開資料記載移民局沒有在永久拒簽前給補充持續關係證據的機會；沒有公開實際補交的文件清單。；Ombudsman 認為在不知道何時下簽的情況下要求作出固定抵澳安排有問題；這不是說所有案件均不應提交旅行或共同生活計畫。",
+          "limit": "此案最終永久簽證結果未公開，適合程序監控教學，不宜列為最終永久獲批案例。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman, Annual Report 2017–18, p40（PDF 第51頁），CASE STUDY Marina / Ehsan。"
+          }
+        }
+      ],
+      "departmentResult": "暫時伴侶簽證恢復；報告結尾永久申請仍待決定。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "已知2016年曾批准暫時伴侶簽證；兩次永久拒簽後被移民局承認不合法。公開報告最後記載永久申請仍在處理，沒有記載永久簽證最終獲批。",
+        "later": "2015 年 AAT 發回並確認真實持續關係；其後救濟進展由 Ombudsman 調查記錄，不可說全部由 AAT 撤銷。",
+        "ref": {
+          "source": 1,
+          "locator": "p40"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "p40"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "發回重審不等於已下永久簽證；代理人應追蹤新決定、資料更新及目前簽證效力。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "等待期間可有計畫地更新關係證據，而非把數年前已認定的資料視為永久不需更新。"
+        },
+        {
+          "title": "後續：通知與風險檢查",
+          "text": "收到重新生效通知，應立即核對簽證入境期限與客戶位置；不能只看『恢復效力』四個字。"
+        }
+      ],
+      "laws": [],
+      "gaps": [
+        "此案最終永久簽證結果未公開，適合程序監控教學，不宜列為最終永久獲批案例。",
+        "原案沒有公開子類別，不能自行標成309/100。",
+        "當時的 AAT 管轄與入境規定須按歷史版本理解，不能直接套用今天。"
+      ],
+      "category": "partner",
+      "period": "2015–2017 年",
+      "visas": [],
+      "topicVisas": [
+        "309",
+        "100"
+      ],
+      "result": "暫時伴侶簽證恢復；報告結尾永久申請仍待決定。",
+      "sources": [
+        {
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0031/89383/Commonwealth_Ombudsman_AnnualReport_2017-18.pdf#page=51",
+          "title": "Commonwealth Ombudsman, Annual Report 2017–18, p40（PDF 第51頁），CASE STUDY Marina / Ehsan。",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2018-10",
+          "locator": "Commonwealth Ombudsman, Annual Report 2017–18, p40（PDF 第51頁），CASE STUDY Marina / Ehsan。"
+        }
+      ],
+      "visaLabel": "伴侶簽證（子類別未公開）"
+    },
+    {
+      "id": "student-financial-source-sister-joint-account",
+      "title": "加足金額仍不夠：學生資金來源造成第二次拒簽",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "Ms A 以姊姊及姊夫聯名帳戶內的資金支持留學。",
+      "background": [
+        {
+          "text": "Ms A 以姊姊及姊夫聯名帳戶內的資金支持留學。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 11–12；PDF 頁 15–16；paragraphs 3.13–3.14",
+            "page": 15
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "第一次申請；日期未公開",
+          "title": "決定／申請效力",
+          "text": "DIAC 因金額及當時要求的持有期間不足拒簽；信上未勾選資金來源問題。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 15，3.13 case study",
+            "page": 15
+          }
+        },
+        {
+          "date": "第二次申請前；日期未公開",
+          "title": "提出申請／處理進展",
+          "text": "家人增加帳戶金額；Ms A 再次付費申請。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 15，3.13 case study",
+            "page": 15
+          }
+        },
+        {
+          "date": "第二次決定；日期未公開",
+          "title": "決定／申請效力",
+          "text": "DIAC 以姊夫不是當時規例認可的資助者而再拒；Ombudsman 調查認為第一封信具誤導性。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 15–16，3.13–3.14",
+            "page": 15
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "要求與實際提交",
+          "request": "第一次拒簽指出金額與持有期間，不勾選資金來源；第二次卻以姊夫不屬當時合格資助人而拒。",
+          "response": "家人增加聯名帳戶金額後重新付費申請；只改變金額沒有解決當時的資金來源限制。",
+          "limit": "沒有公開日期及帳戶金額；當年資助者與六個月等限制不能照搬為今日要求。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 11–12；PDF 頁 15–16；paragraphs 3.13–3.14",
+            "page": 15
+          }
+        }
+      ],
+      "departmentResult": "兩次拒簽；未公開其後獲簽或退款。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "兩次拒簽，第二次理由轉為資金來源不符當時規定。",
+        "later": "誤導通知的投訴成立；未公開因此獲簽或退款。",
+        "ref": {
+          "source": 1,
+          "locator": "印刷頁 11–12；PDF 頁 15–16；paragraphs 3.13–3.14",
+          "page": 15
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "印刷頁 11–12；PDF 頁 15–16；paragraphs 3.13–3.14",
+          "page": 15
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "財力要分開審查金額、資金來源及當時適用的持有或可支配要求；未勾選的條件不等於已審查通過。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "66",
+          "label": "Act s66（延伸研讀）"
+        },
+        {
+          "doc": "migration-regulations",
+          "number": "500.214",
+          "label": "Reg 500.214（延伸研讀）"
+        }
+      ],
+      "gaps": [
+        "所有個案日期及帳戶金額未公開。",
+        "不應把 2007 報告中姊夫／六個月限制視為今日學生簽證的一般規則。"
+      ],
+      "category": "student",
+      "period": "2007 年報告；日期未公開",
+      "visas": [],
+      "topicVisas": [
+        "500"
+      ],
+      "result": "兩次拒簽；未公開其後獲簽或退款。",
+      "sources": [
+        {
+          "id": "omb-notification-2007",
+          "title": "Notification of decisions and review rights for unsuccessful visa applications",
+          "publisher": "Commonwealth and Immigration Ombudsman",
+          "date": "2007-12",
+          "report": "15/2007",
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0029/286652/DIAC-decision-notification-and-review-rights-for-unsuccessful-visa-applications-investigation-report.pdf#page=15",
+          "locator": "印刷頁 11–12；PDF 頁 15–16；paragraphs 3.13–3.14"
+        }
+      ],
+      "visaLabel": "歷史學生簽證（子類別未公開）"
+    },
+    {
+      "id": "student-oshc-membership-number-not-coverage",
+      "title": "多輪補件後只給會員號碼，仍未證明 OSHC 保障期間",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "公開範例遮蔽各日，只保留月份。不能替 X 日補出日期。",
+      "background": [
+        {
+          "text": "公開範例遮蔽各日，只保留月份。不能替 X 日補出日期。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 18–19；PDF 頁 21–22；Example 3",
+            "page": 21
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2005 年 7 月，日遮蔽",
+          "title": "要求、回覆與材料",
+          "text": "面談及遞交時被要求提供 OSHC 證明。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Example 3",
+            "page": 22
+          }
+        },
+        {
+          "date": "2005 年 11 月，日遮蔽",
+          "title": "聯絡與處理進展",
+          "text": "書面要求一年保障，設定同月內的遮蔽日期為期限。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Example 3",
+            "page": 22
+          }
+        },
+        {
+          "date": "2006 年 2–3 月，日遮蔽",
+          "title": "提出申請／處理進展",
+          "text": "再次要求保險證據；申請人只交會員號碼、沒有到期日，官員再要收據或會員卡。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Example 3",
+            "page": 22
+          }
+        },
+        {
+          "date": "2006 年 6 月，兩個日期遮蔽",
+          "title": "聯絡與處理進展",
+          "text": "官員再留言追件；通知最後認為沒有付費保障證據，不符合舊 cl 573.225。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 22，Example 3",
+            "page": 22
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "要求與實際提交",
+          "request": "2005年7月面談索保險證明，11月書面要求一年保障，2006年再追問保障收據或會員卡。",
+          "response": "已知只提交會員號碼而沒有到期日；2006年6月仍被追問，通知最終未認可已付費保障。",
+          "limit": "原通知以 X 遮蔽各日；不得補出精確日期或今日通用回覆天數。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 18–19；PDF 頁 21–22；Example 3",
+            "page": 21
+          }
+        }
+      ],
+      "departmentResult": "公開不成功申請通知：未證明符合當時的 OSHC 要求。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "就已公開通知，官員不信納符合舊醫療保險條件；原報告以不成功申請的理由通知收錄此例。",
+        "later": "未公開是否申請覆核及其結果。",
+        "ref": {
+          "source": 1,
+          "locator": "印刷頁 18–19；PDF 頁 21–22；Example 3",
+          "page": 21
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "印刷頁 18–19；PDF 頁 21–22；Example 3",
+          "page": 21
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "把補件要求拆成要證明的事實：有保單、已付費、適用人士及保障日期；會員號碼本身不必然回答全部問題。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-regulations",
+          "number": "500.215",
+          "label": "Reg 500.215（延伸研讀）"
+        }
+      ],
+      "gaps": [
+        "確切日、決定日期、每封信的完整副本及後續未公開。",
+        "只可保留原文已公開的月份及遮蔽狀態。"
+      ],
+      "category": "student",
+      "period": "2005–2006 年；歷史制度",
+      "visas": [
+        "573"
+      ],
+      "topicVisas": [
+        "500"
+      ],
+      "result": "公開不成功申請通知：未證明符合當時的 OSHC 要求。",
+      "sources": [
+        {
+          "id": "omb-notification-2007",
+          "title": "Notification of decisions and review rights for unsuccessful visa applications",
+          "publisher": "Commonwealth and Immigration Ombudsman",
+          "date": "2007-12",
+          "report": "15/2007",
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0029/286652/DIAC-decision-notification-and-review-rights-for-unsuccessful-visa-applications-investigation-report.pdf#page=22",
+          "locator": "印刷頁 18–19；PDF 頁 21–22；Example 3"
+        }
+      ],
+      "visaLabel": "573"
+    },
+    {
+      "id": "student-validity-delayed-documents-mr-c",
+      "title": "學生材料不齊，四個月後才被告知無效：Mr C",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "學校因抄襲調查延後發成績，申請人仍須處理簽證銜接。",
+      "background": [
+        {
+          "text": "學校因抄襲調查延後發成績，申請人仍須處理簽證銜接。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 8–9；PDF 頁 11–12；Case study: Delay in advising applicant about invalidity leading to reduced immigration options",
+            "page": 11
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2007-09-28",
+          "title": "提出申請／處理進展",
+          "text": "遞交學生申請，附完整表格、費用及學校兩封說明信；當日獲 BVA。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 11，case study 首段",
+            "page": 11
+          }
+        },
+        {
+          "date": "2008-01-30",
+          "title": "決定／申請效力",
+          "text": "DIAC 通知學校文件不正確，判申請無效；先說已無合法身分，後改告 BVA 到 2008-02-27 才屆滿。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 12，case study 續段",
+            "page": 12
+          }
+        },
+        {
+          "date": "其後；未公開日期",
+          "title": "聯絡與處理進展",
+          "text": "Ombudsman 介入；報告說延誤已使其原擬境內永久簽證路徑受阻。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 12，case study 末段",
+            "page": 12
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "要求與實際提交",
+          "request": "學校成績延發，移民局後通知學校文件不正確；未公開正式補件清單。",
+          "response": "首次遞交已附完整表格、費用、學校兩封說明信，並獲 BVA；仍未因此保證學生申請有效。",
+          "limit": "2008-01-30 才判無效；其後更正 BVA 到 2008-02-27 的告知。完整附件與結果未公開。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 8–9；PDF 頁 11–12；Case study: Delay in advising applicant about invalidity leading to reduced immigration options",
+            "page": 11
+          }
+        }
+      ],
+      "departmentResult": "學生申請被當作無效；後續永久簽證結果未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "學生申請被判無效；不是實質資格審理後的拒簽。",
+        "later": "未公開後續永久簽證是否獲批。",
+        "ref": {
+          "source": 1,
+          "locator": "印刷頁 8–9；PDF 頁 11–12；Case study: Delay in advising applicant about invalidity leading to reduced immigration options",
+          "page": 11
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "印刷頁 8–9；PDF 頁 11–12；Case study: Delay in advising applicant about invalidity leading to reduced immigration options",
+          "page": 11
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "要把缺文件、申請是否有效、現有簽證效期分別核對；學校解釋信不能直接視為法定文件的替代品。"
+        },
+        {
+          "title": "提交前：證據與憑證",
+          "text": "不能只靠收據或初期處理狀態，推論全部有效申請門檻已被確認。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "46",
+          "label": "Act s46（延伸研讀）"
+        },
+        {
+          "doc": "migration-act",
+          "number": "47",
+          "label": "Act s47（延伸研讀）"
+        }
+      ],
+      "gaps": [
+        "子類、原簽證屆滿日、所欠的具體學校文件及介入後結果未公開。",
+        "歷史 BVA 日期不能用來推算今日個案期限。"
+      ],
+      "category": "student",
+      "period": "2007–2008 年；歷史制度",
+      "visas": [
+        "010"
+      ],
+      "topicVisas": [
+        "500"
+      ],
+      "result": "學生申請被當作無效；後續永久簽證結果未公開。",
+      "sources": [
+        {
+          "id": "omb-invalid-2009",
+          "title": "Department of Immigration and Citizenship: Invalid visa applications",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2009-07",
+          "report": "10/2009",
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0026/286622/Department-of-immigration-and-citizenship-invalid-visa-applications-investigation-report.pdf#page=11",
+          "locator": "印刷頁 8–9；PDF 頁 11–12；Case study: Delay in advising applicant about invalidity leading to reduced immigration options"
+        }
+      ],
+      "visaLabel": "010"
+    },
+    {
+      "id": "skilled-136-two-invalid-notices-mr-d",
+      "title": "補了第一封信指出的問題，仍再次被退件：Mr D",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "首次申請時已 50 歲；報告指出該舊簽證要求未滿 45 歲。",
+      "background": [
+        {
+          "text": "首次申請時已 50 歲；報告指出該舊簽證要求未滿 45 歲。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 11；PDF 頁 14；Case study: Failure to provide full advice about all deficiencies in the first invalid letter",
+            "page": 14
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2007-06-14",
+          "title": "提出申請／處理進展",
+          "text": "首次遞交 136。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 14",
+            "page": 14
+          }
+        },
+        {
+          "date": "2007-08-16",
+          "title": "決定／申請效力",
+          "text": "第一封無效通知只指出沒有合格技能評估。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 14",
+            "page": 14
+          }
+        },
+        {
+          "date": "2007-08-31",
+          "title": "提出申請／處理進展",
+          "text": "再次遞交；報告未列出第二次的附件清單。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 14",
+            "page": 14
+          }
+        },
+        {
+          "date": "2008-02-12",
+          "title": "決定／申請效力",
+          "text": "第二封無效通知指出未滿 45 歲的要求；第一次信沒有提及年齡。",
+          "ref": {
+            "source": 1,
+            "locator": "PDF 頁 14",
+            "page": 14
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "要求與實際提交",
+          "request": "2007-08-16 只指出欠缺合格技能評估；2008-02-12 又指出未滿45歲門檻。",
+          "response": "申請人於2007-08-31重新遞交。第二次具體附件未公開，不能自行寫成技能評估已被接受。",
+          "limit": "136 已屬歷史簽證；本案學習的是完整門檻檢查，不能當成現行189的年齡結論。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷頁 11；PDF 頁 14；Case study: Failure to provide full advice about all deficiencies in the first invalid letter",
+            "page": 14
+          }
+        }
+      ],
+      "departmentResult": "兩次申請被當作無效；再後續結果未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "兩次被通知申請無效；原報告對第二次處理使用 invalid 一詞，不能自行改寫成已完成 merits assessment 的拒簽。",
+        "later": "報告批評資訊不全造成不必要重申請；未公開個案再後續結果。",
+        "ref": {
+          "source": 1,
+          "locator": "印刷頁 11；PDF 頁 14；Case study: Failure to provide full advice about all deficiencies in the first invalid letter",
+          "page": 14
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "印刷頁 11；PDF 頁 14；Case study: Failure to provide full advice about all deficiencies in the first invalid letter",
+          "page": 14
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "重新遞交前要重做全部資格及有效申請清單；只修正通知信點出的缺點，可能仍不符合其他門檻。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "46",
+          "label": "Act s46（延伸研讀）"
+        }
+      ],
+      "gaps": [
+        "補交了哪些具體技能評估證明未公開。",
+        "136 為歷史簽證，不應在現行簽證目錄中冒稱可申請。"
+      ],
+      "category": "work",
+      "period": "2007–2008 年；歷史制度",
+      "visas": [
+        "136"
+      ],
+      "topicVisas": [
+        "189"
+      ],
+      "result": "兩次申請被當作無效；再後續結果未公開。",
+      "sources": [
+        {
+          "id": "omb-invalid-2009",
+          "title": "Department of Immigration and Citizenship: Invalid visa applications",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2009-07",
+          "report": "10/2009",
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0026/286622/Department-of-immigration-and-citizenship-invalid-visa-applications-investigation-report.pdf#page=14",
+          "locator": "印刷頁 11；PDF 頁 14；Case study: Failure to provide full advice about all deficiencies in the first invalid letter"
+        }
+      ],
+      "visaLabel": "136"
+    },
+    {
+      "id": "ombudsman-2010-dd-ee-security-clearance",
+      "title": "Ms DD／Mr EE：所謂等安全審查，其實轉介缺少材料",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "英國公民 Ms DD 的永久居留申請包括作為受扶養配偶的 Mr EE。移民局將延誤歸因於外部機關審查 Mr EE。",
+      "background": [
+        {
+          "text": "英國公民 Ms DD 的永久居留申請包括作為受扶養配偶的 Mr EE。移民局將延誤歸因於外部機關審查 Mr EE。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman Annual Report 2009–2010, printed p 98, Security clearance issues"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "申請及詢問日期未公開",
+          "title": "聯絡與處理進展",
+          "text": "移民局告知延誤來自外部安全審查，稱自己無法控制。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷第98頁 Security clearance issues"
+          }
+        },
+        {
+          "date": "外部機關多次追問；日期未公開",
+          "title": "要求、回覆與材料",
+          "text": "外部機關索取缺少的家人、旅行及居住歷史；移民局後來才提供完成審查所需資料。",
+          "ref": {
+            "source": 1,
+            "locator": "同頁"
+          }
+        },
+        {
+          "date": "向 Ombudsman 投訴後不久",
+          "title": "批准／後續處理",
+          "text": "簽證獲批。Ombudsman 建議移民局考慮向二人道歉。",
+          "ref": {
+            "source": 1,
+            "locator": "同頁"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "公開紀錄中的往來與材料",
+          "request": "移民局 → Ms DD：延誤因外部安全審查，聲稱無法控制。；外部審查機關 → 移民局：多次索取缺失資料。",
+          "response": "移民局提供 Mr EE 家人、旅行及居住歷史；來源未說明由申請人何時提交、文件清單或原始附件。",
+          "limit": "來源只有短篇年報個案，無申請或補件日期。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman Annual Report 2009–2010, printed p 98, Security clearance issues"
+          }
+        }
+      ],
+      "departmentResult": "永久居留申請獲批；子類別及確切日未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "投訴後不久，申請獲批准；未公開核發日期及子類別。",
+        "later": "沒有公開 Tribunal／法院覆核；Ombudsman 調查發現轉介資料缺漏。",
+        "ref": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman Annual Report 2009–2010, printed p 98, Security clearance issues"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman Annual Report 2009–2010, printed p 98, Security clearance issues"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "催辦不只問何時完成，可要求確認轉介是否完整、是否有尚待申請人提供的歷史資料，並保存具體回覆。"
+        }
+      ],
+      "laws": [],
+      "gaps": [
+        "來源只有短篇年報個案，無申請或補件日期。",
+        "不可宣稱申請人曾收到 s56 信或自行補交特定表格。",
+        "本案不能證明所有安全審查延誤都是移民局過失。"
+      ],
+      "category": "process",
+      "period": "2009–2010 年報個案",
+      "visas": [],
+      "result": "永久居留申請獲批；子類別及確切日未公開。",
+      "sources": [
+        {
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0024/34494/ombudsman_anrep_2009_2010_full.pdf#page=109",
+          "title": "Commonwealth Ombudsman Annual Report 2009–2010, printed p 98, Security clearance issues",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2009",
+          "locator": "Commonwealth Ombudsman Annual Report 2009–2010, printed p 98, Security clearance issues"
+        }
+      ],
+      "visaLabel": "永久居留（子類別未公開）"
+    },
+    {
+      "id": "ombudsman-2013-bb-payment-invalidity",
+      "title": "Mr BB：停收前寄到的 119 申請，信用卡付款失敗後被當作無效",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "119 子類別即將停收；付款是否成功，會影響能否保住原申請。",
+      "background": [
+        {
+          "text": "119 子類別即將停收；付款是否成功，會影響能否保住原申請。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 79, Policy not followed"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2012-06-29",
+          "title": "提出申請／處理進展",
+          "text": "Mr BB 遞交 119 申請。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷第79頁"
+          }
+        },
+        {
+          "date": "2012-07-06",
+          "title": "決定／申請效力",
+          "text": "移民局開始處理；信用卡付款遭拒，申請被當作無效。因子類已停收，無法重新申請。",
+          "ref": {
+            "source": 1,
+            "locator": "同頁"
+          }
+        },
+        {
+          "date": "調查後；日期未公開",
+          "title": "要求、回覆與材料",
+          "text": "Ombudsman 發現當時政策要求至少兩日內聯絡兩次以便修正；移民局同意聯絡並給予補正機會。",
+          "ref": {
+            "source": 1,
+            "locator": "同頁"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "公開紀錄中的往來與材料",
+          "request": "原紀錄未逐封公開聯絡；調查重點正是移民局未依當時補正聯絡政策辦理。",
+          "response": "只公開付款補正機會，沒有公開補件附件或後續付款紀錄。",
+          "limit": "當年兩日兩次聯絡屬歷史政策，不能當作目前每個簽證申請的法定補正權利。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 79, Policy not followed"
+          }
+        }
+      ],
+      "departmentResult": "獲給付款補正機會；最終簽證決定未公開。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "先認定申請無效，後同意給予補正機會。是否最終接受有效及核發簽證，來源未公開。",
+        "later": "Ombudsman 行政調查，未記載法院或 Tribunal 決定。",
+        "ref": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 79, Policy not followed"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 79, Policy not followed"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "停收／過渡日前後，要保存遞交、付款及銀行紀錄；不能只把寄達視為一切完成。"
+        }
+      ],
+      "laws": [
+        {
+          "doc": "migration-act",
+          "number": "46",
+          "label": "Act s46"
+        }
+      ],
+      "gaps": [
+        "當年兩日兩次聯絡屬歷史政策，不能當作目前每個簽證申請的法定補正權利。",
+        "最終簽證裁決未公開，網站必須明示。"
+      ],
+      "category": "process",
+      "period": "2012 年事件；2013 年報告",
+      "visas": [
+        "119"
+      ],
+      "result": "獲給付款補正機會；最終簽證決定未公開。",
+      "sources": [
+        {
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0024/34296/ombudsman_annual_report_2012_2013.pdf#page=93",
+          "title": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 79, Policy not followed",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2012",
+          "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 79, Policy not followed"
+        }
+      ],
+      "visaLabel": "119"
+    },
+    {
+      "id": "ombudsman-2013-cc-names-citizenship-evidence",
+      "title": "Mr CC：不同姓名記載，公民證明補件後得以取得護照",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "1972年已成為公民的 Mr CC 申請護照，被要求先取得公民身分證明；多份文件的中間名記載不同。",
+      "background": [
+        {
+          "text": "1972年已成為公民的 Mr CC 申請護照，被要求先取得公民身分證明；多份文件的中間名記載不同。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 80, Identity confusion"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1972年",
+          "title": "聯絡與處理進展",
+          "text": "成為澳洲公民。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷第80頁"
+          }
+        },
+        {
+          "date": "日期未公開",
+          "title": "要求、回覆與材料",
+          "text": "移民局退回公民證明申請，要求當前法定姓名的身分文件；Mr CC 提交不同姓名同為本人之聲明，仍未滿足審查。",
+          "ref": {
+            "source": 1,
+            "locator": "同頁"
+          }
+        },
+        {
+          "date": "投訴後；日期未公開",
+          "title": "批准／後續處理",
+          "text": "移民局另索資料後認可其公民證書資格，並協同其他機關協助取得護照。",
+          "ref": {
+            "source": 1,
+            "locator": "同頁"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "公開紀錄中的往來與材料",
+          "request": "移民局要求一致法定姓名文件；申請人以別名聲明回應；投訴後部門要求其他資料。來源未附信件。",
+          "response": "不同姓名同為本人的聲明（已公開）；之後額外材料種類未公開。",
+          "limit": "來源未公開具體補件清單及日期。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 80, Identity confusion"
+          }
+        }
+      ],
+      "departmentResult": "確認公民證書資格並協助護照；不是重新授予公民身分。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "補件後認可取得公民證書的資格，並協助完成護照事項。不是重新授予公民身分。",
+        "later": "Ombudsman 聯絡移民局，無法院或 Tribunal 程序記載。",
+        "ref": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 80, Identity confusion"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 80, Identity confusion"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "預先建立不同文件姓名對照及法律姓名變更／文化命名的證據鏈；不要假定一份聲明必然足夠。"
+        }
+      ],
+      "laws": [],
+      "gaps": [
+        "來源未公開具體補件清單及日期。",
+        "此案為公民身分證明，不應放成伴侶或訪客簽證獲批案例。"
+      ],
+      "category": "citizenship",
+      "period": "2012–2013 年報個案",
+      "visas": [],
+      "result": "確認公民證書資格並協助護照；不是重新授予公民身分。",
+      "documents": [
+        "citizenship-act"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0024/34296/ombudsman_annual_report_2012_2013.pdf#page=94",
+          "title": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 80, Identity confusion",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2012",
+          "locator": "Commonwealth Ombudsman Annual Report 2012–2013, printed p 80, Identity confusion"
+        }
+      ],
+      "visaLabel": "公民身分證明"
+    },
+    {
+      "id": "ombudsman-2007-mr-a-rrv-border-records",
+      "title": "Mr A：舊護照未帶來、RRV 記錄漏查，錯誤邊境簽證後果多年才修正",
+      "sourceType": "official",
+      "checkedAt": "2026-11-15",
+      "summary": "Mr A 自1989年為 PR，1991年取得仍有效的 RRV；1995年返澳時只帶新旅行證件，留在越南的舊件雖已過期卻載有 RRV。部門系統其實有記錄。",
+      "background": [
+        {
+          "text": "Mr A 自1989年為 PR，1991年取得仍有效的 RRV；1995年返澳時只帶新旅行證件，留在越南的舊件雖已過期卻載有 RRV。部門系統其實有記錄。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman, Report no. 10|2007, Report into referred immigration cases: Other legal issues, printed pp 4–5, paras 3.8–3.12"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1995年",
+          "title": "聯絡與處理進展",
+          "text": "機場未查到 RRV，改發一個月邊境簽證；按當時規例導致 PR 終止。未使用口譯，Mr A 稱不知需於一個月內處理身分。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷第4–5頁個案框"
+          }
+        },
+        {
+          "date": "2002年11月",
+          "title": "聯絡與處理進展",
+          "text": "邊境簽證到期後被記為無合法身分，遭拘留。",
+          "ref": {
+            "source": 1,
+            "locator": "同上"
+          }
+        },
+        {
+          "date": "2005年6月",
+          "title": "聯絡與處理進展",
+          "text": "收到投訴後 Ombudsman 展開調查。",
+          "ref": {
+            "source": 1,
+            "locator": "同上"
+          }
+        },
+        {
+          "date": "2006年2月",
+          "title": "批准／後續處理",
+          "text": "移民局確認無證據顯示曾申請邊境簽證，因此原核發無法律基礎，將錯誤決定撤銷並釋放；恢復合法非公民身分。",
+          "ref": {
+            "source": 1,
+            "locator": "印刷第5頁，3.9"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "公開紀錄中的往來與材料",
+          "request": "機場未使用口譯，當事人後稱不知被發邊境簽證；其他實際通信及附件未公開。",
+          "response": "既有部門 RRV 記錄；缺乏邊境簽證申請的檔案事實。不能說當事人後補交了特定文件。",
+          "limit": "極具歷史性：原報告3.10明示，拘留前四個月規例已修正，邊境簽證不再觸發更有利簽證終止。不可直接套用到今日 ETA／RRV。",
+          "ref": {
+            "source": 1,
+            "locator": "Commonwealth Ombudsman, Report no. 10|2007, Report into referred immigration cases: Other legal issues, printed pp 4–5, paras 3.8–3.12"
+          }
+        }
+      ],
+      "departmentResult": "2006 年 2 月撤銷錯誤邊境簽證決定並釋放；不是新 RRV 獲批。",
+      "outcomeNote": "以公開紀錄所能確認的處理結果為限，原案與資料缺口列於頁末。",
+      "decision": {
+        "department": "2006年2月撤銷錯誤核發邊境簽證的決定並釋放，身分恢復合法；不是新 RRV 獲批。",
+        "later": "Ombudsman 行政調查；原個案不以個人法院訴訟作為結果。",
+        "ref": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman, Report no. 10|2007, Report into referred immigration cases: Other legal issues, printed pp 4–5, paras 3.8–3.12"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "Commonwealth Ombudsman, Report no. 10|2007, Report into referred immigration cases: Other legal issues, printed pp 4–5, paras 3.8–3.12"
+        },
+        "caution": "此案按原案年代閱讀；現行法條連結是延伸研讀入口，不能把歷史期限或政策當成今天的一般規則。"
+      },
+      "actions": [
+        {
+          "title": "收到要求時：追蹤與盤點",
+          "text": "旅行前核對 RRV 與新舊護照連結，保留批准／舊件證據；有語言困難時安排口譯。"
+        }
+      ],
+      "laws": [],
+      "gaps": [
+        "極具歷史性：原報告3.10明示，拘留前四個月規例已修正，邊境簽證不再觸發更有利簽證終止。不可直接套用到今日 ETA／RRV。",
+        "來源未列 RRV 子類別及精確核發日。"
+      ],
+      "category": "status",
+      "period": "1995–2006 年；歷史制度",
+      "visas": [],
+      "topicVisas": [
+        "155",
+        "157"
+      ],
+      "result": "2006 年 2 月撤銷錯誤邊境簽證決定並釋放；不是新 RRV 獲批。",
+      "sources": [
+        {
+          "url": "https://www.ombudsman.gov.au/__data/assets/pdf_file/0017/26207/investigation_2007_10.pdf#page=7",
+          "title": "Commonwealth Ombudsman, Report no. 10|2007, Report into referred immigration cases: Other legal issues, printed pp 4–5, paras 3.8–3.12",
+          "publisher": "Commonwealth Ombudsman",
+          "date": "2007",
+          "locator": "Commonwealth Ombudsman, Report no. 10|2007, Report into referred immigration cases: Other legal issues, printed pp 4–5, paras 3.8–3.12"
+        }
+      ],
+      "visaLabel": "RRV（子類別未公開）"
+    }
+  ]
+}
