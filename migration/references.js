@@ -45,6 +45,18 @@ export function referenceHref(target) {
 export function linkify(text, ctx) {
   text = String(text || '');
   const hits = [];
+  // Forms are not visa subclasses. Retired paper forms point to the official
+  // application guidance rather than a guessed PDF download.
+  const formSources={
+    '888':{url:'https://immi.homeaffairs.gov.au/form-listing/forms/888.pdf',label:'Form 888：官方現行表格'},
+    '956':{url:'https://immi.homeaffairs.gov.au/form-listing/forms/956.pdf',label:'Form 956：官方委任表格'},
+    '40SP':{url:'https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/temporary-820',label:'Form 40SP：官方伴侶簽證申請及擔保說明（歷史表格編號）'},
+    '47SP':{url:'https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/partner-onshore/temporary-820',label:'Form 47SP：官方伴侶簽證申請說明（歷史表格編號）'}
+  };
+  for(const mention of text.matchAll(/\b(?:Form\s*(\d+[A-Za-z]*)|((?:40|47)SP))\b/gi)){
+    const form=formSources[(mention[1]||mention[2]).toUpperCase()];
+    if(form)hits.push({start:mention.index,end:mention.index+mention[0].length,html:`<a href="${escapeHtml(form.url)}" class="ref-link" data-ref-external="true" data-ref-label="${escapeHtml(form.label)}" title="${escapeHtml(form.label)}" target="_blank" rel="noopener">${escapeHtml(mention[0])}</a>`});
+  }
   // Visa references in Chinese often put the number before 簽證, or omit
   // that noun after an explicit verb such as 持有. Resolve only known subclasses;
   // never treat a year, duration, amount, or provision number as a visa.
@@ -52,7 +64,8 @@ export function linkify(text, ctx) {
   const visaPatterns=[
     new RegExp('('+visaNumbers+')\\s*(?:類(?:別)?|號)?\\s*(?:[（(][^（）()\\n]{1,45}[）)]\\s*)?(?:簽證|\\bvisas?\\b)','giu'),
     new RegExp('(?:Subclass(?:es)?|簽證子類別|簽證類別|簽證|子類別|子類)\\s*('+visaNumbers+')(?![\\d.])','giu'),
-    new RegExp('(?:持有(?:過)?|獲批|申請|轉為|取得|承接)\\s*('+visaNumbers+')(?!\\s*(?:年|月|週|周|天|日|小時|人|元|澳元|份|筆|%|％|章|條|號))','gu')
+    new RegExp('(?:持有(?:過)?|獲批|申請|轉為|取得|承接)\\s*('+visaNumbers+')(?!\\s*(?:年|月|週|周|天|日|小時|人|元|澳元|份|筆|%|％|章|條|號))','gu'),
+    new RegExp('('+visaNumbers+')\\s*(?:伴侶|學生|工作|訪客|永久|臨時)?\\s*(?:申請|提名|獲批|拒簽|被拒|被批准|擔保)','gu')
   ];
   for(const [kind,pattern] of visaPatterns.entries())for(const mention of text.matchAll(pattern)){
     const offset=mention.index+mention[0].indexOf(mention[1]);
