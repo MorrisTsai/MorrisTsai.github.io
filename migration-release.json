@@ -3,7 +3,7 @@
   "files": {
     "app.js": "61fb4c9f1e3707295ebae2a3abc610772ea696b4d991f38e8d0fed416e048759",
     "case-styles.css": "1e42a41599d6033562b50df4650009ff112c673c82de5f7dbc25f4cff1aa7916",
-    "cases.js": "66c072527ec899b63efe59c38e96aeeb25a90514ed9f059a67832a22e5af2beb",
+    "cases.js": "8928a6ba356b5b9815a0db6e43320cd8e2895b5677fca9a2d6cd8256bde2b71e",
     "chapter-menu.js": "620d94f5b8ff755d848884c4396ed6059897d7c0a21ac4e289a3079af123661c",
     "chapter-summaries.js": "e0186ed371957ade95bf86fd21b394ed7b4107aef34189f09ae3c1625728bcc7",
     "data/agent-code.json": "2d30ce315074ba0e3b42964357b7cc86adc41892743df1614adab678a6804ff3",
@@ -41,7 +41,7 @@
     "data/zh/regulations-endnotes.json": "33c8293f5d454d49cc03aa26627758cfc7de68ab7b43c0bda1c71d7cfdefc89c",
     "data/zh/translation-status.json": "d55aee4ef8f23c748ce08189d298ebcfa04064379171073da0be8e9be7853050",
     "data/zh/validation-report.json": "dad0fd390da7899744ffef54b4f53625fc2ac36e431b45f0851cfc9957134f61",
-    "index.html": "dfefcd9090e1aef2fa78ef56f39e9ad0285ec182870e35eeeb8acea51f0f795d",
+    "index.html": "4ba58bbe179c1828b66030087f39928c11586a00839ede4c932afd63f104a68b",
     "reading-layout.js": "a89bf475f9c0214985cfae25d6f6f02452e3f9cfac1f20ddc72b9c914abe5adb",
     "reading-notes.js": "762a53d986ff77ac31577ff81545b096172da38e6aa5174430b88d35e35c6921",
     "reading-palette.css": "24fc374b06f6369effae8d6c6bdf63212ccf24199ea773056b4e0e3b293b0ddb",
