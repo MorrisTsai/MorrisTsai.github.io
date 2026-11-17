@@ -77,6 +77,18 @@ export function linkify(text, ctx) {
       else if(kind<2&&ctx.sourceUrl)hits.push({start,end,html:`<a href="${escapeHtml(ctx.sourceUrl)}" class="ref-link" data-ref-external="true" data-ref-label="${escapeHtml('Subclass '+number[0]+'（本書庫未收錄）')}" target="_blank" rel="noopener">${escapeHtml(number[0])}</a>`});
     }
   }
+  // A case already identifies its visa topics. Link their shorter mentions in
+  // questions too, without turning amounts, durations, forms or laws into visas.
+  const knownVisas=new Set(ctx.knownVisas||[]);
+  if(knownVisas.size)for(const mention of text.matchAll(/(?<![\d.A-Za-z])(\d{3})(?![\d.A-Za-z])/g)){
+    const start=mention.index,end=start+3;
+    if(!knownVisas.has(mention[1])||hits.some(hit=>start<hit.end&&end>hit.start))continue;
+    const before=text.slice(Math.max(0,start-25),start),after=text.slice(end);
+    if(/(?:\bss?\.?|\bsections?|\bregulations?|\bForm|第|表格|[$＄])\s*$/i.test(before)||/^\s*(?:[,，]\d{3}|年|月|週|周|天|日|小時|人|元|澳元|份|筆|%|％|章|條|號)/.test(after))continue;
+    const target=resolveReference(mention[1],'Subclass',ctx);
+    if(target)hits.push({start,end,html:`<a href="${escapeHtml(referenceHref(target))}" class="ref-link" data-ref-doc="${escapeHtml(target.doc)}" data-ref-visa="${escapeHtml(target.visa)}" data-ref-label="${escapeHtml('Subclass '+target.visa)}">${escapeHtml(mention[1])}</a>`});
+    else if(ctx.sourceUrl)hits.push({start,end,html:`<a href="${escapeHtml(ctx.sourceUrl)}" class="ref-link" data-ref-external="true" data-ref-label="${escapeHtml('Subclass '+mention[1]+'（本書庫未收錄）')}" target="_blank" rel="noopener">${escapeHtml(mention[1])}</a>`});
+  }
   // Keep subsection suffixes as part of the exact reference rather than reducing to a heading.
   const patterns = [
     /\b(Act,\s*s\.?|subparagraphs?|subregulations?|subsections?|regulations?|paragraphs?|subclauses?|sections?|clauses?|conditions?|criteri(?:on|a)|Schedules?|Subclass(?:es)?|Parts?|Divisions?|items?)\s+((?:\d+[A-Za-z]*(?:\.\d+[A-Za-z]*)?|\([\da-zA-Z]+\))(?:\([\da-zA-Z]+\))*)/gi,
