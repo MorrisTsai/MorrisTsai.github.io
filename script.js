@@ -9,15 +9,17 @@ function renderSharedSiteNavigation() {
   const inSchoolDirectory = /\/schools\//i.test(window.location.pathname.replace(/\\/g, "/"));
   const prefix = inSchoolDirectory ? "../" : "";
   const href = (path) => `${prefix}${path}`;
+  const homeSection = (section) => document.getElementById(section) ? `#${section}` : href(`index.html#${section}`);
   siteNav.innerHTML = `
-    <a class="nav-migration-link" href="${href("migration/")}">移民法研读室</a>
-    <a href="${href("pte.html")}">PTE 培训</a>
     <details class="nav-dropdown"><summary>中学留学</summary><div>
       <a href="${href("advisor-product-flow.html")}">私校申请与升学规划</a>
       <a href="${href("aeas.html")}">升学衔接课程</a>
       <a href="${href("under-18-welfare-guide.html")}">住宿监护与入学落地</a>
       <a class="nav-advisor-link" href="${href("advisor-schools.html")}"><span>学校资料库</span></a>
     </div></details>
+    <a class="nav-migration-link" href="${homeSection("migration")}">移民与签证</a>
+    <a href="${homeSection("shorts")}">短视频</a>
+    <a href="${href("pte.html")}">PTE 培训</a>
     <a href="${href("camp.html")}">小留学</a>
     <details class="nav-dropdown nav-guides-dropdown"><summary>升学指南</summary><div>
       <a href="${href("guides.html")}">全部升学指南</a>
@@ -142,7 +144,7 @@ if (menuToggle && siteNav) {
   });
 
   siteNav.addEventListener("click", (event) => {
-    if (event.target instanceof HTMLAnchorElement) {
+    if (event.target instanceof Element && event.target.closest("a[href]")) {
       siteNav.classList.remove("is-open");
       menuToggle.setAttribute("aria-expanded", "false");
     }
