@@ -70,6 +70,10 @@
 .shorts-heading p { margin: 0; color: #435775; }
 
 .shorts-actions, .shorts-scroll-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.shorts-platforms { display: inline-flex; gap: 3px; padding: 3px; border: 1px solid var(--line); border-radius: 22px; background: #fff; }
+.shorts-platforms[hidden] { display: none; }
+.shorts-platforms button { border: 0; border-radius: 18px; background: transparent; padding: 7px 12px; color: var(--ink); font: inherit; font-weight: 650; cursor: pointer; }
+.shorts-platforms button[aria-pressed="true"] { color: #fff; background: var(--navy); }
 .shorts-scroll-controls[hidden] { display: none; }
 .shorts-scroll-controls button {
   width: 44px;
@@ -150,7 +154,7 @@
 .shorts-player > a { display: inline-block; padding: 8px 0 2px; text-decoration: underline; text-underline-offset: 3px; }
 
 .shorts-row:focus-visible, .shorts-row a:focus-visible,
-.shorts-scroll-controls button:focus-visible, .shorts-player :focus-visible {
+.shorts-scroll-controls button:focus-visible, .shorts-platforms button:focus-visible, .shorts-player :focus-visible {
   outline: 3px solid var(--blue);
   outline-offset: 3px;
 }

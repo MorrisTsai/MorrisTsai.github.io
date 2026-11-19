@@ -30,7 +30,7 @@
     <link rel="shortcut icon" type="image/png" href="/assets/favicon.png?v=20260719" />
     <link rel="apple-touch-icon" sizes="256x256" href="/assets/favicon.png?v=20260719" />
     <link rel="stylesheet" href="styles.css?v=20260715-02" />
-    <link rel="stylesheet" href="home.css?v=20261119-shorts" />
+    <link rel="stylesheet" href="home.css?v=20261119-douyin" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -196,11 +196,15 @@
       <section id="shorts" class="section shorts-section" aria-labelledby="shorts-heading">
         <div class="shorts-heading">
           <div>
-            <h2 id="shorts-heading">YouTube Shorts 短视频</h2>
+            <h2 id="shorts-heading">澳洲短视频</h2>
             <p>莫里斯的澳洲使用说明书</p>
           </div>
           <div class="shorts-actions">
-            <a class="button ghost" href="https://www.youtube.com/channel/UCzhacy4_QKj7NCLdKzV-CBQ/shorts">在 YouTube 查看频道 ↗</a>
+            <div id="shorts-platforms" class="shorts-platforms" role="group" aria-label="选择短视频平台" hidden>
+              <button type="button" data-platform="youtube" aria-pressed="false">YouTube</button>
+              <button type="button" data-platform="douyin" aria-pressed="false">抖音</button>
+            </div>
+            <a id="shorts-channel" class="button ghost" href="https://www.youtube.com/channel/UCzhacy4_QKj7NCLdKzV-CBQ/shorts">在 YouTube 查看频道 ↗</a>
             <div class="shorts-scroll-controls" id="shorts-scroll-controls" hidden>
               <button type="button" aria-label="查看较新短视频" aria-controls="shorts-list" data-scroll-shorts="-1" disabled>‹</button>
               <button type="button" aria-label="查看较早短视频" aria-controls="shorts-list" data-scroll-shorts="1">›</button>
@@ -332,7 +336,7 @@
     </footer>
 
     <script src="script.js?v=20261119-home"></script>
-    <script type="module" src="shorts.js?v=20261119-shorts"></script>
+    <script type="module" src="shorts.js?v=20261119-douyin"></script>
   </body>
 </html>
 

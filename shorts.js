@@ -25,17 +25,36 @@ const player = document.getElementById("shorts-player");
 const playerTitle = document.getElementById("shorts-player-title");
 const frameSlot = document.getElementById("shorts-frame");
 const sourceLink = document.getElementById("shorts-source");
+const channelLink = document.getElementById("shorts-channel");
+const platformPicker = document.getElementById("shorts-platforms");
+const status = document.getElementById("shorts-status");
 const controls = document.getElementById("shorts-scroll-controls");
 const [newer, older] = controls.querySelectorAll("button");
 const feedUrl = "https://raw.githubusercontent.com/MorrisTsai/MorrisTsai.github.io/shorts-feed/shorts-feed.json";
-const cards = document.createDocumentFragment();
+const platforms = {
+  youtube: {
+    label: "YouTube",
+    channel: "https://www.youtube.com/channel/UCzhacy4_QKj7NCLdKzV-CBQ/shorts",
+    video: (id) => `https://www.youtube.com/shorts/${id}`,
+    embed: (id) => `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1`,
+    cover: (id, thumbnail) => `https://i.ytimg.com/vi/${id}/${thumbnail}.jpg`,
+    load: loadYouTube,
+  },
+  douyin: {
+    label: "抖音",
+    channel: "https://www.douyin.com/user/MS4wLjABAAAASBaGMN-6b2hmYTXMAjtXKklrAQM0GUkMLy65l2BEjZ7e4mp8ucvoaNmuyOpbLWX2",
+    video: (id) => `https://www.douyin.com/video/${id}`,
+    embed: (id) => `https://open.douyin.com/player/video?vid=${id}&autoplay=1`,
+    cover: (_id, thumbnail) => thumbnail,
+    load: loadDouyin,
+  },
+};
 let activeCard;
+let renderVersion = 0;
 
-async function loadVideos() {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 2500);
+async function loadYouTube() {
   try {
-    const response = await fetch(feedUrl, { signal: controller.signal });
+    const response = await fetch(feedUrl, { signal: AbortSignal.timeout(2500) });
     if (!response.ok) return fallbackVideos;
     const feed = await response.json();
     if (feed.channel !== "UCzhacy4_QKj7NCLdKzV-CBQ" || !Array.isArray(feed.videos) || !feed.videos.length) {
@@ -50,16 +69,25 @@ async function loadVideos() {
     return valid ? feed.videos : fallbackVideos;
   } catch {
     return fallbackVideos;
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
-const videos = await loadVideos();
-for (const [id, title, thumbnail] of videos) {
+async function loadDouyin() {
+  const response = await fetch("douyin-feed.json", { signal: AbortSignal.timeout(3000) });
+  if (!response.ok) throw new Error("Douyin catalog unavailable");
+  const { videos } = await response.json();
+  return videos.filter(([id, title, cover]) =>
+    /^\d{19}$/.test(id) && typeof title === "string" &&
+    /^https:\/\/[^/]+\.douyinpic\.com\//.test(cover)
+  );
+}
+
+function videoCard(platformName, [id, title, thumbnail]) {
+  const platform = platforms[platformName];
   const item = document.createElement("li");
   const link = document.createElement("a");
-  link.href = `https://www.youtube.com/shorts/${id}`;
+  link.href = platform.video(id);
+  link.dataset.platform = platformName;
   link.dataset.videoId = id;
   const cover = document.createElement("span");
   cover.className = "shorts-cover";
@@ -68,22 +96,60 @@ for (const [id, title, thumbnail] of videos) {
   image.alt = "";
   image.loading = "lazy";
   image.decoding = "async";
-  if (thumbnail !== "hqdefault") {
+  if (platformName === "youtube" && thumbnail !== "hqdefault") {
     image.addEventListener("error", () => {
-      image.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+      image.src = platform.cover(id, "hqdefault");
     }, { once: true });
   }
-  image.src = `https://i.ytimg.com/vi/${id}/${thumbnail}.jpg`;
+  image.src = platform.cover(id, thumbnail);
   const label = document.createElement("strong");
   label.textContent = title;
   cover.append(image);
   link.append(cover, label);
   item.append(link);
-  cards.append(item);
+  return item;
 }
 
-list.append(cards);
-document.getElementById("shorts-status").textContent = `共 ${videos.length} 支短视频`;
+async function showPlatform(name) {
+  const version = ++renderVersion;
+  const platform = platforms[name];
+  for (const button of platformPicker.querySelectorAll("button")) {
+    button.setAttribute("aria-pressed", String(button.dataset.platform === name));
+  }
+  channelLink.href = platform.channel;
+  channelLink.textContent = `在 ${platform.label} 查看频道 ↗`;
+  list.replaceChildren();
+  list.setAttribute("aria-busy", "true");
+  status.textContent = "正在加载短视频…";
+  updateScrollControls();
+
+  let videos;
+  try {
+    videos = await platform.load();
+  } catch {
+    videos = [];
+  }
+  if (version !== renderVersion) return;
+  for (const video of videos) list.append(videoCard(name, video));
+  list.scrollTo({ left: 0, behavior: "instant" });
+  list.removeAttribute("aria-busy");
+  status.textContent = videos.length ? `共 ${videos.length} 支短视频` : "暂时无法加载作品，请前往频道查看。";
+  updateScrollControls();
+}
+
+async function platformForLocation() {
+  try {
+    const response = await fetch("https://get.geojs.io/v1/ip/country", {
+      signal: AbortSignal.timeout(2200),
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+    });
+    if (response.ok && (await response.text()).trim() === "CN") return "douyin";
+  } catch {
+    // A platform can still be selected when the country lookup is unavailable.
+  }
+  return "youtube";
+}
 
 function updateScrollControls() {
   const maxScroll = list.scrollWidth - list.clientWidth;
@@ -103,7 +169,15 @@ for (const button of [newer, older]) {
 
 list.addEventListener("scroll", updateScrollControls, { passive: true });
 new ResizeObserver(updateScrollControls).observe(list);
-updateScrollControls();
+platformPicker.hidden = false;
+status.textContent = "正在加载短视频…";
+platformPicker.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-platform]");
+  if (button && button.getAttribute("aria-pressed") !== "true") showPlatform(button.dataset.platform);
+});
+platformForLocation().then((name) => {
+  if (!renderVersion) showPlatform(name);
+});
 
 list.addEventListener("click", (event) => {
   const link = event.target.closest("a[data-video-id]");
@@ -112,14 +186,16 @@ list.addEventListener("click", (event) => {
   activeCard = link;
 
   const title = link.textContent;
+  const platform = platforms[link.dataset.platform];
   playerTitle.textContent = title;
   sourceLink.href = link.href;
+  sourceLink.textContent = `在 ${platform.label} 播放 ↗`;
   const frame = document.createElement("iframe");
   frame.title = title;
   frame.referrerPolicy = "strict-origin-when-cross-origin";
   frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
   frame.allowFullscreen = true;
-  frame.src = `https://www.youtube.com/embed/${link.dataset.videoId}?autoplay=1&playsinline=1`;
+  frame.src = platform.embed(link.dataset.videoId);
   frameSlot.replaceChildren(frame);
   player.showModal();
 });
