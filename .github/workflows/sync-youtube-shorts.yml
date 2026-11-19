@@ -1,0 +1,54 @@
+name: Sync YouTube Shorts
+
+on:
+  schedule:
+    - cron: "23 */2 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/sync-youtube-shorts.yml"
+      - "scripts/build-shorts-feed.mjs"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: youtube-shorts-feed
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+      - name: Read public Shorts
+        shell: bash
+        run: |
+          python3 -m venv "$RUNNER_TEMP/shorts-venv"
+          "$RUNNER_TEMP/shorts-venv/bin/pip" install 'yt-dlp==2026.10.26'
+          "$RUNNER_TEMP/shorts-venv/bin/yt-dlp" --ignore-config --flat-playlist --dump-single-json \
+            'https://www.youtube.com/channel/UCzhacy4_QKj7NCLdKzV-CBQ/shorts' \
+            | node scripts/build-shorts-feed.mjs > "$RUNNER_TEMP/shorts-feed.json"
+      - name: Publish the catalog
+        shell: bash
+        run: |
+          if git ls-remote --exit-code --heads origin shorts-feed; then
+            git fetch --no-tags origin refs/heads/shorts-feed
+            git switch --detach FETCH_HEAD
+          else
+            result=$?
+            if [ "$result" -ne 2 ]; then
+              exit "$result"
+            fi
+            git switch --orphan shorts-feed
+          fi
+          cp "$RUNNER_TEMP/shorts-feed.json" shorts-feed.json
+          git add shorts-feed.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+            -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m 'Update public YouTube Shorts'
+          git push origin HEAD:refs/heads/shorts-feed

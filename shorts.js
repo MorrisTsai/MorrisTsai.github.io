@@ -1,5 +1,5 @@
 // Public Australian-topic Shorts in the order shown on YouTube.
-const videos = [
+const fallbackVideos = [
   ["Xq12jIIJ_JY", "一国党要取消父母取得PR的机会？", "sardefault"],
   ["3M9uIrlrJ-4", "父母移民等42年，怎么先团聚？", "oar2"],
   ["0x8WH9P0kyQ", "教华人的美术老师竟然歧视华人？", "sardefault"],
@@ -25,9 +25,37 @@ const player = document.getElementById("shorts-player");
 const playerTitle = document.getElementById("shorts-player-title");
 const frameSlot = document.getElementById("shorts-frame");
 const sourceLink = document.getElementById("shorts-source");
+const controls = document.getElementById("shorts-scroll-controls");
+const [newer, older] = controls.querySelectorAll("button");
+const feedUrl = "https://raw.githubusercontent.com/MorrisTsai/MorrisTsai.github.io/shorts-feed/shorts-feed.json";
 const cards = document.createDocumentFragment();
 let activeCard;
 
+async function loadVideos() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 2500);
+  try {
+    const response = await fetch(feedUrl, { signal: controller.signal });
+    if (!response.ok) return fallbackVideos;
+    const feed = await response.json();
+    if (feed.channel !== "UCzhacy4_QKj7NCLdKzV-CBQ" || !Array.isArray(feed.videos) || !feed.videos.length) {
+      return fallbackVideos;
+    }
+    const valid = feed.videos.every((entry) => {
+      if (!Array.isArray(entry)) return false;
+      const [id, title, thumbnail] = entry;
+      return /^[\w-]{11}$/.test(id) && typeof title === "string" && title.trim() &&
+        /^(?:oar[1-3]|sardefault|hqdefault)$/.test(thumbnail);
+    });
+    return valid ? feed.videos : fallbackVideos;
+  } catch {
+    return fallbackVideos;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+const videos = await loadVideos();
 for (const [id, title, thumbnail] of videos) {
   const item = document.createElement("li");
   const link = document.createElement("a");
@@ -40,9 +68,11 @@ for (const [id, title, thumbnail] of videos) {
   image.alt = "";
   image.loading = "lazy";
   image.decoding = "async";
-  image.addEventListener("error", () => {
-    image.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-  }, { once: true });
+  if (thumbnail !== "hqdefault") {
+    image.addEventListener("error", () => {
+      image.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    }, { once: true });
+  }
   image.src = `https://i.ytimg.com/vi/${id}/${thumbnail}.jpg`;
   const label = document.createElement("strong");
   label.textContent = title;
@@ -54,6 +84,26 @@ for (const [id, title, thumbnail] of videos) {
 
 list.append(cards);
 document.getElementById("shorts-status").textContent = `共 ${videos.length} 支短视频`;
+
+function updateScrollControls() {
+  const maxScroll = list.scrollWidth - list.clientWidth;
+  controls.hidden = maxScroll < 2;
+  newer.disabled = list.scrollLeft < 2;
+  older.disabled = list.scrollLeft >= maxScroll - 2;
+}
+
+for (const button of [newer, older]) {
+  button.addEventListener("click", () => {
+    list.scrollBy({
+      left: Number(button.dataset.scrollShorts) * list.clientWidth * 0.85,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
+  });
+}
+
+list.addEventListener("scroll", updateScrollControls, { passive: true });
+new ResizeObserver(updateScrollControls).observe(list);
+updateScrollControls();
 
 list.addEventListener("click", (event) => {
   const link = event.target.closest("a[data-video-id]");
