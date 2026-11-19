@@ -15,6 +15,7 @@ const cases=JSON.parse(await fs.readFile(path.join(source,'data/cases.json'),'ut
 const hashes={};let bytes=0;
 async function copy(directory,relative=''){
  for(const entry of await fs.readdir(directory,{withFileTypes:true})){
+  if(entry.name==='server'||entry.name==='.openai')continue;
   if(entry.isSymbolicLink())throw Error('Symlinks are not exported');
   const name=path.join(relative,entry.name),target=path.join(destination,name);
   if(entry.isDirectory()){await fs.mkdir(target,{recursive:true});await copy(path.join(directory,entry.name),name);continue;}
@@ -23,6 +24,7 @@ async function copy(directory,relative=''){
   if(name==='index.html'){
    let html=body.toString('utf8');
    html=html.replace('<title>','<link rel="canonical" href="https://www.rewardschool.com.au/migration/">\n  <title>');
+   html=html.replace('<title>','<meta name="mrr-search-api" content="https://migration-law-reading-room.fluffybrowndiscord.chatgpt.site/">\n  <title>');
    html=html.replace('<div class="sidebar-foot">','<div class="sidebar-foot"><a class="aside-link" href="/">← Reward School</a>');
    body=Buffer.from(html,'utf8');
   }

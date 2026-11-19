@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "reviewedAt": "2026-11-19",
+  "reviewBasis": "Developer comparison with official frozen compilation; not independent legal-expert certification.",
+  "sources": {
+    "migration-act:v1-56": {
+      "version": "2026-10-08",
+      "sha256": "d637367322493f99c5afaebaa8136d361d5d7c1476383a011887b7c8ba26e7dd",
+      "number": "56"
+    },
+    "migration-act:v1-82": {
+      "version": "2026-10-08",
+      "sha256": "806c989759db685db892ee438278c4a205dabb1cde63f8ea51f116cabaccb6be",
+      "number": "82"
+    },
+    "migration-regulations:v2-417-411": {
+      "version": "2026-11-01",
+      "sha256": "6faec8790f722becb4275c06d8469643f497dadc5fe234e7fe39b9892587d562",
+      "number": "417.411"
+    },
+    "migration-regulations:v2-417-412": {
+      "version": "2026-11-01",
+      "sha256": "0f935e47453ee5ca91bd4d7925ac7135af8176209eacf90bd2efa454a77fd13b",
+      "number": "417.412"
+    },
+    "migration-regulations:v2-462-411": {
+      "version": "2026-11-01",
+      "sha256": "57ed147e6ad75934770482728031045917322b7b9fa49493f2a7be485c510471",
+      "number": "462.411"
+    },
+    "migration-regulations:v2-462-412": {
+      "version": "2026-11-01",
+      "sha256": "357b8d49966c2074c78b0f02e61a1832a38dfae8731509d2e989a0c4387780e5",
+      "number": "462.412"
+    },
+    "migration-regulations:v2-155-212": {
+      "version": "2026-11-01",
+      "sha256": "048bf2a20bcbde0ed8bb1a21696d7d8ab1070200c7cf95c69845124f789ffe14",
+      "number": "155.212"
+    },
+    "migration-regulations:v1-2-05": {
+      "version": "2026-11-01",
+      "sha256": "4887a639a3e89f5f8c0cc31b97031dca1d5fc7030f1aa84aa77ad816d8589d00",
+      "number": "2.05"
+    },
+    "migration-regulations:v3-8503": {
+      "version": "2026-11-01",
+      "sha256": "7adc7ff7dc7f47cca0dea8084e51ac9b6724c38c32c06587ba3c08f59a3d502d",
+      "number": "8503"
+    },
+    "migration-regulations:v3-8534": {
+      "version": "2026-11-01",
+      "sha256": "cef05f8d8df29dbc40b4a1311a2ba100928011d0d62e68d9fdfc8cda8690a7e6",
+      "number": "8534"
+    },
+    "migration-regulations:v1-2-06aab": {
+      "version": "2026-11-01",
+      "sha256": "536c1b0f8682078006bd44b295c0d24e4b6a4599aa229a8fd81b065762ed152b",
+      "number": "2.06AAB"
+    }
+  }
+}
