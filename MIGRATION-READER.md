@@ -2,8 +2,9 @@
 
 The existing public reading room is published at https://www.rewardschool.com.au/migration/.
 This is the primary publication target, including all future reading-room updates
-(user instruction, 2026-11-19). The homepage's dedicated migration section is the
-main entrance, with question lookup, bilingual library and case-study links.
+(user instruction, 2026-11-19). The homepage opens with the existing consultation photograph and study, migration
+and visa planning introduction. The dedicated illustrated migration section follows
+as the second section, with question lookup, bilingual library and case-study links.
 The main navigation places its entrance before PTE coaching. The shared navigation
 and HTML fallbacks use the same URL, including school profiles in subdirectories.
 
