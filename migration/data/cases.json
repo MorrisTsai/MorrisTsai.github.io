@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "checkedAt": "2026-11-17",
+  "checkedAt": "2026-11-23",
   "recheckedCases": 22,
   "method": "逐案回查公開原始來源；分列申請事實、制度解說、覆核與紀律結果，保留原文矛盾及未公開資訊。",
   "cases": [
@@ -4783,6 +4783,1044 @@
             "page": 16,
             "locator": "PDF pp16–17，建議與部門回應"
           }
+        }
+      ]
+    },
+    {
+      "id": "farah-2007-hca22",
+      "title": "Farah：判例拘束力與審慎考量的附帶意見",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "precedent",
+      "checkedAt": "2026-11-23",
+      "period": "2007 年判決・歷史法制",
+      "citation": "[2007] HCA 22",
+      "studyTopic": "LML6001・判例拘束力",
+      "provenance": "已確認教材提及：Laying Down the Law 第 12 版（作者機構公開書目）；此處內容為依公開判決獨立撰寫，非書中案例全文。",
+      "summary": "地產合資重建爭議，NSW 上訴法院以未充分辯論的衡平法路線改判。",
+      "background": [
+        {
+          "text": "地產合資重建爭議，NSW 上訴法院以未充分辯論的衡平法路線改判。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "地產合資重建爭議，NSW 上訴法院以未充分辯論的衡平法路線改判。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        },
+        {
+          "date": "2007 年",
+          "title": "高等法院結果",
+          "text": "高院准許上訴，並駁回原上訴。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "LML6001・判例拘束力",
+          "response": "區分 ratio、經審慎考量的高院附帶意見，以及適用同一聯邦／統一法律的同級上訴先例。",
+          "limit": "不能把同級先例一概說成不具拘束力，也不能把所有附帶意見視為同等地位。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        }
+      ],
+      "departmentResult": "高院准許上訴，並駁回原上訴。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。已確認教材提及：Laying Down the Law 第 12 版（作者機構公開書目）；此處內容為依公開判決獨立撰寫，非書中案例全文。",
+      "decision": {
+        "department": "非簽證案件；原審為地產及衡平法爭議。",
+        "later": "高院准許上訴，並駁回原上訴。",
+        "ref": {
+          "source": 1,
+          "locator": "[134]–[135]、[158]、[202]"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[134]–[135]、[158]、[202]"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。不能把同級先例一概說成不具拘束力，也不能把所有附帶意見視為同等地位。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "區分 ratio、經審慎考量的高院附帶意見，以及適用同一聯邦／統一法律的同級上訴先例。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "不能把同級先例一概說成不具拘束力，也不能把所有附帶意見視為同等地位。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "非移民判決",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "不能把同級先例一概說成不具拘束力，也不能把所有附帶意見視為同等地位。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "區分 ratio、經審慎考量的高院附帶意見，以及適用同一聯邦／統一法律的同級上訴先例。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "不能把同級先例一概說成不具拘束力，也不能把所有附帶意見視為同等地位。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院准許上訴，並駁回原上訴。",
+          "ref": {
+            "source": 1,
+            "locator": "[134]–[135]、[158]、[202]"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "已確認教材提及：Laying Down the Law 第 12 版（作者機構公開書目）；此處內容為依公開判決獨立撰寫，非書中案例全文。",
+          "ref": {
+            "source": 2,
+            "locator": "作者機構書目公開摘要"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Farah [2007] HCA 22 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2007/HCA/22.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2007",
+          "locator": "[134]–[135]、[158]、[202]"
+        },
+        {
+          "title": "Laying Down the Law 第 12 版：作者機構書目",
+          "url": "https://rune.une.edu.au/entities/publication/d431731c-91c8-4670-8f0d-43ba6b476b5f",
+          "publisher": "University of New England",
+          "locator": "公開摘要提及 Farah Constructions Pty Ltd v Say-Dee Pty Ltd"
+        }
+      ]
+    },
+    {
+      "id": "hossain-2018-hca34",
+      "title": "Hossain：有法律錯誤，是否必然撤銷？",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2018 年判決・歷史法制",
+      "citation": "[2018] HCA 34",
+      "studyTopic": "司法覆核・重大性",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "配偶簽證 AAT 將 Schedule 3 compelling reasons 的評估錯限於遞件時；另有獨立的聯邦欠款 PIC 4004，案卷沒有付款或安排。",
+      "background": [
+        {
+          "text": "配偶簽證 AAT 將 Schedule 3 compelling reasons 的評估錯限於遞件時；另有獨立的聯邦欠款 PIC 4004，案卷沒有付款或安排。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "配偶簽證 AAT 將 Schedule 3 compelling reasons 的評估錯限於遞件時；另有獨立的聯邦欠款 PIC 4004，案卷沒有付款或安排。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        },
+        {
+          "date": "2018 年",
+          "title": "高等法院結果",
+          "text": "高院駁回上訴；本案錯誤不構成管轄權錯誤。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "司法覆核・重大性",
+          "response": "就本案，修正時間點仍無法改變獨立欠款條件不滿足的結果。",
+          "limit": "不能把所有法律錯誤都當成可撤銷決定的管轄權錯誤。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        }
+      ],
+      "departmentResult": "高院駁回上訴；本案錯誤不構成管轄權錯誤。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "拒絕配偶簽證，AAT 維持。",
+        "later": "高院駁回上訴；本案錯誤不構成管轄權錯誤。",
+        "ref": {
+          "source": 1,
+          "locator": "[4]–[12]、[29]–[36]；命令"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[4]–[12]、[29]–[36]；命令"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。不能把所有法律錯誤都當成可撤銷決定的管轄權錯誤。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "就本案，修正時間點仍無法改變獨立欠款條件不滿足的結果。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "不能把所有法律錯誤都當成可撤銷決定的管轄權錯誤。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "司法覆核・重大性",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "不能把所有法律錯誤都當成可撤銷決定的管轄權錯誤。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "就本案，修正時間點仍無法改變獨立欠款條件不滿足的結果。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "不能把所有法律錯誤都當成可撤銷決定的管轄權錯誤。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院駁回上訴；本案錯誤不構成管轄權錯誤。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[4]–[12]、[29]–[36]；命令"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Hossain [2018] HCA 34 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2018/HCA/34.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2018",
+          "locator": "[4]–[12]、[29]–[36]；命令"
+        }
+      ]
+    },
+    {
+      "id": "wei-2015-hca51",
+      "title": "Wei：失真的在讀紀錄與取消學生簽證",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2015 年判決・歷史法制",
+      "citation": "[2015] HCA 51",
+      "studyTopic": "學生簽證・決策基礎",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "學校未按規定更新在讀紀錄，通知信退回；代表依失真的登錄，以 s 116(1)(b) 取消學生簽證。",
+      "background": [
+        {
+          "text": "學校未按規定更新在讀紀錄，通知信退回；代表依失真的登錄，以 s 116(1)(b) 取消學生簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "學校未按規定更新在讀紀錄，通知信退回；代表依失真的登錄，以 s 116(1)(b) 取消學生簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        },
+        {
+          "date": "2015 年",
+          "title": "高等法院結果",
+          "text": "高院准延長、撤銷取消決定，並禁止依其執行。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "學生簽證・決策基礎",
+          "response": "多數理由著重校方未履行重要法定責任而污染決策基礎；另有個別理由著重未進行顯而易見查證。",
+          "limit": "不等於每次資料不一致都產生普遍查證義務。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        }
+      ],
+      "departmentResult": "高院准延長、撤銷取消決定，並禁止依其執行。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "依 s 116(1)(b) 取消學生簽證。",
+        "later": "高院准延長、撤銷取消決定，並禁止依其執行。",
+        "ref": {
+          "source": 1,
+          "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。不等於每次資料不一致都產生普遍查證義務。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "多數理由著重校方未履行重要法定責任而污染決策基礎；另有個別理由著重未進行顯而易見查證。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "不等於每次資料不一致都產生普遍查證義務。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "學生簽證・決策基礎",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "不等於每次資料不一致都產生普遍查證義務。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "多數理由著重校方未履行重要法定責任而污染決策基礎；另有個別理由著重未進行顯而易見查證。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "不等於每次資料不一致都產生普遍查證義務。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院准延長、撤銷取消決定，並禁止依其執行。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Wei [2015] HCA 51 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2015/HCA/51.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2015",
+          "locator": "[5]–[21]、[23]–[29]、[49]–[51]；命令"
+        }
+      ]
+    },
+    {
+      "id": "khalil-2025-hca33",
+      "title": "Khalil：覆核時適用哪一版部長指令？",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2025 年判決・歷史法制",
+      "citation": "[2025] HCA 33",
+      "studyTopic": "品格・過渡適用",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "配偶簽證依品格理由拒發時適用 Direction 65；AAT 實體覆核時適用已生效的 Direction 90。",
+      "background": [
+        {
+          "text": "配偶簽證依品格理由拒發時適用 Direction 65；AAT 實體覆核時適用已生效的 Direction 90。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "配偶簽證依品格理由拒發時適用 Direction 65；AAT 實體覆核時適用已生效的 Direction 90。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        },
+        {
+          "date": "2025 年",
+          "title": "高等法院結果",
+          "text": "高院駁回上訴並命支付訟費。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "品格・過渡適用",
+          "response": "s 499 指令拘束作決定當下的權力行使；申請覆核不使當事人取得沿用 Direction 65 的既得權。",
+          "limit": "不是所有簽證條件都只看裁決日；仍須核對具體法規與過渡安排。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        }
+      ],
+      "departmentResult": "高院駁回上訴並命支付訟費。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "以品格理由拒發配偶簽證；AAT 維持。",
+        "later": "高院駁回上訴並命支付訟費。",
+        "ref": {
+          "source": 1,
+          "locator": "[1]–[6]、[14]–[27]；命令"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[1]–[6]、[14]–[27]；命令"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。不是所有簽證條件都只看裁決日；仍須核對具體法規與過渡安排。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "s 499 指令拘束作決定當下的權力行使；申請覆核不使當事人取得沿用 Direction 65 的既得權。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "不是所有簽證條件都只看裁決日；仍須核對具體法規與過渡安排。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "品格・過渡適用",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "不是所有簽證條件都只看裁決日；仍須核對具體法規與過渡安排。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "s 499 指令拘束作決定當下的權力行使；申請覆核不使當事人取得沿用 Direction 65 的既得權。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "不是所有簽證條件都只看裁決日；仍須核對具體法規與過渡安排。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院駁回上訴並命支付訟費。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[6]、[14]–[27]；命令"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Khalil [2025] HCA 33 官方判決",
+          "url": "https://www.hcourt.gov.au/cases-and-judgments/judgments/judgments-1998-current/khalil-v-minister-immigration-citizenship-migrant-services-and-multicultural-affairs",
+          "publisher": "High Court of Australia",
+          "date": "2025",
+          "locator": "[1]–[6]、[14]–[27]；命令"
+        }
+      ]
+    },
+    {
+      "id": "li-2013-hca18",
+      "title": "Li：拒絕延期與法律上的不合理",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2013 年判決・歷史法制",
+      "citation": "[2013] HCA 18",
+      "studyTopic": "司法覆核・合理性",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "技術居留簽證申請人正等待 Trades Recognition Australia 覆核技能評估；MRT 拒絕延期並維持拒簽。",
+      "background": [
+        {
+          "text": "技術居留簽證申請人正等待 Trades Recognition Australia 覆核技能評估；MRT 拒絕延期並維持拒簽。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "技術居留簽證申請人正等待 Trades Recognition Australia 覆核技能評估；MRT 拒絕延期並維持拒簽。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        },
+        {
+          "date": "2013 年",
+          "title": "高等法院結果",
+          "text": "高院駁回部長上訴；MRT 的決定不能維持。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "司法覆核・合理性",
+          "response": "依本案紀錄，拒絕延期欠缺可理解的合理理由。",
+          "limit": "不是每次等待新材料都必須准許延期。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        }
+      ],
+      "departmentResult": "高院駁回部長上訴；MRT 的決定不能維持。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "拒絕技術居留簽證，MRT 拒絕延期並維持。",
+        "later": "高院駁回部長上訴；MRT 的決定不能維持。",
+        "ref": {
+          "source": 1,
+          "locator": "[63]–[76]、[82]–[85]；命令"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[63]–[76]、[82]–[85]；命令"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。不是每次等待新材料都必須准許延期。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "依本案紀錄，拒絕延期欠缺可理解的合理理由。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "不是每次等待新材料都必須准許延期。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "司法覆核・合理性",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "不是每次等待新材料都必須准許延期。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "依本案紀錄，拒絕延期欠缺可理解的合理理由。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "不是每次等待新材料都必須准許延期。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院駁回部長上訴；MRT 的決定不能維持。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[63]–[76]、[82]–[85]；命令"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Li [2013] HCA 18 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2013/HCA/18.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2013",
+          "locator": "[63]–[76]、[82]–[85]；命令"
+        }
+      ]
+    },
+    {
+      "id": "nathanson-2022-hca26",
+      "title": "Nathanson：公平聆訊與改變結果的現實可能",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2022 年判決・歷史法制",
+      "citation": "[2022] HCA 26",
+      "studyTopic": "司法覆核・程序公平",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "強制取消簽證後，AAT 維持不撤銷取消；家暴相關材料成為不利考量，當事人沒有充分回應機會。",
+      "background": [
+        {
+          "text": "強制取消簽證後，AAT 維持不撤銷取消；家暴相關材料成為不利考量，當事人沒有充分回應機會。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "強制取消簽證後，AAT 維持不撤銷取消；家暴相關材料成為不利考量，當事人沒有充分回應機會。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        },
+        {
+          "date": "2022 年",
+          "title": "高等法院結果",
+          "text": "高院准上訴，撤銷 AAT 決定並發回重審；並未恢復簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "司法覆核・程序公平",
+          "response": "當時卷證足以支持公平聆訊有改變結果的現實可能性，毋須逐項證明未能提交的證據。",
+          "limit": "撤銷覆核決定不等於簽證恢復或最終申請成功。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        }
+      ],
+      "departmentResult": "高院准上訴，撤銷 AAT 決定並發回重審；並未恢復簽證。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "不撤銷強制取消簽證，AAT 維持。",
+        "later": "高院准上訴，撤銷 AAT 決定並發回重審；並未恢復簽證。",
+        "ref": {
+          "source": 1,
+          "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。撤銷覆核決定不等於簽證恢復或最終申請成功。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "當時卷證足以支持公平聆訊有改變結果的現實可能性，毋須逐項證明未能提交的證據。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "撤銷覆核決定不等於簽證恢復或最終申請成功。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "司法覆核・程序公平",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "撤銷覆核決定不等於簽證恢復或最終申請成功。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "當時卷證足以支持公平聆訊有改變結果的現實可能性，毋須逐項證明未能提交的證據。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "撤銷覆核決定不等於簽證恢復或最終申請成功。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院准上訴，撤銷 AAT 決定並發回重審；並未恢復簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Nathanson [2022] HCA 26 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2022/HCA/26.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2022",
+          "locator": "[1]–[3]、[30]–[33]、[46]–[48]；命令"
+        }
+      ]
+    },
+    {
+      "id": "mzapc-2021-hca17",
+      "title": "MZAPC：如何證立程序錯誤的重大性？",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2021 年判決・歷史法制",
+      "citation": "[2021] HCA 17",
+      "studyTopic": "司法覆核・舉證",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "未披露的舊 s 438 保密通知涵蓋刑事紀錄；當事人主張程序不公平及其重大性。",
+      "background": [
+        {
+          "text": "未披露的舊 s 438 保密通知涵蓋刑事紀錄；當事人主張程序不公平及其重大性。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "未披露的舊 s 438 保密通知涵蓋刑事紀錄；當事人主張程序不公平及其重大性。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        },
+        {
+          "date": "2021 年",
+          "title": "高等法院結果",
+          "text": "高院駁回上訴。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "司法覆核・舉證",
+          "response": "主張錯誤重大的一方通常須以蓋然性衡量證立相關歷史事實；不同結果只須有現實可能，不必證明必定改判。",
+          "limit": "本案未證立審裁曾考慮相關不利資料等足以支持重大性的事實；不要混淆歷史事實的證明與反事實可能性。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        }
+      ],
+      "departmentResult": "高院駁回上訴。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "本摘要聚焦司法覆核爭點，不推補未整理的申請細節。",
+        "later": "高院駁回上訴。",
+        "ref": {
+          "source": 1,
+          "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。本案未證立審裁曾考慮相關不利資料等足以支持重大性的事實；不要混淆歷史事實的證明與反事實可能性。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "主張錯誤重大的一方通常須以蓋然性衡量證立相關歷史事實；不同結果只須有現實可能，不必證明必定改判。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "本案未證立審裁曾考慮相關不利資料等足以支持重大性的事實；不要混淆歷史事實的證明與反事實可能性。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "司法覆核・舉證",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "本案未證立審裁曾考慮相關不利資料等足以支持重大性的事實；不要混淆歷史事實的證明與反事實可能性。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "主張錯誤重大的一方通常須以蓋然性衡量證立相關歷史事實；不同結果只須有現實可能，不必證明必定改判。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "本案未證立審裁曾考慮相關不利資料等足以支持重大性的事實；不要混淆歷史事實的證明與反事實可能性。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院駁回上訴。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "MZAPC [2021] HCA 17 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2021/HCA/17.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2021",
+          "locator": "[2]–[3]、[38]–[39]、[60]–[69]"
+        }
+      ]
+    },
+    {
+      "id": "berenguel-2010-hca8",
+      "title": "Berenguel：遞件後考 IELTS，如何解釋舊規則？",
+      "sourceType": "official",
+      "recordKind": "judgment",
+      "category": "review",
+      "checkedAt": "2026-11-23",
+      "period": "2010 年判決・歷史法制",
+      "citation": "[2010] HCA 8",
+      "studyTopic": "LML6001／LML6004・法規解釋",
+      "provenance": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "summary": "申請舊 885 技術居留簽後才考 IELTS，並在決定前提交成績；代表認為考試須在申請前。",
+      "background": [
+        {
+          "text": "申請舊 885 技術居留簽後才考 IELTS，並在決定前提交成績；代表認為考試須在申請前。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原案程序",
+          "title": "爭議背景",
+          "text": "申請舊 885 技術居留簽後才考 IELTS，並在決定前提交成績；代表認為考試須在申請前。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        },
+        {
+          "date": "2010 年",
+          "title": "高等法院結果",
+          "text": "高院撤銷拒簽並命依法重決，並非直接核發簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "司法爭點與審理範圍",
+          "request": "LML6001／LML6004・法規解釋",
+          "response": "當時 reg 1.15B 與 885.213 須依文字、目的及上下文解讀；分組標題有解釋作用，但不能單獨增加流程限制。",
+          "limit": "不能推廣成現行各類簽證一律可先遞件、後考語言。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        }
+      ],
+      "departmentResult": "高院撤銷拒簽並命依法重決，並非直接核發簽證。",
+      "outcomeNote": "法院救濟與簽證最終結果須分開閱讀。主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+      "decision": {
+        "department": "以語言考試時間不符為由拒簽。",
+        "later": "高院撤銷拒簽並命依法重決，並非直接核發簽證。",
+        "ref": {
+          "source": 1,
+          "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+        },
+        "laterRef": {
+          "source": 1,
+          "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+        },
+        "caution": "按原案當時法律閱讀；不是現行個案法律意見。不能推廣成現行各類簽證一律可先遞件、後考語言。"
+      },
+      "actions": [
+        {
+          "title": "判決研讀重點",
+          "text": "當時 reg 1.15B 與 885.213 須依文字、目的及上下文解讀；分組標題有解釋作用，但不能單獨增加流程限制。"
+        },
+        {
+          "title": "適用前先核對",
+          "text": "不能推廣成現行各類簽證一律可先遞件、後考語言。"
+        }
+      ],
+      "laws": [],
+      "visas": [],
+      "visaLabel": "LML6001／LML6004・法規解釋",
+      "gaps": [
+        "這是指定段落的獨立研讀摘要，並非完整案卷或教材案例清單。",
+        "不能推廣成現行各類簽證一律可先遞件、後考語言。"
+      ],
+      "clarifications": [
+        {
+          "title": "法律要點",
+          "text": "當時 reg 1.15B 與 885.213 須依文字、目的及上下文解讀；分組標題有解釋作用，但不能單獨增加流程限制。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        },
+        {
+          "title": "不要過度延伸",
+          "text": "不能推廣成現行各類簽證一律可先遞件、後考語言。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        },
+        {
+          "title": "結果範圍",
+          "text": "高院撤銷拒簽並命依法重決，並非直接核發簽證。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        },
+        {
+          "title": "教材與來源範圍",
+          "text": "主題延伸・非已確認教材收錄。此處為公開判決原創研讀摘要。",
+          "ref": {
+            "source": 1,
+            "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Berenguel [2010] HCA 8 官方判決",
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2010/HCA/8.pdf",
+          "publisher": "High Court of Australia",
+          "date": "2010",
+          "locator": "[3]–[8]、[14]–[16]、[23]–[27]；命令"
         }
       ]
     }

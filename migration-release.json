@@ -3,7 +3,7 @@
   "files": {
     "app.js": "3d6a4acc28cba1867e9d72b841d64fbd5fc4fb4ba79212224b86c54932c42efc",
     "case-styles.css": "1e42a41599d6033562b50df4650009ff112c673c82de5f7dbc25f4cff1aa7916",
-    "cases.js": "8928a6ba356b5b9815a0db6e43320cd8e2895b5677fca9a2d6cd8256bde2b71e",
+    "cases.js": "fcbaeafe0110c2bf975bebd643bf94c1704714048835365fb3b83fc9368affc2",
     "chapter-menu.js": "620d94f5b8ff755d848884c4396ed6059897d7c0a21ac4e289a3079af123661c",
     "chapter-summaries.js": "e0186ed371957ade95bf86fd21b394ed7b4107aef34189f09ae3c1625728bcc7",
     "cloud-ask.js": "6cea44ca12464a85eaa45198d0b4a74d88892e253898e14c53e759445f8524f1",
@@ -14,7 +14,7 @@
     "data/agents-regulations.json": "26332b12e3b82d9571b3a90d3e19ec9d689343866425bf916de0041d1443d711",
     "data/art-act.json": "2985a37f883af005bc72c6782d085a52cbb546f8dc98d959e62ecf4ec5dc3653",
     "data/art-rules.json": "6bd2fe428a45a3e86585db68940f6bbea481f974b999b7df264aefeb15d00f27",
-    "data/cases.json": "7299fa469e35b0c6e38791f2cecc96e019fb6043b1087de8a9d8235862f2d928",
+    "data/cases.json": "62e9c2e9332ddf6e6bbcb85ae658db285cd1c3664f08720f5b148fb4a18c9530",
     "data/catalog.json": "93472de996c78bca6cb44e02c50cdd65cef85e0ad4bd0736c311e8b0257e12dd",
     "data/citizenship-act.json": "0f01592add78d7fdaee2f6b0aba1a8916b9c2baf9bcb7fee475c3420b89b852d",
     "data/citizenship-regulations.json": "6912d9d08014ac0bd2228e08268bda2a86d1867e034a1b48485b548b903ffcbe",
@@ -65,5 +65,5 @@
     "visa-guide.css": "3404fe4b6671adeebeea89c96ac13c22b0b9a305e609ac2a9a7f596e12819842",
     "visa-guide.js": "d7be37be3dc9e4b03280976e9560255639d449b3f0dc27b61375e1cd821e84c9"
   },
-  "cases": 22
+  "cases": 30
 }
