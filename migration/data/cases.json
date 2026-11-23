@@ -2,8 +2,1043 @@
   "version": 2,
   "checkedAt": "2026-11-23",
   "recheckedCases": 22,
-  "method": "逐案回查公開原始來源；分列申請事實、制度解說、覆核與紀律結果，保留原文矛盾及未公開資訊。",
+  "method": "依公開判詞、授權彙報和原始個案紀錄整理；各案標示裁判範圍、來源和研讀重點。",
   "cases": [
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-cronin-v-hamilton-smith",
+      "title": "Cronin v Hamilton-Smith",
+      "period": "1955 年判決 · 1958 年刊載",
+      "court": "昆士蘭最高法院全席",
+      "citation": "Cronin v Hamilton-Smith; ex parte Hamilton-Smith [1958] Qd R 24",
+      "studyTopic": "判決結構、檢索詞與補強證據",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（書頁 3）及第 13 章（書頁 11）",
+      "summary": "昆士蘭法院審理一宗襲擊定罪的覆核，涉及證詞是否需要其他證據支持，以及當時法律如何處理加重情節。教材用同一宗判例示範閱讀判決與查找關鍵詞。",
+      "departmentResult": "全席法院駁回上訴。",
+      "outcomeNote": "法院處理了原審定罪、證詞補強及當時《刑法典》的加重處罰條文。",
+      "background": [
+        {
+          "text": "布里斯本原審裁定 Hamilton-Smith 非法襲擊成立。原審理由記載，警員轉述被告的陳述，支持了申訴人對案發情境的部分證詞。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 判例彙報 pp 24–25"
+          }
+        },
+        {
+          "text": "全席由 Stanley J、Mack J 與 Bradford AJ 審理。網站採用 Queensland Reports 的完整案名，教材第 13 章寫作 Cronin v Hamilton。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1955-07-22",
+          "title": "布里斯本原審",
+          "text": "治安法官作出定罪，命被告具保後釋放，並於一年內遵守守秩序與行為良好的條件。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · pp 24–25"
+          }
+        },
+        {
+          "date": "1955-09-07 至 09-08",
+          "title": "全席法院開庭",
+          "text": "全席法院審理原審的定罪與證據問題。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 案頭日期"
+          }
+        },
+        {
+          "date": "1955-11-25",
+          "title": "全席法院作出判決",
+          "text": "全席法院駁回上訴。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · pp 24–25"
+          }
+        },
+        {
+          "date": "1958",
+          "title": "收錄於 Queensland Reports",
+          "text": "由第一頁 24 可定位彙報，完整引註為 [1958] Qd R 24。",
+          "ref": {
+            "source": 1,
+            "locator": "Reported Citation"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "補強證據與加重情節",
+          "request": "全席法院須考慮原審是否必須先要求補強證據，以及當時《刑法典》第 343、344 條如何適用。",
+          "response": "原審理由與彙報指出，警員轉述的陳述支持部分背景。Bradford AJ 討論這些陳述如何支持申訴人所述的重要情節。",
+          "limit": "研讀證詞時，分清楚有人支持的是案發背景、行為本身，還是行為人身分。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · p 24 摘要、p 25 原審理由"
+          }
+        }
+      ],
+      "decision": {
+        "department": "治安法官在評估申訴人證詞與其他材料後，認為已達毫無合理懷疑的證明標準。",
+        "ref": {
+          "source": 2,
+          "locator": "圖 2 · p 25"
+        },
+        "later": "全席法院駁回上訴。彙報整理法院對補強問題的結論，並記載當時第 344 條處理較重處罰的條件。",
+        "laterRef": {
+          "source": 2,
+          "locator": "圖 2 · pp 24–25"
+        },
+        "caution": "使用此案研究歷史證據規則時，先查當時的條文與完整理由。現行證據規則及昆士蘭刑法須另查。"
+      },
+      "actions": [
+        {
+          "title": "用報告引註定位原案",
+          "text": "用 [1958] Qd R 24 核對法院、當事人與頁碼。即使教材縮寫一方姓名，仍可循此引註找到完整案名。"
+        },
+        {
+          "title": "從檢索詞走到理由",
+          "text": "先用 assault、corroboration、circumstances of aggravation 等詞縮小搜尋範圍，再讀法官署名後的理由，並找出法院最後作出的命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "1955 與 1958 各代表什麼",
+          "text": "裁判日是 1955 年 11 月 25 日。1958 用於定位 Queensland Reports 年度卷。",
+          "ref": {
+            "source": 1,
+            "locator": "Date、Reported Citation"
+          }
+        },
+        {
+          "title": "檢索詞與摘要的位置",
+          "text": "在圖 2 左頁，檢索詞放在案件名稱與法院資訊下方。右頁 Stanley J、Mack J 署名處可找到判決理由。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · pp 24–25"
+          }
+        },
+        {
+          "title": "圖 2 中的引用如何辨認",
+          "text": "彙報摘要提及 R v Cook。下一頁列出雙方律師在庭上援引的其他判例。閱讀以前案為依據的主張時，再由法官理由核對法院是否採納。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · pp 24–25"
+          },
+          "relatedRefs": [
+            {
+              "source": 5,
+              "locator": "彙報摘要"
+            },
+            {
+              "source": 6,
+              "locator": "上訴方援引"
+            },
+            {
+              "source": 7,
+              "locator": "上訴方援引"
+            },
+            {
+              "source": 8,
+              "locator": "上訴方援引"
+            },
+            {
+              "source": 9,
+              "locator": "答辯方援引"
+            },
+            {
+              "source": 10,
+              "locator": "答辯方援引"
+            },
+            {
+              "source": 11,
+              "locator": "答辯方援引"
+            }
+          ]
+        },
+        {
+          "title": "用法規名稱和條號再查一次",
+          "text": "圖中的檢索詞列出當時《刑法典》的相關條文及 Justices Acts 的第 211 條。兩個法規來源可用於查找歷史版本與修正沿革。",
+          "ref": {
+            "source": 3,
+            "locator": "第 13 章 · Catchwords and summary search"
+          },
+          "relatedRefs": [
+            {
+              "source": 4,
+              "locator": "歷史法規"
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/500888",
+          "title": "Cronin v Hamilton-Smith; ex parte Hamilton-Smith [1958] Qd R 24",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1958",
+          "locator": "官方彙報目錄與案名。全文入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "Legal Research Skills: An Australian Law Guide（2025）",
+          "publisher": "CAUL OER Collective 與澳洲大學圖書館",
+          "date": "2025",
+          "locator": "第 10 章，書頁 3 · 圖 2，展示判例彙報 pp 24–25"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=27",
+          "title": "Legal Research Skills: An Australian Law Guide（2025）",
+          "publisher": "CAUL OER Collective 與澳洲大學圖書館",
+          "date": "2025",
+          "locator": "第 13 章，書頁 11 · 檢索詞範例"
+        },
+        {
+          "url": "https://media.sclqld.org.au/documents/digitisation/v08_pp105-243_Justices_Justices%20Acts%2C%201886%20to%201965.pdf",
+          "title": "Justices Acts 1886 to 1965（歷史彙編）",
+          "publisher": "Supreme Court Library Queensland",
+          "date": "歷史彙編",
+          "locator": "含第 211 條及 Cronin 的判例交叉索引。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/504058",
+          "title": "R v Cook [1927] St R Qd 348",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1927",
+          "locator": "圖 2 左頁的彙報摘要提及此案。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/1914/HCA/77.pdf",
+          "title": "Eather v The King (1914) 19 CLR 409",
+          "publisher": "High Court of Australia",
+          "date": "1914",
+          "locator": "圖 2 右頁，上訴方援引至 p 415。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/1924/HCA/9.pdf",
+          "title": "Eade v The King (1924) 34 CLR 154",
+          "publisher": "High Court of Australia",
+          "date": "1924",
+          "locator": "圖 2 右頁，上訴方援引至 p 159。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/504086",
+          "title": "Warrill v The King [1943] St R Qd 39",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1943",
+          "locator": "圖 2 右頁，上訴方援引。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/502877",
+          "title": "Dwyer v Bridges; ex parte Bridges [1951] St R Qd 90",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1951",
+          "locator": "圖 2 右頁，答辯方援引。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/510307",
+          "title": "R v O’Brien (No 1) [1931] St R Qd 158",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1931",
+          "locator": "圖 2 右頁，答辯方援引。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/503088",
+          "title": "R v O’Brien (No 2) [1931] St R Qd 168",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1931",
+          "locator": "圖 2 右頁，答辯方援引。"
+        }
+      ],
+      "gaps": [
+        "教材圖 2 展示判例彙報前兩頁。需要援引完整判決或分辨三位法官的理由時，可循 Queensland Judgments 取得完整彙報。",
+        "七宗延伸判例是圖中的彙報或當事人引證。其後續法律效力須各自查證。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-commonwealth-v-tasmania",
+      "title": "Commonwealth v Tasmania（塔斯馬尼亞水壩案）",
+      "period": "1983 年 · 澳大利亞高等法院",
+      "court": "澳大利亞高等法院",
+      "citation": "(1983) 158 CLR 1 · [1983] HCA 21 · (1983) 46 ALR 625 · (1983) 57 ALJR 450",
+      "studyTopic": "授權彙報、平行引註與聯邦外交事務權",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 11 章表 4（書頁 6）",
+      "summary": "塔斯馬尼亞州擬興建水壩。聯邦以世界遺產保護為由限制工程，高等法院須判斷聯邦是否有憲法權限採取這些措施。教材以此案示範同一判決的四種查找方式。",
+      "departmentResult": "足以阻止水壩工程的核心聯邦措施獲維持，部分個別措施無效。",
+      "outcomeNote": "多數理由支持以憲法第 51(xxix) 條實施《世界遺產公約》。各條文與公告的效力逐項判定。",
+      "background": [
+        {
+          "text": "塔斯馬尼亞州立法授權以水壩發展水力發電。工程會影響塔斯馬尼亞西南部的世界遺產區。",
+          "ref": {
+            "source": 2,
+            "locator": "Commonwealth v Tasmania 專節"
+          }
+        },
+        {
+          "text": "聯邦透過立法、規例與公告限制工程。爭議涉及條約義務、聯邦立法權，以及州法與有效聯邦法牴觸的後果。",
+          "ref": {
+            "source": 1,
+            "locator": "原判決 · 憲法權限與最後命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1982",
+          "title": "州法授權工程",
+          "text": "塔斯馬尼亞州通過 Gordon River Hydro-Electric Power Development Act 1982。",
+          "ref": {
+            "source": 2,
+            "locator": "Commonwealth v Tasmania 專節"
+          }
+        },
+        {
+          "date": "1983-05",
+          "title": "聯邦採取保護措施",
+          "text": "聯邦制定 World Heritage Properties Conservation Act 1983，並作出相關規例與公告。",
+          "ref": {
+            "source": 6,
+            "locator": "1983 年原法"
+          }
+        },
+        {
+          "date": "1983-07-01",
+          "title": "高等法院裁定",
+          "text": "維持核心限制，並就特定條文、規例及公告分別作答。",
+          "ref": {
+            "source": 1,
+            "locator": "最後命令及對特別案件各題的答覆"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "國際條約如何連到國內法律",
+          "request": "聯邦主張第 51(xxix) 條支持為履行《世界遺產公約》所採的國內措施。",
+          "response": "塔斯馬尼亞州質疑聯邦權限。法院分別審視條約中保護及保存的義務、相關法規及其對工程的約束。",
+          "limit": "各位法官對不同措施採用的論證不盡相同。沿個別法官的理由讀回最後命令。",
+          "ref": {
+            "source": 1,
+            "locator": "判決理由、特別案件與命令"
+          }
+        }
+      ],
+      "decision": {
+        "department": "州政府依州法推動水壩。聯邦採取保護措施後，兩者就相互牴觸與聯邦權限向高等法院爭執。",
+        "ref": {
+          "source": 2,
+          "locator": "案件經過"
+        },
+        "later": "高等法院維持足以阻止工程的主要聯邦措施，也判定依第 8 條及第 11 條所作規例的相應部分及第 8 條公告無效。",
+        "laterRef": {
+          "source": 1,
+          "locator": "特別案件問題 2–3 的答覆"
+        },
+        "caution": "判決處理 1983 年的立法與措施。聯邦原法已廢止，研究今天的環境審批須核對後續立法及適用條文。"
+      },
+      "actions": [
+        {
+          "title": "引用時找授權彙報",
+          "text": "按 AGLC4 第 2.2.2 條的順序，優先用 (1983) 158 CLR 1。需要直接查判詞時，可同時以 [1983] HCA 21 搜尋。"
+        },
+        {
+          "title": "按條文追蹤判決",
+          "text": "從憲法第 51(xxix) 條和《世界遺產公約》第 4、5 條入手，再對照 1983 年立法與法院對各項措施的具體答覆。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "四種引註指向同一判決",
+          "text": "158 CLR 1 是授權彙報。46 ALR 625 與 57 ALJR 450 是平行彙報引註。HCA 21 是依年份與法院代碼查找的引註。",
+          "ref": {
+            "source": 3,
+            "locator": "表 4"
+          },
+          "relatedRefs": [
+            {
+              "source": 4,
+              "locator": "AGLC4 第 2.2.2 條"
+            }
+          ]
+        },
+        {
+          "title": "外交事務權與條約實施",
+          "text": "第 51(xxix) 條是聯邦的立法權來源之一。把法院對特定條約義務與實施措施的分析一併讀完，才知道多數意見所支持的範圍。",
+          "ref": {
+            "source": 1,
+            "locator": "多數法官就 external affairs 的理由"
+          },
+          "relatedRefs": [
+            {
+              "source": 5,
+              "locator": "憲法第 51(xxix) 條"
+            },
+            {
+              "source": 7,
+              "locator": "公約第 4、5 條"
+            }
+          ]
+        },
+        {
+          "title": "同案不同問題可以有不同答案",
+          "text": "涉及條約的核心限制獲維持，部分規例及公告失去效力。法院另外討論公司權等其他憲法基礎。",
+          "ref": {
+            "source": 1,
+            "locator": "最後命令及各項憲法問題"
+          }
+        },
+        {
+          "title": "後續應用",
+          "text": "Richardson 案進一步討論，為查明地區是否符合世界遺產資格，可否在調查期間維持臨時保護。",
+          "ref": {
+            "source": 8,
+            "locator": "判詞 · 公約與暫時保護"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikisource.org/wiki/File:Commonwealth_v_Tasmania_(1983_HCA_21).pdf",
+          "title": "Commonwealth v Tasmania [1983] HCA 21 · 判決全文轉載",
+          "publisher": "High Court of Australia 判詞（Wikisource 掃描檔）",
+          "date": "1983-07-01",
+          "locator": "判決理由及頁末命令。"
+        },
+        {
+          "url": "https://www.supremecourt.tas.gov.au/publications/speeches-articles/tasmanian-cases-high-court-australia/",
+          "title": "Tasmanian Cases in the High Court",
+          "publisher": "Supreme Court of Tasmania",
+          "date": "公開資料",
+          "locator": "Commonwealth v Tasmania 專節，交代工程、條約和裁判背景。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=22",
+          "title": "Legal Research Skills: An Australian Law Guide（2025）",
+          "publisher": "CAUL OER Collective 與澳洲大學圖書館",
+          "date": "2025",
+          "locator": "第 11 章，書頁 6 · 表 4，平行引註"
+        },
+        {
+          "url": "https://library.unimelb.edu.au/recite/referencing-styles/aglc",
+          "title": "Australian Guide to Legal Citation（AGLC4）· 引用速查與原書入口",
+          "publisher": "University of Melbourne Library",
+          "date": "2018",
+          "locator": "第 2 章 · 判例引用"
+        },
+        {
+          "url": "https://www.legislation.gov.au/constitution",
+          "title": "澳大利亞憲法",
+          "publisher": "Federal Register of Legislation",
+          "date": "官方文本",
+          "locator": "第 51(xxix) 條外交事務權及第 109 條聯邦、州法牴觸。"
+        },
+        {
+          "url": "https://www.legislation.gov.au/C2004A02722/asmade/1983-05-22/text/original/pdf",
+          "title": "World Heritage Properties Conservation Act 1983 · 原始法案",
+          "publisher": "Federal Register of Legislation",
+          "date": "1983-05-22",
+          "locator": "判決所審視的歷史版本。"
+        },
+        {
+          "url": "https://whc.unesco.org/en/conventiontext/",
+          "title": "《世界遺產公約》全文",
+          "publisher": "UNESCO World Heritage Centre",
+          "date": "1972",
+          "locator": "第 4、5 條的自然與文化遺產保護義務。"
+        },
+        {
+          "url": "https://judicialportal.informea.org/sites/default/files/court-case/Richardson%20v%20Forestry%20Commission.pdf",
+          "title": "Richardson v Forestry Commission (1988) 164 CLR 261",
+          "publisher": "High Court of Australia 判詞（InforMEA 掃描檔）",
+          "date": "1988-03-10",
+          "locator": "比較後續案件如何討論調查期間的臨時保護。"
+        }
+      ],
+      "gaps": [
+        "裁判結果按所爭執的條文及措施而異。引用特定措施的效力時應核對法院對該項問題的答覆。",
+        "1983 年的保護措施具有歷史背景。法規連結同時含當時文本與憲法資料。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-jaensch-v-coffey",
+      "title": "Jaensch v Coffey",
+      "period": "1984 年 · 澳大利亞高等法院",
+      "court": "澳大利亞高等法院",
+      "citation": "(1984) 155 CLR 549 · [1984] HCA 52",
+      "studyTopic": "判例引註與精神傷害",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 12 章表 7、8（書頁 8）",
+      "summary": "Coffey 在醫院目睹丈夫車禍受重傷後的情況，後來罹患精神疾病。判決討論事故後果、合理可預見性與注意義務。教材用這宗判決示範兩種引註格式。",
+      "departmentResult": "高等法院駁回上訴，維持 Coffey 就精神傷害取得的賠償。",
+      "outcomeNote": "法官從各自的理由分析在醫院親身經歷事故直接後果的情況。",
+      "background": [
+        {
+          "text": "Jaensch 駕車過失使 Coffey 的丈夫受重傷。Coffey 到醫院後親身接觸丈夫受傷及治療的情況，並得知傷勢嚴重。",
+          "ref": {
+            "source": 1,
+            "locator": "Gibbs CJ 開宗及 Deane J 事實摘要"
+          }
+        },
+        {
+          "text": "法院所認定的是已出現的精神疾病。受害者家屬的關係、在醫院所見所聞和事故後果之間的連結都是理由的一部分。",
+          "ref": {
+            "source": 1,
+            "locator": "Brennan J 及 Deane J 各自的理由"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1979-06-02",
+          "title": "車禍及醫院經歷",
+          "text": "Coffey 的丈夫在事故中受重傷。她其後至醫院。",
+          "ref": {
+            "source": 1,
+            "locator": "Brennan J · 事實摘要"
+          }
+        },
+        {
+          "date": "1983",
+          "title": "南澳最高法院全席",
+          "text": "全席法院未改動對精神傷害所判的普通損害賠償。",
+          "ref": {
+            "source": 3,
+            "locator": "[16]"
+          }
+        },
+        {
+          "date": "1984-08-20",
+          "title": "高等法院裁判",
+          "text": "法院駁回 Jaensch 的上訴並命其負擔訟費。",
+          "ref": {
+            "source": 1,
+            "locator": "判決末尾命令"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "駕駛人是否對配偶負有注意義務",
+          "request": "上訴方主張自己對未在撞擊現場的 Coffey 沒有避免其精神傷害的注意義務。",
+          "response": "法院檢視她與受傷者的關係、在醫院所感知的情況，以及在此脈絡下精神傷害的合理可預見性。",
+          "limit": "應分開研究注意義務、損害種類及因果關係。各位法官的分析路徑須按署名閱讀。",
+          "ref": {
+            "source": 1,
+            "locator": "Gibbs CJ、Brennan J、Deane J 理由"
+          }
+        }
+      ],
+      "decision": {
+        "department": "南澳下級法院認定精神傷害求償成立，精神傷害的一般賠償在全席階段維持。",
+        "ref": {
+          "source": 3,
+          "locator": "[16]"
+        },
+        "later": "高等法院駁回上訴。Tame／Annetts 後來重新檢討對精神傷害施加固定前提的做法。",
+        "laterRef": {
+          "source": 4,
+          "locator": "[16]–[18]、[46]–[50]、[185]–[200]"
+        },
+        "caution": "本案反映 1984 年普通法的發展。讀到後續個案時，還須查事發州別、適用日期及精神傷害專門立法。"
+      },
+      "actions": [
+        {
+          "title": "把兩種引註拆開讀",
+          "text": "155 是 Commonwealth Law Reports 卷號，549 是本案起始頁。[1984] HCA 52 則用年份、法院代碼及判決序號定位同案。"
+        },
+        {
+          "title": "用後續高院判決驗證原則",
+          "text": "對讀 Tame／Annetts 和 King v Philcox，辨認普通法注意義務的發展，以及成文法對受償範圍另加的要件。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "549 是彙報起始頁",
+          "text": "在作業或書狀援引某一句或某項法律原則，還需要加上實際引用位置。",
+          "ref": {
+            "source": 2,
+            "locator": "表 7–8"
+          },
+          "relatedRefs": [
+            {
+              "source": 7,
+              "locator": "AGLC4 第 2 章"
+            }
+          ]
+        },
+        {
+          "title": "車禍後在醫院所見也可能有法律意義",
+          "text": "本案的分析涵蓋配偶在醫院感知的事故直接後果。判斷是否負有注意義務，仍須依個別事實及適用法。",
+          "ref": {
+            "source": 1,
+            "locator": "Brennan J、Deane J"
+          }
+        },
+        {
+          "title": "精神疾病與悲痛有何差別",
+          "text": "本案涉及法院認定的精神疾病。後續判決進一步討論可辨識的精神疾病與合理可預見性。",
+          "ref": {
+            "source": 4,
+            "locator": "Tame／Annetts 理由"
+          }
+        },
+        {
+          "title": "後續案件可能同時涉及普通法與成文法",
+          "text": "King v Philcox 應用南澳 Civil Liability Act 1936，並分開分析注意義務與法定賠償限制。",
+          "ref": {
+            "source": 5,
+            "locator": "判決與摘要"
+          },
+          "relatedRefs": [
+            {
+              "source": 6,
+              "locator": "南澳法規版本頁"
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://zoelaw.ai/cases/jaensch-v-coffey-1984-hca-52",
+          "title": "Jaensch v Coffey [1984] HCA 52 · 判詞轉載",
+          "publisher": "High Court of Australia 判詞（ZoeLaw 轉載）",
+          "date": "1984-08-20",
+          "locator": "Judgment 全文 · Gibbs CJ、Murphy J、Brennan J、Deane J、Dawson J 的理由。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=24",
+          "title": "Legal Research Skills: An Australian Law Guide（2025）",
+          "publisher": "CAUL OER Collective 與澳洲大學圖書館",
+          "date": "2025",
+          "locator": "第 12 章，書頁 8 · 表 7 和表 8"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2015/HCA/19.pdf",
+          "title": "King v Philcox [2015] HCA 19 · 引述本案",
+          "publisher": "High Court of Australia",
+          "date": "2015-06-10",
+          "locator": "[16] 記錄南澳全席與高等法院的案件歷史。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2002/HCA/35.pdf",
+          "title": "Tame v New South Wales; Annetts v Australian Stations Pty Ltd [2002] HCA 35",
+          "publisher": "High Court of Australia",
+          "date": "2002-09-05",
+          "locator": "關於普通法精神傷害與固定限制條件的後續分析。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/cases-and-judgments/judgments/judgments-1998-current/king-v-philcox",
+          "title": "King v Philcox · 判決頁",
+          "publisher": "High Court of Australia",
+          "date": "2015-06-10",
+          "locator": "南澳精神傷害規定的後續案例與判決入口。"
+        },
+        {
+          "url": "https://www.legislation.sa.gov.au/lz?path=%2FC%2FA%2Fcivil-liability-act-1936",
+          "title": "Civil Liability Act 1936 (SA) · 版本索引",
+          "publisher": "South Australian Legislation",
+          "date": "官方版本索引",
+          "locator": "可比對第 33、53 條與事發日期適用的版本。"
+        },
+        {
+          "url": "https://library.unimelb.edu.au/recite/referencing-styles/aglc",
+          "title": "Australian Guide to Legal Citation（AGLC4）· 引用速查與原書入口",
+          "publisher": "University of Melbourne Library",
+          "date": "2018",
+          "locator": "第 2 章 · 判例引用"
+        }
+      ],
+      "gaps": [
+        "判決以普通法處理本案。不同州及不同日期的索賠，還需查相關成文法與後續判決。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-r-v-stubbs",
+      "title": "R v Stubbs",
+      "period": "2009 年 · 首都領地最高法院",
+      "court": "澳大利亞首都領地最高法院",
+      "citation": "(2009) 228 FLR 221 · [2009] ACTSC 63",
+      "studyTopic": "刑事案名讀法與證據排除",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 12 章（書頁 9）",
+      "summary": "刑事審訊前，被告要求排除警方臥底調查取得的通訊證據。教材用這宗案件說明如何在庭上口頭介紹刑事判例。",
+      "departmentResult": "法院拒絕排除該批證據的申請。",
+      "outcomeNote": "這是審訊前的證據裁定，裁定範圍是證據能否在審訊中提出。",
+      "background": [
+        {
+          "text": "案件涉及警方以假身分進行網路臥底調查，控方擬在審訊中用通訊紀錄。被告援引 Evidence Act 1995 (Cth) 第 138 條提出排除申請。",
+          "ref": {
+            "source": 1,
+            "locator": "判詞開頭及 s 138 討論"
+          }
+        },
+        {
+          "text": "案件由 ACT Supreme Court 的 Higgins CJ 審理。正式索引以 R v Stubbs 收錄，判詞也列出被告全名。",
+          "ref": {
+            "source": 2,
+            "locator": "26 May 2009 · ACTSC 63"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2008-07-24",
+          "title": "提出起訴書",
+          "text": "起訴書列出兩項與通訊行為有關的控罪。",
+          "ref": {
+            "source": 1,
+            "locator": "判詞 · 起訴書日期"
+          }
+        },
+        {
+          "date": "2009-02-05",
+          "title": "被告答辯",
+          "text": "被告對兩項控罪作不認罪答辯。",
+          "ref": {
+            "source": 1,
+            "locator": "判詞 · 起訴背景"
+          }
+        },
+        {
+          "date": "2009-05-26",
+          "title": "裁定是否排除證據",
+          "text": "Higgins CJ 駁回排除申請。",
+          "ref": {
+            "source": 1,
+            "locator": "Order、結尾理由"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "警方取得通訊的方式是否觸發排除裁量",
+          "request": "被告稱警方行為超出單純蒐證，並主張涉及誘使犯罪或不當取得證據。",
+          "response": "法院檢視臥底通訊與相關證詞，並說明即使取得方式存在所指的不當之處，衡量本案情況後仍會接納證據。",
+          "limit": "本裁定只涵蓋在該申請中爭執的證據。",
+          "ref": {
+            "source": 1,
+            "locator": "[67]–[72] · 第 138 條衡量及結論"
+          }
+        }
+      ],
+      "decision": {
+        "department": "被告在本案審訊前申請排除控方擬提出的通訊資料。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 申請性質"
+        },
+        "later": "法院拒絕排除申請。所列判詞記錄至此項證據裁定。",
+        "laterRef": {
+          "source": 1,
+          "locator": "Order"
+        },
+        "caution": "第 138 條是否適用取決於取得證據的具體情況。法院對證據的裁定也與審訊後的罪責判斷分屬不同階段。"
+      },
+      "actions": [
+        {
+          "title": "先用完整引註介紹判例",
+          "text": "教材在這起 2009 年的刑案用 The Queen against Stubbs 示範口頭讀法。書面可用 R v Stubbs (2009) 228 FLR 221，指明所引理由時再加具體頁段。"
+        },
+        {
+          "title": "核對法院及原命令",
+          "text": "用 [2009] ACTSC 63 到法院索引核對法院、法官及日期，再在判決正文查第 138 條、相關事實與命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "R 與 v 的口頭讀法",
+          "text": "本案當年的判詞列 The Queen。口頭談及這宗刑案時，教材以 against 連接兩方名稱。",
+          "ref": {
+            "source": 3,
+            "locator": "第 12 章 · How to talk about a case"
+          }
+        },
+        {
+          "title": "FLR 的 221 與 ACTSC 的 63",
+          "text": "221 是 Federal Law Reports 的起始頁，63 是當年度的法院判決序號。",
+          "ref": {
+            "source": 2,
+            "locator": "ACTSC 63"
+          },
+          "relatedRefs": [
+            {
+              "source": 3,
+              "locator": "228 FLR 221"
+            }
+          ]
+        },
+        {
+          "title": "第 138 條要求閱讀兩個問題",
+          "text": "先查證據取得方式是否不當或違法。條文如適用，再看法院如何衡量接納證據的益處與以該方式取得證據所帶來的問題。",
+          "ref": {
+            "source": 4,
+            "locator": "Evidence Act 1995 (Cth) s 138"
+          }
+        },
+        {
+          "title": "去哪裡找法官自己的結論",
+          "text": "判詞標示 Order 與 Reasons for Judgment。資料庫頁面另有機器整理，讀原文可直接核對法院與裁決。",
+          "ref": {
+            "source": 1,
+            "locator": "Order、Reasons for Judgment"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://casechat.au/cases/au/r-v-murray-colin-stubbs",
+          "title": "R v Murray Colin Stubbs [2009] ACTSC 63 · 判詞轉載",
+          "publisher": "ACT Supreme Court 判詞（CaseChat 轉載）",
+          "date": "2009-05-26",
+          "locator": "Full Text · Higgins CJ 的命令及理由。"
+        },
+        {
+          "url": "https://www.courts.act.gov.au/__data/assets/pdf_file/0008/967805/act_s.c_._index_2009_.pdf",
+          "title": "ACT Supreme Court · 2009 判決索引",
+          "publisher": "ACT Courts",
+          "date": "2009",
+          "locator": "5 月 26 日 · R v Stubbs · ACTSC 63。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=25",
+          "title": "Legal Research Skills: An Australian Law Guide（2025）",
+          "publisher": "CAUL OER Collective 與澳洲大學圖書館",
+          "date": "2025",
+          "locator": "第 12 章，書頁 9 · 口頭引註範例"
+        },
+        {
+          "url": "https://www.legislation.gov.au/C2004A04858/latest",
+          "title": "Evidence Act 1995 (Cth)",
+          "publisher": "Federal Register of Legislation",
+          "date": "版本見網站",
+          "locator": "查第 138 條。研究原案時可用版本功能回查 2009 年文本。"
+        },
+        {
+          "url": "https://library.unimelb.edu.au/recite/referencing-styles/aglc",
+          "title": "Australian Guide to Legal Citation（AGLC4）· 引用速查與原書入口",
+          "publisher": "University of Melbourne Library",
+          "date": "2018",
+          "locator": "第 2 章 · 判例引用"
+        },
+        {
+          "url": "https://www.courts.act.gov.au/cm/courts/judgment",
+          "title": "ACT Courts · 判決查詢",
+          "publisher": "ACT Courts",
+          "date": "官方查詢入口",
+          "locator": "以 [2009] ACTSC 63 或 Stubbs 查找。若線上只顯示索引，可依完整引註向圖書館查詢。"
+        }
+      ],
+      "gaps": [
+        "所列原判詞僅處理證據排除申請。此頁未確認之後的審訊結果。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-haug-v-jupiters",
+      "title": "Haug v Jupiters Ltd",
+      "period": "2007 年判決 · 2008 年刊載",
+      "court": "昆士蘭上訴法院",
+      "citation": "[2008] 1 Qd R 276 · [2007] QCA 199",
+      "studyTopic": "民事案名讀法、文件披露與法律專業保密特權",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 12 章（書頁 9）",
+      "summary": "Haug 在被帶離賭場後提出人身傷害索償。雙方就訴前要交出哪些文件和資訊發生爭議。教材用此案示範民事案名的口頭讀法。",
+      "departmentResult": "上訴獲准，法院縮減原來命令披露的範圍。",
+      "outcomeNote": "命令處理訴前文件和資料，未裁決賭場須否就人身傷害賠償。",
+      "background": [
+        {
+          "text": "Haug 稱他於 2006 年被帶離布里斯本 Conrad Treasury 賭場時受傷，並依昆士蘭 Personal Injuries Proceedings Act 2002 提出索償通知。",
+          "ref": {
+            "source": 1,
+            "locator": "Jerrard JA · This matter"
+          }
+        },
+        {
+          "text": "Haug 的律師要求賭場提供文件及資訊。初審命令涵蓋多項要求，賭場上訴爭執部分範圍。",
+          "ref": {
+            "source": 1,
+            "locator": "判詞及所載原審命令"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2006-02-22",
+          "title": "事件發生",
+          "text": "Haug 被帶離賭場，其後提起人身傷害索償程序。",
+          "ref": {
+            "source": 1,
+            "locator": "Jerrard JA · This matter"
+          }
+        },
+        {
+          "date": "2007-01-17",
+          "title": "律師要求披露",
+          "text": "Haug 律師致函，分項要求文件及資訊。",
+          "ref": {
+            "source": 1,
+            "locator": "Jerrard JA · 2007 年 1 月 17 日來函"
+          }
+        },
+        {
+          "date": "2007-03-22",
+          "title": "初審發出披露命令",
+          "text": "法院對律師函所列的請求作出兩項命令。",
+          "ref": {
+            "source": 1,
+            "locator": "Order Nos 1–2"
+          }
+        },
+        {
+          "date": "2007-06-15",
+          "title": "上訴法院改動命令",
+          "text": "上訴法院從兩項命令中移除部分請求，並命 Haug 支付上訴訟費。",
+          "ref": {
+            "source": 1,
+            "locator": "Order"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "文件、資訊與法律專業保密特權",
+          "request": "上訴涉及第 27(1)(a)(i) 條要求交付的文件、第 27(1)(b)(i) 條要求提供的資訊以及第 30 條。",
+          "response": "上訴法院逐項審查律師函，並說明要求與索償爭點的關聯，及法律專業保密特權如何影響披露命令。",
+          "limit": "各份文件能否披露須考慮內容、與爭點的關聯及法規規定。",
+          "ref": {
+            "source": 1,
+            "locator": "Order、Williams JA、Jerrard JA、White J"
+          }
+        }
+      ],
+      "decision": {
+        "department": "初審 2007 年 3 月 22 日命令要求交付若干文件及資訊。",
+        "ref": {
+          "source": 1,
+          "locator": "案頭命令、Jerrard JA"
+        },
+        "later": "法院准許上訴，刪除第一項命令中對律師函第 1、5、6、7 項的引用，以及第二項命令中對第 11 項的引用。",
+        "laterRef": {
+          "source": 1,
+          "locator": "Order"
+        },
+        "caution": "案件具體解釋昆士蘭人身傷害程序法的披露義務。其他法域、一般法院文件開示程序及修法後的案件須各自對讀。"
+      },
+      "actions": [
+        {
+          "title": "用完整案名及權威彙報定位",
+          "text": "教材用 Haug and Jupiters 示範民事案名讀法。檢索時可用 [2007] QCA 199，正式引用時可查 [2008] 1 Qd R 276。"
+        },
+        {
+          "title": "把各項請求和法院命令一一對讀",
+          "text": "閱讀第 27 與第 30 條，再把律師函的每項請求對回法院判決。可看出文件披露、提供資訊和保密特權各自的範圍。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "為何彙報引註是 2008",
+          "text": "判決作於 2007 年，之後刊於 2008 年 Queensland Reports 第一卷第 276 頁。",
+          "ref": {
+            "source": 2,
+            "locator": "Reported Citation"
+          }
+        },
+        {
+          "title": "民事案件的 v 怎麼讀",
+          "text": "教材的口頭示例以 and 連接 Haug 及 Jupiters。書面案名保留 v。",
+          "ref": {
+            "source": 3,
+            "locator": "第 12 章 · How to talk about a case"
+          }
+        },
+        {
+          "title": "訴前披露的條文要分開讀",
+          "text": "文件與資訊分屬第 27 條的不同規定，第 30 條還涉及受保密特權保護的資料。",
+          "ref": {
+            "source": 1,
+            "locator": "Jerrard JA、Williams JA 理由"
+          },
+          "relatedRefs": [
+            {
+              "source": 4,
+              "locator": "ss 27、30"
+            }
+          ]
+        },
+        {
+          "title": "上訴獲准指哪一部分",
+          "text": "上訴判決改動披露命令並處理訟費。索償是否成立須另看後續程序。",
+          "ref": {
+            "source": 1,
+            "locator": "Order"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/caselaw/qca/2007/199",
+          "title": "Haug v Jupiters Limited [2007] QCA 199 · 判決",
+          "publisher": "Queensland Court of Appeal · Queensland Judgments",
+          "date": "2007-06-15",
+          "locator": "命令、案情及三位法官理由。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/509867",
+          "title": "Haug v Jupiters Ltd [2008] 1 Qd R 276 · 授權彙報",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "2008",
+          "locator": "較正式的彙報版本。全文入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=25",
+          "title": "Legal Research Skills: An Australian Law Guide（2025）",
+          "publisher": "CAUL OER Collective 與澳洲大學圖書館",
+          "date": "2025",
+          "locator": "第 12 章，書頁 9 · 民事案名口頭讀法"
+        },
+        {
+          "url": "https://www.legislation.qld.gov.au/view/whole/html/inforce/current/act-2002-024#sec.27",
+          "title": "Personal Injuries Proceedings Act 2002 (Qld)",
+          "publisher": "Queensland Legislation",
+          "date": "版本見網站",
+          "locator": "第 27 條文件與資訊、第 30 條不披露資料。版本入口可回查歷史法。"
+        },
+        {
+          "url": "https://library.unimelb.edu.au/recite/referencing-styles/aglc",
+          "title": "Australian Guide to Legal Citation（AGLC4）· 引用速查與原書入口",
+          "publisher": "University of Melbourne Library",
+          "date": "2018",
+          "locator": "第 2 章 · 判例引用"
+        }
+      ],
+      "gaps": [
+        "這份上訴判詞只處理披露爭議及上訴費用。此頁未確認其後的和解或賠償結果。"
+      ]
+    },
     {
       "id": "partner-djk-client-upload-2024",
       "title": "DJK：因家人生病請求優先處理，漏接補件後由本人補上獲批",
