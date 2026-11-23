@@ -23,3 +23,26 @@
 .guide-law-points > li { margin-block: .55rem; }
 .guide-law-points .guide-links { font-size: .9rem; margin-block: .2rem .6rem; }
 #guide-results > section h3 { margin-block: 1.2rem .45rem; }
+.textbook-contents { max-width: 47rem; }
+.textbook-contents p { font-size: 1rem; line-height: 1.65; }
+.textbook-buttons, .textbook-page-nav { display: flex; flex-wrap: wrap; gap: .7rem 1rem; align-items: center; margin-block: 1.3rem; }
+.textbook-unit { border-block-start: 1px solid var(--line); padding-block: .8rem; }
+.textbook-unit li { margin-block: .65rem; padding-inline-start: .25rem; }
+.textbook-unit a { font-weight: 650; }
+.textbook-unit p { margin-block: .2rem; color: var(--muted); }
+.textbook-chapter .textbook-kicker { font-size: .95rem; color: var(--muted); }
+.textbook-goal { border-inline-start: .2rem solid var(--green); padding-inline-start: .8rem; }
+.textbook-example, .textbook-questions { border: 1px solid var(--line); border-radius: .5rem; margin-block: 1.3rem; padding: .65rem 1rem 1rem; }
+.textbook-example h2, .textbook-questions h2 { margin-top: .4rem; }
+.textbook-example ol, .textbook-questions ol { padding-inline-start: 1.3rem; line-height: 1.65; }
+.textbook-example li, .textbook-questions li { margin-block: .55rem; }
+.textbook-questions summary { cursor: pointer; color: var(--green); }
+.textbook-page-nav { justify-content: space-between; border-block-start: 1px solid var(--line); padding-block-start: 1rem; }
+.textbook-full .textbook-chapter { margin-block: 2.4rem; padding-block-start: 1rem; border-block-start: 1px solid var(--line); }
+@media print {
+  body:has(.textbook-full) { --ink: #141414; --muted: #444; --line: #aaa; --green: #154335; color: #141414; background: #fff; }
+  body:has(.textbook-full) :is(.topbar,.sidebar,.companion,.skip) { display: none; }
+  body:has(.textbook-full) :is(.app-shell,main) { display: block; width: auto; max-width: none; padding: 0; margin: 0; }
+  .textbook-full .textbook-chapter { break-before: page; max-width: none; }
+  .textbook-full :is(h1,h2,summary) { break-after: avoid; }
+}

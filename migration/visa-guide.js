@@ -3,7 +3,7 @@ import {abbreviations, conditionMeanings, forms, formUrl, instruments, official,
 import {visaForms, visaGroups, visas} from './guide-visas.js';
 
 const regulations = 'migration-regulations';
-const path = slug => `#/guide${slug ? '/'+slug : ''}`;
+const path = (slug = 'reference') => `#/guide/${slug}`;
 const titleZh = entry => entry.titleZh.replace(/^簽證子類別\s+\d{3}\s*[—–-]\s*/, '');
 const chapterById = new Map(topics.map(topic => [topic[0], topic]));
 const common = ['study-path','work-path','partner-path','family-visit-path','bridging'];
@@ -22,12 +22,8 @@ function topicLinks(ids, catalog) {
   return links(ids.map(id => [topicTitle(id,catalog),path(id)]));
 }
 
-export function guideEntry(label = '澳洲簽證申請指南') {
-  return `<a class="case-library-entry guide-entry" href="${path()}"><div><h3>${esc(label)}</h3><p>按目的找簽證，核對資格、文件、時間與遞件步驟。</p></div><span>查看指南</span></a>`;
-}
-
 export function guideVisaLink(number) {
-  return visas[number] ? `<p><a class="small-button" href="${path(number)}">查看 ${number} 白話申請指南</a></p>` : '';
+  return visas[number] ? `<p><a class="small-button" href="${path(number)}">查看課本附錄 · ${number} 簽證資料</a></p>` : '';
 }
 
 function card(id, title, description = '', extra = '') {
@@ -100,7 +96,7 @@ function exactLawLinks(index, query) {
 }
 
 function renderContents(main, catalog, codes, index) {
-  main.innerHTML = `<div class="library-intro guide-hero"><h1>澳洲簽證申請指南</h1><p>把《移民規例 1994》改寫成申請人用得上的步驟。從你的目的開始，查資格、擔保、文件與期限，再回到官方流程和原文。</p></div>
+  main.innerHTML = `<div class="breadcrumb"><a href="#/textbook">課本目錄</a></div><div class="library-intro guide-hero"><h1>簽證與申請資料附錄</h1><p>查子類別、附加條件、表格與規例代碼，並連到條文與官方資料。</p></div>
   <div class="guide-pages"><section><h2>按情況找路線</h2>${topicLinks(common, catalog)}</section>
   <section><h2>準備申請</h2><div class="guide-grid">${topics.filter(([id]) => !common.includes(id)).map(([id,title]) => card(id,title)).join('')}</div></section>
   <section><h2>查簽證、條件或表格代碼</h2><label class="guide-search" for="guide-search">輸入編號或名稱</label><input class="overview-search" id="guide-search" placeholder="例如 500、8503、Form 888、伴侶"><p id="guide-match" role="status"></p><div id="guide-results"></div></section></div>`;
@@ -150,18 +146,18 @@ function renderVisa(entry, data, summaries) {
     ${relevantForms.length ? `<section><h2>可能會用到的表格</h2><ul class="guide-law-points">${relevantForms.map(([form,title,note])=>`<li><a href="${esc(formUrl(form))}">Form ${esc(form)} ${esc(title)}</a><p>${esc(note)}</p></li>`).join('')}</ul></section>` : ''}
     ${legalPoints.length ? `<section><h2>法規重點</h2><p class="guide-en">研讀室保存版本 ${esc(data.version)}</p><ul class="guide-law-points">${legalPoints.map(point => `<li>${esc(point.text)}${links(point.sections.map(section => ['對照條文 ' + section.replace(/^v\d-/, '').replace(/-/g,'.'),routeFor(regulations,section)]) )}</li>`).join('')}</ul></section>` : ''}
     <section><h2>對照有效申請和核發規則</h2>${links([...lodgement.map(item => [`附表 1 · ${item.title.startsWith(item.number+' ') ? item.title : `${item.number} ${item.title}`}`,routeFor(regulations,item.id)]), ['附表 2 · '+number+' 完整條文',entry.href], ['聯邦法規登錄庫及修法', 'https://www.legislation.gov.au/F1996B03551/latest/text']])}</section>
-    <section><h2>相關簽證和準備指南</h2>${topicLinks(guide.related,data.visas)}</section></article>`;
+    <section><h2>相關簽證和證據資料</h2>${topicLinks(guide.related,data.visas)}</section></article>`;
 }
 
 export function renderVisaGuide({main, companion, slug, data, index, summaries}) {
   const codes = codeEntries(index, data, summaries);
   const topic = chapterById.get(slug);
   const visa = data.visas.find(entry => entry.number === slug);
-  companion.innerHTML = `<h3>澳洲簽證申請指南</h3>${links([['指南目錄',path()],['代碼怎麼讀',path('codes')],['簽證條件',path('conditions')],['申請表格',path('forms')],['規例原文書庫','#/book/'+regulations]])}`;
-  if (!slug) renderContents(main,data.visas,codes,index);
+  companion.innerHTML = `<h3>課本附錄</h3>${links([['課本目錄','#/textbook'],['附錄索引',path()],['代碼怎麼讀',path('codes')],['簽證條件',path('conditions')],['申請表格',path('forms')],['規例原文書庫','#/book/'+regulations]])}`;
+  if (slug === 'reference') renderContents(main,data.visas,codes,index);
   else {
     const content = topic ? renderChapter(topic,data.visas,codes) : visa && visas[slug] ? renderVisa(visa,data,summaries) : '<h1>找不到這一頁</h1><p>回到目錄查簽證編號或申請主題。</p>';
-    main.innerHTML = `<div class="breadcrumb"><a href="${path()}">簽證申請指南</a></div>${content}`;
+    main.innerHTML = `<div class="breadcrumb"><a href="#/textbook">課本目錄</a><span>›</span><a href="${path()}">附錄索引</a></div>${content}`;
   }
-  main.insertAdjacentHTML('beforeend', `<p class="source-note">編寫日期 ${guideDate}。簽證、表件、費用與資格可能隨修法調整。遞件前以對應分支的官方資料及適用法規核對。${slug ? ` <a href="${path()}">回到指南目錄</a>` : ''}</p>`);
+  main.insertAdjacentHTML('beforeend', `<p class="source-note">編寫日期 ${guideDate}。簽證、表件、費用與資格可能隨修法調整。查閱時以對應分支的官方資料及適用法規核對。${slug === 'reference' ? '' : ` <a href="${path()}">回到附錄索引</a>`}</p>`);
 }

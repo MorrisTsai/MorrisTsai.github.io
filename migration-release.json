@@ -1,7 +1,7 @@
 {
   "url": "https://www.rewardschool.com.au/migration/",
   "files": {
-    "app.js": "515c64bb1b144cb03690a6089ee9d6179dc716cd935f111c01cd9c3d330d3bce",
+    "app.js": "3d6a4acc28cba1867e9d72b841d64fbd5fc4fb4ba79212224b86c54932c42efc",
     "case-styles.css": "1e42a41599d6033562b50df4650009ff112c673c82de5f7dbc25f4cff1aa7916",
     "cases.js": "8928a6ba356b5b9815a0db6e43320cd8e2895b5677fca9a2d6cd8256bde2b71e",
     "chapter-menu.js": "620d94f5b8ff755d848884c4396ed6059897d7c0a21ac4e289a3079af123661c",
@@ -49,7 +49,7 @@
     "data/zh/validation-report.json": "dad0fd390da7899744ffef54b4f53625fc2ac36e431b45f0851cfc9957134f61",
     "guide-topics.js": "bbe5739754632f0e2c71cf0a4582f306da88735389fea9e2ce0ef1a18c49b789",
     "guide-visas.js": "c4e993150e68f2350d20e31f91416b091ad47c362be07e4fc42d8c76219f5dd9",
-    "index.html": "55fa1c3a5fe9cc67a9ec2a824e660c9e9890ba4b37decc31da69d8774fc6fc3e",
+    "index.html": "721aa76a53e0fb884ed594e1c06931b81e4b0fefce986b55eb681803d7ac68eb",
     "law-finder.css": "81dd47be31c15e1c25d86ce64c5611f0a81bf4dab8ab909ddb1d36168668ca82",
     "law-finder.js": "013eabe958ecdff020532b21563586c0b797391033da904ddaf2918100a9f93a",
     "reading-layout.js": "a89bf475f9c0214985cfae25d6f6f02452e3f9cfac1f20ddc72b9c914abe5adb",
@@ -60,8 +60,10 @@
     "strict-answers.js": "7925b85e3c094a31ea64292f8e3e6df31d9b82721844c9499ebad98f8498278f",
     "styles.css": "0669415926c8fbb7e26744875c2019c31e7a48c7e9b9c290ddc28d5465f4282d",
     "summary-styles.css": "5147f2f1a9740310a9b479bb50b4209ff407c04cc9f5b07d46b6c492a55d3f55",
-    "visa-guide.css": "b3b9ca444e7ea37d25f610324770bc1d4a23b216f100450a7d9e332378a11830",
-    "visa-guide.js": "288c36ccfc3345b2df514e5a5ba2be31d8ae024c2eb9425b2a9dbe3edca0d2ab"
+    "textbook-chapters.js": "da5de2af39c596f1bfb6238ce3d5f4bf6ee6b5040fb70582675e8e46ca63c960",
+    "textbook.js": "aab625374bc4b62d3970e7a89d56463685ce2a2c251e26d925076fb0bb329923",
+    "visa-guide.css": "3404fe4b6671adeebeea89c96ac13c22b0b9a305e609ac2a9a7f596e12819842",
+    "visa-guide.js": "d7be37be3dc9e4b03280976e9560255639d449b3f0dc27b61375e1cd821e84c9"
   },
   "cases": 22
 }
