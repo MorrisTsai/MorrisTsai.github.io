@@ -36,7 +36,7 @@ function renderContents() {
 function renderChapter(chapter, showAnswers = false) {
   const number = chapters.indexOf(chapter)+1;
   return `<article class="guide-article textbook-chapter" id="chapter-${chapter.id}"><header><p class="textbook-kicker">第 ${number} 章</p><h1>${esc(chapter.title)}</h1><p class="textbook-goal">${esc(chapter.goal)}</p></header>
-  ${chapter.sections.map(([heading,body])=>`<section><h2>${esc(heading)}</h2><p>${esc(body)}</p></section>`).join('')}
+  ${chapter.sections.map(([heading,...paragraphs])=>`<section><h2>${esc(heading)}</h2>${paragraphs.map(body=>`<p>${esc(body)}</p>`).join('')}</section>`).join('')}
   <section class="textbook-example"><h2>示範案例</h2><p>${esc(chapter.example[0])}</p><ol>${chapter.example[1].map(step=>`<li>${esc(step)}</li>`).join('')}</ol></section>
   <section class="textbook-questions"><h2>練習與解答</h2><ol>${chapter.questions.map(([question,answer])=>`<li><p>${esc(question)}</p><details ${showAnswers?'open':''}><summary>查看解答</summary><p>${esc(answer)}</p></details></li>`).join('')}</ol></section>
   <section><h2>對照條文與官方資料</h2>${renderLinks(chapter.sources)}</section>
