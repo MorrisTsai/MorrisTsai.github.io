@@ -1,9 +1,9 @@
 {
   "url": "https://www.rewardschool.com.au/migration/",
   "files": {
-    "app.js": "7acd8ca98957a1f1b1f22959083355148bac5ac2928b1400ad21fb6037ce249c",
+    "app.js": "93d7ec3f321b7c8b7e8f2c58c2405a2492a62d5f05423e8f44881f4211ccc49c",
     "case-styles.css": "1e42a41599d6033562b50df4650009ff112c673c82de5f7dbc25f4cff1aa7916",
-    "cases.js": "470047e6e8277252023cef46ecf2e5586be922af82f04272273c05fab7bf9dea",
+    "cases.js": "838855502879b7dca9e93771edc3ce52eed5ee77ad9aa5c6be89dec649de7e83",
     "chapter-menu.js": "620d94f5b8ff755d848884c4396ed6059897d7c0a21ac4e289a3079af123661c",
     "chapter-summaries.js": "e0186ed371957ade95bf86fd21b394ed7b4107aef34189f09ae3c1625728bcc7",
     "cloud-ask.js": "6cea44ca12464a85eaa45198d0b4a74d88892e253898e14c53e759445f8524f1",
@@ -14,7 +14,7 @@
     "data/agents-regulations.json": "26332b12e3b82d9571b3a90d3e19ec9d689343866425bf916de0041d1443d711",
     "data/art-act.json": "2985a37f883af005bc72c6782d085a52cbb546f8dc98d959e62ecf4ec5dc3653",
     "data/art-rules.json": "6bd2fe428a45a3e86585db68940f6bbea481f974b999b7df264aefeb15d00f27",
-    "data/cases.json": "2c6011cd257b25da1314baef5c66edc14372b14f1e31fca48ecf5c8bbfc4dc84",
+    "data/cases.json": "a3d224be633847a2a33e0fa295811df9b4427faec20f700bbb2821f2b5145103",
     "data/catalog.json": "93472de996c78bca6cb44e02c50cdd65cef85e0ad4bd0736c311e8b0257e12dd",
     "data/citizenship-act.json": "0f01592add78d7fdaee2f6b0aba1a8916b9c2baf9bcb7fee475c3420b89b852d",
     "data/citizenship-regulations.json": "6912d9d08014ac0bd2228e08268bda2a86d1867e034a1b48485b548b903ffcbe",
@@ -49,7 +49,7 @@
     "data/zh/validation-report.json": "dad0fd390da7899744ffef54b4f53625fc2ac36e431b45f0851cfc9957134f61",
     "guide-topics.js": "bbe5739754632f0e2c71cf0a4582f306da88735389fea9e2ce0ef1a18c49b789",
     "guide-visas.js": "c4e993150e68f2350d20e31f91416b091ad47c362be07e4fc42d8c76219f5dd9",
-    "index.html": "1be2fccb91c5e035ab1ffee1ea3e8c5a06a2ec1da05675d9323217775380a750",
+    "index.html": "ad4ff246fa8a488ac9e23b61f691209cb428a318145e33f10073b4c2e063303c",
     "law-finder.css": "81dd47be31c15e1c25d86ce64c5611f0a81bf4dab8ab909ddb1d36168668ca82",
     "law-finder.js": "013eabe958ecdff020532b21563586c0b797391033da904ddaf2918100a9f93a",
     "reading-layout.js": "a89bf475f9c0214985cfae25d6f6f02452e3f9cfac1f20ddc72b9c914abe5adb",
@@ -65,5 +65,5 @@
     "visa-guide.css": "3404fe4b6671adeebeea89c96ac13c22b0b9a305e609ac2a9a7f596e12819842",
     "visa-guide.js": "d7be37be3dc9e4b03280976e9560255639d449b3f0dc27b61375e1cd821e84c9"
   },
-  "cases": 35
+  "cases": 47
 }

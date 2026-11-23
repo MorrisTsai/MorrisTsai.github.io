@@ -260,7 +260,37 @@
       ],
       "gaps": [
         "教材圖 2 展示判例彙報前兩頁。需要援引完整判決或分辨三位法官的理由時，可循 Queensland Judgments 取得完整彙報。",
-        "七宗延伸判例是圖中的彙報或當事人引證。其後續法律效力須各自查證。"
+        "圖中七宗引證各有案例入口，並標示屬於彙報摘要提及或訴訟一方援引。要確認原案裁判，可依引註回到各案來源。"
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-eather-v-the-king",
+          "title": "Eather v The King"
+        },
+        {
+          "id": "guide-eade-v-the-king",
+          "title": "Eade v The King"
+        },
+        {
+          "id": "guide-r-v-cook-1927",
+          "title": "R v Cook"
+        },
+        {
+          "id": "guide-warrill-v-the-king",
+          "title": "Warrill v The King"
+        },
+        {
+          "id": "guide-dwyer-v-bridges",
+          "title": "Dwyer v Bridges; ex parte Bridges"
+        },
+        {
+          "id": "guide-r-v-obrien-no-1",
+          "title": "R v O’Brien (No 1)"
+        },
+        {
+          "id": "guide-r-v-obrien-no-2",
+          "title": "R v O’Brien (No 2)"
+        }
       ]
     },
     {
@@ -275,7 +305,7 @@
       "court": "澳大利亞高等法院",
       "citation": "(1983) 158 CLR 1 · [1983] HCA 21 · (1983) 46 ALR 625 · (1983) 57 ALJR 450",
       "studyTopic": "授權彙報、平行引註與聯邦外交事務權",
-      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 11 章表 4（書頁 6）",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 7 章（書頁 21）與第 11 章表 4（所提供 PDF 書頁 6）",
       "summary": "塔斯馬尼亞州擬興建水壩。聯邦以世界遺產保護為由限制工程，高等法院須判斷聯邦是否有憲法權限採取這些措施。教材以此案示範同一判決的四種查找方式。",
       "departmentResult": "足以阻止水壩工程的核心聯邦措施獲維持，部分個別措施無效。",
       "outcomeNote": "多數理由支持以憲法第 51(xxix) 條實施《世界遺產公約》。各條文與公告的效力逐項判定。",
@@ -407,6 +437,14 @@
             "source": 8,
             "locator": "判詞 · 公約與暫時保護"
           }
+        },
+        {
+          "title": "同一判例也用於示範後續引註",
+          "text": "完整版第 7 章先保留原案全名和授權彙報，再示範用 Tasmanian Dam Case (n 1) 指回第一個註腳。",
+          "ref": {
+            "source": 9,
+            "locator": "第 7 章 · 註 1、4"
+          }
         }
       ],
       "sources": [
@@ -465,11 +503,28 @@
           "publisher": "High Court of Australia 判詞（InforMEA 掃描檔）",
           "date": "1988-03-10",
           "locator": "比較後續案件如何討論調查期間的臨時保護。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=print_pdf#page=37",
+          "title": "法律研究指南 · 完整 2025 年版",
+          "publisher": "CAUL OER Collective",
+          "date": "2025",
+          "locator": "第 7 章，書頁 21。以 Tasmanian Dam Case 示範簡稱及後續引註。"
         }
       ],
       "gaps": [
         "裁判結果按所爭執的條文及措施而異。引用特定措施的效力時應核對法院對該項問題的答覆。",
         "1983 年的保護措施具有歷史背景。法規連結同時含當時文本與憲法資料。"
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-carlill-v-carbolic-smoke-ball",
+          "title": "Carlill · 同章的 Ibid 示例"
+        },
+        {
+          "id": "guide-r-v-demicoli",
+          "title": "Demicoli · 同章的簡稱示例"
+        }
       ]
     },
     {
@@ -1037,6 +1092,1421 @@
       ],
       "gaps": [
         "這份上訴判詞只處理披露爭議及上訴費用。此頁未確認其後的和解或賠償結果。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-carlill-v-carbolic-smoke-ball",
+      "title": "Carlill v Carbolic Smoke Ball Co",
+      "court": "英格蘭及威爾斯上訴法院",
+      "period": "1892 年裁判 · 1893 年刊載",
+      "citation": "[1893] 1 QB 256 · [1892] EWCA Civ 1",
+      "studyTopic": "廣告要約、履行即承諾、後續引註",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》完整 2025 年版 · 第 7 章（書頁 21）",
+      "summary": "公司承諾依指示使用產品後仍患流感者可獲 100 英鎊。Carlill 履行條件後染病，法院判斷廣告承諾是否可執行。",
+      "departmentResult": "上訴駁回，Carlill 有權領取 100 英鎊。",
+      "outcomeNote": "廣告的具體條件及公司在銀行的存款，支持法院對承諾的理解。",
+      "background": [
+        {
+          "text": "公司刊登獎金廣告，並表示已存入 1,000 英鎊。Carlill 購買產品並按文中條件使用。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 256–258"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1891-11-13",
+          "title": "刊登獎金廣告",
+          "text": "報刊登載獎金承諾及使用條件。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 256–257"
+          }
+        },
+        {
+          "date": "1892-12-07",
+          "title": "上訴法院裁判",
+          "text": "維持 Hawkins J 的原判。",
+          "ref": {
+            "source": 1,
+            "locator": "p 275"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "公開廣告能否構成要約",
+          "request": "公司爭執廣告只是宣傳，亦質疑接受通知與對價。",
+          "response": "法院從廣告及銀行存款判斷公司有受拘束的意思。這類要約可依廣告所列條件完成履行而獲接受。",
+          "limit": "判決依本廣告的措辭和履行方式判斷。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 261–275"
+          }
+        }
+      ],
+      "decision": {
+        "department": "初審判 Carlill 勝訴。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 案情及程序"
+        },
+        "later": "上訴法院維持可執行的獎金承諾。",
+        "laterRef": {
+          "source": 1,
+          "locator": "p 275"
+        },
+        "caution": "本案屬英國契約法。澳洲問題仍要核對本地判例與成文法。"
+      },
+      "actions": [
+        {
+          "title": "練習後續引註",
+          "text": "教材先示範完整案名及起始頁，接著用 Ibid 引同案另一頁，再示範跨註腳引用。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "有無認真承諾",
+          "text": "法院從具體獎金、使用條件與存款判斷公司有受拘束的意思。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 261–263"
+          }
+        },
+        {
+          "title": "通知與履行",
+          "text": "在本案的要約下，履行廣告指定條件便可表示接受。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 268–269"
+          }
+        },
+        {
+          "title": "對價",
+          "text": "法官考慮按條件使用產品對消費者的不便，以及對公司的商業利益。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 270–272"
+          }
+        },
+        {
+          "title": "定位頁碼",
+          "text": "教材用 265、268 和 270 指向不同頁段。案件的起始頁是 256。",
+          "ref": {
+            "source": 2,
+            "locator": "註 2、3、5"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.ius.uzh.ch/dam/jcr:f3af9c9d-3cd6-45ba-8666-bd7d23bf5a12/Carill%2520v.%2520Carbolic%2520Smoke%2520Ball%2520Company.pdf",
+          "title": "Carlill · Queen’s Bench 授權彙報掃描",
+          "publisher": "英格蘭及威爾斯上訴法院判詞（University of Zurich 掃描）",
+          "date": "1893",
+          "locator": "pp 256–275 · 判決及命令。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=print_pdf#page=37",
+          "title": "Legal Research Skills: An Australian Law Guide · 完整 2025 年版",
+          "publisher": "CAUL OER Collective",
+          "date": "2025",
+          "locator": "第 7 章，書頁 21 · 後續引註範例。"
+        },
+        {
+          "url": "https://library.unimelb.edu.au/recite/referencing-styles/aglc",
+          "title": "AGLC4 · 判例引用速查",
+          "publisher": "University of Melbourne Library",
+          "date": "2018",
+          "locator": "第 2 章 · 判例引用。"
+        }
+      ],
+      "gaps": [
+        "本案對廣告承諾的分析取決於該廣告的文字及交易背景。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-legione-v-hateley",
+      "title": "Legione v Hateley",
+      "court": "澳大利亞高等法院",
+      "period": "1983 年 · 澳大利亞高等法院",
+      "citation": "(1983) 152 CLR 406 · [1983] HCA 11",
+      "studyTopic": "承諾禁反言、契約失權及判例書目",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》完整 2025 年版 · 第 8 章（書頁 24）",
+      "summary": "土地買賣逾期付款。賣方律所職員在電話中表示須取得指示，法院考慮回覆是否構成足以支持延期的清楚表示。",
+      "departmentResult": "高院准許上訴，發回審理買方的失權救濟。",
+      "outcomeNote": "判決分別處理承諾禁反言與失權救濟。",
+      "background": [
+        {
+          "text": "該維州土地買賣契約以時間為要素。買方未依約付款，賣方發出限期補正通知。",
+          "ref": {
+            "source": 1,
+            "locator": "Order 後的案情及條款"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1978-07-14",
+          "title": "簽訂買賣契約",
+          "text": "雙方約定付款日期及逾期處理方式。",
+          "ref": {
+            "source": 1,
+            "locator": "Gibbs CJ、Murphy J · 案情"
+          }
+        },
+        {
+          "date": "1979",
+          "title": "補正通知與電話",
+          "text": "買方律師聯絡賣方律所，爭議集中在對話是否展延補正期限。",
+          "ref": {
+            "source": 1,
+            "locator": "法官記載的聯絡經過"
+          }
+        },
+        {
+          "date": "1983-04-14",
+          "title": "高院發回",
+          "text": "撤銷初審和維州全席命令，發回審理失權救濟。",
+          "ref": {
+            "source": 1,
+            "locator": "Order"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "通話是否限制賣方主張解除",
+          "request": "買方主張賣方不能以逾期為由解除契約。",
+          "response": "多數法官認為在此脈絡下，通話內容不足以清楚支持買方所稱的延期承諾。",
+          "limit": "衡平法上的失權救濟須另行審理。",
+          "ref": {
+            "source": 1,
+            "locator": "Mason J、Deane J 理由及 Order"
+          }
+        }
+      ],
+      "decision": {
+        "department": "原審判賣方得解除，維州最高法院全席多數其後採納買方的禁反言主張。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 案情及程序"
+        },
+        "later": "高院准許賣方上訴，並把買方的失權救濟發回原法院。",
+        "laterRef": {
+          "source": 1,
+          "locator": "Order"
+        },
+        "caution": "原高院結果止於發回命令。"
+      },
+      "actions": [
+        {
+          "title": "對讀後來對相同原則的引用",
+          "text": "對照 Crown Melbourne 的談話內容，辨認合理人可能從措辭理解到什麼。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "承諾要依情境解讀",
+          "text": "將電話前後文與補正通知、交割期限一起看。",
+          "ref": {
+            "source": 1,
+            "locator": "Mason J、Deane J 理由"
+          }
+        },
+        {
+          "title": "不同的衡平救濟",
+          "text": "法院否定本案的禁反言主張，同時准許原法院審理失權救濟。",
+          "ref": {
+            "source": 1,
+            "locator": "Order"
+          }
+        },
+        {
+          "title": "後續判例",
+          "text": "Crown Melbourne 分別討論表示的清楚程度及實際依賴。",
+          "ref": {
+            "source": 3,
+            "locator": "[35]、[39]"
+          }
+        },
+        {
+          "title": "教材的書目格式",
+          "text": "B Cases 列授權彙報及起始頁 406。",
+          "ref": {
+            "source": 2,
+            "locator": "第 8 章 · B Cases"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://zoelaw.ai/cases/legione-v-hateley-1983-hca-11",
+          "title": "Legione v Hateley · 判詞",
+          "publisher": "High Court of Australia 判詞（ZoeLaw 轉載）",
+          "date": "1983-04-14",
+          "locator": "Judgment 區 · 法院命令及法官理由。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=print_pdf#page=40",
+          "title": "Legal Research Skills: An Australian Law Guide · 完整 2025 年版",
+          "publisher": "CAUL OER Collective",
+          "date": "2025",
+          "locator": "第 8 章，書頁 24 · 範例書目 B Cases。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/2016/HCA/26.pdf",
+          "title": "Crown Melbourne [2016] HCA 26",
+          "publisher": "High Court of Australia",
+          "date": "2016-07-20",
+          "locator": "[35]、[39] · 承諾禁反言。"
+        }
+      ],
+      "gaps": [
+        "須另查發回審理後的命令，才能確認買方最終是否取得失權救濟。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-mabo-v-queensland-no-2",
+      "title": "Mabo v Queensland (No 2)",
+      "court": "澳大利亞高等法院",
+      "period": "1992 年 · 澳大利亞高等法院",
+      "citation": "(1992) 175 CLR 1 · [1992] HCA 23 · (1992) 107 ALR 1 · (1992) 66 ALJR 408",
+      "studyTopic": "原住民族土地權與平行引註",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》完整 2025 年版 · 第 8 章（書頁 24）；線上第 16 章複習題",
+      "summary": "梅里亞姆人請求確認依其傳統法律和習俗對默里群島土地的權利。高院承認澳洲普通法可以承認原住民族土地權（native title）。",
+      "departmentResult": "高院承認梅里亞姆人在判決範圍內對相關土地的權利。",
+      "outcomeNote": "六位法官支持承認 native title，Dawson J 持不同意見。命令列有特定土地例外。",
+      "background": [
+        {
+          "text": "梅里亞姆人的代表依傳統法律、習俗及土地使用向法院主張權利。",
+          "ref": {
+            "source": 1,
+            "locator": "Brennan J 理由"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1982",
+          "title": "啟動土地權訴訟",
+          "text": "申請人提出默里群島土地權主張。",
+          "ref": {
+            "source": 4,
+            "locator": "Mabo 訴訟經過"
+          }
+        },
+        {
+          "date": "1992-06-03",
+          "title": "高院裁判",
+          "text": "法院在所列例外下承認梅里亞姆人的土地權。",
+          "ref": {
+            "source": 1,
+            "locator": "法院宣告"
+          }
+        },
+        {
+          "date": "1993",
+          "title": "聯邦立法",
+          "text": "Native Title Act 建立承認及保護土地權的成文法架構。",
+          "ref": {
+            "source": 5,
+            "locator": "Native Title Act ss 3–4、10–13"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "取得主權後土地權能否繼續存在",
+          "request": "法院考慮群島併入昆士蘭後，原有的傳統土地權是否持續。",
+          "response": "多數認為取得主權本身不必然消滅 native title。權利的種類及是否已消滅仍須依案情判斷。",
+          "limit": "判決的具體宣告與例外以原文為準。",
+          "ref": {
+            "source": 1,
+            "locator": "Brennan J、Mason CJ、McHugh J 理由"
+          }
+        }
+      ],
+      "decision": {
+        "department": "申請人請求法院確認默里群島的土地權。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 案情及程序"
+        },
+        "later": "高院作出承認梅里亞姆人土地權的宣告，並列出特定土地例外。",
+        "laterRef": {
+          "source": 1,
+          "locator": "Court declaration"
+        },
+        "caution": "若研究個別土地的權利，還須查權利性質、適用法與後續裁判。"
+      },
+      "actions": [
+        {
+          "title": "把四個引註對回同一裁判",
+          "text": "教材用 (1992) 175 CLR 1 示範書目，線上複習則比較 HCA、CLR、ALR 等引註。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "傳統習俗與普通法承認",
+          "text": "法院的分析從既有的法律與習俗所支持的權利出發。",
+          "ref": {
+            "source": 1,
+            "locator": "Brennan J 理由"
+          }
+        },
+        {
+          "title": "宣告的界限",
+          "text": "查高院最後宣告及其例外，才能知道本案涵蓋的土地範圍。",
+          "ref": {
+            "source": 1,
+            "locator": "Court declaration"
+          }
+        },
+        {
+          "title": "授權彙報",
+          "text": "175 CLR 1 是 Commonwealth Law Reports 的引註，其他版本指向同一判決。",
+          "ref": {
+            "source": 3,
+            "locator": "第 16 章 · 平行引註"
+          }
+        },
+        {
+          "title": "接著讀後來立法",
+          "text": "Native Title Act 設有權利承認、確定及申請制度。",
+          "ref": {
+            "source": 5,
+            "locator": "ss 10–13、61"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikisource.org/wiki/File:Mabo_v_Queensland_(No_2)_(1992_HCA_23).pdf?page=1",
+          "title": "Mabo (No 2) · 高等法院原判掃描",
+          "publisher": "High Court of Australia 判詞（Wikisource 掃描）",
+          "date": "1992-06-03",
+          "locator": "原判理由及法院宣告。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=print_pdf#page=40",
+          "title": "Legal Research Skills: An Australian Law Guide · 完整 2025 年版",
+          "publisher": "CAUL OER Collective",
+          "date": "2025",
+          "locator": "第 8 章，書頁 24 · 範例書目 B Cases。"
+        },
+        {
+          "url": "https://jcu.pressbooks.pub/legalresearchskills-australianlawguide/chapter/review-quiz-case-law/#h5p-16",
+          "title": "法律研究指南 · 線上示例",
+          "publisher": "JCU Open eBooks",
+          "date": "2026",
+          "locator": "第 16 章 · Mabo 平行引註複習題。"
+        },
+        {
+          "url": "https://www.aph.gov.au/About_Parliament/Parliamentary_departments/Parliamentary_Library/Research/Research_Papers/2022-23/Mabo",
+          "title": "Mabo 訴訟與立法沿革",
+          "publisher": "Parliamentary Library",
+          "date": "2022",
+          "locator": "訴訟過程、判決與後續立法。"
+        },
+        {
+          "url": "https://www.legislation.gov.au/C2004A04665/latest",
+          "title": "Native Title Act 1993 (Cth)",
+          "publisher": "Federal Register of Legislation",
+          "date": "官方文本",
+          "locator": "ss 10–13、61。"
+        }
+      ],
+      "gaps": [
+        "No 2 的宣告依案件事實及所處理土地而定，個別土地的權利須另行研究。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-dietrich-v-the-queen",
+      "title": "Dietrich v The Queen",
+      "court": "澳大利亞高等法院",
+      "period": "1992 年 · 澳大利亞高等法院",
+      "citation": "(1992) 177 CLR 292 · [1992] HCA 57",
+      "studyTopic": "公平審訊、法律代表與精確引註",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》線上第 6 章 · AGLC 判例註腳互動示例",
+      "summary": "被告面對嚴重毒品指控，因無力聘請律師而自行出庭。高院審查原審拒絕延期後是否仍能進行公平審訊。",
+      "departmentResult": "高院准許上訴，撤銷定罪並命重審。",
+      "outcomeNote": "主要問題是當事人缺乏法律代表時，審訊是否仍能公平進行。",
+      "background": [
+        {
+          "text": "Dietrich 面對涉及進口海洛因的指控。他嘗試取得法律代表未果，在原審沒有律師。",
+          "ref": {
+            "source": 1,
+            "locator": "Mason CJ、McHugh J · 開頭案情"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "原審",
+          "title": "延期申請遭拒",
+          "text": "被告自行應訊，其中一項指控遭定罪。",
+          "ref": {
+            "source": 1,
+            "locator": "Mason CJ、McHugh J · 案情"
+          }
+        },
+        {
+          "date": "1992-11-13",
+          "title": "高院裁判",
+          "text": "法院撤銷定罪並命重審。",
+          "ref": {
+            "source": 1,
+            "locator": "命令及多數理由"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "欠缺法律代表時法院可怎樣處理",
+          "request": "被告認為原審繼續開庭導致不公平。",
+          "response": "多數法官說明，無過錯欠缺法律代表而可能導致不公平時，法院可延期或暫停嚴重刑案審訊。",
+          "limit": "法院須按具體案情決定；法律援助資格另由相關制度處理。",
+          "ref": {
+            "source": 1,
+            "locator": "Mason CJ、McHugh J · pp 298–315"
+          }
+        }
+      ],
+      "decision": {
+        "department": "維州原審繼續進行，刑事上訴法院拒絕上訴許可。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 案情及程序"
+        },
+        "later": "高院准許上訴，撤銷定罪並命重審。",
+        "laterRef": {
+          "source": 1,
+          "locator": "判決命令"
+        },
+        "caution": "判決涉及公平審訊，公費資助及判決後上訴須分別查考。"
+      },
+      "actions": [
+        {
+          "title": "精確指向判詞",
+          "text": "用 177 CLR 292, 299 (Mason CJ and McHugh J) 連同完整案名，便能找到指定法官的第 299 頁。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "起始頁與定位頁",
+          "text": "292 是整案彙報起始頁，299 指本次引文的位置。",
+          "ref": {
+            "source": 2,
+            "locator": "第 6 章 · 文字版"
+          }
+        },
+        {
+          "title": "署名是誰",
+          "text": "教材用括號指出第 299 頁被引用的理由作者是 Mason CJ 及 McHugh J。",
+          "ref": {
+            "source": 2,
+            "locator": "第 6 章 · 文字版"
+          }
+        },
+        {
+          "title": "受審公平與資助",
+          "text": "判決分析法院如何處理缺乏法律代表時的公平風險。",
+          "ref": {
+            "source": 1,
+            "locator": "Mason CJ、McHugh J 理由"
+          }
+        },
+        {
+          "title": "受審後的上訴另查",
+          "text": "Sinanovic 檢視 Dietrich 在被定罪後的上訴程序有何作用。",
+          "ref": {
+            "source": 3,
+            "locator": "Catchwords"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://zoelaw.ai/cases/dietrich-v-the-queen-1992-hca-57",
+          "title": "Dietrich v The Queen · 高院判詞",
+          "publisher": "High Court of Australia 判詞（ZoeLaw 轉載）",
+          "date": "1992-11-13",
+          "locator": "Judgment 區 · 命令及理由。"
+        },
+        {
+          "url": "https://jcu.pressbooks.pub/legalresearchskills-australianlawguide/chapter/aglc-footnotes/#h5p-3",
+          "title": "法律研究指南 · 線上示例",
+          "publisher": "JCU Open eBooks",
+          "date": "2026",
+          "locator": "第 6 章 · 判例引註示例的文字版。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/cases-and-judgments/judgments/judgments-1998-current/sinanovic-v-queen",
+          "title": "Sinanovic v The Queen [1998] HCA 40",
+          "publisher": "High Court of Australia",
+          "date": "1998",
+          "locator": "Dietrich 與定罪後上訴程序。"
+        }
+      ],
+      "gaps": [
+        "此頁整理高院判決。重審結果須另查後續資料。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-eather-v-the-king",
+      "title": "Eather v The King",
+      "court": "澳大利亞高等法院",
+      "period": "1914 年 · 澳大利亞高等法院",
+      "citation": "(1914) 19 CLR 409 · [1914] HCA 77",
+      "studyTopic": "補強證據與特別上訴許可",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 上訴方援引）",
+      "summary": "被告對當時法規下用以支持兒童未宣誓證詞的證據提出爭議。高院處理已給予的特別上訴許可是否應維持。",
+      "departmentResult": "高院多數撤銷已給予的特別上訴許可。",
+      "outcomeNote": "高院於 1915 年另就特別上訴許可作出說明。",
+      "background": [
+        {
+          "text": "原審依新州當時的 Crimes Act 1900 第 418 條接受未宣誓的兒童證詞。被告定罪後，爭執是否有法條要求的補強證據。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 409–410"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1914-05-19",
+          "title": "新州原審",
+          "text": "原審作出有罪裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 410–411"
+          }
+        },
+        {
+          "date": "1914-12-15",
+          "title": "高院撤銷許可",
+          "text": "多數撤銷之前給予的特別上訴許可，Isaacs J 持不同意見。",
+          "ref": {
+            "source": 1,
+            "locator": "判決末尾"
+          }
+        },
+        {
+          "date": "1915-06-15",
+          "title": "後續說明",
+          "text": "高院另案說明特別上訴許可的裁量。",
+          "ref": {
+            "source": 3,
+            "locator": "p 147"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "證據爭議是否足以維持特別上訴許可",
+          "request": "被告質疑補強證據是否符合當時法例。",
+          "response": "各法官分別處理程序問題及證據問題。高院多數最後撤銷許可。",
+          "limit": "援引時須分辨個別法官理由與最後命令。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 409–410、判決末尾"
+          }
+        }
+      ],
+      "decision": {
+        "department": "新州刑事上訴法院駁回對定罪的上訴。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 案情及程序"
+        },
+        "later": "高院撤銷此前給予的特別上訴許可。",
+        "laterRef": {
+          "source": 1,
+          "locator": "判決末尾"
+        },
+        "caution": "本案的歷史證據條文及上訴實務須與現行制度區分。"
+      },
+      "actions": [
+        {
+          "title": "沿教材引註查原判",
+          "text": "從 Cronin 圖例的彙報 p 25 回查 Eather 第 415 頁，確認法官、上下文及命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "引用角色",
+          "text": "這一引註列在上訴方的陳述之中。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 25"
+          }
+        },
+        {
+          "title": "裁判階段",
+          "text": "本案高院命令撤銷特別上訴許可。",
+          "ref": {
+            "source": 1,
+            "locator": "正式彙報與末尾命令"
+          }
+        },
+        {
+          "title": "後續說明",
+          "text": "次年高院說明 1914 年案關於特別許可實務的表述之地位。",
+          "ref": {
+            "source": 3,
+            "locator": "p 147"
+          }
+        },
+        {
+          "title": "歷史法例",
+          "text": "補強問題須連同當時適用的第 418 條閱讀。",
+          "ref": {
+            "source": 1,
+            "locator": "Crimes Act 1900 (NSW) s 418"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        },
+        {
+          "id": "guide-eade-v-the-king",
+          "title": "Eade v The King · 同一歷史證據條文"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/1914/HCA/77.pdf",
+          "title": "Eather v The King · CLR 原彙報",
+          "publisher": "High Court of Australia",
+          "date": "1914-12-15",
+          "locator": "19 CLR 409 及以下。圖例中的引註指向 p 415。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        },
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/1915/HCA/45.pdf",
+          "title": "In re Eather v The King (1915) 20 CLR 147",
+          "publisher": "High Court of Australia",
+          "date": "1915-06-15",
+          "locator": "p 147 · 對特別上訴許可的後續說明。"
+        }
+      ],
+      "gaps": [
+        "本案的證據條文和刑事上訴制度有其歷史背景。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-eade-v-the-king",
+      "title": "Eade v The King",
+      "court": "澳大利亞高等法院",
+      "period": "1924 年 · 澳大利亞高等法院",
+      "citation": "(1924) 34 CLR 154 · [1924] HCA 9",
+      "studyTopic": "兒童證詞、先前申訴與獨立補強",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 上訴方援引）",
+      "summary": "高院審查兒童的先前申訴、獨立證據顯示的案發機會，以及可能不實的否認，如何影響補強證據的判定。",
+      "departmentResult": "高院准許上訴並命重審。",
+      "outcomeNote": "先前申訴與可獨立支持證詞的材料須分開處理。",
+      "background": [
+        {
+          "text": "原審依當時新州 Crimes Act 1900 第 418 條接納未宣誓的兒童證詞。被告定罪後質疑陪審團有關補強的指示。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 154–156"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1923-10-11",
+          "title": "新州原審",
+          "text": "陪審團審理後作出定罪。",
+          "ref": {
+            "source": 1,
+            "locator": "p 155"
+          }
+        },
+        {
+          "date": "1924-05-02",
+          "title": "高院命重審",
+          "text": "高院認為原審指示有誤，准許上訴並命重審。",
+          "ref": {
+            "source": 1,
+            "locator": "p 160 · Order"
+          }
+        }
+      ],
+      "communications": [
+        {
+          "title": "其他材料何時能補強證詞",
+          "request": "法院查兒童的先前申訴、獨立事實所顯示的機會以及被告的否認。",
+          "response": "法官認為，僅有機會不足以補強。在具體情況下，與獨立事實相結合的不實否認可能支持證詞。",
+          "limit": "材料能否補強，以及該材料應給多少分量，須分開看。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 158–160"
+          }
+        }
+      ],
+      "decision": {
+        "department": "新州刑事上訴法院維持定罪。",
+        "ref": {
+          "source": 1,
+          "locator": "判詞 · 案情及程序"
+        },
+        "later": "高院准許上訴、撤銷原判並命重審。",
+        "laterRef": {
+          "source": 1,
+          "locator": "p 160 · Order"
+        },
+        "caution": "本案的具體分析依當時新州的歷史條文。"
+      },
+      "actions": [
+        {
+          "title": "精確查第 159 頁",
+          "text": "將 Cronin 圖例裡的頁碼對回原判，辨認法官如何區分機會、否認與證據分量。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "機會與法定補強",
+          "text": "有機會在場與能獨立支持指控，是兩個不同的證據問題。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 158–159"
+          }
+        },
+        {
+          "title": "先前陳述的用途",
+          "text": "先前申訴本身不符合本案所適用的補強規定。",
+          "ref": {
+            "source": 1,
+            "locator": "pp 154、157"
+          }
+        },
+        {
+          "title": "高院的命令",
+          "text": "高院命重審，後續證據判斷取決於重審。",
+          "ref": {
+            "source": 1,
+            "locator": "p 160"
+          }
+        },
+        {
+          "title": "引註的來處",
+          "text": "Cronin 圖例列出上訴方引證及第 159 頁。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 25"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        },
+        {
+          "id": "guide-eather-v-the-king",
+          "title": "Eather v The King · 同一歷史證據條文"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.hcourt.gov.au/sites/default/files/eresources/1924/HCA/9.pdf",
+          "title": "Eade v The King · CLR 原彙報",
+          "publisher": "High Court of Australia",
+          "date": "1924-05-02",
+          "locator": "34 CLR 154–160 · 判詞及命令。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        }
+      ],
+      "gaps": [
+        "重審結果未在高院此份判決中確定。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-r-v-demicoli",
+      "title": "R v Demicoli",
+      "citation": "[1971] Qd R 358",
+      "court": "昆士蘭最高法院全席",
+      "period": "1971 年",
+      "studyTopic": "刑事判例簡稱與保留法律問題",
+      "summary": "教材用 Demicoli 示範刑事判例的完整引註及可供後續使用的簡稱。",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》完整 2025 年版 · 第 7 章（書頁 21）",
+      "outcomeNote": "已核對法院、裁判日與引註。裁判結果可查閱授權彙報全文。",
+      "background": [
+        {
+          "text": "昆士蘭最高法院全席於 1971-07-06 作出裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1971-07-06",
+          "title": "裁判日期",
+          "text": "授權彙報目錄所列的裁判日。",
+          "ref": {
+            "source": 1,
+            "locator": "Date"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "title": "按引註查看原彙報",
+          "text": "以 [1971] Qd R 358 核對起始頁及法院，再閱讀判詞和最後命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "教材如何引用",
+          "text": "教材用 Demicoli 示範刑事判例的完整引註及可供後續使用的簡稱。",
+          "ref": {
+            "source": 2,
+            "locator": "第 7 章 · 註 6"
+          }
+        },
+        {
+          "title": "後續判決的引用",
+          "text": "北領地上訴法院後來引用本案，討論上訴法院能否將保留的法律問題按定罪上訴方式處理。該院自身的裁判與 Demicoli 的命令須分開查。",
+          "ref": {
+            "source": 3,
+            "locator": "Mildren J 結尾提及 Demicoli。"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-commonwealth-v-tasmania",
+          "title": "Commonwealth v Tasmania · 同章示例"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/506792",
+          "title": "R v Demicoli [1971] Qd R 358",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1971",
+          "locator": "授權彙報目錄。完整判詞入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=print_pdf#page=37",
+          "title": "Legal Research Skills: An Australian Law Guide · 完整 2025 年版",
+          "publisher": "CAUL OER Collective",
+          "date": "2025",
+          "locator": "第 7 章，書頁 21 · 後續引註範例。"
+        },
+        {
+          "url": "https://supremecourt.nt.gov.au/__data/assets/pdf_file/0010/782929/1996-NTCCA-18-R-v-Secretary-2-Apr-1996-Martin-CJ%2C-Angel-and-Mildren-JJ.pdf",
+          "title": "R v Secretary [1996] NTCCA 18",
+          "publisher": "Supreme Court of the Northern Territory",
+          "date": "1996-04-02",
+          "locator": "Mildren J 結尾提及 Demicoli。"
+        }
+      ],
+      "gaps": [
+        "現有導讀以可核對的彙報索引、教材圖例及後續公開引註為依據。要確認原案事實、理由及命令，請查完整授權彙報。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-r-v-cook-1927",
+      "title": "R v Cook",
+      "citation": "[1927] St R Qd 348",
+      "court": "昆士蘭最高法院",
+      "period": "1927 年",
+      "studyTopic": "彙報摘要與後續判例引註",
+      "summary": "Cronin 的彙報摘要列出 R v Cook 為曾提及的案例。",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 判例引證）",
+      "outcomeNote": "已核對法院、裁判日與引註。裁判結果可查閱授權彙報全文。",
+      "background": [
+        {
+          "text": "昆士蘭最高法院於 1927-06-03 作出裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1927-06-03",
+          "title": "裁判日期",
+          "text": "授權彙報目錄所列的裁判日。",
+          "ref": {
+            "source": 1,
+            "locator": "Date"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "title": "按引註查看原彙報",
+          "text": "以 [1927] St R Qd 348 核對起始頁及法院，再閱讀判詞和最後命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "教材如何引用",
+          "text": "Cronin 的彙報摘要列出 R v Cook 為曾提及的案例。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 24"
+          }
+        },
+        {
+          "title": "後續判決的引用",
+          "text": "後來的 Hales v Jamilmira 引 Cook 第 349 頁討論涉及年齡的立法目的。這是後續法院使用此案的例子。",
+          "ref": {
+            "source": 3,
+            "locator": "[8] · 引用 Cook p 349。"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/504058",
+          "title": "R v Cook [1927] St R Qd 348",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1927",
+          "locator": "授權彙報目錄。完整判詞入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        },
+        {
+          "url": "https://supremecourt.nt.gov.au/__data/assets/pdf_file/0006/766689/2003NTCA9-Hales-v-Jamilmira-15-Apr-2003.pdf",
+          "title": "Hales v Jamilmira [2003] NTCA 9",
+          "publisher": "Supreme Court of the Northern Territory",
+          "date": "2003-04-15",
+          "locator": "[8] · 引用 Cook p 349。"
+        }
+      ],
+      "gaps": [
+        "現有導讀以可核對的彙報索引、教材圖例及後續公開引註為依據。要確認原案事實、理由及命令，請查完整授權彙報。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-warrill-v-the-king",
+      "title": "Warrill v The King",
+      "citation": "[1943] St R Qd 39",
+      "court": "昆士蘭刑事上訴法院",
+      "period": "1942 年裁判 · 1943 年刊載",
+      "studyTopic": "刑事上訴與當事人引證",
+      "summary": "Cronin 上訴方在陳述時列出 Warrill，與 Eather、Eade 及當時的《刑法典》條文一併引述。",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 判例引證）",
+      "outcomeNote": "已核對法院、裁判日與引註。裁判結果可查閱授權彙報全文。",
+      "background": [
+        {
+          "text": "昆士蘭刑事上訴法院於 1942-10-09 作出裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1942-10-09",
+          "title": "裁判日期",
+          "text": "授權彙報目錄所列的裁判日。",
+          "ref": {
+            "source": 1,
+            "locator": "Date"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "title": "按引註查看原彙報",
+          "text": "以 [1943] St R Qd 39 核對起始頁及法院，再閱讀判詞和最後命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "教材如何引用",
+          "text": "Cronin 上訴方在陳述時列出 Warrill，與 Eather、Eade 及當時的《刑法典》條文一併引述。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 25"
+          }
+        },
+        {
+          "title": "核對歷史引註",
+          "text": "1943 是彙報年份。用法院目錄可核對 1942 年的裁判日期，找到對應的原報告。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/504086",
+          "title": "Warrill v The King [1943] St R Qd 39",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1943",
+          "locator": "授權彙報目錄。完整判詞入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        }
+      ],
+      "gaps": [
+        "現有導讀以可核對的彙報索引、教材圖例及後續公開引註為依據。要確認原案事實、理由及命令，請查完整授權彙報。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-dwyer-v-bridges",
+      "title": "Dwyer v Bridges; ex parte Bridges",
+      "citation": "[1951] St R Qd 90",
+      "court": "昆士蘭最高法院全席",
+      "period": "1950 年裁判 · 1951 年刊載",
+      "studyTopic": "完整案名與合併彙報",
+      "summary": "Cronin 的答辯方援引此案。Queensland Judgments 的同一彙報條目亦列 Dwyer v Brough。",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 判例引證）",
+      "outcomeNote": "已核對法院、裁判日與引註。裁判結果可查閱授權彙報全文。",
+      "background": [
+        {
+          "text": "昆士蘭最高法院全席於 1950-11-28 作出裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1950-11-28",
+          "title": "裁判日期",
+          "text": "授權彙報目錄所列的裁判日。",
+          "ref": {
+            "source": 1,
+            "locator": "Date"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "title": "按引註查看原彙報",
+          "text": "以 [1951] St R Qd 90 核對起始頁及法院，再閱讀判詞和最後命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "教材如何引用",
+          "text": "Cronin 的答辯方援引此案。Queensland Judgments 的同一彙報條目亦列 Dwyer v Brough。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 25"
+          }
+        },
+        {
+          "title": "核對歷史引註",
+          "text": "用起始頁 90 找到彙報後，再對照出版案名確認當事人。僅以 Dwyer 搜尋可能見到不同案件。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/502877",
+          "title": "Dwyer v Bridges; ex parte Bridges [1951] St R Qd 90",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1951",
+          "locator": "授權彙報目錄。完整判詞入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        }
+      ],
+      "gaps": [
+        "現有導讀以可核對的彙報索引、教材圖例及後續公開引註為依據。要確認原案事實、理由及命令，請查完整授權彙報。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-r-v-obrien-no-1",
+      "title": "R v O’Brien (No 1)",
+      "citation": "[1931] St R Qd 158",
+      "court": "昆士蘭刑事上訴法院",
+      "period": "1930 年裁判 · 1931 年刊載",
+      "studyTopic": "不實否認與證據分量",
+      "summary": "Cronin 答辯方同時引用 O’Brien (No 1) 及 (No 2)。",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 判例引證）",
+      "outcomeNote": "已核對法院、裁判日與引註。裁判結果可查閱授權彙報全文。",
+      "background": [
+        {
+          "text": "昆士蘭刑事上訴法院於 1930-06-12 作出裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1930-06-12",
+          "title": "裁判日期",
+          "text": "授權彙報目錄所列的裁判日。",
+          "ref": {
+            "source": 1,
+            "locator": "Date"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "title": "按引註查看原彙報",
+          "text": "以 [1931] St R Qd 158 核對起始頁及法院，再閱讀判詞和最後命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "教材如何引用",
+          "text": "Cronin 答辯方同時引用 O’Brien (No 1) 及 (No 2)。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 25"
+          }
+        },
+        {
+          "title": "後續判決的引用",
+          "text": "Carlton 後來引 No 1 第 163–164 頁，提醒即使不實否認可能有補強作用，也須注意其證明分量及當事人可能有其他說謊動機。",
+          "ref": {
+            "source": 3,
+            "locator": "[109] 附近 · 引用 O’Brien (No 1) pp 163–164。"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        },
+        {
+          "id": "guide-r-v-obrien-no-2",
+          "title": "R v O’Brien (No 2) · 另一份彙報"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/510307",
+          "title": "R v O’Brien (No 1) [1931] St R Qd 158",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1931",
+          "locator": "授權彙報目錄。完整判詞入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        },
+        {
+          "url": "https://www.queenslandjudgments.com.au/caselaw/qca/2018/294",
+          "title": "R v Carlton [2018] QCA 294",
+          "publisher": "Queensland Court of Appeal · Queensland Judgments",
+          "date": "2018",
+          "locator": "[109] 附近 · 引用 O’Brien (No 1) pp 163–164。"
+        }
+      ],
+      "gaps": [
+        "現有導讀以可核對的彙報索引、教材圖例及後續公開引註為依據。要確認原案事實、理由及命令，請查完整授權彙報。"
+      ]
+    },
+    {
+      "category": "legal-research",
+      "recordKind": "judgment",
+      "sourceType": "official",
+      "checkedAt": "2026-11-23",
+      "visas": [],
+      "id": "guide-r-v-obrien-no-2",
+      "title": "R v O’Brien (No 2)",
+      "citation": "[1931] St R Qd 168",
+      "court": "昆士蘭刑事上訴法院",
+      "period": "1930 年裁判 · 1931 年刊載",
+      "studyTopic": "同名判例與彙報定位",
+      "summary": "Cronin 答辯方用 No 2 及起始頁 168 標明這宗裁判，另列 No 1。",
+      "provenance": "《Legal Research Skills: An Australian Law Guide》2025 年版 · 第 10 章圖 2（Cronin 判例引證）",
+      "outcomeNote": "已核對法院、裁判日與引註。裁判結果可查閱授權彙報全文。",
+      "background": [
+        {
+          "text": "昆士蘭刑事上訴法院於 1930-10-14 作出裁判。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "timeline": [
+        {
+          "date": "1930-10-14",
+          "title": "裁判日期",
+          "text": "授權彙報目錄所列的裁判日。",
+          "ref": {
+            "source": 1,
+            "locator": "Date"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "title": "按引註查看原彙報",
+          "text": "以 [1931] St R Qd 168 核對起始頁及法院，再閱讀判詞和最後命令。"
+        }
+      ],
+      "clarifications": [
+        {
+          "title": "教材如何引用",
+          "text": "Cronin 答辯方用 No 2 及起始頁 168 標明這宗裁判，另列 No 1。",
+          "ref": {
+            "source": 2,
+            "locator": "圖 2 · 彙報 p 25"
+          }
+        },
+        {
+          "title": "核對歷史引註",
+          "text": "兩案的裁判日和彙報起始頁不同。保留 No 2 便可對回 1930 年 10 月 14 日的裁判紀錄。",
+          "ref": {
+            "source": 1,
+            "locator": "Editorial Notes"
+          }
+        }
+      ],
+      "relatedCases": [
+        {
+          "id": "guide-cronin-v-hamilton-smith",
+          "title": "Cronin v Hamilton-Smith · 教材圖例"
+        },
+        {
+          "id": "guide-r-v-obrien-no-1",
+          "title": "R v O’Brien (No 1) · 另一份彙報"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.queenslandjudgments.com.au/case/id/503088",
+          "title": "R v O’Brien (No 2) [1931] St R Qd 168",
+          "publisher": "Queensland Judgments · ICLRQ / SCLQ",
+          "date": "1931",
+          "locator": "授權彙報目錄。完整判詞入口可能要求免費註冊。"
+        },
+        {
+          "url": "https://oercollective.caul.edu.au/legalresearchskills-australianlawguide/open/download?type=pdf#page=19",
+          "title": "法律研究指南 · Cronin 判例圖 2",
+          "publisher": "CAUL OER Collective 與 UQ Library",
+          "date": "2025",
+          "locator": "所提供 PDF 書頁 3，圖中彙報 pp 24–25。"
+        }
+      ],
+      "gaps": [
+        "現有導讀以可核對的彙報索引、教材圖例及後續公開引註為依據。要確認原案事實、理由及命令，請查完整授權彙報。"
       ]
     },
     {
