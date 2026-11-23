@@ -75,6 +75,11 @@ const indexLabels = {
   divisions:'規例主要部分及附表', documents:'法規與文書', forms:'表格與資訊單', abbreviations:'常見縮寫與識別碼',
 };
 
+const codePrefixes = {
+  form:'forms', 表格:'forms', condition:'conditions', 條件:'conditions',
+  subclass:'visas', 簽證:'visas', pic:'criteria', item:'lodgement',
+};
+
 function indexSections(codes, keys, query = '') {
   return keys.map(key => {
     const rows = codes[key].filter(item => [item[0],item[1],item[3] || ''].some(value => value.toLowerCase().includes(query)));
@@ -104,14 +109,12 @@ function renderContents(main, catalog, codes, index) {
   const input = main.querySelector('#guide-search');
   const render = () => {
     const raw = input.value.trim().toLowerCase();
-    const term = raw.replace(/^(?:form|condition|subclass|表格|條件|簽證)\s*(?=\d)/i,'').trim();
-    const match = raw.match(/^(?:form|表格)\s*(?=\d)|^(?:condition|條件)\s*(?=\d)|^(?:subclass|簽證)\s*(?=\d)/i)?.[0] || '';
-    const formOnly = /^(form|表格)/.test(match);
-    const conditionOnly = /^(condition|條件)/.test(match);
-    const visaOnly = /^(subclass|簽證)/.test(match);
-    const codeKeys = formOnly ? ['forms'] : conditionOnly ? ['conditions'] : Object.keys(codes);
-    const codeMatches = visaOnly ? '' : indexSections(codes, codeKeys, term);
-    const matchingVisas = formOnly || conditionOnly ? '' : groupGrid(catalog, term);
+    const match = raw.match(/^(form|condition|subclass|pic|item|表格|條件|簽證)\s*(?=\d)/);
+    const term = match ? raw.slice(match[0].length) : raw;
+    const kind = codePrefixes[match?.[1]];
+    const codeKeys = kind ? [kind] : Object.keys(codes);
+    const codeMatches = kind === 'visas' ? '' : indexSections(codes, codeKeys, term);
+    const matchingVisas = !kind || kind === 'visas' ? groupGrid(catalog, term) : '';
     const matchingTopics = !term || match ? [] : topics.filter(([id,title]) => `${id} ${title}`.toLowerCase().includes(term));
     const provisions = exactLawLinks(index,raw);
     status.textContent = term ? '查詢結果' : `簽證索引共 ${catalog.length} 個子類別`;
