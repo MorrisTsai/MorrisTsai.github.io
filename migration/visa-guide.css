@@ -13,6 +13,12 @@
 .guide-index ul { padding-inline-start: 1.35rem; line-height: 1.65; }
 .guide-index li { padding-block: .15rem; }
 .guide-index p { margin-block: .1rem .55rem; }
+.guide-index .guide-condition-note { margin-block: .55rem .85rem; }
+.guide-index .guide-condition-label { font-weight: 650; margin-block: .25rem .2rem; }
+.guide-index .guide-condition-visas { display: flex; flex-wrap: wrap; gap: .3rem .65rem; list-style: none; padding-inline-start: 0; margin-block: 0 .85rem; font-size: .9em; }
+.guide-condition-visas li { border: 1px solid var(--line); border-radius: .35rem; padding: .2rem .5rem; }
+.guide-condition-citations { display: inline-block; margin-inline-start: .55em; font-size: .9em; }
+.guide-index .guide-condition-empty { font-size: .9em; margin-block-end: .85rem; }
 .guide-article { max-width: 46rem; }
 .guide-article h1 { margin-bottom: .3rem; }
 .guide-article h2 { margin-block: 1.55rem .4rem; }

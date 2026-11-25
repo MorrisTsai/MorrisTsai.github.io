@@ -51,8 +51,12 @@ function codeEntries(index, data, summaries) {
   const criteria = sections.filter(section => !section.isHeading && /^\d{4}$/.test(section.number) && section.path.some(label => /^Schedule [345] —/.test(label)));
   const lodgement = sections.filter(section => !section.isHeading && /^\d{4}[A-Z]*$/.test(section.number) && section.path.some(label => /^Schedule 1 —/.test(label)));
   const divisions = sections.filter(section => section.isHeading && /^(Schedule|Part 2A|Division 1\.[45]|Division 2\.(?:6|1[3-9]))\b/.test(section.title));
+  const catalogue = new Map(data.visas.map(visa => [visa.number, visa]));
   return {
-    conditions: conditions.map(entry => [entry.number, conditionMeanings[entry.number] || '簽證附加條件', routeFor(regulations, entry.id), summaries?.sections?.[entry.id]?.text]),
+    conditions: conditions.map(entry => {
+      const matches = data.conditionVisas?.[entry.number]?.map(match => ({...match, visa: catalogue.get(match.subclass)}));
+      return [entry.number, conditionMeanings[entry.number] || '簽證附加條件', routeFor(regulations, entry.id), summaries?.sections?.[entry.id]?.text, matches];
+    }),
     criteria: criteria.map(entry => [entry.number, entry.path.some(part => /^Schedule 4/.test(part)) ? '公共利益準則 PIC' : entry.path.some(part => /^Schedule 3/.test(part)) ? '境內附加準則' : '特別返澳準則', routeFor(regulations, entry.id), summaries?.sections?.[entry.id]?.text]),
     lodgement: lodgement.map(entry => {
       const category = entry.title.match(/\(Class ([A-Z]{2})\)/)?.[1];
@@ -76,11 +80,25 @@ const codePrefixes = {
   subclass:'visas', 簽證:'visas', pic:'criteria', item:'lodgement',
 };
 
-function indexSections(codes, keys, query = '') {
+function renderConditionVisas(matches, condition) {
+  if (!matches) return '';
+  if (!matches.length) return '<p class="guide-condition-empty">本頁採用的規例版本中，附表 2 未列出適用這項條件的簽證子類別。</p>';
+  const items = matches.map(({visa, description, provisions}) => {
+    const title = visa && titleZh(visa);
+    const name = title && !title.includes('簽證') && visa.number !== '601' ? title.replace(/（|$/, '簽證$&') : title;
+    const visaLink = visa ? `<a href="${path(visa.number)}">${esc(visa.number)} ${esc(name)}</a>` : `${esc(description)}<small>（無子類別編號）</small>`;
+    const citations = provisions.map(({id, number}) => `<a href="${routeFor(regulations, id)}" aria-label="查看 ${esc(number)} 關於 ${esc(condition)} 條件的規定">${esc(number)}</a>`).join('、');
+    return `<li>${visaLink}<span class="guide-condition-citations">${citations}</span></li>`;
+  });
+  return `<p class="guide-condition-label">相關簽證</p><ul class="guide-condition-visas" aria-label="${esc(condition)} 的相關簽證">${items.join('')}</ul>`;
+}
+
+function indexSections(codes, keys, version, query = '') {
   return keys.map(key => {
     const rows = codes[key].filter(item => [item[0],item[1],item[3] || ''].some(value => value.toLowerCase().includes(query)));
     if (!rows.length) return '';
-    return `<details class="guide-index" ${query || keys.length === 1 ? 'open' : ''}><summary>${esc(indexLabels[key])} · ${rows.length} 筆</summary><ul>${rows.map(([number, label, url, explanation]) => `<li><a href="${esc(url)}"><strong>${esc(number)}</strong> ${esc(label)}</a>${explanation ? `<p>${esc(explanation)}</p>` : ''}</li>`).join('')}</ul></details>`;
+    const conditionNote = key === 'conditions' ? `<p class="guide-condition-note">依研讀室收錄的 ${esc(version)} 版《移民規例》對照。點簽證名稱可看介紹，點旁邊的條文編號可查什麼情況會附加。部分條件只適用於特定分支、主申請人或家屬，有些可由原簽證延續到過橋簽證。個別簽證的條件請查核發通知或 <a href="${esc(official.vevo)}">VEVO</a>。</p>` : '';
+    return `<details class="guide-index" ${query || keys.length === 1 ? 'open' : ''}><summary>${esc(indexLabels[key])} · ${rows.length} 筆</summary>${conditionNote}<ul>${rows.map(([number, label, url, explanation, matches]) => `<li><a href="${esc(url)}"><strong>${esc(number)}</strong> ${esc(label)}</a>${explanation ? `<p>${esc(explanation)}</p>` : ''}${key === 'conditions' ? renderConditionVisas(matches, number) : ''}</li>`).join('')}</ul></details>`;
   }).join('');
 }
 
@@ -95,7 +113,7 @@ function exactLawLinks(index, query) {
   ]);
 }
 
-function renderContents(main, catalog, codes, index) {
+function renderContents(main, {visas: catalog, version}, codes, index) {
   main.innerHTML = `<div class="breadcrumb"><a href="#/textbook">課本目錄</a></div><div class="library-intro guide-hero"><h1>簽證與申請資料附錄</h1><p>查子類別、附加條件、表格與規例代碼，並連到條文與官方資料。</p></div>
   <div class="guide-pages"><section><h2>按情況找路線</h2>${topicLinks(common, catalog)}</section>
   <section><h2>準備申請</h2><div class="guide-grid">${topics.filter(([id]) => !common.includes(id)).map(([id,title]) => card(id,title)).join('')}</div></section>
@@ -109,7 +127,7 @@ function renderContents(main, catalog, codes, index) {
     const term = match ? raw.slice(match[0].length) : raw;
     const kind = codePrefixes[match?.[1]];
     const codeKeys = kind ? [kind] : Object.keys(codes);
-    const codeMatches = kind === 'visas' ? '' : indexSections(codes, codeKeys, term);
+    const codeMatches = kind === 'visas' ? '' : indexSections(codes, codeKeys, version, term);
     const matchingVisas = !kind || kind === 'visas' ? groupGrid(catalog, term) : '';
     const matchingTopics = !term || match ? [] : topics.filter(([id,title]) => `${id} ${title}`.toLowerCase().includes(term));
     const provisions = exactLawLinks(index,raw);
@@ -121,12 +139,12 @@ function renderContents(main, catalog, codes, index) {
   render();
 }
 
-function renderChapter(topic, catalog, codes) {
+function renderChapter(topic, {visas: catalog, version}, codes) {
   const [id,title,sections,related,sources] = topic;
   const indexKeys = id === 'conditions' ? ['conditions'] : id === 'forms' ? ['forms'] : id === 'codes' ? Object.keys(codes) : [];
   return `<article class="guide-article"><h1>${esc(title)}</h1>
     ${sections.map(([heading,body]) => `<section><h2>${esc(heading)}</h2><p>${esc(body)}</p></section>`).join('')}
-    ${indexKeys.length ? `<section><h2>查編號</h2>${indexSections(codes,indexKeys)}</section>` : ''}
+    ${indexKeys.length ? `<section><h2>查編號</h2>${indexSections(codes,indexKeys,version)}</section>` : ''}
     <section><h2>接著查</h2>${topicLinks(related,catalog)}</section>
     <section><h2>官方資料及條文</h2>${links(sources)}</section></article>`;
 }
@@ -154,9 +172,9 @@ export function renderVisaGuide({main, companion, slug, data, index, summaries})
   const topic = chapterById.get(slug);
   const visa = data.visas.find(entry => entry.number === slug);
   companion.innerHTML = `<h3>課本附錄</h3>${links([['課本目錄','#/textbook'],['附錄索引',path()],['代碼怎麼讀',path('codes')],['簽證條件',path('conditions')],['申請表格',path('forms')],['規例原文書庫','#/book/'+regulations]])}`;
-  if (slug === 'reference') renderContents(main,data.visas,codes,index);
+  if (slug === 'reference') renderContents(main,data,codes,index);
   else {
-    const content = topic ? renderChapter(topic,data.visas,codes) : visa && visas[slug] ? renderVisa(visa,data,summaries) : '<h1>找不到這一頁</h1><p>回到目錄查簽證編號或申請主題。</p>';
+    const content = topic ? renderChapter(topic,data,codes) : visa && visas[slug] ? renderVisa(visa,data,summaries) : '<h1>找不到這一頁</h1><p>回到目錄查簽證編號或申請主題。</p>';
     main.innerHTML = `<div class="breadcrumb"><a href="#/textbook">課本目錄</a><span>›</span><a href="${path()}">附錄索引</a></div>${content}`;
   }
   main.insertAdjacentHTML('beforeend', `<p class="source-note">編寫日期 ${guideDate}。簽證、表件、費用與資格可能隨修法調整。查閱時以對應分支的官方資料及適用法規核對。${slug === 'reference' ? '' : ` <a href="${path()}">回到附錄索引</a>`}</p>`);
