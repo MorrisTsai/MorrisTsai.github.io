@@ -1,7 +1,7 @@
 {
   "url": "https://www.rewardschool.com.au/migration/",
   "files": {
-    "app.js": "93d7ec3f321b7c8b7e8f2c58c2405a2492a62d5f05423e8f44881f4211ccc49c",
+    "app.js": "8af33ce2344bcead52e2261b0066aa41fbe3f45585c208bdc52051af81705acf",
     "case-styles.css": "1e42a41599d6033562b50df4650009ff112c673c82de5f7dbc25f4cff1aa7916",
     "cases.js": "838855502879b7dca9e93771edc3ce52eed5ee77ad9aa5c6be89dec649de7e83",
     "chapter-menu.js": "620d94f5b8ff755d848884c4396ed6059897d7c0a21ac4e289a3079af123661c",
@@ -33,7 +33,7 @@
     "data/summaries-visas.json": "946cd918ebe8360672cd3c46f8feb478bf9ad66121ab90a62998c080c17c2c50",
     "data/summary-validation.json": "bbac16c9bd5803153a80e059cc2cde2e28207c660aad5213b84de7abeaa2c9bf",
     "data/verified-qa-rules.json": "fce73965030a9e2a6e450fbd836a2b2cabbe5cd50696158d85c0880c4ab022ae",
-    "data/visa-catalogue.json": "ddefd2fc24d06daf824407f189921fdb67109c30f2cfbfa3f048db0a4ee6ccd1",
+    "data/visa-catalogue.json": "9cecdc3adcbfb2cf6a06712b6b2ed9388aae9b3f45255ca4bf1fe111be3fcbda",
     "data/zh/agent-code.json": "5d9f2bcb85644702895ba121ff05c271cca4f3a589dccb954c3e0814377844bf",
     "data/zh/agents-regulations.json": "1be8011478dca70b86d718e329cd8d8c9db46d43d75e0272f830aef286ccc42c",
     "data/zh/art-act.json": "346484dafc115f8e187b4a60a81b4bc17d8352fd92cb9b0e1981682dd41a1020",
@@ -47,9 +47,9 @@
     "data/zh/regulations-endnotes.json": "33c8293f5d454d49cc03aa26627758cfc7de68ab7b43c0bda1c71d7cfdefc89c",
     "data/zh/translation-status.json": "d55aee4ef8f23c748ce08189d298ebcfa04064379171073da0be8e9be7853050",
     "data/zh/validation-report.json": "dad0fd390da7899744ffef54b4f53625fc2ac36e431b45f0851cfc9957134f61",
-    "guide-topics.js": "bbe5739754632f0e2c71cf0a4582f306da88735389fea9e2ce0ef1a18c49b789",
-    "guide-visas.js": "c4e993150e68f2350d20e31f91416b091ad47c362be07e4fc42d8c76219f5dd9",
-    "index.html": "cadba6f84c2381b6d51cb500402bd8382d9b9787487a9668864e30acecfeedb8",
+    "guide-topics.js": "46cc29ffc250344ba2783011afe448c76e7525312b6fe0c2f1584517d72bdeb6",
+    "guide-visas.js": "9c5c28eeec9ba01b374b97c4a90a362aeb433dfffc8114958a401ee20d8f1275",
+    "index.html": "5a9b7d1d8fcfdf696cffb81ccb02005f2fd2cc87253801c30292576824676f8d",
     "law-finder.css": "81dd47be31c15e1c25d86ce64c5611f0a81bf4dab8ab909ddb1d36168668ca82",
     "law-finder.js": "013eabe958ecdff020532b21563586c0b797391033da904ddaf2918100a9f93a",
     "reading-layout.js": "a89bf475f9c0214985cfae25d6f6f02452e3f9cfac1f20ddc72b9c914abe5adb",
@@ -60,10 +60,10 @@
     "strict-answers.js": "7925b85e3c094a31ea64292f8e3e6df31d9b82721844c9499ebad98f8498278f",
     "styles.css": "0669415926c8fbb7e26744875c2019c31e7a48c7e9b9c290ddc28d5465f4282d",
     "summary-styles.css": "5147f2f1a9740310a9b479bb50b4209ff407c04cc9f5b07d46b6c492a55d3f55",
-    "textbook-chapters.js": "093f102cc89e0b6bdcf1cd958a1f769059946b15f0094f45ba22b3e32a460947",
+    "textbook-chapters.js": "cbf8438522a66f824013aeb10aa09e1e0dc55772471cb333a304bb4bfb367b84",
     "textbook.js": "210c9ce6d1b9ae49bab4fc5af3299d13c601fa2bfea0a5149469fc625bc012c3",
-    "visa-guide.css": "5a7eb132947f1cacb62a6a5ac685529be02f0cb2cef23fd4b516d7182161c8ba",
-    "visa-guide.js": "e7d8c290f61767f3eb075fd5f9fec1cef398c6a097deedfec8f1b5ae99702d3d"
+    "visa-guide.css": "bbb968925ff085714eacdda2155fa4736732d0cf0395e1d84b07ebc4c987e881",
+    "visa-guide.js": "3f763aa2f9ff37bde4232de0ad95d67c8fe9aed1945fbc8771bad714abb510e9"
   },
   "cases": 47
 }
